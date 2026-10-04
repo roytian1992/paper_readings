@@ -1,0 +1,565 @@
+\section{Dynamics: How Memory Operates and Evolves?}
+\label{sec:how-memory}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.85\linewidth]{img/sec5-whole.pdf}
+    \caption{
+    The operational dynamics of agent memory. We decouple the complete memory lifecycle into three fundamental processes that drive the system's adaptability and self-evolution: (1) \textbf{Memory Formation} transforms raw interactive experiences into information-dense knowledge units by selectively identifying patterns with long-term utility; (2) \textbf{Memory Evolution} dynamically integrates new memories into the existing repository through \textit{consolidation}, \textit{updating}, and \textit{forgetting} mechanisms to ensure the knowledge base remains coherent and efficient; and (3) \textbf{Memory Retrieval} executes context-aware queries to access specific memory modules, thereby optimizing reasoning performance with precise information support. The alphabetical order denotes the sequence of operations within the memory systems.
+    }
+    \label{fig:sec5-whole}
+\end{figure}
+
+The preceding sections introduced the architectural forms (\Cref{sec:what-memory}) and functional roles (\Cref{sec:why-memory}) of memory, outlining a relatively static conceptual framework for agent memory. However, such a static view overlooks the inherent dynamism that fundamentally characterizes agentic memory. Unlike knowledge that is statically encoded in model parameters or fixed databases, an agentic memory system can dynamically construct and update its memory store and perform customized retrieval conditioned on different queries. This adaptive capability is crucial for enabling agents to self-evolve and engage in lifelong learning.
+
+Accordingly, this section investigates the paradigm shift from static storage to dynamic memory management and utilization. This paradigm shift reflects the foundational operational advantages of agentic memory over static database approaches. In practice, an agentic memory system can autonomously extract refined, generalizable knowledge based on reasoning traces and environmental feedback. By dynamically fusing and updating this newly extracted knowledge with the existing memory base, the system ensures continuous adaptation to evolving environments and mitigates cognitive conflicts. Based on the constructed memory base, the system executes targeted retrieval from designated memory modules at precise moments, thereby enhancing reasoning effectively. To systematically analyze ``how'' the memory system operates and evolves, we examine the complete memory lifecycle by decomposing it into three fundamental processes. \autoref{fig:sec5-whole} provides a holistic illustration of this dynamic memory lifecycle, highlighting how memory formation, evolution, and retrieval interact to support adaptive and self-evolving agent behavior. 
+
+\vspace{0.5em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Fundamental Process in Memory Systems}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=10pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{enumerate}
+    \item \textbf{Memory Formation}(\Cref{ssec:formation}): This process focuses on transforming raw experience into information-dense knowledge. Instead of passively logging all interaction history, the memory system selectively identifies information with long-term utility, such as successful reasoning patterns or environmental constraints. This part answers the question: ``How to extract the memory?''.
+    \item \textbf{Memory Evolution}(\Cref{ssec:evolution}): This process represents the dynamic evolution of the memory system. It focuses on integrating newly formed memories with the existing memory base. Through mechanisms such as the consolidation of correlated entries, conflict resolution, and adaptive pruning, the system ensures that the memory remains generalizable, coherent, and efficient in an ever-changing environment. This part answers the question: ``How to refine the memory?''.
+    \item \textbf{Memory Retrieval}(\Cref{ssec:retrieval}): This process determines the quality of the retrieved memory. Conditioned on the context, the system constructs a task-aware query and uses a carefully designed retrieval strategy to access the appropriate memory bank. The retrieved memory is therefore both semantically relevant and functionally critical for reasoning. This part answers the question: ``How to utilize the memory?''.
+\end{enumerate}
+\end{tcolorbox}
+
+These three processes are not independent; rather, they form an interconnected cycle that drives the dynamic evolution and operation of the memory system. Memory extracted during the memory formation stage is integrated and updated with the existing memory base during the memory evolution stage. Leveraging the memory base constructed through these first two stages, the memory retrieval stage enables targeted access to optimize reasoning. In turn, reasoning outcomes and environmental feedback feed back into memory formation to extract new insights and into memory evolution to refine the memory base. Collectively, these components enable LLMs to transition from static conditional generators into dynamic systems that continuously learn from and respond to changing environments.
+
+\subsection{Memory Formation}
+\label{ssec:formation}
+
+We define memory formation as the process of encoding raw contexts (e.g., dialogues or images) into compact knowledge. The necessity for memory formation emerges from the scaling limitations inherent in processing lengthy, noisy, and highly redundant raw contexts. Full-context prompting often encounters computational overhead, prohibitive memory footprints, and degraded reasoning performance on out-of-distribution input lengths. To mitigate these issues, recent memory systems distill essential information into efficiently storable and precisely retrievable representations, enabling more efficient and effective inference. 
+
+Memory formation is not independent of the preceding sections. Depending on the task type, the memory formation process selectively extracts different architectural memories described in \Cref{sec:what-memory} to fulfill the corresponding functions outlined in \Cref{sec:why-memory}. Based on the granularity of information compression and the logic of encoding, we categorize the memory formation process into five distinct types.
+\autoref{tab:formation} summarizes representative methods under each category, comparing their sub-types, representation forms, and key mechanisms.
+
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Five Categories of Memory Formation Operations}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=10pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize} 
+    \item \textbf{Semantic Summarization}(\Cref{ssec:summarization}) transforms lengthy raw data into compact summaries, filtering out redundancy while preserving global, high-level semantic information to reduce contextual overhead. 
+    \item \textbf{Knowledge Distillation} (\Cref{ssec:knowledgedistill}) extracts specific cognitive assets, ranging from factual details to experiential planning strategies. 
+    \item \textbf{Structured Construction}(\Cref{ssec:structured}) organizes amorphous source data into explicit topological representations, such as knowledge graphs or hierarchical trees, to enhance the explainability of memory and support multi-hop reasoning. 
+    \item \textbf{Latent Representation}(\Cref{ssec:latentrepre}) encodes raw experiences directly into machine-native formats (e.g., vector embeddings or KV states) within a continuous latent space. 
+    \item \textbf{Parametric Internalization}(\Cref{ssec:parametricinter}) consolidates external memories directly into the model's weight space through parameter updates, effectively transforming retrievable information into the agent's intrinsic competence and instincts. 
+\end{itemize}
+\end{tcolorbox}
+
+Although we categorize these methods into five types, we argue that these memory formation strategies are not mutually exclusive. A single algorithm can integrate multiple memory formation strategies and translate knowledge across different representations~\citep{li2025memosoperatingmemoryaugmentedgeneration}.
+
+\begin{table*}[!t]
+\centering
+\caption{
+Taxonomy of memory formation methods. We classify approaches based on the memory formation operations.
+Methods are analyzed across three technical dimensions:
+(1) \textbf{Sub-Type} identifies the specific variation or scope,
+(2) \textbf{Representation Form} specifies the output format, and
+(3) \textbf{Key Mechanism} denotes the core algorithmic strategy.
+}
+\label{tab:formation}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l| l l l}
+\toprule
+Method & Sub-Type & Representation Form & Key Mechanism \\
+\midrule
+\multicolumn{4}{c}{\textit{I. Semantic Summarization}} \\
+\midrule
+MemGPT \citep{packerMemGPTLLMsOperating2023} & Incremental & Textual Summary & Merging new chunks into the working context \\
+Mem0 \citep{Chhikara2025mem0} & Incremental & Textual Summary & LLM-driven summarization \\
+Mem1 \citep{zhou2025mem1learningsynergizememory} & Incremental & Textual Summary & RL-optimized summarization (PPO) \\
+MemAgent \citep{yu2025memagent} & Incremental & Textual Summary & RL-optimized summarization (GRPO) \\
+MemoryBank \citep{zhong2023memorybankenhancinglargelanguage} & Partitioned & Textual Summary & Daily/Session-based segmentation \\
+ReadAgent \citep{lee2024humaninspiredreadingagentgist} & Partitioned & Textual Summary & Semantic clustering before summarization \\
+LightMem \citep{fang2025lightmem} & Partitioned & Textual Summary & Topic-clustered summarization \\
+DeepSeek-OCR \citep{wei2025deepseekocr} & Partitioned & Visual Token Mapping & Optical 2D mapping compression \\
+FDVS \citep{you2024towards} & Partitioned & Multimodal Summary & Multi-source signal integration (Subtitle/Object) \\
+LangRepo \citep{kahatapitiya2025language} & Partitioned & Multimodal Summary & Hierarchical video clip aggregation \\
+\midrule
+\multicolumn{4}{c}{\textit{II. Knowledge Distillation}} \\
+\midrule
+TiM \citep{DBLP:journals/corr/abs-2311-08719} & Factual & Textual Insight & Abstraction of dialogue into thoughts \\
+RMM \citep{Tan2025MemoTime} & Factual & Topic Insight & Abstraction of dialogue into topic-based memory\\
+MemGuide \citep{duMemGuideIntentDrivenMemory2025} & Factual & User Intent & Capturing high-level user intent \\
+M3-Agent \citep{long2025seeing} & Factual & Text-addressable Facts & Compressing egocentric visual observations \\
+AWM \citep{wang2024agentworkflowmemory} & Experiential & Workflow Patterns & Workflow extraction from success trajectories \\
+Mem$^p$ \citep{fang2025mempexploringagentprocedural} & Experiential & Procedural Knowledge & Distilling gold trajectories into abstract procedures \\
+ExpeL \citep{DBLP:conf/aaai/Zhao0XLLH24} & Experiential & Experience Insight & Contrastive reflection and successful practices \\
+R2D2 \citep{huang_r2d2_2025} & Experiential & Reflective Insight & Reflection on reasoning traces vs. ground truth \\
+$H^{2}R$ \citep{DBLP:journals/corr/abs-2509-12810} & Experiential & Hierarchical Insight & Two-tier reflection (Plan \& Subgoal) \\
+Memory-R1 \citep{yan2025memory} & Experiential & Textual Knowledge & RL-trained LLMExtract module \\
+Mem-$\alpha$ \citep{DBLP:journals/corr/abs-2509-25911} & Experiential & Textual Insight & Learnable insight extraction policy \\
+\midrule
+\multicolumn{4}{c}{\textit{III. Structured Construction}} \\
+\midrule
+KGT \citep{sun2024knowledgegraphtuningrealtime} & Entity-Level & User Graph & Encoding user preferences as nodes/edges \\
+Mem0$^g$ \citep{Chhikara2025mem0} & Entity-Level & Knowledge Graph & LLM-based entity and triplet extraction \\
+D-SMART \citep{Lei2025DSMART} & Entity-Level & Dynamic Memory Graph & Constructing an OWL-compliant graph \\
+GraphRAG \citep{edge2025localglobalgraphrag} & Entity-Level & Hierarchical KG & Community detection and iterative summarization \\
+AriGraph \citep{anokhin2024arigraph} & Entity-Level & Semantic+Episodic Graph & Dual-layer (Semantic nodes + Episodic links) \\
+Zep \citep{Rasmussen2025Zep} & Entity-Level & Temporal KG & 3-layer graph (Episodic, Semantic, Community) \\
+RAPTOR \citep{Sarthi2024RAPTOR} & Chunk-Level & Tree Structure & Recursive GMM clustering and summarization \\
+MemTree \citep{rezazadehIsolatedConversationsHierarchical2025} & Chunk-Level & Tree Structure & Bottom-up insertion and summary updates \\
+H-MEM \citep{Sun2025HMEM} & Chunk-Level & Hierarchical JSON & Top-down 4-level hierarchy organization \\
+A-MEM \citep{xuAMEMAgenticMemory2025} & Chunk-Level & Networked Notes & Discrete notes with semantic links \\
+PREMem \citep{DBLP:journals/corr/PREMem} & Chunk-Level & Reasoning Patterns & Cross-session reasoning pattern clustering \\
+CAM \citep{liCAMConstructivistView2025} & Chunk-Level & Hierarchical Graph & Disentangling overlapping clusters via replication \\
+G-Memory \citep{Zhang2025GMemory} & Chunk-Level & Hierarchical Graph & 3-tier graph (interaction, query, insight) \\
+\midrule
+\multicolumn{4}{c}{\textit{IV. Latent Representation}} \\
+\midrule
+MemoryLLM \citep{Wang2024MEMORYLLM} & Textual & Latent Vector & Self-updatable latent embeddings \\
+M+ \citep{DBLP:journals/corr/abs-2502-00592} & Textual & Latent Vector & Cross-layer long-term memory tokens \\
+MemGen \citep{Zhang2025MemGen} & Textual & Latent Token & Latent memory trigger and weaver \\
+ESR \citep{shenEncodeStoreRetrieveAugmentingHuman2024} & Multimodal & Latent Vector & Video-to-Language-to-Vector encoding \\
+CoMEM \citep{Wu2025CoMEM} & Multimodal & Continuous Embedding & Vision-language compression via Q-Former \\
+Mem2Ego \citep{DBLP:journals/corr/abs-2502-14254} & Multimodal & Multimodal Embedding & Embedding landmark semantics as latent memory \\
+KARMA \citep{wangKARMAAugmentingEmbodied2025} & Multimodal & Multimodal Embedding & Hybrid long/short-term memory encoding \\
+\midrule
+\multicolumn{4}{c}{\textit{V. Parametric Internalization}} \\
+\midrule
+MEND \citep{mend} & Knowledge & Gradient Decomposition & Auxiliary network for fast edits \\
+ROME \citep{DBLP:conf/nips/ROME} & Knowledge & Model Parameters & Causal tracing and rank-one update \\
+MEMIT \citep{DBLP:conf/iclr/MEMIT} & Knowledge & Model Parameters & Mass-editing via residual distribution \\
+CoLoR \citep{DBLP:journals/corr/color} & Knowledge & LoRA Parameters & Low-rank adapter training \\
+ToolFormer \citep{schick2023toolformer} & Capability & Model Parameters & Supervised fine-tuning on API calls \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+\subsubsection{Semantic Summarization}
+\label{ssec:summarization}
+Semantic summarization transforms raw observational data into compact and semantically rich summaries. The resulting summaries capture the global, high-level information of the original data, rather than specific factual or experiential details~\citep{DBLP:conf/aaai/Zhao0XLLH24,anokhin2024arigraph}. Typical examples of such summaries include the overarching narrative of a document~\citep{kim2025nexussum,yu2025memagent}, the procedural flow of a task~\citep{ye2025agentfold,DBLP:journals/corr/abs-2510-12635}, or a user’s historical profile~\citep{zhang2024guided,DBLP:journals/corr/abs-2510-07925}. By filtering out redundant content while preserving task-relevant global semantics, semantic summarization provides a high-level guiding blueprint for subsequent reasoning without introducing excessive contextual overhead. To achieve these effects, the compression process can be implemented in two primary ways: incremental and partitioned semantic summarization. 
+
+\paragraph{Incremental Semantic Summarization} This paradigm employs a temporal integration mechanism that continuously fuses newly observed information with the existing summary, producing an evolving representation of global semantics. This chunk-by-chunk paradigm supports incremental learning~\citep{MCCLOSKEY1989109}, circumvents the $O(n^2)$ computational burden of full-sequence processing~\citep{yu2025memagent}, and promotes progressive convergence toward global semantics~\citep{chen2024write}. Early implementations such as MemGPT~\citep{packerMemGPTLLMsOperating2023} and Mem0~\citep{Chhikara2025mem0} directly merged new chunks with existing summaries at appropriate moments, relying solely on the LLM’s inherent summarization ability. However, this approach was constrained by the model’s limited capacity, often resulting in inconsistency or semantic drift. To alleviate these issues, \citet{chen2024write} and \citet{wu2025incremental} incorporated external evaluators to filter redundant or incoherent content, using a convolutional-based discriminator for consistency verification and DeBERTa~\citep{he2020deberta} for filtering trivial content, respectively. Instead of relying on auxiliary networks, subsequent methods, such as Mem1~\citep{zhou2025mem1learningsynergizememory} and MemAgent~\citep{yu2025memagent}, enhanced the LLM’s own summarization capability through reinforcement learning with PPO~\citep{schulman2017proximal} and GRPO~\citep{shao2024deepseekmath}. 
+
+As incremental summarization advanced from heuristic fusion to filtered integration and ultimately to learning-based optimization, the summarization competence became increasingly internalized within the model, thereby reducing cumulative errors across iterations. Nevertheless, the serial update nature still poses computational bottlenecks~\citep{fang2025lightmem} and potential information forgetting, motivating the development of Partitioned semantic summarization approaches. 
+
+\paragraph{Partitioned Semantic Summarization} This paradigm adopts a spatial decomposition mechanism, dividing information into distinct semantic partitions and generating separate summaries for each. Early studies typically adopted heuristic partitioning strategies for handling long contexts. MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage} and COMEDY~\citep{chen2025compress} summarize and aggregate long-term dialogues by treating each day or session as a basic unit. Along the structural dimension, \citet{wu2021recursively} and \citet{bailly2025divide} generate summaries of summaries by segmenting long documents into chapters or paragraphs. While intuitive, such approaches often suffer from semantic discontinuity across partitions. To address this issue, methods such as ReadAgent~\citep{lee2024humaninspiredreadingagentgist} and LightMem~\citep{fang2025lightmem} introduce semantic or topical clustering before summarization, thereby enhancing inter-chunk coherence. Extending beyond textual compression, DeepSeek-OCR~\citep{wei2025deepseekocr} pioneers the idea of compressing long contexts via optical 2D mapping, achieving higher compression ratios in multimodal scenarios. In the video memory domain, FDVS~\citep{you2024towards}  and LangRepo~\citep{kahatapitiya2025language} segment long videos into clips and generate textual summaries by integrating multi-source signals such as subtitles, object detection, and scene descriptions, which are then hierarchically aggregated into a global long video story. 
+
+Compared with incremental summarization, the partitioned approach offers superior efficiency and captures finer-grained semantics. However, its independent processing of each sub-chunk can lead to the loss of cross-partition semantic dependencies.
+
+\paragraph{Summary} Semantic summarization operates as a lossy compression mechanism, aiming to distill the gist from lengthy interaction logs. Unlike verbatim storage, it prioritizes global semantic coherence over local factual precision, transforming linear streams into compact narrative blocks. The primary strength of semantic summarization is efficiency: it drastically reduces context length, making it ideal for long-term dialogue. However, the trade-off is resolution loss: specific details or subtle cues may be smoothed out, limiting their utility in evidence-critical tasks.
+
+\subsubsection{Knowledge Distillation} 
+\label{ssec:knowledgedistill}
+While semantic summarization captures the global semantics of raw data at a macro level, knowledge distillation operates at a finer granularity, extracting reusable knowledge from interaction trajectories or documents. In a broad sense, knowledge refers to the various forms of factual and experiential memory described in \Cref{sec:why-memory}, depending on the task’s underlying functions.
+
+\paragraph{Distilling Factual Memory} This process focuses on transforming raw interactions and documents into explicit, declarative knowledge regarding users and environmental states. This process ensures that the agent maintains consistency and adaptability by retaining verifiable facts rather than transient context. In the domain of user modeling, systems such as TiM~\citep{DBLP:journals/corr/abs-2311-08719}, RMM~\citep{DBLP:conf/acl/rmm2025}, and EMem~\citep{zhou2025simplestrongbaselinelongterm} employ abstraction mechanisms to convert dialogue turns into high-level thoughts or enriched elementary discourse units, thereby preserving long-term persona coherence. For users' objective modeling, approaches like  MemGuide~\citep{duMemGuideIntentDrivenMemory2025} extract user intent descriptions from dialogues. During reasoning, it captures and updates goal states, separating confirmed constraints from unresolved intents to mitigate goal drift. Furthermore, this distillation extends to multimodal environments, where agents like ESR~\citep{shenEncodeStoreRetrieveAugmentingHuman2024} and M3-Agent~\citep{long2025seeing} compress egocentric visual observations into text-addressable facts about object locations and user routines. Furthermore, by equipping agents with multimodal understanding capabilities, Video-RAG~\citep{luo2025videoragvisuallyalignedretrievalaugmentedlong} converts audio, subtitles, and objects in videos into textual notes, i.e., factual memories, to enhance long-video understanding.
+
+\paragraph{Distilling Experiential Memory} This process focuses on extracting the strategies underlying task execution from historical trajectories. By deriving planning principles from successful rollouts and corrective signals from failures, this paradigm enhances the agent’s problem-solving ability on specific tasks. Through abstraction and generalization, it further supports cross-task knowledge transfer. As a result, experiential generalization enables the agent to continually refine its competence and move toward lifelong learning.
+
+This line of research aims to derive high-level planning strategies and key insights from both successful and failed trajectories. Some approaches focus on success-based distillation, where systems such as AgentRR~\citep{DBLP:journals/corr/agentrr} and AWM~\citep{wang2024agentworkflowmemory} summarize overall task plans from successful cases. Mem$^p$~\citep{fang2025mempexploringagentprocedural} analyzes and summarizes the gold trajectories from the training set, distilling them into abstract procedural knowledge. Others adopt failure-driven reflection, exemplified by Matrix~\citep{DBLP:journals/corr/matrix}, SAGE~\citep{DBLP:journals/ijon/SAGE}, and R2D2~\citep{huang_r2d2_2025}, which compare reasoning traces against ground-truth answers to identify error sources and extract reflective insights. Combining both, ExpeL~\citep{DBLP:conf/aaai/Zhao0XLLH24}, From Experience to Strategy~\citep{xia2025experience}, and ReMe~\citep{cao2025remembermerefineme} contrast successful and failed experiences to uncover holistic planning insights. 
+
+However, prior work primarily focuses on summarizing task-level planning knowledge, lacking fine-grained, step-level insights. To address this gap, H$^2$R~\citep{DBLP:journals/corr/abs-2509-12810} introduces a two-tier reflection mechanism: it follows ExpeL to construct a pool of high-level planning insights, while further segmenting trajectories by subgoal sequences to derive step-wise execution insights.
+
+Earlier methods relied on fixed prompts for insight extraction, making their performance sensitive to prompt design and the underlying LLM’s capacity. Recently, trainable distillation methods have become prevalent. Learn-to-Memorize~\citep{DBLP:journals/corr/learntomemorize} optimizes task-specific prompts for different agents. On the other hand, Memory-R1~\citep{yan2025memory} uses an LLMExtract module to obtain experiential and factual knowledge, while only the subsequent fusion component is trained to integrate these outputs into the memory bank. Although these approaches adopt an end-to-end framework, they still fall short in enhancing the LLM’s intrinsic ability to distill insights. To overcome this limitation, Mem-$\alpha$~\citep{DBLP:journals/corr/abs-2509-25911} explicitly trains the LLM on what insights to extract and how to preserve them.
+
+\paragraph{Summary} This part focuses on extracting function-specific knowledge from the raw context, without addressing the structure of memory storage. Each piece of knowledge can be viewed as a flat memory unit. Simply storing multiple units in an unstructured table ignores the semantic and hierarchical relations among them. To address this, the memory formation process can apply structured rules to derive insights and store them within a hierarchical architecture. Simple but essential, the single knowledge distillation method introduced here serves as a foundational component for more complex and structured memory formation mechanisms.
+
+\subsubsection{Structured Construction}
+\label{ssec:structured}
+While Semantic Summarization (\Cref{ssec:summarization}) and Knowledge Distillation (\Cref{ssec:knowledgedistill}) effectively compress summaries and knowledge at different levels of granularity, they often treat memory as isolated units. In contrast, Structured Construction transforms amorphous data into organized topological representations. This process is not merely a change in storage format, but an active structural operation that determines how information is linked and layered. Unlike unstructured plaintext summarization, structured extraction significantly enhances both interpretability and retrieval efficiency. Crucially, such structural prior excels at capturing complex logic and dependencies in multi-hop reasoning tasks, offering substantial advantages over traditional retrieval-augmented methods. 
+
+Based on the operational granularity of how the underlying structure is derived, we categorize existing methods into two paradigms: Entity-Level Construction, which builds underlying topology by atomizing text into entities and relations, and Chunk-Level Construction, which builds structure by organizing intact text segments or memory items. 
+
+\paragraph{Entity-Level Construction}  
+The foundational structure of this paradigm is derived from relational triples extraction, which decomposes the raw context into its finest-grained semantic atomic entities and relations. Traditional approaches model memory as a planar knowledge graph. For instance, KGT~\citep{sun2024knowledgegraphtuningrealtime} introduces a real-time personalization mechanism where user preferences and feedback are directly encoded as nodes and edges within a user-specific knowledge graph. Similarly, $\texttt{Mem0}^{g}$~\citep{Chhikara2025mem0} utilizes LLMs to convert conversation messages directly into entities and relation triplets in the extraction phase. 
+
+However, these direct extraction methods are often limited by the inherent capabilities of the LLM, leading to potential noise or structural errors. To improve the quality of the constructed graph, D-SMART~\citep{Lei2025DSMART} adopts a refined approach: it first employs an LLM to distill core semantic content into concise, assertion-like natural language statements, and subsequently extracts an OWL-compliant knowledge graph fragment through a neuro-symbolic pipeline. Additionally, Ret-LLM~\citep{modarressi2023ret} applies supervised fine-tuning to the LLM, enabling more robust read-write interactions with the relational graph.
+
+While the aforementioned methods focus on planar structures, recent advancements have progressed towards constructing hierarchical memory to capture high-level abstractions. For example, GraphRAG~\citep{edge2025localglobalgraphrag} derives an entity knowledge graph from source documents and applies community detection algorithms to extract graph communities and generate community summaries iteratively. This hierarchical approach identifies higher-level cluster associations between entities, enabling the extraction of generalized insights and facilitating flexible retrieval at varying granularities. 
+
+To better reflect the internal coherence and temporal information of the original data, some works extend the semantic knowledge graph by incorporating an episodic graph. AriGraph~\citep{anokhin2024arigraph} and HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} establish a dual-layer structure comprising the semantic and episodic graph. They extract semantic triplets from dialogues while connecting nodes that occur simultaneously or establishing node–paragraph indices. Zep~\citep{Rasmussen2025Zep} further formalizes this into a three-layer temporal graph architecture: an episodic subgraph ($\mathcal{G}_{e}$) that logs the occurrence and processing times of raw messages via a bi-temporal model, a semantic subgraph ($\mathcal{G}_{s}$) for entities and time-bounded facts, and a community subgraph ($\mathcal{G}_{c}$) for high-level clustering and summarization of entities.
+
+\paragraph{Chunk-Level Construction}
+This paradigm treats continuous text spans or discrete memory items as nodes, preserving local semantic integrity while organizing them into topological structures. The evolution of this field progresses from static, planar (2D) extraction from fixed corpora to dynamic adaptation with incoming trajectories, and ultimately to hierarchical (3D) architectures.
+
+Early approaches focused on organizing fixed text libraries into static planar structures. HAT~\citep{a2024enhancinglongtermmemoryusing} processes long texts by segmenting them and progressively aggregating summaries to construct a hierarchical tree. Similarly, RAPTOR~\citep{Sarthi2024RAPTOR} recursively clusters text chunks using UMAP for dimensionality reduction and Gaussian Mixture Models for soft clustering, iteratively summarizing these clusters to form a tree. However, these static methods lack the flexibility to handle streaming data without costly reconstruction.
+
+To address this, dynamic planar approaches incrementally build memory structures as new trajectories arrive, differing based on their foundational elements. Methods based on raw text include MemTree~\citep{rezazadehIsolatedConversationsHierarchical2025} and H-MEM~\citep{Sun2025HMEM}. MemTree adopts a bottom-up approach where new text fragments retrieve the most similar nodes and are inserted as children or iteratively into a subtree, triggering bottom-up summary updates for all parent nodes. Conversely, H-MEM utilizes a top-down strategy, prompting the LLM to organize data into a four-level JSON hierarchy comprising the domain, category, memory trace, and episode layer. Alternatively, A-MEM~\citep{xuAMEMAgenticMemory2025} and PREMem~\citep{DBLP:journals/corr/PREMem} focus on reorganizing the extracted memory items. A-MEM summarizes knowledge into discrete notes and links relevant ones to construct a networked memory. PREMem clusters extracted factual, experiential, and subjective memories to identify and store higher-dimensional cross-session reasoning patterns.
+
+Recent advancements move beyond planar layouts to construct hierarchical structures, offering richer semantic depth. SGMem~\citep{Wu2025SGMemSG} constructs a hierarchy by using NLTK to split text into sentences, forming a KNN graph across all sentence nodes, and subsequently calling an LLM to extract summaries, facts, and insights corresponding to each dialogue. To support the incremental construction of hierarchical structures as streaming data arrives, CAM~\citep{liCAMConstructivistView2025} establishes edges between text blocks based on semantic relevance and narrative coherence. It iteratively summarizes the ego graph and handles new memory insertions by explicitly disentangling overlapping clusters through node replication. In multi-agent scenarios, G-memory~\citep{Zhang2025GMemory} extends this dynamic 3D approach by maintaining three distinct graphs: an interaction graph for raw chat history, a query graph for specific tasks, and an insight graph. This structure enables each agent to receive customized memory at varying levels of granularity.
+
+\paragraph{Summary} The main advantage of structured construction is explainability and the ability to handle complex relational queries. Such methods capture intricate semantic and hierarchical relationships between memory elements, support reasoning over multi-step dependencies, and facilitate integration with symbolic or graph-based reasoning frameworks. However, the downside is schema rigidity: pre-defined structures may fail to represent nuanced or ambiguous information, and the extraction and maintenance costs are typically high.
+
+\subsubsection{Latent Representation}
+\label{ssec:latentrepre}
+The previous chapters focused on how to build token-level memory; this part focuses on encoding memory into the machine's native latent representation. Latent representation encodes raw experiences into embeddings that reside in a latent space. Unlike semantic compression and structured extraction, which summarize experiences before embedding them into vectors, latent encoding inherently stores experiences in latent space, thereby reducing information loss during summarization and text embedding. Furthermore, latent encoding is more conducive to machine cognition, enabling a unified representation across different modalities and ensuring both density and semantic richness in memory representation.
+
+\paragraph{Textual Latent Representation} 
+Although originally designed to accelerate inference, the KV cache can also be viewed as a form of latent representation within the context of memory~\citep{DBLP:journals/tmlr/kvcachemanagement,Jiang_towards_2025}. It utilizes additional memory to store past information, thereby avoiding redundant computation. MEMORYLLM~\citep{Wang2024MEMORYLLM} and M+~\citep{DBLP:journals/corr/abs-2502-00592} represent memory as self-updatable latent embeddings, which are injected into transformer layers during inference. Moreover, MemGen~\citep{Zhang2025MemGen} introduces a memory trigger to monitor the agent's reasoning state and determine when to explicitly invoke memory, as well as a memory waiver that leverages the agent’s current state to construct a latent token sequence. This sequence acts as machine-native memory, enriching the agent's reasoning capabilities.
+
+\paragraph{Multimodal Latent Representation}
+In multimodal memory research, CoMEM~\citep{Wu2025CoMEM} compresses vision-language inputs into fixed-length tokens via a Q-Former, enabling dense, continuous memory and supporting plug-and-play usage for infinite context lengths. Encode-Store-Retrieve~\citep{shenEncodeStoreRetrieveAugmentingHuman2024} converts egocentric video frames into language encodings using Ego-LLaVA, which are subsequently transformed into vector representations through an embedding model. Although embedding models are employed to ensure semantic alignment, these methods often face a trade-off between compression loss and computational overhead, particularly in handling gradient flow in long-context sequences. 
+
+When integrated with Embodied AI, multimodal latent memory can fuse data from multiple sensors. For example, Mem2Ego~\citep{DBLP:journals/corr/abs-2502-14254} dynamically aligns global contextual information with local perception, embedding landmark semantics as latent memory to enhance spatial reasoning and decision-making in long-horizon tasks. KARMA~\citep{wangKARMAAugmentingEmbodied2025} adopts a hybrid long- and short-term memory form that encodes object information into multimodal embeddings, achieving a balance between immediate responsiveness and consistent representation. These explorations underscore the advantages of latent encoding in providing unified and semantically rich representations across modalities.
+
+\paragraph{Summary} Latent representation bypasses human-readable formats, encoding experiences directly into machine-native vectors or KV-caches. This high-density format preserves rich semantic signals that might be lost in text decoding, enabling smoother integration with the model's internal computations. And it supports multimodal alignment seamlessly. However, it suffers from opaqueness. The latent memory is a black box, making it difficult for humans to debug, edit, or verify the knowledge it stores.
+
+\subsubsection{Parametric Internalization}
+\label{ssec:parametricinter}
+As LLMs increasingly incorporate memory systems to support long-term adaptation, a central research question is how these external memories should be consolidated into parametric form. While the latent representation methods discussed above parameterize memory externally to the model, parametric internalization directly adjusts the model’s internal parameters. It leverages the model’s capacity to encode and generalize information through its learned parameter space. This paradigm fundamentally enhances the model’s intrinsic competence, eliminating the overhead of external storage and retrieval while seamlessly supporting continual updates. As we discussed in~\Cref{sec:why-memory}, not all memory content serves the same function: some entries provide declarative knowledge, while others encode procedural strategies that shape an agent’s reasoning and behavior. This distinction motivates a finer-grained view of memory internalization, separating it into knowledge internalization and capability internalization.
+
+\paragraph{Knowledge Internalization} This strategy entails converting externally stored factual memories, such as conceptual definitions or domain knowledge, into the model’s parameter space. Through this process, the model can directly recall and utilize these facts without relying on explicit retrieval or external memory modules. In practice, knowledge internalization is typically achieved through model editing~\citep{DBLP:conf/iclr/Editable,de-cao-etal-2021-editing}. Early work, such as MEND~\citep{mend}, introduced an auxiliary network that enables rapid, single-step edits by decomposing fine-tuning gradients, thereby minimizing interference with unrelated knowledge. Building on this line of work, ROME~\citep{DBLP:conf/nips/ROME} refined the editing process by using causal tracing to precisely locate the MLP layers that store specific facts and applying rank-one updates to inject new information with higher precision and better generalization. MEMIT~\citep{DBLP:conf/iclr/MEMIT} further advanced this line by supporting batch edits, enabling thousands of facts to be updated simultaneously through multi-layer residual distributions and batch formulas, which substantially improves scalability. With the rise of parameter-efficient paradigms like LoRA~\citep{hu2022lora}, knowledge internalization can be performed through lightweight adapters rather than direct parameter modification. For instance, CoLoR~\citep{DBLP:journals/corr/color} freezes the pretrained Transformer parameters and trains only small LoRA adapters to internalize new knowledge, avoiding the high cost of full-parameter fine-tuning. Despite these advances, these approaches can still incur off-target effects~\citep{de-cao-etal-2021-editing} and remain vulnerable to catastrophic forgetting in continual learning scenarios.
+
+\paragraph{Capability Internalization} This strategy seeks to embed experiential knowledge, such as procedural expertise or strategic heutistics, into the model's parameter space. The paradigm represents a memory formation operation in a broad sense, shifting from the acquisition of factual knowledge to the internalization of experiential capabilities. Specifically, these capabilities include domain-specific solution schemas, strategic planning, and the effective deployment of agentic skills, among others. Technically, capability internalization is achieved by learning from reasoning traces, through supervised fine-tuning~\citep{wei2022finetunedlanguagemodelszeroshot,zelikman2022,schick2023toolformer,mukherjee2023orcaprogressivelearningcomplex} or preference-guided optimization methods such as DPO~\citep{rafailov2023direct,tunstall2023zephyrdirectdistillationlm,DBLP:conf/icml/selfrewarding,dubey2024llama} and GRPO~\citep{shao2024deepseekmath,deepseekai2025deepseekr1incentivizingreasoningcapability}. As an attempt to integrate external RAG with parameterized training, Memory Decoder~\citep{cao2025memorydecoder} is a plug-and-play method that does not modify the base model, like external RAG, while achieving parameter-internalized inference speed by eliminating external retrieval overhead. Such plug-and-play parameterized memory may have broad potential.
+
+\paragraph{Summary} Parametric internalization represents the ultimate consolidation of memory, where external knowledge is fused into the model's weights via gradients. This shifts the paradigm from retrieving information to possessing capability, mimicking biological long-term potentiation. As knowledge becomes effectively instinctive, access is zero-latency, enabling the model to respond immediately without querying external memory. However, this approach faces several challenges, including catastrophic forgetting and high update costs. Unlike external memory, parameterized internalization is difficult to modify or remove precisely without unintended side effects, limiting flexibility and adaptability. 
+
+\subsection{Memory Evolution}
+\label{ssec:evolution}
+Memory Formation introduced in \Cref{ssec:formation} extracts memory from raw data. The next important step is to integrate the newly extracted memories with the existing memory repository, enabling the dynamic evolution of the memory system. A naive strategy is simply appending new entries to the existing memory bank. However, it overlooks the semantic dependencies and potential contradictions between memory entries and neglects the temporal validity of information. To address these limitations, we introduce Memory Evolution. This mechanism consolidates new and existing memories to synthesize high-level insights, resolve logical conflicts, and prune obsolete data. By ensuring the compactness, consistency, and relevance of long-term knowledge, this approach enables the memory system to adapt its cognitive processes and contextual understanding as environments and tasks evolve.
+
+Based on the objectives of memory evolution, we categorize it into the following mechanisms:
+
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Mechanisms of Memory Evolution}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize}
+    \item \textbf{Memory Consolidation} (\Cref{ssec:consolidation}) merges new and existing memories and performs reflective integration, forming more generalized insights. This ensures that learning is cumulative rather than isolated.
+    \item \textbf{Memory Updating} (\Cref{ssec:updating}) resolves conflicts between new and existing memories, correcting and supplementing the repository to maintain accuracy and relevance. It allows the agent to adapt to changes in the environment or task requirements.
+    \item \textbf{Memory Forgetting} (\Cref{ssec:forgetting}) removes outdated or redundant information, freeing capacity and improving efficiency. This prevents performance degradation due to knowledge overload and ensures that the memory repository remains focused on actionable and current knowledge.
+\end{itemize}
+\end{tcolorbox}
+
+These mechanisms collectively maintain the generalization, accuracy, and timeliness of the memory repository. By actively managing memory evolution, these mechanisms underscore the agentic capabilities of the memory system, facilitating continuous learning and autonomous self-improvement.
+\autoref{fig:sec5-mem-evolution} provides a unified view of these memory evolution mechanisms, illustrating their operational roles and representative frameworks within a shared memory database.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{img/sec5-mem-evolution.pdf}
+    \caption{
+    The landscape of Memory Evolution mechanisms. We categorize the evolution process into three distinct branches that maintain the central \textbf{Memory Database}:
+    (a) \textbf{Consolidation} synthesizes insights by processing raw materials through local consolidation, cluster fusion, and global integration;
+    (b) \textbf{Updating} ensures accuracy and consistency by performing conflict resolution on external databases and applying parameter updates to the internal model; and
+    (c) \textbf{Forgetting} optimizes efficiency by pruning data based on specific criteria: time expiration, low access frequency, and low informational value.
+    The outer ring displays representative frameworks and agents associated with each evolutionary mechanism.
+    }
+    \label{fig:sec5-mem-evolution}
+\end{figure}
+
+\subsubsection{Consolidation}
+\label{ssec:consolidation}
+Memory consolidation aims to transform newly acquired short-term traces into structured and generalizable long-term knowledge. Its core mechanism is to identify semantic relationships between new and existing memories and to integrate them into higher-level abstractions or insights. This process serves two main purposes. First, it reorganizes fragmented pieces of information into coherent structures, preventing the loss of critical details during short-term retention and enabling the formation of stable knowledge schemas. Second, by abstracting, compressing, and generalizing experiential data, consolidation extracts reusable patterns from specific events, yielding insights that support cross-task generalization.
+
+A central challenge is determining the granularity at which new memories should be matched and merged with existing ones. Prior work spans a spectrum of consolidation strategies, from local content merging to cluster-level fusion and global integration.
+
+\paragraph{Local Consolidation} This operation focuses on fine-grained updates involving highly similar memory fragments. In RMM~\citep{DBLP:conf/acl/rmm2025}, each new topic memory retrieves its top-K most similar candidates, and an LLM decides whether merging is appropriate, thereby reducing the risk of incorrect generalization. In multimodal settings, VLN~\citep{DBLP:conf/cvpr/VLN} triggers a pooling mechanism when capacity is saturated. It identifies the most similar or redundant memory pairs and compresses them into higher-level abstractions. These approaches refine detailed knowledge while preserving the global structure of the memory store, improving precision and storage efficiency. However, they cannot fully capture cluster-level relations or the higher-order dependencies that emerge across semantically related memories. 
+
+\paragraph{Cluster-level Fusion} Adopting cluster-level fusion is essential for capturing cross-instance regularities as memory grows. Across clusters, PREMem~\citep{DBLP:journals/corr/PREMem} aligns new memory clusters with similar existing ones and applies fusion modes such as generalization and refinement to form higher-order reasoning units, substantially improving interpretability and reasoning depth. EverMemOS~\citep{hu2026evermemosselforganizingmemoryoperating} computes the similarity between a newly generated MemCell and the centroids of all MemScenes, and merges it into the MemScene that is sufficiently similar. Within a cluster, TiM~\citep{DBLP:journals/corr/abs-2311-08719} periodically invokes an LLM to examine memories that share the same hashing bucket and merges semantically redundant entries. CAM~\citep{liCAMConstructivistView2025} merges all nodes within the target cluster into a representative summary, yielding higher-level and consistent cross-sample representations. These methods reorganize the memory structure at a broader scale and mark an important step toward structured knowledge.
+\paragraph{Global Integration} This operation performs holistic consolidation to maintain global coherence and to distill system-level insights from accumulated experience. Compared with \Cref{ssec:summarization}, semantic summarization focuses on deriving a global summary from the existing context and can be viewed as the initial construction of the summary. In contrast, this paragraph emphasizes how new information is integrated into an existing summary as additional data arrives. For user factual memory, MOOM~\citep{chen2025moommaintenanceorganizationoptimization} constructs stable role profiles by integrating temporary role snapshots with historical traces using rule-based processing, embedding methods, and LLM-driven abstraction. For experiential memory, Matrix~\citep{DBLP:journals/corr/matrix} performs iterative optimization to combine execution trajectories and reflective insights with global memory, distilling task-agnostic principles that support reuse across scenarios. As single-step reasoning contexts and environmental feedback lengthen, methods like AgentFold~\citep{ye2025agentfold} and Context Folding~\citep{DBLP:journals/corr/abs-2510-12635} internalize the ability to compress working memory. In multi-step interactions, including web navigation, these methods automatically summarize and condense the global context after each step, supporting efficient and effective reasoning. Global integration consolidates high-level, structured knowledge from the complete history of experience, providing a reliable contextual foundation while improving generalization, reasoning accuracy, and personalized decision-making.
+
+\paragraph{Summary} Consolidation is the cognitive process of reorganizing fragmented short-term traces into coherent long-term schemas. It moves beyond simple storage to synthesize connections between isolated entries, forming a structured worldview. It enhances generalization and reduces storage redundancy. However, it risks information smoothing, where outlier events or unique exceptions are lost during the abstraction process, potentially reducing the agent's sensitivity to anomalies and specific events.
+
+\subsubsection{Updating}
+\label{ssec:updating}
+Memory Update refers to the process by which an agent revises or replaces its existing memory when conflicts arise or new information is acquired. The goal is to maintain factual consistency and continual adaptation without full model retraining. Unlike memory consolidation described in \Cref{ssec:consolidation}, which focuses on abstraction and generalization, memory update emphasizes localized correction and synchronization, enabling the agent to remain aligned with an evolving environment.
+
+Through continuous updating, agentic memory systems preserve the accuracy and timeliness of knowledge, preventing outdated information from biasing reasoning. It is thus a core mechanism for achieving lifelong learning and self-evolution. Depending on where the memory resides, updates fall into two categories: (1) External Memory Update: updates to external memory stores and (2) Model Editing: model-internal editing within the parameter space.
+
+\paragraph{External Memory Update} Entries in vector databases or knowledge graphs are revised whenever contradictions or new facts emerge. Instead of altering model weights, this approach maintains factual alignment through dynamic modifications of external storage. Static memories inevitably accumulate outdated or conflicting entries, leading to logical inconsistencies and reasoning errors. Updating external memories enables lightweight corrections while avoiding the cost of full retraining or re-indexing.
+
+The development of external memory update mechanisms has progressed along a trajectory, moving from rule-based corrections to temporally aware soft deletion, then to delayed-consistency strategies, and ultimately to fully learned update policies. 
+Early systems such as MemGPT~\citep{packerMemGPTLLMsOperating2023}, D-SMART~\citep{Lei2025DSMART}, and Mem0$^g$~\citep{Chhikara2025mem0} followed a straightforward pipeline in which the LLM detects conflicts between new information and then invokes replace or delete operations to update the memory.
+Although effective for basic factual repair, these systems relied on destructive replacement, erasing valuable historical context and breaking temporal continuity. To address this issue, Zep~\citep{Rasmussen2025Zep} introduced temporal annotations, marking conflicting facts with invalid timestamps rather than deleting them, thereby preserving both semantic consistency and temporal integrity. This marked a shift from hard replacement to soft, time-aware updating. However, real-time updates impose significant computational and I/O burdens under high-frequency interaction. MOOM~\citep{chen2025moommaintenanceorganizationoptimization} and LightMem~\citep{fang2025lightmem}, therefore, introduced dual-phase updating: a soft online update for real-time responsiveness, followed by an offline reflective consolidation phase where similar entries are merged and conflicts resolved via LLM reasoning. This eventual consistency paradigm balances latency and coherence. As agentic reinforcement learning matured, it became possible to enhance the LLM’s intrinsic memory update decision-making through reinforcement learning. Mem-$\alpha$~\citep{DBLP:journals/corr/abs-2509-25911} formulated memory updating as a policy-learning problem, enabling the LLM to learn when, how, and whether to update, thereby achieving dynamic trade-offs between stability and freshness.
+
+Overall, external memory updates have transitioned from manually triggered corrections to self-regulated, temporally aware learning processes, maintaining factual consistency and structural stability through LLM-driven retrieval, conflict detection, and revision.
+
+\paragraph{Model Editing}
+Model editing performs direct modifications within the model’s parameter space to correct or inject knowledge without full retraining, representing implicit knowledge updates. Retraining is costly and prone to catastrophic forgetting. Model editing enables precise, low-cost corrections that enhance adaptability and internal knowledge retention.
+
+Approaches of model editing fall into two main categories. (1) Explicit localization and modification: ROME~\citep{Tan2025MemoTime} identifies the parameter region encoding specific knowledge via gradient tracing and performs targeted weight updates; Model Editor Networks~\citep{tang2025chemagentselfupdatinglibrarylarge} trains an auxiliary meta-editor network to predict optimal parameter adjustments.
+(2) Latent-space self-updating: MEMORYLLM~\citep{xuAMEMAgenticMemory2025} embeds a memory pool within Transformer layers, periodically replacing memory tokens to integrate new knowledge; M+~\citep{DBLP:journals/corr/abs-2502-00592} maintains dual-layer memories, discarding obsolete short-term entries and compressing key information into long-term storage.
+
+Hybrid approaches such as ChemAgent~\citep{tang2025chemagentselfupdatinglibrarylarge} further combine external memory updates with internal model editing, synchronizing factual and representational changes for rapid cross-domain adaptation.
+
+\paragraph{Summary} From an implementation standpoint, memory updating focuses on resolving conflicts and revising knowledge triggered by the arrival of new memories, whereas memory consolidation emphasizes the integration and abstraction of new and existing knowledge. The two memory updating strategies discussed above establish a dual-pathway mechanism involving conflict resolution in external databases and parameter editing within the model, enabling agents to perform continuous self-correction and support long-term evolution. The key challenge is the stability–plasticity dilemma: determining when to overwrite existing knowledge versus when to treat new information as noise. Incorrect updates can overwrite critical information, leading to knowledge degradation and faulty reasoning.
+
+\subsubsection{Forgetting}
+\label{ssec:forgetting}
+Memory forgetting refers to the deliberate removal of outdated, redundant, or low-value information to free capacity and maintain focus on salient knowledge. Unlike update mechanisms, which resolve conflicts between memories, forgetting prioritizes eliminating outdated information to ensure efficiency and relevance. Over time, unbounded memory accumulation leads to increased noise, retrieval delays, and interference from outdated knowledge. Controlled forgetting helps mitigate overload and maintain cognitive focus. Yet, overly aggressive pruning risks erasing rare but essential knowledge, harming reasoning continuity in long-term contexts. 
+
+Forgetting mechanisms can be categorized into Time-based Forgetting, Frequency-based Forgetting, and Importance-driven Forgetting, corresponding respectively to creation time, retrieval activity, and integrated semantic valuation.
+
+\paragraph{Time-based Forgetting}
+Time-driven forgetting considers only the creation time of memories, gradually decaying their strength over time to emulate human memory fading. MemGPT~\citep{packerMemGPTLLMsOperating2023} evicts the earliest messages upon context overflow. \citet{xuAMEMAgenticMemory2025} and \citet{DBLP:journals/corr/abs-2502-00592} employ stochastic token replacement, with a replacement ratio of K/N, to simulate exponential forgetting in human cognition, discarding the oldest entries once the pool exceeds capacity. Unlike explicit deletion of old memories, MAICC~\citep{jiang2025maicc} implements soft forgetting by gradually decaying the weights of memories over time. This process mirrors natural forgetting, ensuring continuous adaptation without historical overload. 
+
+\paragraph{Frequency-based Forgetting}
+Frequency-driven forgetting prioritizes memory based on retrieval behavior, retaining frequently accessed entries while discarding inactive ones. XMem~\citep{cheng2022xmemlongtermvideoobject} employs an LFU policy to remove low-frequency entries; KARMA~\citep{wangKARMAAugmentingEmbodied2025} uses counting Bloom filters to track access frequency; MemOS~\citep{li2025memosoperatingmemoryaugmentedgeneration} applies an LRU strategy, removing long-unused items while archiving highly active ones. This ensures efficient retrieval and storage equilibrium.
+By distinguishing between creation time and retrieval frequency, these two axes form a more orthogonal taxonomy: time-based decay captures natural temporal aging, while frequency-based forgetting reflects usage dynamics, together maintaining system efficiency and recency.
+
+\paragraph{Importance-driven Forgetting}
+Importance-driven forgetting integrates temporal, frequency, and semantic signals to retain high-value knowledge while pruning redundancy. Early works such as \citet{zhong2023memorybankenhancinglargelanguage} and \citet{chen2025moommaintenanceorganizationoptimization} quantified importance via composite scores combining temporal decay and access frequency, achieving numeric-based selective forgetting. Later methods evolved toward semantic-level evaluation: VLN~\citep{DBLP:conf/cvpr/VLN} pools semantically redundant memories via similarity clustering, while Livia~\citep{DBLP:journals/corr/abs-2509-05298} incorporates emotional salience and contextual relevance to model emotion-driven selective forgetting. As LLMs develop increasingly powerful judgment capabilities, TiM~\citep{DBLP:journals/corr/abs-2311-08719} and MemTool~\citep{lumer2025memtool} leverage LLMs to assess memory importance and explicitly prune or forget less important memories. 
+This shift reflects a transition from static numeric scoring to semantic intelligence. Agents can now perform conscious forgetting and selectively retain memories most pertinent to the task context, semantics, and affective cues. 
+
+\paragraph{Summary} Time-based decay reflects the natural temporal fading of memory, frequency-based forgetting ensures efficient access to frequently used memories, and importance-driven forgetting introduces semantic discernment. These three forgetting mechanisms jointly govern how agentic memory remains timely, efficiently accessible, and semantically relevant. However, heuristic forgetting mechanisms like LRU may eliminate long-tail knowledge, which is seldom accessed but essential for correct decision-making. Therefore, when storage cost is not a critical constraint, many memory systems avoid directly deleting certain memories.
+
+The above discussion describes how prior work manually designs memory architectures at different stages, enabling agents’ memory contents to evolve online. More recently, MemEvolve~\citep{zhang2025memevolvemetaevolutionagentmemory} proposes a meta-evolutionary framework that jointly evolves both agents’ experiential knowledge and their underlying memory architecture, allowing the memory framework itself to continuously learn and adapt.
+
+\subsection{Memory Retrieval}
+\label{ssec:retrieval}
+Building on the memory bank established in \Cref{ssec:formation} and \Cref{ssec:evolution}, the next critical step is how to retrieve and utilize memories during reasoning. We define memory retrieval as the process of retrieving relevant and concise knowledge fragments from a certain memory repository to support current reasoning tasks at the right moment. The key challenge lies in efficiently and accurately locating the required knowledge fragments within a large-scale memory store. To address this, many algorithms employ heuristic strategies or learnable models to optimize various stages of the retrieval process. Based on the execution order of retrieval, this process can be decomposed into four aspects.
+\autoref{fig:retrievalmindmap} provides a structured overview of this retrieval pipeline, organizing existing methods according to their roles across retrieval stages.
+
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Four Steps of Memory Retrieval}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize} 
+\item \textbf{Retrieval Timing and Intent}(\Cref{ssec:retrievaltiming}) determines the specific moments and objectives for memory retrieval, shifting from passive, instruction-driven triggers to autonomous, self-regulated decisions. 
+\item \textbf{Query Construction}(\Cref{ssec:retrievalquery}) bridges the semantic gap between the user's raw input and the stored memory index by decomposing or rewriting queries into effective retrieval signals. 
+\item \textbf{Retrieval Strategies}(\Cref{ssec:retrievalstrategy}) executes the search over the memory repository, employing paradigms ranging from sparse lexical matching to dense semantic embedding and structure-aware graph traversal. 
+\item \textbf{Post-Retrieval Processing}(\Cref{ssec:retrievalpost}) refines the retrieved raw fragments through re-ranking, filtering, and aggregation, ensuring that the final context provided to the model is concise and coherent. 
+\end{itemize}
+\end{tcolorbox}
+
+Collectively, these mechanisms transform memory retrieval from a static search operation into a dynamic cognitive process. Retrieval timing and intent determine when and where to retrieve. Next, query construction specifies what to retrieve, and retrieval strategies focus on how to execute the retrieval. Finally, post-retrieval processing decides how the retrieved information is integrated and used. A robust agentic system typically orchestrates these components within a unified pipeline, enabling agents to approximate human-like associative memory activation for efficient knowledge access.
+
+\begin{figure}[!t]
+    \centering
+    \resizebox{\linewidth}{!}{
+    \begin{forest}
+      for tree={
+        grow'=east,                  
+        forked edges,                
+        draw=black!35,               
+        rounded corners=2pt,        
+        align=left,                  
+        font=\sffamily\small,      
+        inner xsep=4pt,
+        inner ysep=3pt,
+        l sep=10pt,                  
+        s sep=6pt,                  
+        edge={thick, gray!60},      
+        parent anchor=east,
+        child anchor=west,
+        anchor=west,
+        base=left,
+        edge path={
+          \noexpand\path [\forestoption{edge}]
+            (!u.parent anchor) -- +(5pt,0) |- (.child anchor)\forestoption{edge label};
+        },
+      },
+      root style/.style={
+        fill=gray!15,
+        draw=gray!60,
+        text=black,
+        font=\sffamily\bfseries\normalsize,
+        minimum width=3.3cm,
+        align=center,
+        inner xsep=6pt,
+        inner ysep=5pt,
+      },
+      level 1/.style={
+        font=\sffamily\bfseries\small,
+        minimum width=3.4cm,
+        inner xsep=5pt,
+        inner ysep=4pt,
+      },
+      level 2/.style={
+        fill=white,
+        draw=black!25,
+        text=black,
+        line width=0.9pt,
+        font=\sffamily\bfseries\footnotesize,
+        minimum width=2.7cm,
+        inner xsep=4pt,
+        inner ysep=3pt,
+      },
+      level 3/.style={
+        fill=white,
+        draw=black!25,
+        text=black,
+        font=\scriptsize,  
+        line width=0.6pt,
+        edge={black!35},
+        align=left,
+        text width=8.5cm,           
+        inner xsep=3pt,
+        inner ysep=3pt,
+        anchor=west,
+      }
+      [Memory Retrieval \\ (\Cref{ssec:retrieval}), root style
+        [Timing \& Intent \\ (\Cref{ssec:retrievaltiming}),
+          level 1,
+          fill=BlueGreen!15,
+          draw=BlueGreen!70,
+          edge={thick, BlueGreen!70}
+            [Automated Timing, level 2
+                [{MemGPT \citep{packerMemGPTLLMsOperating2023}, MemTool \citep{lumer2025memtool} \\ComoRAG \citep{DBLP:journals/corr/comorag}, PRIME \citep{DBLP:journals/corr/PRIME} \\ MemGen \citep{Zhang2025MemGen}}, level 3]
+            ]
+            [Automated Intent, level 2
+                [{AgentRR \citep{DBLP:journals/corr/agentrr}, MemOS \citep{li2025memosoperatingmemoryaugmentedgeneration} \\ H-MEM \citep{Sun2025HMEM}}, level 3]
+            ]
+        ]
+        [Query Construction \\ (\Cref{ssec:retrievalquery}),
+          level 1,
+          fill=Periwinkle!20,
+          draw=Periwinkle!70,
+          edge={thick, Periwinkle!70}
+            [Decomposition, level 2
+                [{Visconde \citep{DBLP:conf/ecir/visconde}, ChemAgent \citep{tang2025chemagentselfupdatinglibrarylarge} \\ PRIME \citep{DBLP:journals/corr/PRIME}, MA-RAG \citep{DBLP:journals/corr/MA-RAG} \\ Agent KB \citep{tang2025agentkbleveragingcrossdomain}, Auto-RAG \citep{DBLP:journals/corr/autorag}}, level 3]
+            ]
+            [Rewriting, level 2
+                [{HyDE \citep{DBLP:conf/acl/HyDE23}, MemoRAG \citep{DBLP:conf/www/Qian0ZMLD025} \\ MemGuide \citep{duMemGuideIntentDrivenMemory2025}, ToC \citep{kim2023treeclarificationsansweringambiguous} \\ Rewrite-Retrieve-Read \citep{ma2023queryrewrite}\\
+                Auto-RAG \citep{DBLP:journals/corr/autorag}}, level 3]
+            ]
+        ]
+        [Retrieval Strategies \\ (\Cref{ssec:retrievalstrategy}),
+          level 1,
+          fill=Goldenrod!20,
+          draw=Goldenrod!70,
+          edge={thick, Goldenrod!70}
+            [Lexical Retrieval, level 2
+                [{Agent KB \citep{tang2025agentkbleveragingcrossdomain}, MemAlpha \citep{DBLP:journals/corr/abs-2509-25911} \\ SeCom \citep{panSeCom2025}}, level 3]
+            ]
+            [Semantic Retrieval, level 2
+                [{MemGPT \citep{packer2023memgpt}, MemoryBank \citep{zhong2023memorybankenhancinglargelanguage}\\
+                Voyager \citep{wang_voyager_2024}, $\text{Memory}^3$ \citep{DBLP:journals/corr/abs-2407-01178}\\A-MEM \citep{xuAMEMAgenticMemory2025}, RMM \citep{DBLP:conf/acl/rmm2025} \\TIM \citep{du2025rethinkingmemoryaitaxonomy}, MA-RAG \citep{DBLP:journals/corr/MA-RAG} \\MemoRAG \citep{DBLP:conf/www/Qian0ZMLD025}, R2D2 \citep{huang_r2d2_2025}}, level 3]
+            ]
+            [Graph Retrieval, level 2
+                [{AriGraph \citep{anokhin2024arigraph}, EMG-RAG \citep{wang2024craftingpersonalizedagentsretrievalaugmented} \\ Mem0$^g$ \citep{Chhikara2025mem0}, SGMem \citep{Wu2025SGMemSG} \\ HippoRAG \citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm}, CAM \citep{liCAMConstructivistView2025}\\ D-SMART \citep{Lei2025DSMART}, Zep \citep{Rasmussen2025Zep}\\ MemoTime \citep{Tan2025MemoTime}}, level 3]
+            ]
+            [Hybrid Retrieval, level 2
+                [{Agent KB \citep{tang2025agentkbleveragingcrossdomain}, MIRIX \citep{wang2025mirixmultiagentmemoryllmbased} \\ Semantic Anchoring \citep{DBLP:journals/corr/SemanticAnchor}\\ Generative Agents \citep{kaiya2023lyfeagentsgenerativeagents}, MAICC \citep{jiang2025maicc}\\ MemoriesDB \citep{ward2025memoriesdb}}, level 3]
+            ]
+        ]
+        [Post-Retrieval \\ (\Cref{ssec:retrievalpost}),
+          level 1,
+          fill=Melon!20,
+          draw=Melon!70,
+          edge={thick, Melon!70}
+            [Re-ranking \& \\ Filtering, level 2
+                [{Semantic Anchoring \citep{DBLP:journals/corr/SemanticAnchor} \\ RCR-Router \citep{DBLP:journals/corr/rcrrouter}, MemoTime \citep{Tan2025MemoTime}  \\  Zep \citep{Rasmussen2025Zep}, learn-to-memorize \citep{DBLP:journals/corr/learntomemorize} \\ Memory-R1 \citep{yan2025memory} \\ Personalized Long term Interaction \citep{DBLP:journals/corr/abs-2510-07925}\\
+                RMM \citep{DBLP:conf/acl/rmm2025}, Memento \citep{DBLP:journals/corr/abs-2508-16153}}, level 3]
+            ]
+            [Aggregation \& \\ Compression, level 2
+                [{ComoRAG \citep{DBLP:journals/corr/comorag}, MA-RAG \citep{DBLP:journals/corr/MA-RAG} \\ G-Memory \citep{Zhang2025GMemory}}, level 3]
+            ]
+        ]
+      ]
+    \end{forest}
+    }
+    \caption{Taxonomy of memory retrieval methodologies in agentic systems. The mindmap organizes existing literature into four distinct phases of the retrieval pipeline: \textbf{Timing and Intent}, which governs the initiation of the process; \textbf{Query Construction}, covering techniques for query decomposition and rewriting; \textbf{Retrieval Strategies}, categorizing search paradigms into lexical, semantic, graph-based, and hybrid approaches; and \textbf{Post-Retrieval Processing}, which focuses on refining outputs through re-ranking, filtering, and aggregation.
+    }
+    \label{fig:retrievalmindmap}
+\end{figure}
+
+
+
+\subsubsection{Retrieval Timing and Intent}
+\label{ssec:retrievaltiming}
+The retrieval intent and timing determine when to trigger the retrieval mechanism and which memory store to query. Existing memory systems adopt different design choices in this regard, ranging from always-on retrieval to retrieval triggered by explicit instructions or internal signals~\citep{DBLP:conf/aaai/Zhao0XLLH24,DBLP:journals/corr/abs-2509-25911,fang2025lightmem}. For example, MIRIX~\citep{wang2025mirixmultiagentmemoryllmbased} performs retrieval from all six memory databases for each query and concatenates the retrieved contents, reflecting a design that prioritizes comprehensive memory access. Other approaches instead aim to trigger retrieval more selectively, allowing the model to decide both the timing and scope of memory access, which can lead to more targeted and efficient use of memory resources. In this subsection, we review the literature from two complementary perspectives: automated retrieval timing and automated retrieval intent.
+
+\paragraph{Automated Retrieval Timing} This term refers to the model’s ability to autonomously determine when to trigger a memory retrieval operation during reasoning. The simplest strategy is to delegate the decision to either the LLM or an external controller, allowing it to determine solely from the query whether retrieval is necessary. For example, MemGPT~\citep{packerMemGPTLLMsOperating2023} and MemTool~\citep{lumer2025memtool} allow the LLM itself to invoke retrieval functions, enabling efficient access to external memory within an operating-system-like framework. However, these methods rely on static judgments from the query alone, neglecting the model’s dynamically evolving cognitive state during reasoning.
+
+To address this limitation, recent work integrates fast–slow thinking mechanisms into retrieval timing. ComoRAG~\citep{DBLP:journals/corr/comorag} and PRIME~\citep{DBLP:journals/corr/PRIME}, for instance, first produce a fast response and then let the agent evaluate its adequacy. If the initial reasoning is deemed insufficient, the system triggers deeper retrieval and reasoning based on failure feedback. MemGen~\citep{Zhang2025MemGen} further refines the triggering mechanism by converting the explicit agent-level decision into a latent, trainable process. It introduces memory triggers that detect critical retrieval moments from latent rollout states, thereby improving the precision of retrieval timing while preserving end-to-end differentiability.
+
+\paragraph{Automated Retrieval Intent} This aspect concerns the model’s ability to autonomously decide which memory source to access within a hierarchical storage form. AgentRR~\citep{DBLP:journals/corr/agentrr}, for example, dynamically switches between low-level procedural templates and high-level experiential abstractions based on environmental feedback. However, its reliance on explicit feedback limits applicability in open-ended reasoning settings.
+
+To overcome this constraint, MemOS~\citep{li2025memosoperatingmemoryaugmentedgeneration} employs a MemScheduler that dynamically selects among parametric, activation, and plaintext memory based on user-, task-, or organization-level context. Yet, this flat selection scheme overlooks the hierarchical structure of the memory system. H-MEM~\citep{Sun2025HMEM} addresses this by introducing an index-based routing mechanism, which performs coarse-to-fine retrieval, moving from the domain layer to the episode layer and gradually narrowing the search space to the most relevant sub-memories. This hierarchical routing not only improves retrieval precision but also mitigates information overload.
+
+\paragraph{Summary} Autonomous timing and intent help reduce computational overhead and suppress unnecessary noise, but they also create a potential vulnerability. When an agent overestimates its internal knowledge and fails to initiate retrieval when needed, the system can fall into a silent failure mode in which knowledge gaps may lead to hallucinated outputs. Therefore, a balance needs to be achieved: providing the agent with essential information at the right moments while avoiding excessive retrieval that introduces noise.
+
+\subsubsection{Query Construction}
+\label{ssec:retrievalquery}
+After initiating the retrieval process, the next challenge lies in transforming the raw query into an effective retrieval signal aligned with the memory index. Query construction acts as the translation layer between the user's surface utterance and the memory's latent storage. Traditional approaches typically perform retrieval directly based on the user query, which is simple but fails to align the query semantics with those of the memory index. To bridge this gap, agentic memory systems proactively perform query decomposition or query rewriting, generating intermediate retrieval signals that better match the latent structure of the memory.
+
+\paragraph{Query Decomposition}
+This approach breaks down a complex query into simpler sub-queries, allowing the system to retrieve more fine-grained and relevant information. Such decomposition alleviates the one-shot retrieval bottleneck by enabling modular retrieval and reasoning over intermediate results. For instance, Visconde~\citep{DBLP:conf/ecir/visconde} and ChemAgent~\citep{tang2025chemagentselfupdatinglibrarylarge} employ LLMs to decompose the original question into sub-problems, retrieve candidate results for each from the memory, and finally aggregate them into a coherent answer. However, these methods lack global planning. To address this issue, PRIME~\citep{DBLP:journals/corr/PRIME} and MA-RAG~\citep{DBLP:journals/corr/MA-RAG} introduce a Planner Agent, inspired by the ReAct~\citep{yao2023react} paradigm, that first formulates a global retrieval plan before decomposing it into sub-queries. Yet, these approaches mainly rely on problem-driven decomposition and thus cannot explicitly identify what specific knowledge the model is missing. To make sub-queries more targeted, Agent KB~\citep{tang2025agentkbleveragingcrossdomain} adopts a two-stage retrieval process in which a teacher model observes the student model’s failures and generates fine-grained sub-queries accordingly. This targeted decomposition improves retrieval precision and reduces irrelevant results, particularly in knowledge-intensive tasks.
+
+\paragraph{Query Rewriting}
+Instead of decomposing, this strategy rewrites the original query or generates a hypothetical document to refine its semantics before retrieval. Such rewriting mitigates the mismatch between user intent and the memory index. HyDE~\citep{DBLP:conf/acl/HyDE23}, for example, instructs the LLM to generate a hypothetical document in a zero-shot manner and performs retrieval using its semantic embedding. The generated document encapsulates the desired semantics, effectively bridging the gap between the user query and the target memory. MemoRAG~\citep{DBLP:conf/www/Qian0ZMLD025} extends this idea by incorporating global memory into hypothetical document generation. It first compresses the global memory and then generates a draft answer conditioned on both the query and the compressed memory; this draft is then used as a rewritten query. Since the draft has access to the global memory context, it captures user intent more faithfully and uncovers implicit information needs. Similarly, MemGuide~\citep{duMemGuideIntentDrivenMemory2025} leverages the dialogue context to prompt an LLM to produce a concise, command-like phrase that serves as a high-level intent description for retrieval. Beyond directly prompting an LLM to rewrite the query, Rewrite-Retrieve-Read~\citep{ma2023queryrewrite} trains a small language model as a dedicated rewriter through reinforcement learning, while ToC~\citep{kim2023treeclarificationsansweringambiguous} employs a Tree of Clarifications to progressively refine and specify the user’s retrieval objective. 
+
+\paragraph{Summary}
+These two paradigms, decomposition and rewriting, are not mutually exclusive. Auto-RAG~\citep{DBLP:journals/corr/autorag} integrates both by evaluating HyDE and Visconde under identical retrieval conditions and then selecting the strategy that performs best for the given task. The findings of this work demonstrate that the quality of the memory-retrieval query has a substantial impact on reasoning performance. In contrast to earlier research, which primarily focused on designing sophisticated memory architectures, recent studies~\citep{yanGeneralAgenticMemory2025} place increasing emphasis on the retrieval construction process, shifting the role of memory toward serving retrieval. The choice of what to retrieve with is, unsurprisingly, a critical component of this process.
+
+\subsubsection{Retrieval Strategies}
+\label{ssec:retrievalstrategy}
+After clarifying the retrieval objective, we obtain a query with a well-defined intent. The next core challenge lies in leveraging this query to efficiently and accurately retrieve truly relevant knowledge from a large and complex memory repository. Retrieval strategies serve as the bridge between queries and the memory base, and their design directly determines both retrieval efficiency and result quality. In this section, we systematically review various retrieval paradigms and analyze their strengths, limitations, and application scenarios—from traditional sparse retrieval based on keyword matching, to modern dense retrieval using semantic embeddings, to graph-based retrieval for structured knowledge, to the emerging class of generative retrieval methods, and finally to hybrid retrieval techniques that integrate multiple paradigms.
+
+\paragraph{Lexical Retrieval} This strategy relies on keyword matching to locate relevant documents, with representative methods including TF-IDF~\citep{TFIDF1972} and BM25~\citep{DBLP:journals/ftir/RobertsonZ09BM25}. TF-IDF measures the importance of keywords based on term frequency and inverse document frequency, enabling fast and interpretable retrieval. BM25 further refines this approach by incorporating term frequency saturation and document length normalization. Such methods are often employed in precision-oriented retrieval scenarios, where accuracy and relevance of results take precedence over recall~\citep{tang2025agentkbleveragingcrossdomain,DBLP:journals/corr/abs-2509-25911,panSeCom2025}. However, purely lexical matching struggles to capture semantic variations and contextual relationships, making it highly sensitive to linguistic expression differences and thus less effective in open-domain knowledge or multimodal memory settings.
+
+\paragraph{Semantic Retrieval} This strategy encodes queries and memory entries into a shared embedding space and matches them based on semantic similarity rather than lexical overlap. Representative approaches utilize semantic encoders, including Sentence-BERT~\citep{DBLP:conf/emnlp/SentenceBert19} and CLIP~\citep{DBLP:conf/icml/CLIP21}. Within memory systems, this approach better captures task context and supports semantic generalization and fuzzy matching, making it the default choice in most agentic memory frameworks~\citep{DBLP:conf/nips/RAG2020,wang_voyager_2024,DBLP:journals/corr/abs-2407-01178,xuAMEMAgenticMemory2025,DBLP:conf/acl/rmm2025,DBLP:journals/corr/MA-RAG,DBLP:conf/www/Qian0ZMLD025,hassell2025learning,huang_r2d2_2025}. However, semantic drift and forced top-K retrieval often introduce retrieval noise and spurious recall. To address these issues, recent systems incorporate dynamic retrieval policies, reranking modules, and hybrid retrieval schemes.
+
+\paragraph{Graph Retrieval} This strategy leverages not only semantic signals but also the explicit topological structure of graphs, enabling inherently more precise and structure-aware retrieval. By directly accessing structural paths, these methods exhibit stronger multi-hop reasoning capabilities and can more effectively explore long-range dependencies. Moreover, treating relational structure as a constraint on inference paths naturally supports retrieval governed by exact rules and symbolic constraints. Representative approaches such as AriGraph~\citep{anokhin2024arigraph}, EMG-RAG~\citep{wang2024craftingpersonalizedagentsretrievalaugmented}, Mem0$^g$~\citep{Chhikara2025mem0}, and SGMem~\citep{Wu2025SGMemSG} first identify the most relevant nodes or triples and then expand to their semantically related K-hop neighbors to construct an ego-graph. HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} performs personalized PageRank~\citep{Page1999ThePC} seeded on the retrieved nodes and ranks the rest of the graph by their proximity to these seeds, enabling effective multi-hop retrieval. Going beyond fixed expansion rules, CAM~\citep{liCAMConstructivistView2025} and D-SMART~\citep{Lei2025DSMART} employ LLMs to steer subgraph exploration: CAM uses an LLM to select informative neighbors and children of a central node for associative exploration, while D-SMART treats the LLM as a planner that performs beam search over a KG memory to retrieve one-hop neighbors of target entities and the relations connecting a given entity pair. For temporal graphs, Zep~\citep{Rasmussen2025Zep} and MemoTime~\citep{Tan2025MemoTime} further enable entity-subgraph construction and relation retrieval under explicit temporal constraints, ensuring that the returned results satisfy the required time rules.
+
+\paragraph{Generative Retrieval} This strategy replaces lexical or semantic retrieval with a model that directly generates the identifiers of relevant documents~\citep{DBLP:conf/nips/Taytransformer22,DBLP:conf/nips/Wangneuralcorpus0022}. By framing retrieval as a conditional generation task, the model implicitly stores candidate documents in its parameters and performs deep query–document interaction during decoding\citep{DBLP:journals/tois/LiJZZZZD25}. Leveraging the semantic capabilities of pretrained language models, this paradigm often outperforms traditional retrieval methods, particularly in small-scale settings\citep{DBLP:conf/www/Zeng0JSWZ24}.
+However, generative retrieval requires additional training to internalize the semantics of all candidate documents, resulting in limited scalability when the corpus evolves~\citep{DBLP:conf/eacl/YuanWFPLWML24}. For these reasons, agentic memory systems have paid relatively little attention to this paradigm, although its tight integration of generation and retrieval suggests untapped potential.
+
+\paragraph{Hybrid Retrieval} This strategy integrates the strengths of multiple retrieval paradigms. Systems such as Agent KB~\citep{tang2025agentkbleveragingcrossdomain} and MIRIX~\citep{wang2025mirixmultiagentmemoryllmbased} combine lexical and semantic retrieval to balance precise term or tool matching with broader semantic alignment. Similarly, Semantic Anchoring~\citep{DBLP:journals/corr/SemanticAnchor} performs parallel searches over semantic embeddings and symbolic inverted indices to achieve complementary coverage. Some other methods combine multiple evaluation signals to guide retrieval. Generative Agents~\citep{kaiya2023lyfeagentsgenerativeagents}, for example, illustrate this multi-factor approach through a scoring scheme that accumulates recency, importance, and relevance. MAICC~\citep{jiang2025maicc} adopts a mixed-utility scoring function that integrates similarity with both global and predicted individual returns. In graph-based settings, retrieval typically proceeds in two stages: semantic retrieval first identifies relevant nodes or triples, and graph topology is subsequently leveraged to expand the search space~\citep{anokhin2024arigraph,wang2024craftingpersonalizedagentsretrievalaugmented,gutiérrez2025hipporagneurobiologicallyinspiredlongterm,liCAMConstructivistView2025}. 
+
+At the database infrastructure level, MemoriesDB~\citep{ward2025memoriesdb} introduces a temporal–semantic–relational database designed for long-term agent memory, providing a hybrid retrieval architecture that integrates these dimensions into a unified storage and access framework. 
+
+By fusing heterogeneous retrieval signals, hybrid approaches preserve the precision of keyword matching while incorporating the contextual understanding of semantic methods, ultimately yielding more comprehensive and relevant results.
+
+\subsubsection{Post-Retrieval Processing}
+\label{ssec:retrievalpost}
+Initial retrieval often returns fragments that are redundant, noisy, or semantically inconsistent. Directly injecting these results into the prompt can lead to excessively long contexts, conflicting information, and reasoning distracted by irrelevant content. Post-retrieval processing, therefore, becomes essential for ensuring prompt quality. Its goal is to distill the retrieved results into a concise, accurate, and semantically coherent context. In practice, two components are central:
+(1) \textbf{Re-ranking and Filtering:} performing fine-grained relevance estimation to remove irrelevant or outdated memories and reorder the remaining fragments, thereby reducing noise and redundancy.
+(2) \textbf{Aggregation and Compression:} integrating the retrieved memories with the original query, eliminating duplication, merging semantically similar information, and reconstructing a compact and coherent final context.
+
+\paragraph{Re-ranking and Filtering} To maintain a concise and coherent context, initial retrieval results are re-ranked and filtered to ensure a concise and coherent context by removing low-relevance items. Early approaches rely on heuristic criteria for evaluating semantic consistency. For example, Semantic Anchoring~\citep{DBLP:journals/corr/SemanticAnchor} integrates vector similarity with entity- and discourse-level alignment, whereas RCR-Router~\citep{DBLP:journals/corr/rcrrouter} combines multiple handcrafted signals, including role relevance, task-stage priority, and recency. These methods, however, often require extensive hyperparameter tuning to balance heterogeneous importance scores. To alleviate this burden, learn-to-memorize~\citep{DBLP:journals/corr/learntomemorize} formulates score aggregation as a reinforcement-learning problem, enabling the model to learn optimal weights over retrieval signals. While these techniques primarily optimize semantic coherence, scenarios demanding strict temporal reasoning require additional constraints: \citet{Rasmussen2025Zep} and \citet{Tan2025MemoTime} filter memories based on their timestamps and validity windows to satisfy complex temporal dependencies.
+
+With the increasing capability of LLMs, recent methods leverage their intrinsic language understanding to assess memory quality directly. Memory-R1~\citep{yan2025memory} and \citet{DBLP:journals/corr/abs-2510-07925} both introduce LLM-based evaluators (Answer Agents or Self-Validator Agents) that filter retrieved content before producing the final response. However, prompt-based filtering remains limited by the LLM’s inherent capacity and by mismatches between prompt semantics and downstream usage. Consequently, many systems train auxiliary models to estimate memory importance more robustly~\citep{DBLP:conf/acl/rmm2025}. Memento~\citep{DBLP:journals/corr/abs-2508-16153} uses Q-learning~\citep{Watkins1992Qlearning} to predict the probability that a retrieved item contributes to a correct answer, and MemGuide~\citep{duMemGuideIntentDrivenMemory2025} fine-tunes LLaMA-8B~\citep{dubey2024llama} to re-rank candidates using marginal slot-completion gain. Together, these re-ranking and filtering strategies refine retrieval results without modifying the underlying retriever, enabling compatibility with any pre-trained retrieval model while supporting task-specific optimization.
+
+\paragraph{Aggregation and Compression} Another approach to improving both the quality and efficiency of downstream reasoning through post-retrieval processing is the aggregation and compression. This process integrates the retrieved evidence with the query to form a coherent and compact context. Unlike filtering and re-ranking, which mainly address noise and prioritization, this stage focuses on merging multiple fragmented memory items into higher-level and distilled knowledge representations, and on refining these representations when task-specific adaptations are required. ComoRAG~\citep{DBLP:journals/corr/comorag} illustrates this idea through its Integration Agent, which identifies historical signals that are semantically aligned with the query and combines them into an abstract global summary that provides broad contextual grounding. The Extractor Agent in MA-RAG~\citep{DBLP:journals/corr/MA-RAG} performs fine-grained content selection over the retrieved documents, retaining only the key information that is strongly relevant to the current subquery and producing concise snippets tailored to local reasoning needs.
+
+Furthermore, G-Memory~\citep{Zhang2025GMemory} extends aggregation and compression into the personalization for multi-agent systems. It consolidates retrieved high-level insights and sparsified trajectories, and then uses an LLM to customize these condensed experiences according to the agent’s role. This process refines general knowledge into role-specific prompts that populate the agent’s personalized memory.
+
+\paragraph{Summary} 
+In conclusion, post-retrieval processing acts as a crucial intermediate step that transforms noisy, fragmented retrieval results into a precise and coherent context for reasoning. Through the above mechanisms, the post-retrieval processing not only enhances the density and fidelity of the memories supplied to the model but also aligns the information with task requirements and agent characteristics.

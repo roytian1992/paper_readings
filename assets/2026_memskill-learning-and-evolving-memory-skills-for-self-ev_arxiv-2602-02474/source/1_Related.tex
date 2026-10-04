@@ -1,0 +1,35 @@
+\section{Related Work}
+
+
+
+\subsection{LLM Agent Memory Systems}
+
+
+Prior work on agent memory focuses on constructing external memories from interaction histories and leveraging them to support downstream reasoning and decision making. 
+Typical pipelines periodically extract salient information into a memory store, retrieve relevant entries for a new query, and update the store via consolidation or pruning~\citep{kang2025memory, zhong2024memorybank, xu2025mem, packer2023memgpt, chhikara2025mem0, fang2025lightmem}. More recently, learning-based approaches such as Memory-R1~\citep{yan2025memory} and Mem-$\alpha$~\cite{wang2025mem} optimize memory management with reinforcement learning using downstream task signals. 
+Despite this progress, memory management is still largely governed by static, hand-crafted routines for extraction, consolidation, and pruning.
+
+
+
+Several concurrent works also explore self-evolving memory in agent settings, but differ from our focus. Evo-Memory~\citep{wei2025evo} evaluates streaming memory evolution, MemEvolve~\citep{zhang2025memevolve} optimizes predefined memory architectures, MemGen~\citep{zhang2025memgen} targets latent memory for reasoning, and ReasoningBank~\citep{ouyang2025reasoningbank} distills reasoning strategies from experience. 
+By contrast, we target the evolution of memory skills themselves, enabling the system to refine and grow reusable memory operations over time.
+
+
+
+
+
+
+
+
+\subsection{Self-Evolving LLM Agents}
+
+
+Recent work on self-evolving LLM agents studies how agents can improve from interaction experience with minimal manual supervision. 
+ExpeL~\citep{zhao2024expel} distills trajectories into editable natural-language insights and retrieves relevant experiences to guide future decisions, while EvolveR~\citep{wu2025evolver} formalizes an experience lifecycle that consolidates interactions into reusable principles and closes the loop with reinforcement learning updates. 
+A complementary line reduces reliance on curated data via self-play style curricula: Absolute Zero Reasoner~\citep{zhao2025absolute} trains a proposer and solver with verifiable rewards from a code executor, and Multi-Agent Evolve~\citep{chen2025multi} extends this to a proposer solver judge triad with LLM-based evaluation; R-Zero~\citep{huang2025r} follows a similar challenger solver co-evolution pattern. 
+Beyond curricula, systems such as AgentEvolver~\citep{zhai2025agentevolver} and RAGEN~\citep{wang2025ragen} study efficient agent learning dynamics and stabilization in multi-turn RL settings, while ADAS~\citep{hu2024automated} and AlphaEvolve~\citep{novikov2025alphaevolve} explore automated discovery and evolutionary improvement of agent designs. Finally, SkillWeaver~\citep{zheng2025skillweaver} shows that agents can discover and refine reusable skills for web interaction. In contrast, our focus is on self-evolving \emph{memory skills} that govern how agents construct and revise memories over time.
+
+
+
+
+

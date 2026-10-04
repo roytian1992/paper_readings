@@ -1,0 +1,96 @@
+\section{Appendix}
+
+
+\subsection{License} \label{license}
+This work uses the LoCoMo benchmark dataset, which is publicly available for academic research purposes. We follow all usage terms specified by the dataset authors. 
+
+% \subsection{Background} \label{background}
+% Long-term memory serves as the cognitive foundation for agents to maintain persona consistency and perform reasoning across extended horizons~\cite{maharana2024evaluating,wu2024longmemeval,dong2025towards,huang2025licomemory}.
+ 
+% Early approaches addressed the context window limitation by externalizing history into flat vector databases~\cite{park2023generative,packer2023memgpt,zhong2024memorybank}. While efficient for semantic matching, this paradigm fundamentally treats interaction history as an unordered bag of propositions, severing the temporal progression, causal dependencies, and relational substrate that bind events into coherent narratives~\cite{gao2023retrieval, Liu2023LostIT}. This flat representation leads to fragmented retrieval where isolated facts are returned without the contextual scaffolding necessary for complex reasoning~\cite{weller2025theoreticallimitationsembeddingbasedretrieval,li2025sculptorempoweringllmscognitive}. Recent work has explored enhanced retrieval strategies through reflective reasoning and closed-loop control mechanisms~\cite{du2025memr3memoryretrievalreflective}, yet these improvements still operate within the fundamental constraints of flat representations. Even with extended context windows, flat systems suffer from the Lost-in-the-Middle phenomenon~\cite{Liu2023LostIT}, where attention mechanisms degrade in ultra-long sequences, reducing multi-hop reasoning to superficial similarity search~\cite{zhuang2025linearrag}.
+
+% To bridge this reasoning gap, the field has increasingly pivoted towards structure-enriched architectures, particularly those leveraging Knowledge Graphs. Static graph approaches, such as Microsoft GraphRAG~\cite{edge2024local} and HippoRAG~\cite{gutierrez2025rag}, employ hierarchical community detection and Personalized PageRank to facilitate global sense-making and multi-hop traversal. Concurrently, dynamic memory systems tailored for agents, such as $\text{Mem0}^\text{g}$~\cite{chhikara2025mem0} and Zep~\cite{rasmussen2025zep}, have introduced evolving schemas to capture the fluidity of user interactions. Recent advances further explore trainable graph representations that enable agents to learn strategic meta-cognition from past experiences~\cite{xia2025experience} and lightweight hierarchical graphs with entity-relation indexing for efficient long-term reasoning~\cite{huang2025licomemory}. These graph-based architectures have demonstrated substantial improvements in multi-agent collaboration~\cite{zhang2025g} and procedural skill reuse~\cite{fang2025memp}, validating the necessity of structural organization.
+
+% Despite these advancements, imposing explicit graph structures on natural dialogue introduces inherent trade-offs. Compressing fluid, nuanced narratives into rigid entity-relation triplets often incurs semantic loss, stripping away the subtle contextual qualifiers and discourse continuity necessary for episodic grounding~\cite{chaudhri2022knowledge,zhuang2025linearrag}. This compression challenge is compounded by extraction instability: hallucinated relations can propagate as persistent structural noise, calcifying errors into the memory topology~\cite{zhong2021frustratingly,kolluru2020openie6}. Beyond these quality concerns, the computational overhead required for continuous graph maintenance, including entity resolution, relation deduplication, and conflict detection, poses latency challenges for real-time agentic applications~\cite{edge2024local,fang2025lightmem}.
+
+
+
+\subsection{Dataset} \label{dataset}
+We evaluate on the \textbf{LoCoMo} benchmark~\cite{maharana2024evaluating}, which contains 10 long-term conversations with an average of 588 turns and 16,618 tokens per conversation. We focus on the question answering task, utilizing four reasoning types from the benchmark. Table~\ref{tab:locomo_stats} shows the statistics of questions used in our evaluation. Model performance is evaluated using LLM-as-a-judge.
+\input{table/dataset_statistics}
+\input{table/appendix_evaluation_1}
+\input{table/appendix_evaluation_2}
+
+\subsection{Implementation Details}
+We provide key implementation details for StructMem to facilitate reproducibility. 
+\textbf{Memory construction:} We set the time window threshold to 1 hour for triggering consolidation. For cross-event consolidation, we retrieve top-15 semantically similar seed entries from historical memory. \textbf{Question answering:} During inference, we retrieve 60 entries and 5 synthesis from memory to provide context for answer generation. 
+
+\subsection{Baseline Configurations} \label{appendix:baseline}
+
+To ensure empirical rigor and reproducibility, we provide the detailed retrieval and architectural configurations for all evaluated systems:
+
+\textbf{FullContext} utilizes the entire raw dialogue history fed into the prompt in reverse chronological order via a full-scan with $k=-1$. \textbf{OpenAI} processes all conversation turns concatenated as a flat, unordered text sequence directly without a retrieval step.
+
+\textbf{MiniRAG} and \textbf{LightRAG} retrieve the top-20 relevant entries per question to provide factual context. Similarly, \textbf{A-MEM} and \textbf{LangMem} employ a global search mechanism to retrieve the top-40 most relevant memory entries for each query.
+
+\textbf{MemoryOS} implements a three-tier hierarchical system featuring exhaustive recall of all Short-Term Memory (STM) pages, a two-stage selection for Mid-Term Memory (MTM) comprising the top-5 segments and top-10 dialogue pages, and the extraction of the top-10 relevant entries from Long-term Personal Memory (LPM).
+
+For API-based systems including \textbf{Mem0}, \textbf{Mem0$^\text{g}$}, \textbf{Zep}, and \textbf{Memobase}, the top-10 relevant memories per speaker are retrieved for response generation.
+
+\subsection{Robustness of Evaluation}\label{appendix:robustness}
+
+We validate the reliability of our LLM-as-a-judge protocol by conducting extensive cross-model evaluations and statistical analyses. 
+
+Table~\ref{tab:robustness_blocks} summarizes the performance of memory systems across three distinct judge model families: gpt-4o-mini, Qwen2.5-32b-Instruct, and DeepSeek-V3.2. We further calculate the inter-judge agreement and correlation across all judge pairs, as detailed in Table~\ref{tab:inter_judge_stats}. The Fleiss' $\kappa$ among different models reaches \textbf{0.8341}, reflecting a near-perfect agreement that substantially exceeds the commonly accepted reliability threshold of 0.8. This high level of consensus, combined with significant Pearson correlation coefficients ($r > 0.81$, $p < 10^{-300}$), confirms that the automated evaluation protocol provides a stable and objective assessment of semantic response quality.
+
+\subsection{Fidelity and Hallucination Study}\label{appendix:fidelity}
+
+We conducted a systematic study to ensure that the induced structures are grounded in the source dialogue. 
+
+\input{table/extraction_hallucination}
+
+\paragraph{Event-Level Extraction Fidelity.} We first evaluated whether the atomic memory entries  accurately reflect the original utterances. We employed three independent judge models (gpt-4o-mini, Qwen2.5-32B-Instruct, and DeepSeek-V3.2) to identify hallucinated entries across conversations. 
+
+Specifically, for each extracted memory entry, the judges are provided with the corresponding source dialogue segment and tasked with determining if any factual or relational information is fabricated or unsubstantiated by the original text. The full prompt templates are provided in Figure~\ref{fig:Extraction_Fidelity}.
+
+As detailed in Table~\ref{tab:extraction_hallucination}, the mean hallucination rate is only 2.36\%, confirming that the \textbf{Dual-Perspective Extraction} of our hierarchical memory is highly faithful to the source context. 
+
+\input{table/consolidation_fidelity}
+
+\paragraph{Cross-Event Consolidation Fidelity.} The most critical verification involves the synthesis of cross-event links. To isolate and audit these links, we employed three independent judge models (gpt-4o-mini, Qwen2.5-32B-Instruct, and DeepSeek-V3.2) to identify hallucinated links across conversations. 
+
+For each consolidation step, the judge is provided with: (1) \textit{Buffer Text} (current events), (2) \textit{Supplementary Text} (retrieved history), and (3) two summaries, including \textbf{Summary A} (Baseline, $k=0$, consolidates only buffer events) and \textbf{Summary B} (Test, $k=15$, establishes cross-event links). The judge identifies cross-event links present in Summary B that are absent from Summary A, then classifies each cross-event link to judge if the link is spurious. The full prompt templates are provided in Figure~\ref{fig:Consolidation_Fidelity_1} and Figure~\ref{fig:Consolidation_Fidelity_2}.
+
+To evaluate the specific impact of our grounding anchors, we conduct a sensitivity analysis by comparing our default \textit{Constrained} prompt against an \textit{Unconstrained} variant. As illustrated in Figure~\ref{fig:synthesis_unconstrained_prompt}, the \textit{Unconstrained} version is created by removing explicit requirements for timestamp citations and concrete dependency focus (highlighted in gray).
+
+The results in Table~\ref{tab:consolidation_fidelity} demonstrate that removing these grounding constraints leads to a dramatic surge in hallucination rates across all judge models. This trend underscores that the high fidelity of StructMem's hierarchical organization is directly tied to our constrained synthesis mechanism, confirming that the \textbf{Memory Consolidation} of our hierarchical memory is highly faithful to the source context.
+
+\subsection{Prompt Templates}\label{appendix:prompts}
+We present the prompt templates used for memory construction, question answering, and evaluation in StructMem.
+
+For memory construction, we design prompts for different paradigms implemented in the LightMem framework. For Flat Memory, the factual entry extraction prompt (Figure~\ref{fig:fact_1} and Figure~\ref{fig:fact_2}) guides the model to decompose utterances into objective event descriptions. 
+For StructMem, the relational entry extraction prompt (Figure~\ref{fig:relation_1} and Figure~\ref{fig:relation_2}) instructs the model to capture interaction dynamics, causal influences, and temporal dependencies. The narrative synthesis prompt (Figure~\ref{fig:synthesis_prompt}) consolidates local and retrieved contexts into coherent summaries during Macro Synthesis. For Graph Memory, the entity extraction prompt (Figure~\ref{fig:entity_extract_prompt}) identifies key entities from dialogue. The entity deduplication prompt (Figure~\ref{fig:entity_dedup_prompt}) normalizes extracted entities to eliminate redundancy. The relation extraction prompt (Figure~\ref{fig:relation_extract_prompt}) constructs connections between entities. The relation deduplication prompt (Figure~\ref{fig:relation_dedup_prompt}) resolves contradictions in the knowledge graph.
+
+For question answering, we provide separate prompts tailored to different memory architectures. Figure~\ref{fig:structmem_qa} shows the prompt for StructMem with dual-circuit retrieval that leverages both atomic entries and consolidated summaries. Figure~\ref{fig:flat_qa} and Figure~\ref{fig:graph_qa} present prompts adapted for flat memory and graph-based memory baselines, respectively.
+
+For evaluation, we use the LLM-as-a-judge prompt (Figure~\ref{fig:eval_prompt}) to assess response correctness and coherence. 
+
+For fidelity and hallucination analysis, we provide the specialized templates used for memory auditing. Figure~\ref{fig:Extraction_Fidelity} presents the prompt for verifying event-level extraction. Figures~\ref{fig:Consolidation_Fidelity_1} and~\ref{fig:Consolidation_Fidelity_2} presents the prompt for verifying cross-event consolidation. We also include the \textit{Unconstrained} synthesis template in Figure~\ref{fig:synthesis_unconstrained_prompt}, where the grounding constraints are intentionally removed to evaluate the impact of explicit temporal anchors on reducing hallucinated associations.
+
+
+
+\input{table/case_study}
+\subsection{Case Study}\label{appendix:casestudy}
+
+Table~\ref{tab:case_study} presents a case study comparing how different memory paradigms handle temporal reasoning over joint participation. The query asks when two speakers attended an event together, requiring inference over co-participation relationships that are not explicitly stated in individual conversational turns.
+
+\textbf{Flat Memory} retrieves factual entries independently: Caroline attended Pride fest "last year" (temporally anchored to August 17, 2023, referring to 2022), while Melanie enjoyed time "with the whole gang" at Pride fest. Without any mechanism to connect these isolated facts, the system concludes "they haven't gone together," failing to recognize the implicit joint participation.
+
+\textbf{Graph Memory} constructs entity-relation triples on top of the same factual entries. While the graph captures individual attendance, these remain isolated nodes without explicit co-participation edges. The post-hoc graph structure cannot infer that mentions of the same event by different speakers within the same conversation indicate joint attendance. Consequently, it produces an incorrect temporal inference: "Last month, June 2023."
+
+\textbf{StructMem} addresses this limitation through two mechanisms. First, relational entries capture interpersonal dynamics during extraction: "Melanie showed interest in Caroline's pride parade experience" provides crucial context about their shared discussion. Second, synthesis consolidates temporally co-located entries. When Caroline's Pride fest mention appears adjacent to Melanie's in the chronologically sorted context, the relational entry's possessive pronoun "their" signals joint participation. The synthesis then makes this implicit connection explicit: "their enjoyable time at Pride fest last year," enabling the system to correctly answer "Last year, August 2022."
+
+This case demonstrates why extraction-time structural capture outperforms post-hoc graph construction for temporal reasoning. By organizing information hierarchically during memory formation rather than overlaying structure afterward, StructMem preserves the temporal and relational context necessary for inferring implicit relationships across conversational turns.
+
+
+\input{tex/Prompts}

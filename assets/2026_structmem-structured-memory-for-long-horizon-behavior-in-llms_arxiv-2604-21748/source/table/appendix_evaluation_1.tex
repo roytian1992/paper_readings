@@ -1,0 +1,40 @@
+\definecolor{JudgeGPT}{RGB}{235, 245, 255}  % 淡蓝色块
+\definecolor{JudgeQwen}{RGB}{255, 245, 235} % 淡橙色块
+\definecolor{JudgeDS}{RGB}{245, 255, 235}   % 淡绿色块
+
+\begin{table*}[t]
+\centering
+\caption{Robustness check of memory systems across different LLM judges on the \texttt{LoCoMo} dataset. The table is categorized by three judge models: \texttt{gpt-4o-mini}, \texttt{Qwen2.5-32B-Instruct}, and \texttt{DeepSeek-V3.2}. \textbf{Bold} and \underline{underline} denote the best and second-best results within each judge block, respectively. $\uparrow$: larger is better.}
+\label{tab:robustness_blocks}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+\textbf{Judge Model} & \textbf{Method} & \textbf{Overall $\uparrow$} & \textbf{Single Hop} & \textbf{Multi Hop} & \textbf{Temporal} & \textbf{Open Domain} \\
+\midrule
+% --- GPT-4o-mini Block ---
+\rowcolor{JudgeGPT} & FullContext & 73.83 & \textbf{86.56} & 68.79 & 50.16 & \underline{56.25} \\
+\rowcolor{JudgeGPT} & A-MEM & 64.16 & 72.06 & 56.03 & 60.44 & 31.25 \\
+\rowcolor{JudgeGPT} & MemoryOS & 58.25 & 67.06 & 56.74 & 40.19 & 45.83 \\
+\rowcolor{JudgeGPT} & Memobase & \underline{75.78} & 77.17 & \underline{70.92} & \textbf{85.05} & 46.88 \\
+\rowcolor{JudgeGPT} & Zep & 75.14 & 79.79 & \textbf{74.11} & 67.71 & \textbf{66.04} \\
+\rowcolor{JudgeGPT} \multirow{-6}{*}{\texttt{gpt-4o-mini}} & \textbf{StructMem} & \textbf{76.82} & \underline{81.09} & 68.77 & \underline{81.62} & 46.88 \\
+\midrule
+% --- Qwen Block ---
+\rowcolor{JudgeQwen} & FullContext & 71.17 & \textbf{83.83} & 67.02 & 48.29 & \underline{48.96} \\
+\rowcolor{JudgeQwen} & A-MEM & 60.26 & 68.85 & 53.19 & 52.65 & 31.25 \\
+\rowcolor{JudgeQwen} & MemoryOS & 60.32 & 69.80 & 62.41 & 39.88 & 39.58 \\
+\rowcolor{JudgeQwen} & Memobase & \underline{76.36} & 78.00 & \underline{71.28} & \textbf{85.05} & 47.92 \\
+\rowcolor{JudgeQwen} & Zep & 75.52 & 79.19 & \textbf{75.18} & 70.40 & \textbf{61.46} \\
+\rowcolor{JudgeQwen} \multirow{-6}{*}{\texttt{Qwen2.5-32B-Instruct}} & \textbf{StructMem} & \textbf{77.01} & \underline{82.16} & \underline{69.86} & \underline{78.19} & \underline{48.96} \\
+\midrule
+% --- DeepSeek Block ---
+\rowcolor{JudgeDS} & FullContext & 70.97 & \textbf{85.49} & 67.02 & 41.43 & \underline{54.17} \\
+\rowcolor{JudgeDS} & A-MEM & 63.90 & 74.55 & 56.38 & 47.35 & 47.92 \\
+\rowcolor{JudgeDS} & MemoryOS & 61.56 & 72.53 & 62.06 & 35.83 & 50.00 \\
+\rowcolor{JudgeDS} & Memobase & \underline{79.29} & 80.86 & \textbf{77.66} & \textbf{85.67} & 48.96 \\
+\rowcolor{JudgeDS} & Zep & 75.45 & 80.98 & \underline{75.89} & 64.80 & \textbf{61.46} \\
+\rowcolor{JudgeDS} \multirow{-6}{*}{\texttt{DeepSeek-V3.2}} & \textbf{StructMem} & \textbf{79.35} & \underline{85.14} & 73.05 & \underline{77.57} & 53.12 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

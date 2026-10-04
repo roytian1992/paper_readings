@@ -1,0 +1,277 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\zref@newlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{hu2025memory}
+\citation{kang2025memory,chhikara2025mem0,packer2023memgpt,xu2025mem}
+\citation{wang2025mem,yan2025memory}
+\citation{kang2025memory,fang2025lightmem}
+\citation{fang2025lightmem}
+\citation{zhong2024memorybank}
+\citation{fang2025lightmem}
+\citation{kang2025memory}
+\providecommand \oddpage@label [2]{}
+\citation{kang2025memory,zhong2024memorybank,xu2025mem,packer2023memgpt,chhikara2025mem0,fang2025lightmem}
+\citation{yan2025memory}
+\citation{wang2025mem}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{intro_figure}{{1}{2}{\textbf {Comparison between (a) prior turn-level, handcrafted operations and (b) MemSkill’s span-level, skill-conditioned generation.} Prior methods interleave handcrafted operations with LLM calls to incrementally extract and revise memory turn by turn, while MemSkill selects a small set of skills from a shared skill bank and applies them in one pass to produce skill-guided memories.\relax }{figure.caption.1}{}}
+\newlabel{intro_figure@cref}{{[figure][1][]1}{[1][1][]2}}
+\citation{wei2025evo}
+\citation{zhang2025memevolve}
+\citation{zhang2025memgen}
+\citation{ouyang2025reasoningbank}
+\citation{zhao2024expel}
+\citation{wu2025evolver}
+\citation{zhao2025absolute}
+\citation{chen2025multi}
+\citation{huang2025r}
+\citation{zhai2025agentevolver}
+\citation{wang2025ragen}
+\citation{hu2024automated}
+\citation{novikov2025alphaevolve}
+\citation{zheng2025skillweaver}
+\newlabel{sec:method}{{3}{3}{}{section.3}{}}
+\newlabel{sec:method@cref}{{[section][3][]3}{[1][3][]3}}
+\newlabel{sec:method_overview}{{3.1}{3}{}{subsection.3.1}{}}
+\newlabel{sec:method_overview@cref}{{[subsection][1][3]3.1}{[1][3][]3}}
+\newlabel{sec:skill_bank}{{3.2}{3}{}{subsection.3.2}{}}
+\newlabel{sec:skill_bank@cref}{{[subsection][2][3]3.2}{[1][3][]3}}
+\newlabel{sec:learn_to_use_skills}{{3.3}{3}{}{subsection.3.3}{}}
+\newlabel{sec:learn_to_use_skills@cref}{{[subsection][3][3]3.3}{[1][3][]3}}
+\citation{kool2019stochastic}
+\newlabel{model_figure}{{2}{4}{\textbf {MemSkill architecture overview.} Given an interaction trace, MemSkill processes it span by span: the controller selects a Top-$K$ subset of skills from a shared \emph {skill bank} conditioned on the current text span and retrieved memories, and an LLM executor applies the selected skills in one pass to update the trace-specific \emph {memory bank}. The constructed memory is then evaluated on memory-dependent training queries to provide task reward for optimizing the controller, while query-centric failures are logged into a sliding hard-case buffer. Periodically, the designer mines representative hard cases to refine existing skills and propose new ones, yielding alternating phases of skill usage and skill evolution. More skill case study can be found in Section~\ref {sec:case_study} and Appendix~\ref {appendix:case_study}.\relax }{figure.caption.2}{}}
+\newlabel{model_figure@cref}{{[figure][2][]2}{[1][3][]4}}
+\newlabel{sec:controller}{{3.3.1}{4}{}{subsubsection.3.3.1}{}}
+\newlabel{sec:controller@cref}{{[subsubsection][1][3,3]3.3.1}{[1][3][]4}}
+\newlabel{sec:executor}{{3.3.2}{4}{}{subsubsection.3.3.2}{}}
+\newlabel{sec:executor@cref}{{[subsubsection][2][3,3]3.3.2}{[1][4][]4}}
+\citation{schulman2017proximal}
+\citation{maharana2024evaluating-locomo}
+\citation{wu2024longmemeval}
+\citation{yang2018hotpotqa}
+\citation{shridhar2020alfworld}
+\newlabel{sec:controller_optimization}{{3.3.3}{5}{}{subsubsection.3.3.3}{}}
+\newlabel{sec:controller_optimization@cref}{{[subsubsection][3][3,3]3.3.3}{[1][5][]5}}
+\newlabel{eq:topk_joint_prob_main}{{3}{5}{}{equation.3.3}{}}
+\newlabel{eq:topk_joint_prob_main@cref}{{[equation][3][]3}{[1][5][]5}}
+\newlabel{sec:designer}{{3.4}{5}{}{subsection.3.4}{}}
+\newlabel{sec:designer@cref}{{[subsection][4][3]3.4}{[1][5][]5}}
+\newlabel{sec:closed_loop}{{3.5}{5}{}{subsection.3.5}{}}
+\newlabel{sec:closed_loop@cref}{{[subsection][5][3]3.5}{[1][5][]5}}
+\newlabel{sec:exp}{{4}{5}{}{section.4}{}}
+\newlabel{sec:exp@cref}{{[section][4][]4}{[1][5][]5}}
+\newlabel{sec:exp_setup}{{4.1}{5}{}{subsection.4.1}{}}
+\newlabel{sec:exp_setup@cref}{{[subsection][1][4]4.1}{[1][5][]5}}
+\citation{yu2024chain}
+\citation{lee2024human}
+\citation{zhong2024memorybank}
+\citation{xu2025mem}
+\citation{chhikara2025mem0}
+\citation{LangMem}
+\citation{kang2025memory}
+\citation{grattafiori2024llama}
+\citation{yang2025qwen3}
+\citation{schulman2017proximal}
+\citation{yang2025qwen3}
+\citation{yu2025memagent}
+\citation{yu2025memagent}
+\newlabel{tab:exp_main}{{1}{6}{\textbf {Main comparison results on LoCoMo, LongMemEval, and ALFWorld.}\relax }{table.caption.3}{}}
+\newlabel{tab:exp_main@cref}{{[table][1][]1}{[1][5][]6}}
+\newlabel{sec:exp_main}{{4.2}{6}{}{subsection.4.2}{}}
+\newlabel{sec:exp_main@cref}{{[subsection][2][4]4.2}{[1][6][]6}}
+\citation{yu2025memagent}
+\newlabel{fig:hotpot_shift}{{3}{7}{\textbf {Skill generalization under distribution shift on HotpotQA.} We transfer the LoCoMo-trained skill bank to HotpotQA and evaluate three context-length settings (50/100/200 concatenated documents) following~\citep {yu2025memagent}. Bars show LLM-judge (L-J) under LLaMA with different Top-$K$ skill counts, compared to MemoryOS and A-MEM.\relax }{figure.caption.4}{}}
+\newlabel{fig:hotpot_shift@cref}{{[figure][3][]3}{[1][6][]7}}
+\newlabel{sec:exp_shift}{{4.3}{7}{}{subsection.4.3}{}}
+\newlabel{sec:exp_shift@cref}{{[subsection][3][4]4.3}{[1][7][]7}}
+\newlabel{sec:ablation}{{4.4}{7}{}{subsection.4.4}{}}
+\newlabel{sec:ablation@cref}{{[subsection][4][4]4.4}{[1][7][]7}}
+\citation{fang2025lightmem}
+\newlabel{fig:case_study}{{4}{8}{\textbf {Case study.} We show representative evolved skills learned on LoCoMo and ALFWorld.\relax }{figure.caption.5}{}}
+\newlabel{fig:case_study@cref}{{[figure][4][]4}{[1][7][]8}}
+\newlabel{tab:ablation_locomo}{{2}{8}{\textbf {LoCoMo ablation} (L-J).\relax }{table.caption.6}{}}
+\newlabel{tab:ablation_locomo@cref}{{[table][2][]2}{[1][8][]8}}
+\newlabel{sec:case_study}{{4.5}{8}{}{subsection.4.5}{}}
+\newlabel{sec:case_study@cref}{{[subsection][5][4]4.5}{[1][8][]8}}
+\bibdata{example_paper}
+\bibcite{chen2025multi}{{1}{2025}{{Chen et~al.}}{{Chen, Wang, Zhu, Yu, Feng, Zhang, Patwary, and You}}}
+\bibcite{chhikara2025mem0}{{2}{2025}{{Chhikara et~al.}}{{Chhikara, Khant, Aryan, Singh, and Yadav}}}
+\bibcite{fang2025lightmem}{{3}{2025}{{Fang et~al.}}{{Fang, Deng, Xu, Jiang, Tang, Xu, Deng, Yao, Wang, Qiao, et~al.}}}
+\bibcite{grattafiori2024llama}{{4}{2024}{{Grattafiori et~al.}}{{Grattafiori, Dubey, Jauhri, Pandey, Kadian, Al-Dahle, Letman, Mathur, Schelten, Vaughan, et~al.}}}
+\bibcite{hu2024automated}{{5}{2024}{{Hu et~al.}}{{Hu, Lu, and Clune}}}
+\bibcite{hu2025memory}{{6}{2025}{{Hu et~al.}}{{Hu, Liu, Yue, Zhang, Liu, Zhu, Lin, Guo, Dou, Xi, et~al.}}}
+\bibcite{huang2025r}{{7}{2025}{{Huang et~al.}}{{Huang, Yu, Wang, Zhang, Li, Li, Huang, Mi, and Yu}}}
+\bibcite{kang2025memory}{{8}{2025}{{Kang et~al.}}{{Kang, Ji, Zhao, and Bai}}}
+\bibcite{kool2019stochastic}{{9}{2019}{{Kool et~al.}}{{Kool, Van~Hoof, and Welling}}}
+\bibcite{LangMem}{{10}{2025}{{LangChain}}{{}}}
+\bibcite{lee2024human}{{11}{2024}{{Lee et~al.}}{{Lee, Chen, Furuta, Canny, and Fischer}}}
+\bibcite{maharana2024evaluating-locomo}{{12}{2024}{{Maharana et~al.}}{{Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang}}}
+\bibcite{novikov2025alphaevolve}{{13}{2025}{{Novikov et~al.}}{{Novikov, V{\~u}, Eisenberger, Dupont, Huang, Wagner, Shirobokov, Kozlovskii, Ruiz, Mehrabian, et~al.}}}
+\bibcite{ouyang2025reasoningbank}{{14}{2025}{{Ouyang et~al.}}{{Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le, Daruki, Tang, et~al.}}}
+\bibcite{packer2023memgpt}{{15}{2023}{{Packer et~al.}}{{Packer, Fang, Patil, Lin, Wooders, and Gonzalez}}}
+\bibcite{schulman2017proximal}{{16}{2017}{{Schulman et~al.}}{{Schulman, Wolski, Dhariwal, Radford, and Klimov}}}
+\bibcite{shridhar2020alfworld}{{17}{2020}{{Shridhar et~al.}}{{Shridhar, Yuan, C{\^o}t{\'e}, Bisk, Trischler, and Hausknecht}}}
+\newlabel{tab:cost_analysis_chunk}{{3}{9}{\textbf {Cost analysis on LoCoMo.}\relax }{table.caption.7}{}}
+\newlabel{tab:cost_analysis_chunk@cref}{{[table][3][]3}{[1][9][]9}}
+\newlabel{sec:conclusion}{{5}{9}{}{section.5}{}}
+\newlabel{sec:conclusion@cref}{{[section][5][]5}{[1][9][]9}}
+\bibcite{trivedi2024appworld}{{18}{2024}{{Trivedi et~al.}}{{Trivedi, Khot, Hartmann, Manku, Dong, Li, Gupta, Sabharwal, and Balasubramanian}}}
+\bibcite{wang2025mem}{{19}{2025{a}}{{Wang et~al.}}{{Wang, Takanobu, Liang, Mao, Hu, McAuley, and Wu}}}
+\bibcite{wang2025ragen}{{20}{2025{b}}{{Wang et~al.}}{{Wang, Wang, Wang, Zhang, Li, Yang, Jin, Yu, Nguyen, Liu, et~al.}}}
+\bibcite{wang2024agent}{{21}{2024}{{Wang et~al.}}{{Wang, Mao, Fried, and Neubig}}}
+\bibcite{wei2025evo}{{22}{2025}{{Wei et~al.}}{{Wei, Sachdeva, Coleman, He, Bei, Ning, Ai, Li, He, Chi, et~al.}}}
+\bibcite{wu2024longmemeval}{{23}{2024}{{Wu et~al.}}{{Wu, Wang, Yu, Zhang, Chang, and Yu}}}
+\bibcite{wu2025evolver}{{24}{2025}{{Wu et~al.}}{{Wu, Wang, Mei, Cai, Fu, Yang, Wen, Yang, Shen, Wang, et~al.}}}
+\bibcite{xu2025mem}{{25}{2025}{{Xu et~al.}}{{Xu, Liang, Mei, Gao, Tan, and Zhang}}}
+\bibcite{yan2025memory}{{26}{2025}{{Yan et~al.}}{{Yan, Yang, Huang, Nie, Ding, Li, Ma, Kersting, Pan, Sch{\"u}tze, et~al.}}}
+\bibcite{yang2025qwen3}{{27}{2025}{{Yang et~al.}}{{Yang, Li, Yang, Zhang, Hui, Zheng, Yu, Gao, Huang, Lv, et~al.}}}
+\bibcite{yang2018hotpotqa}{{28}{2018}{{Yang et~al.}}{{Yang, Qi, Zhang, Bengio, Cohen, Salakhutdinov, and Manning}}}
+\bibcite{yu2025memagent}{{29}{2025}{{Yu et~al.}}{{Yu, Chen, Feng, Chen, Dai, Yu, Zhang, Ma, Liu, Wang, et~al.}}}
+\bibcite{yu2024chain}{{30}{2024}{{Yu et~al.}}{{Yu, Zhang, Pan, Cao, Ma, Li, Wang, and Yu}}}
+\bibcite{zhai2025agentevolver}{{31}{2025}{{Zhai et~al.}}{{Zhai, Tao, Chen, Zou, Chen, Fu, Mai, Yu, Deng, Cao, et~al.}}}
+\bibcite{zhang2025memgen}{{32}{2025{a}}{{Zhang et~al.}}{{Zhang, Fu, and Yan}}}
+\bibcite{zhang2025memevolve}{{33}{2025{b}}{{Zhang et~al.}}{{Zhang, Ren, Zhan, Zhou, Wang, Zhu, Zhou, and Yan}}}
+\bibcite{zhao2024expel}{{34}{2024}{{Zhao et~al.}}{{Zhao, Huang, Xu, Lin, Liu, and Huang}}}
+\bibcite{zhao2025absolute}{{35}{2025}{{Zhao et~al.}}{{Zhao, Wu, Yue, Wu, Xu, Lin, Wang, Wu, Zheng, and Huang}}}
+\bibcite{zheng2025skillweaver}{{36}{2025}{{Zheng et~al.}}{{Zheng, Fatemi, Jin, Wang, Gandhi, Song, Gu, Srinivasa, Liu, Neubig, et~al.}}}
+\bibcite{zhong2024memorybank}{{37}{2024}{{Zhong et~al.}}{{Zhong, Guo, Gao, Ye, and Wang}}}
+\bibstyle{icml2026}
+\citation{fang2025lightmem}
+\citation{wang2024agent}
+\citation{zhao2024expel}
+\citation{trivedi2024appworld}
+\newlabel{appendix:more_exp}{{A}{11}{Acknowledgements}{appendix.A}{}}
+\newlabel{appendix:more_exp@cref}{{[appendix][1][2147483647]A}{[1][11][]11}}
+\newlabel{appendix:more_exp_comparison}{{A.1}{11}{Acknowledgements}{subsection.A.1}{}}
+\newlabel{appendix:more_exp_comparison@cref}{{[subappendix][1][2147483647,1]A.1}{[1][11][]11}}
+\newlabel{tab:more_exp_comparison}{{4}{11}{\textbf {More comparison results on ALFWorld.}\relax }{table.caption.10}{}}
+\newlabel{tab:more_exp_comparison@cref}{{[table][4][2147483647]4}{[1][11][]11}}
+\newlabel{appendix:more_exp_appworld}{{A.2}{11}{Acknowledgements}{subsection.A.2}{}}
+\newlabel{appendix:more_exp_appworld@cref}{{[subappendix][2][2147483647,1]A.2}{[1][11][]11}}
+\newlabel{tab:more_exp_alfworld}{{5}{12}{\textbf {More comparison results on ALFWorld \textit {without} in-context demonstrations.}\relax }{table.caption.11}{}}
+\newlabel{tab:more_exp_alfworld@cref}{{[table][5][2147483647]5}{[1][11][]12}}
+\newlabel{tab:more_exp_appworld}{{6}{13}{\textbf {More comparison results on AppWorld \textit {with} and \textit {without} in-context demonstrations.}\relax }{table.caption.12}{}}
+\newlabel{tab:more_exp_appworld@cref}{{[table][6][2147483647]6}{[1][11][]13}}
+\newlabel{appendix:small_model}{{A.3}{13}{Acknowledgements}{subsection.A.3}{}}
+\newlabel{appendix:small_model@cref}{{[subappendix][3][2147483647,1]A.3}{[1][12][]13}}
+\newlabel{appendix:train_stability}{{A.4}{13}{Acknowledgements}{subsection.A.4}{}}
+\newlabel{appendix:train_stability@cref}{{[subappendix][4][2147483647,1]A.4}{[1][13][]13}}
+\citation{maharana2024evaluating-locomo}
+\citation{wu2024longmemeval}
+\citation{shridhar2020alfworld}
+\citation{yang2018hotpotqa}
+\citation{yu2025memagent}
+\newlabel{tab:exp_small_model}{{7}{14}{\textbf {Experimental results on LoCoMo and LongMemEval using Llama-3.1-8B-Instruct.}\relax }{table.caption.13}{}}
+\newlabel{tab:exp_small_model@cref}{{[table][7][2147483647]7}{[1][13][]14}}
+\newlabel{appendix:imple_detail}{{B}{14}{Acknowledgements}{appendix.B}{}}
+\newlabel{appendix:imple_detail@cref}{{[appendix][2][2147483647]B}{[1][14][]14}}
+\newlabel{appendix:exp_eval}{{B.1}{14}{Acknowledgements}{subsection.B.1}{}}
+\newlabel{appendix:exp_eval@cref}{{[subappendix][1][2147483647,2]B.1}{[1][14][]14}}
+\newlabel{appendix:detail_component}{{B.2}{14}{Acknowledgements}{subsection.B.2}{}}
+\newlabel{appendix:detail_component@cref}{{[subappendix][2][2147483647,2]B.2}{[1][14][]14}}
+\newlabel{eq:new_skill_mass_constraint}{{5}{15}{Acknowledgements}{equation.B.5}{}}
+\newlabel{eq:new_skill_mass_constraint@cref}{{[equation][5][2147483647]5}{[1][15][]15}}
+\citation{kool2019stochastic}
+\newlabel{appendix:detail_alfworld}{{B.3}{16}{Acknowledgements}{subsection.B.3}{}}
+\newlabel{appendix:detail_alfworld@cref}{{[subappendix][3][2147483647,2]B.3}{[1][15][]16}}
+\newlabel{appendix:rl_objective}{{B.4}{16}{Acknowledgements}{subsection.B.4}{}}
+\newlabel{appendix:rl_objective@cref}{{[subappendix][4][2147483647,2]B.4}{[1][16][]16}}
+\newlabel{eq:topk_joint_prob_appendix}{{10}{16}{Acknowledgements}{equation.B.10}{}}
+\newlabel{eq:topk_joint_prob_appendix@cref}{{[equation][10][2147483647]10}{[1][16][]16}}
+\newlabel{eq:topk_joint_logprob_appendix}{{11}{16}{Acknowledgements}{equation.B.11}{}}
+\newlabel{eq:topk_joint_logprob_appendix@cref}{{[equation][11][2147483647]11}{[1][16][]16}}
+\citation{schulman2017proximal}
+\newlabel{eq:topk_ratio}{{14}{17}{Acknowledgements}{equation.B.14}{}}
+\newlabel{eq:topk_ratio@cref}{{[equation][14][2147483647]14}{[1][17][]17}}
+\newlabel{eq:ppo_policy_topk}{{15}{17}{Acknowledgements}{equation.B.15}{}}
+\newlabel{eq:ppo_policy_topk@cref}{{[equation][15][2147483647]15}{[1][17][]17}}
+\newlabel{eq:ppo_value}{{16}{17}{Acknowledgements}{equation.B.16}{}}
+\newlabel{eq:ppo_value@cref}{{[equation][16][2147483647]16}{[1][17][]17}}
+\newlabel{eq:ppo_entropy}{{17}{17}{Acknowledgements}{equation.B.17}{}}
+\newlabel{eq:ppo_entropy@cref}{{[equation][17][2147483647]17}{[1][17][]17}}
+\newlabel{eq:ppo_full_topk}{{18}{17}{Acknowledgements}{equation.B.18}{}}
+\newlabel{eq:ppo_full_topk@cref}{{[equation][18][2147483647]18}{[1][17][]17}}
+\newlabel{appendix:case_study}{{C}{18}{Acknowledgements}{appendix.C}{}}
+\newlabel{appendix:case_study@cref}{{[appendix][3][2147483647]C}{[1][17][]18}}
+\newlabel{appendix:case_insert}{{C.1}{18}{Acknowledgements}{subsection.C.1}{}}
+\newlabel{appendix:case_insert@cref}{{[subappendix][1][2147483647,3]C.1}{[1][17][]18}}
+\newlabel{appendix:case_update}{{C.1}{18}{Acknowledgements}{subsection.C.1}{}}
+\newlabel{appendix:case_update@cref}{{[subappendix][1][2147483647,3]C.1}{[1][18][]18}}
+\newlabel{appendix:case_delete}{{C.1}{19}{Acknowledgements}{subsection.C.1}{}}
+\newlabel{appendix:case_delete@cref}{{[subappendix][1][2147483647,3]C.1}{[1][18][]19}}
+\newlabel{appendix:case_noop}{{C.1}{19}{Acknowledgements}{subsection.C.1}{}}
+\newlabel{appendix:case_noop@cref}{{[subappendix][1][2147483647,3]C.1}{[1][19][]19}}
+\newlabel{appendix:case_capture_activity_details}{{C.2}{20}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_capture_activity_details@cref}{{[subappendix][2][2147483647,3]C.2}{[1][19][]20}}
+\newlabel{appendix:case_capture_entity_nuances}{{C.2}{20}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_capture_entity_nuances@cref}{{[subappendix][2][2147483647,3]C.2}{[1][20][]20}}
+\newlabel{appendix:case_capture_temporal_context}{{C.2}{21}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_capture_temporal_context@cref}{{[subappendix][2][2147483647,3]C.2}{[1][20][]21}}
+\newlabel{appendix:case_delete}{{C.2}{21}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_delete@cref}{{[subappendix][2][2147483647,3]C.2}{[1][21][]21}}
+\newlabel{appendix:case_handle_entity_relationships}{{C.2}{22}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_handle_entity_relationships@cref}{{[subappendix][2][2147483647,3]C.2}{[1][21][]22}}
+\newlabel{appendix:case_insert}{{C.2}{22}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_insert@cref}{{[subappendix][2][2147483647,3]C.2}{[1][22][]22}}
+\newlabel{appendix:case_noop}{{C.2}{23}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_noop@cref}{{[subappendix][2][2147483647,3]C.2}{[1][22][]23}}
+\newlabel{appendix:case_refine_temporal_details_with_context}{{C.2}{23}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_refine_temporal_details_with_context@cref}{{[subappendix][2][2147483647,3]C.2}{[1][23][]23}}
+\newlabel{appendix:case_update}{{C.2}{24}{Acknowledgements}{subsection.C.2}{}}
+\newlabel{appendix:case_update@cref}{{[subappendix][2][2147483647,3]C.2}{[1][23][]24}}
+\newlabel{appendix:case_capture_action_constraints}{{C.3}{24}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_capture_action_constraints@cref}{{[subappendix][3][2147483647,3]C.3}{[1][24][]24}}
+\newlabel{appendix:case_delete}{{C.3}{25}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_delete@cref}{{[subappendix][3][2147483647,3]C.3}{[1][24][]25}}
+\newlabel{appendix:case_insert}{{C.3}{25}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_insert@cref}{{[subappendix][3][2147483647,3]C.3}{[1][25][]25}}
+\newlabel{appendix:case_noop}{{C.3}{26}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_noop@cref}{{[subappendix][3][2147483647,3]C.3}{[1][25][]26}}
+\newlabel{appendix:case_track_object_location}{{C.3}{26}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_track_object_location@cref}{{[subappendix][3][2147483647,3]C.3}{[1][26][]26}}
+\newlabel{appendix:case_track_object_movements}{{C.3}{27}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_track_object_movements@cref}{{[subappendix][3][2147483647,3]C.3}{[1][26][]27}}
+\newlabel{appendix:case_update}{{C.3}{27}{Acknowledgements}{subsection.C.3}{}}
+\newlabel{appendix:case_update@cref}{{[subappendix][3][2147483647,3]C.3}{[1][27][]27}}
+\newlabel{appendix:prompts}{{D}{27}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:prompts@cref}{{[appendix][4][2147483647]D}{[1][27][]27}}
+\newlabel{appendix:case_locomo}{{D}{27}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_locomo@cref}{{[appendix][4][2147483647]D}{[1][27][]27}}
+\newlabel{appendix:case_longmemeval}{{D}{28}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_longmemeval@cref}{{[appendix][4][2147483647]D}{[1][27][]28}}
+\newlabel{appendix:case_hp}{{D}{28}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_hp@cref}{{[appendix][4][2147483647]D}{[1][28][]28}}
+\newlabel{appendix:case_alfworld}{{D}{28}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_alfworld@cref}{{[appendix][4][2147483647]D}{[1][28][]28}}
+\newlabel{appendix:case_executor}{{D}{29}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_executor@cref}{{[appendix][4][2147483647]D}{[1][28][]29}}
+\newlabel{appendix:case_designer_1}{{D}{30}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_designer_1@cref}{{[appendix][4][2147483647]D}{[1][29][]30}}
+\newlabel{appendix:case_designer_2_1}{{D}{31}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_designer_2_1@cref}{{[appendix][4][2147483647]D}{[1][30][]31}}
+\newlabel{appendix:case_designer_2_2}{{D}{32}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_designer_2_2@cref}{{[appendix][4][2147483647]D}{[1][32][]32}}
+\newlabel{appendix:case_judge}{{D}{33}{Acknowledgements}{appendix.D}{}}
+\newlabel{appendix:case_judge@cref}{{[appendix][4][2147483647]D}{[1][32][]33}}
+\newlabel{app:llm_usage}{{E}{33}{Acknowledgements}{appendix.E}{}}
+\newlabel{app:llm_usage@cref}{{[appendix][5][2147483647]E}{[1][33][]33}}
+\newlabel{app:limitations_impact}{{F}{33}{Acknowledgements}{appendix.F}{}}
+\newlabel{app:limitations_impact@cref}{{[appendix][6][2147483647]F}{[1][33][]33}}
+\ttl@finishall
+\gdef \@abspage@last{34}

@@ -1,0 +1,494 @@
+\newpage
+\appendix
+\section{Detailed Formulations}
+\label{app:detailed_formulations}
+
+This appendix provides the formal details behind the three components of \ours{}. We organize the material following the same structure as the main text: memory store (\S\ref{sec:memory_layer}), retrieval layer (\S\ref{sec:retrieval}), and self-evolution engine (\S\ref{sec:evolution_engine}). Each subsection gives the full mathematical specification that was summarized in prose in the main paper.
+
+\noindent \textbf{Scope hierarchy.} To support multi-user and multi-workspace deployment, each memory unit is assigned a hierarchical scope identifier:
+\begin{equation}
+    \sigma = \texttt{user}{:}u \;\mid\; \texttt{workspace}{:}w \;\mid\; \texttt{session}{:}s,
+    \label{eq:scope}
+\end{equation}
+A base scope $\bar{\sigma}$ strips the session component, enabling cross-session retrieval within the same user-workspace context. This ensures that memories from different sessions of the same user are retrievable together.
+
+\noindent \textbf{Extraction quality guards.} The three mechanisms described in \S\ref{sec:memory_layer} are formalized as follows. Let $\phi_{\text{ext}}$ denote the LLM extraction function:
+\begin{equation}
+    \mathcal{M}^{(j)} = \begin{cases}
+        \phi_{\text{ext}}(S^{(j)}) & \text{after } r \leq R_{\text{retry}} \text{ retries with increasing wait}, \\
+        \bigcup_{\ell} \phi_{\text{ext}}(S^{(j,\ell)}) & \text{fallback: split } S^{(j)} \text{ into } C\text{-turn sub-windows } (C{=}15), \\
+        \phi_{\text{ext}}\!\bigl(S^{(j)},\; \mathcal{V}^{\text{miss}}_{j}\bigr) & \text{targeted re-extract for missing keywords}.
+    \end{cases}
+    \label{eq:extract_guards}
+\end{equation}
+The coverage verifier $\mathcal{V}$ compares extracted memories against reference keywords from the source text and returns the missing subset $\mathcal{V}^{\text{miss}}_{j}$, which triggers the third branch.
+
+\noindent \textbf{Per-view retrieval scores.} The three retrieval views described in \S\ref{sec:retrieval} each compute a score differently. Given a query $q$ and memory unit $m_i$:
+\begin{align}
+    s_{\text{kw}}(q, m_i) &= \mathrm{BM25}(q, c_i) = \sum_{t \in q} \mathrm{IDF}(t)\cdot\frac{f(t,c_i)\,(k_1{+}1)}{f(t,c_i) + k_1\bigl(1 - b + b\,|c_i|/\overline{|c|}\bigr)}, \label{eq:bm25}\\
+    s_{\text{sem}}(q, m_i) &= \cos(\mathbf{e}_q, \mathbf{e}_i) = \frac{\mathbf{e}_q^{\top}\mathbf{e}_i}{\|\mathbf{e}_q\|\,\|\mathbf{e}_i\|}, \label{eq:sem_cos}\\
+    s_{\text{str}}(q, m_i) &= \sum_{f \in \{\text{persons},\text{locations},\text{entities}\}} \mathbb{1}\!\bigl[\,\mathrm{extract}_f(q) \cap \boldsymbol{\eta}_{i,f} \neq \emptyset\,\bigr], \label{eq:str}
+\end{align}
+with BM25 constants $k_1{=}1.5$, $b{=}0.75$. Each view independently returns its top-$k$: $\mathcal{R}_v(q;\theta) = \mathrm{top}\text{-}k_v\bigl(s_v(q,\cdot)\bigr)$ for $v\in\{\text{kw},\text{sem},\text{str}\}$.
+
+\noindent \textbf{Adversarial entity-swap.} To handle questions where person names are swapped or misleading, a parallel retrieval path strips detected names and re-searches by topic alone:
+\begin{equation}
+    q_{\text{swap}} = q \,\setminus\, \bigl\{p : p \in \mathrm{persons}(q)\bigr\},
+    \qquad
+    \mathcal{R}_{\text{swap}}(q;\theta) = \mathcal{R}_{\text{fuse}}(q_{\text{swap}};\theta).
+    \label{eq:swap}
+\end{equation}
+The final retrieval set is $\mathcal{R}(q;\theta) = \mathcal{R}_{\text{fuse}}(q;\theta) \cup \mathcal{R}_{\text{swap}}(q;\theta)$ when \texttt{enable\_entity\_swap} $=$ \texttt{true}.
+
+\noindent \textbf{Query decomposition.} Multi-hop questions often fail because no single retrieval query captures all required information. An optional pre-retrieval LLM pass $\psi_{\text{dec}}$ decomposes $q$ into at most $N_{\text{sub}}$ sub-queries (controlled by \texttt{decomposition\_max\_subqs} in Table~\ref{tab:retrieval_config}):
+\begin{equation}
+    \{q_1, \ldots, q_{K}\} = \psi_{\text{dec}}(q),\; K \leq N_{\text{sub}}; \qquad
+    \mathcal{R}_{\text{dec}}(q;\theta) = \bigcup_{k=1}^{K} \mathcal{R}(q_k;\theta),
+    \label{eq:decomp}
+\end{equation}
+followed by RRF merging over the union. The toggle \texttt{enable\_query\_decomposition} is evolvable per category.
+
+\noindent \textbf{Answer generation and verification.} Given retrieved context, the system generates an answer under a configurable style $\alpha$ (e.g., concise, explanatory, verifying). The base prediction is:
+\begin{equation}
+    \hat{y}_0 = \psi_{\text{ans}}\!\bigl(q,\; \mathcal{R}(q;\theta),\; \alpha\bigr).
+    \label{eq:answer}
+\end{equation}
+When \texttt{enable\_answer\_verification} is set, a second LLM pass reviews and conditionally replaces the answer:
+\begin{equation}
+    \hat{y} = \begin{cases}
+        \psi_{\text{ver}}(q, \mathcal{R}(q;\theta), \hat{y}_0) & \text{if } \mathrm{conf}(\hat{y}_0) < \tau_{\text{ver}} \text{ or } \hat{y}_0 \in \mathcal{U}, \\
+        \hat{y}_0 & \text{otherwise},
+    \end{cases}
+    \label{eq:verify}
+\end{equation}
+where $\mathcal{U}$ is the ``Unknown''/``not specified'' class and $\tau_{\text{ver}}$ is a self-reported confidence threshold.
+
+\noindent \textbf{Raw evaluation log.} The evolution engine requires detailed per-question information to diagnose failures. After each round $r$, the evaluator writes:
+\begin{equation}
+    \mathcal{L}_r = \bigl\{(q_j,\; \hat{y}_j,\; y^*_j,\; \mathrm{score}_j,\; \mathcal{R}(q_j;\theta_r))\bigr\}_{j=1}^{|\mathcal{Q}|}
+    \label{eq:raw_log}
+\end{equation}
+to disk (\texttt{raw\_results.jsonl}).
+
+\noindent \textbf{Coverage-gap-triggered re-extraction.} Sometimes failures stem not from retrieval configuration but from missing memories in the store. If the diagnosis returns a non-empty missing-keyword set $\mathcal{V}^{\text{miss}}_r$, the engine augments the store:
+\begin{equation}
+    \mathcal{K}_{r+1} = \mathcal{K}_r \;\cup\; \phi_{\text{ext}}^{\text{targeted}}\!\bigl(\mathcal{S},\; \mathcal{V}^{\text{miss}}_r\bigr),
+    \label{eq:gap_extract}
+\end{equation}
+closing the feedback loop from evaluation back to extraction.
+
+\noindent \textbf{Convergence criterion.} The evolution loop must know when to stop. The engine terminates at:
+\begin{equation}
+    f_r - f_{r-1} < \epsilon \quad \text{(convergence)}\quad\text{or}\quad r \geq R_{\max},
+    \label{eq:convergence}
+\end{equation}
+with $\epsilon = 0.005$ (0.5\,pp) by default. The returned configuration is $\theta^\star = \arg\max_{0 \leq r \leq R} f_r$.
+
+
+\noindent \textbf{Consolidation parameters.} The symbols introduced in \S\ref{sec:memory_layer} take the following default values: deduplication threshold $\tau_J{=}0.80$ (two memories with $\geq$80\% token overlap are merged, retaining the higher-importance unit); importance decay rate $\alpha_d{=}0.05$ per day with a floor $\iota_{\min}{=}0.15$ (so even old memories retain baseline retrievability); entity reinforcement increment $\delta_\rho{=}0.05$ per co-occurrence, capped at $\rho_{\max}{=}0.30$ (preventing any single memory from dominating retrieval purely through frequency).
+
+\noindent \textbf{Recency factor.} The recency function $\text{rec}(m_i) \in [0, 1]$ in Eq.~\ref{eq:hybrid_score} is a non-increasing function of the age $\Delta t_i$ of memory $m_i$, parameterized by the half-life \texttt{time\_decay\_half\_life\_days} (Table~\ref{tab:retrieval_config}); when this parameter is null, $\text{rec}(m_i)$ is set to a constant and contributes no recency-based ranking signal.
+
+
+\begin{table}[h]
+\centering
+\small
+\caption{The \texttt{RetrievalConfig} dimensions exposed to the diagnosis LLM. Per-category overrides let the engine specialize different question types without forcing a single global choice.}
+\label{tab:retrieval_config}
+\vspace{0.5em}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llp{4.2cm}@{}}
+\toprule
+\textbf{Group} & \textbf{Dimension} & \textbf{Range} \\
+\midrule
+Retrieval budget & \texttt{semantic/keyword/structured\_top\_k} & ints in $[3,30]$ \\
+Context budget   & \texttt{max\_context} & int in $[6,30]$ \\
+Fusion           & \texttt{fusion\_mode}, $w_{\text{sem}}, w_{\text{kw}}, w_{\text{str}}$ & \{sum, rrf, weighted\_sum\}; $[0.1, 2.5]$ \\
+Entity swap      & \texttt{enable\_entity\_swap} + 2 top-$k$s & bool, ints \\
+Decomposition    & \texttt{enable\_query\_decomposition} + 2 ints & bool, ints \\
+Reflection       & \texttt{reflection\_rounds} & int in $[0,3]$ \\
+Verification     & \texttt{enable\_answer\_verification}, \texttt{verification\_style} & bool, \{strict, multi\_candidate\} \\
+Answer style     & \texttt{answer\_style} & 6 branches \\
+Time decay       & \texttt{time\_decay\_half\_life\_days}, \texttt{reference\_date} & float/null, date/null \\
+Specialization   & \texttt{per\_category\_overrides} & category $\to$ sub-config \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\section{Complete Algorithm Pseudocode}
+\label{app:full_algorithm}
+
+\begin{algorithm}[h]
+\caption{Complete \ours{} Memory Management Pipeline}
+\label{alg:full_pipeline}
+\begin{algorithmic}[1]
+\REQUIRE Memory store $\mathcal{K}$, retrieval configuration $\theta$, session stream $\{S_1, S_2, \ldots\}$
+\STATE Initialize: $\mathcal{K} \leftarrow \emptyset$, $\theta \leftarrow \theta_0$, telemetry $\leftarrow \emptyset$
+\FOR{each session $S_t$}
+    \STATE \textbf{// Ingestion Phase}
+    \FOR{each turn pair $(q, r)$ in $S_t$}
+        \STATE Extract memory units $\{m_1, \ldots, m_j\}$ from $(q, r)$
+        \STATE Validate: filter units with $|c| < 3$ chars
+        \STATE Pre-dedup: remove exact matches against $\mathcal{K}$
+        \STATE Generate embeddings $\mathbf{e}_i$ for each $m_i$ (if enabled)
+        \STATE $\mathcal{K} \leftarrow \mathcal{K} \cup \{m_1, \ldots, m_j\}$
+    \ENDFOR
+    \STATE \textbf{// Consolidation Phase}
+    \STATE Remove stale working summaries (keep newest per scope)
+    \STATE Exact dedup by $(\mu, \text{normalize}(c))$
+    \STATE Merge near-dupes: $\forall (m_i, m_j)$ with $J(m_i, m_j) \geq \tau_J$
+    \STATE Reinforce shared entities: $\rho_i \leftarrow \min(\rho_i + \delta_\rho, \rho_{\max})$
+    \STATE Apply importance decay ($D{=}30$\,d, $\alpha_d{=}0.05$, $\iota_{\min}{=}0.15$)
+    \STATE \textbf{// Retrieval Phase} (for each task query $q$)
+    \STATE Multi-view retrieval: BM25 + semantic + structured; fuse via $\theta.\text{fusion\_mode}$
+    \STATE Optionally apply entity-swap and/or query decomposition per \texttt{RetrievalConfig}
+    \STATE Fit to context budget $B_{\text{ctx}}$; generate answer; optional verification pass
+    \STATE Record per-question raw result (qid, pred, ref, metrics, sources)
+    \STATE \textbf{// Self-Evolution Phase} (if conditions met)
+    \IF{$|\mathcal{K}^{\text{active}}| \geq 5$ \AND new records since last round}
+        \STATE Execute Algorithm~\ref{alg:evolution}
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\section{Extended Experimental Results}
+\label{app:extended_results}
+
+
+\subsection{Case Study: Iterative Refinement on an Open-Domain Aggregation Question}
+\label{app:case_study}
+
+To make the self-evolution loop concrete, we walk through a single LoCoMo question end-to-end and show how each evolution round contributes a distinct mechanism rather than the loop saturating after one configuration jump. The case is drawn from \texttt{conv-26} (LoCoMo-10, sample~0) and every detail in this section is taken verbatim from the persisted \texttt{raw\_results.jsonl}; nothing is post-hoc curated.
+
+\paragraph{The probe.} The question is
+\begin{quote}\itshape
+``What did Melanie and her family do while camping?''  \quad (Cat.~4, open-domain aggregation)
+\end{quote}
+with reference answer \emph{``explored nature, roasted marshmallows, and went on a hike.''} The evidence (D4:8) is a single conversational turn in which Melanie tells Caroline: ``\emph{We explored nature, roasted marshmallows around the campfire and even went on a hike.}'' Open-domain aggregation is a notoriously hard category because the system must (a)~retrieve the correct episode out of multiple camping references in the conversation, (b)~enumerate \emph{all} of the relevant activities, and (c)~suppress activities from neighbouring episodes that share surface vocabulary (e.g., a separate ``Perseid meteor shower'' camping memory that contaminates BM25-only retrieval). The result is a probe where F1 climbs gradually as the framework adds first \emph{recall}, then \emph{precision}, then \emph{stylistic} machinery.
+
+\paragraph{Round-by-round trace.} Table~\ref{tab:case_study_trace} reproduces the verbatim per-round record; F1 is monotonically non-trivial across all four configuration changes ($0.00 \to 0.44 \to 1.00 \to 0.94 \to 1.00$).
+
+\begin{table}[h]
+\centering
+\small
+\caption{Per-round trace for the case-study probe (Cat.~4, \texttt{conv-26-95}, sample~0). Retrieved sources are the actual view labels logged at evaluation time. Each round contributes a distinct mechanism—recall (R1), precision (R2), safety (R3), polish (R4)—so F1 climbs over four rounds rather than saturating after the first.}
+\label{tab:case_study_trace}
+\vspace{0.5em}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}cl>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{4.1cm}c@{}}
+\toprule
+\textbf{R} & \textbf{Stage} & \textbf{Config delta vs.\ previous} & \textbf{Retrieved} & \textbf{Prediction} & \textbf{F1} \\
+\midrule
+R0 & weak  & BM25-only, $k{=}5$, $B_{\text{ctx}}{=}8$, no entity-swap, fusion = first-found
+       & 5\,kw. & ``watched the Perseid meteor shower while camping'' & 0.00 \\
+R1 & auto  & multi-view on; $k_{\text{sem}}{:}\,0\to8$; $k_{\text{kw}}{:}\,5\to8$; $k_{\text{str}}{:}\,0\to3$; $B_{\text{ctx}}{:}\,8\to16$; entity-swap enabled; weighted-sum fusion
+       & 16 sem. & ``explored nature, roasted marshmallows, hiked, watched Perseid meteor shower'' & 0.44 \\
+R2 & auto  & $k_{\text{sem}}{:}\,8\to10$; $k_{\text{str}}{:}\,3\to5$; $w_{\text{str}}{:}\,1.0\to1.8$; recency window enabled
+       & 13\,sem.\,$+$\,3\,str.\,$+$\,1\,kw.\ (16) & ``explored nature, roasted marshmallows, and went on a hike'' & \textbf{1.00} \\
+R3 & revert & meta-analyzer reverts to R1's $\theta^{\star}$ (overall F1 regressed by 0.054 in R2); per-question expansion to 20 retrievals
+       & 20 mixed & ``explored nature, roasted marshmallows, went on a hike'' & 0.94 \\
+R4 & auto  & per-category override for Cat.~4 (\texttt{answer\_style}: concise list with explicit ``and'' connector)
+       & 13\,sem.\,$+$\,3\,str.\,$+$\,1\,kw.\ (16) & ``explored nature, roasted marshmallows, and went on a hike'' & \textbf{1.00} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{What the diagnosis LLM proposed at R0.} R0's per-question log $\mathcal{L}_0$ shows overall F1 of 0.336 with 75 zero-F1 questions, including 26 zero-F1 cases in Cat.~4 alone. The diagnosis module $\phi_{\text{diag}}$ reads $\mathcal{L}_0$ and emits the following priority actions (verbatim from the persisted trace):
+\begin{quote}\small\itshape
+1.~Enable semantic retrieval with \texttt{fusion\_mode='rrf'} and \texttt{semantic\_top\_k} in the low-mid range (12--16) so lexically-different but semantically-related memories (e.g., camping trip vs.\ Perseid meteor shower, painting descriptions) can be recalled.
+
+2.~Increase retrieval depth and context breadth (\texttt{keyword\_top\_k} to $\sim$10--12, \texttt{max\_context} to $\sim$12--16) \textbf{especially for categories 4 and 5 via per\_category\_overrides} to fix the many abstentions and `not specified' failures for detailed episodic facts.
+
+3.~Tighten and enrich extraction so specific concrete details are captured and retrievable.
+\end{quote}
+Notice that the diagnosis LLM names \emph{the exact failure mode} of this case (camping trip vs.\ Perseid meteor shower) inside priority action~1---a failure pattern it inferred from $\mathcal{L}_0$ alone, with no benchmark-specific cue.
+
+\paragraph{Mechanism, round by round.}
+\textit{(i)~R0$\to$R1 — recall.} BM25-only with $k{=}5$ retrieves the wrong camping memory (a separate ``Perseid meteor shower'' episode that shares the keyword \emph{camping}) and predicts a single tangential activity. The R1 update enables the semantic view (Eq.~\ref{eq:sem_cos}) and triples the context budget, so the answer LLM now sees \emph{all} camping-related episodes; the prediction expands to four activities, three of them correct, but the Perseid memory still leaks in—F1 jumps to 0.44.
+\textit{(ii)~R1$\to$R2 — precision.} R2 raises the structured-view weight ($w_{\text{str}}{:}\,1.0\to1.8$) and turns on the recency factor $\text{rec}(m_i)$ (Eq.~\ref{eq:hybrid_score}); structured retrieval over extracted entities (Melanie, family, camping) re-anchors the top-ranked memories to the right episode, and the recency signal down-weights the older Perseid memory. The Perseid noise is dropped; F1 reaches 1.00.
+\textit{(iii)~R2$\to$R3 — safety.} R2's aggressive expansion lifts this case but \emph{regresses overall F1 by $-$0.054}. The revert guard (Eq.~\ref{eq:meta_update}, $\tau_{\text{rev}}{=}0.01$) auto-rolls $\theta_{r+1}$ back to the best-so-far $\theta^{\star}{=}\theta_1$. The per-question prediction at R3 is essentially correct but missing the connector ``and'', costing 0.06 F1—a minor wording artifact rather than a content failure.
+\textit{(iv)~R3$\to$R4 — polish.} The diagnosis LLM, reading R3's wording-only failures, proposes a per-category answer-style override for Cat.~4 that mandates explicit list connectors. Applied via the \texttt{per\_category\_overrides} mechanism (Eq.~\ref{eq:theta_space}), the connector is restored and F1 returns to 1.00.
+
+\paragraph{Generalization.} This trace exemplifies a broader pattern. Across the 70 Cat.~4 probes in sample~0, the four configuration changes successively reduce zero-F1 cases ($26\to12\to11\to16\to9$, where the R3 uptick reflects the same revert artefact illustrated above) and lift the per-sample Cat.~4 F1 from 0.350 at R0 to 0.520 at R4 ($+$17\,pp). At the population level, the aggregate Cat.~4 trajectory across the full 10-sample evaluation climbs from 41.0\,\% at R0 to 49.6\,\% at R7 ($+$8.6\,pp), with each evolved dimension (multi-view fusion, structured and recency scoring, per-category answer styles, and answer verification) contributing a distinguishable share. The case study renders this aggregate effect at single-question resolution.
+
+\section{Implementation Details}
+\label{app:implementation}
+
+\subsection{SQLite Schema}
+\label{app:schema}
+
+The memory store uses SQLite 3.35+ with FTS5 support. The core schema (version 6) includes:
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item \texttt{memories}: Primary storage table with columns for \texttt{memory\_id} (UUID), \texttt{scope\_id}, \texttt{memory\_type}, \texttt{content}, \texttt{summary}, \texttt{entities} (JSON), \texttt{topics} (JSON), \texttt{importance}, \texttt{confidence}, \texttt{reinforcement\_score}, \texttt{access\_count}, \texttt{embedding} (BLOB), \texttt{tags} (JSON), \texttt{status}, \texttt{supersedes} (JSON), \texttt{superseded\_by}, \texttt{expires\_at}, \texttt{created\_at}, \texttt{updated\_at}.
+    \item \texttt{memories\_fts}: FTS5 virtual table indexing \texttt{content}, \texttt{summary}, \texttt{entities}, \texttt{topics} for efficient full-text search.
+    \item \texttt{memory\_events}: Append-only audit log for all mutations.
+    \item \texttt{memory\_links}: Relationship graph with typed edges (related, depends\_on, elaborates, contradicts).
+    \item \texttt{schema\_version}: Migration tracking.
+\end{itemize}
+
+The database operates in WAL mode with normal sync and foreign keys enabled.
+
+\subsection{Embedding Models}
+\label{app:embeddings}
+
+We support two embedding backends:
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item \textbf{HashingEmbedder}: A lightweight, deterministic hash-based embedder that maps tokens to dimensions via SHA-256 hashing. Produces $d{=}64$ dimensional vectors with $\ell_2$ normalization. Zero external dependencies; suitable for environments where installing ML libraries is impractical.
+    \item \textbf{SentenceTransformerEmbedder}: Uses BAAI/bge-base-en-v1.5 (768-dim) from the \texttt{sentence-transformers} library. Provides semantic similarity for hybrid retrieval. Batch encoding with size 32 for efficiency.
+\end{itemize}
+
+All experiments use SentenceTransformerEmbedder.
+
+\subsection{Efficiency Analysis}
+\label{app:efficiency}
+
+\paragraph{Self-evolution overhead.} A full 7-round evolution on one LoCoMo sample (200 QA, $\sim$900 memories) completes in 25--35\,min wall clock, dominated by QA evaluation LLM calls. Each round consists of index building ($\sim$5\,s per sample), QA evaluation ($\sim$15--20\,min for 200 questions with verification enabled), and LLM-powered diagnosis ($\sim$15\,s per sample). Convergence detection stops evolution automatically when the best-round metric plateaus.
+
+\paragraph{Retrieval latency.} Multi-view index construction over $\sim$900 memories (SentenceTransformer encoding + BM25 index + metadata indices) completes in $\sim$5\,s. Per-query retrieval (semantic top-20 + BM25 top-8 + structured top-5 + entity-swap) averages 15\,ms, well within interactive requirements. Enabling answer verification adds one extra LLM call per question ($\sim$2--3\,s).
+
+\paragraph{Storage and reproducibility.} The SQLite database with FTS5 index adds under 5\,MB per 1{,}000 memory units; extracted memory caches (JSON with structured metadata) average 150\,KB per LoCoMo sample. For every run we persist: (i)~per-round config snapshot, (ii)~complete \texttt{raw\_results.jsonl} containing every question, prediction, reference, every metric, and retrieved sources, (iii)~per-round summary, (iv)~the best-so-far configuration $\theta^\star$ snapshot, versioned alongside the code so that the autonomous trajectory is reproducible across runs, and (v)~extracted memory cache.
+
+\section{Reproducibility}
+\label{app:reproducibility}
+
+\paragraph{Code.} Our implementation is available as a Python package with zero required external dependencies beyond the standard library and SQLite. Optional dependencies include \texttt{sentence-transformers} for semantic embeddings and an LLM API for memory extraction.
+
+\paragraph{Compute.} All experiments were run on a single machine with an Apple M-series CPU (no GPU required for the memory system itself). LLM calls for extraction and diagnosis use GPT-5.1 via Azure OpenAI API. Answer generation uses GPT-4o for all categories. Self-evolution and consolidation are CPU-only operations.
+
+\paragraph{Data.} LoCoMo \citep{maharana2024evaluating} is publicly available. MemBench \citep{membench2025} is publicly available.
+
+\paragraph{Hyperparameters.} All evolvable hyperparameters and their valid ranges are listed in Table~\ref{tab:retrieval_config}. Default values were chosen based on preliminary experiments on a held-out validation set (2 LoCoMo samples) and remained fixed for all reported results.
+
+\section{Prompt Catalog}
+\label{app:prompts}
+
+This appendix presents, verbatim, every LLM prompt used by \ours{}. Curly-brace placeholders (e.g., \texttt{\{context\}}, \texttt{\{question\}}) are substituted at runtime. Prompts are colour-coded by role: \textcolor{blue!70}{blue} = extraction / structural input, \textcolor{violet!70}{violet} = retrieval expansion, \textcolor{orange!80}{orange} = LoCoMo answer generation, \textcolor{teal!70!black}{teal} = MemBench answer generation, \textcolor{green!55!black}{green} = second-pass verification, \textcolor{yellow!50!brown}{yellow-brown} = diagnosis, and \textcolor{gray!70!black}{gray} = meta-evaluation.
+
+\subsection{Extraction: Sliding-Window Memory Extraction}
+\label{app:prompt_extract}
+
+Called once per window $S^{(j)}$ of $W{=}40$ turns. The \{context\} slot receives the tail of the previous window's extractions to avoid duplication.
+
+\begin{tcolorbox}[title={\textbf{Extraction: System + User Prompt}}, breakable, colback=blue!3, colframe=blue!40]
+\small\ttfamily
+You are a professional information extraction assistant.\\
+Extract ALL valuable information from the following dialogue into structured memory entries.\\[0.3em]
+\{context\}\\[0.3em]
+{[Dialogue from \{date\}]}\\
+\{dialogue\_text\}\\[0.3em]
+{[Requirements]}\\
+1. Complete Coverage: Generate entries for ALL facts, events, opinions, plans, feelings.\\
+2. Force Disambiguation: PROHIBIT pronouns (he/she/it/they). Use actual names and absolute dates.\\
+3. Lossless Restatement: Each entry must be complete, independent, self-contained.\\
+4. Extract EVERY specific detail -- no paraphrasing fine-grained facts:\\
+\ \ \ - Named entities: book/movie/song/game titles (keep quotation marks), brand names, places, pet names, nicknames, colors, specific activities, specific numbers.\\
+\ \ \ - Quantities: exact counts, frequencies ("twice", "three times"), durations ("for 3 years", "since 2019").\\
+\ \ \ - Lists: if someone mentions multiple items (books, hobbies, gifts), create ONE entry that lists them ALL.\\
+\ \ \ - Gifts and possessions: for each gift/possession mentioned, create an explicit entry (who gave what to whom, when).\\
+\ \ \ - Facts stated implicitly through dialogue: capture them as direct statements.\\
+5. Cover names, places, objects, opinions, plans, feelings, events, dates, gifts, hobbies, relationships, pets, travel, food, books, art, music, work, family, health.\\[0.3em]
+{[Output Format]}\\
+Return a JSON array:\\
+\lbrack\\
+\ \ \{ "lossless\_restatement": "Complete sentence with all subjects, objects, time, location",\\
+\ \ \ \ \ "keywords": ["keyword1", "keyword2"], "timestamp": "YYYY-MM-DD or null",\\
+\ \ \ \ \ "location": "location or null", "persons": ["name1", "name2"],\\
+\ \ \ \ \ "entities": ["entity1"], "topic": "topic phrase" \}\\
+\rbrack\\[0.3em]
+Return ONLY the JSON array. Extract at least 15 entries (more if the window contains multiple distinct facts). Prioritise completeness over brevity.
+\end{tcolorbox}
+
+\subsection{Retrieval Expansion: Query Decomposition}
+\label{app:prompt_decompose}
+
+Invoked when \texttt{enable\_query\_decomposition} is set (Eq.~\ref{eq:decomp}). \texttt{\{max\_n\}} is bound to \texttt{decomposition\_max\_subqs}.
+
+\begin{tcolorbox}[title={\textbf{Query Decomposition: User Prompt}}, breakable, colback=violet!3, colframe=violet!40]
+\small\ttfamily
+Split this question into 1--\{max\_n\} single-hop sub-questions, each answerable from one piece of evidence. If the original question IS already single-hop, return only the original.\\[0.3em]
+Question: \{question\}\\[0.3em]
+Return JSON list of sub-question strings:\\
+\lbrack "sub1", "sub2", ...\rbrack\\[0.3em]
+Return ONLY the JSON array.
+\end{tcolorbox}
+
+\subsection{Answer Generation: LoCoMo}
+\label{app:prompt_answer_locomo}
+
+LoCoMo uses a category-aware adapter with three branches, all sharing one system message.
+
+\begin{tcolorbox}[title={\textbf{LoCoMo: System Prompt (shared)}}, colback=orange!3, colframe=orange!40]
+\small\ttfamily
+Professional Q\&A assistant. Concise answers grounded in context. JSON output only.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{LoCoMo Cat.~5 Adversarial: User Prompt}}, breakable, colback=orange!3, colframe=orange!40]
+\small\ttfamily
+Answer based on the context.\\[0.3em]
+IMPORTANT: This question may deliberately swap person names. The CONTEXT contains the TRUE information; answer based on the context even if the question names seem off.\\[0.3em]
+Question: \{question\}\\[0.3em]
+Context:\\
+\{context\}\\[0.3em]
+Rules:\\
+1. ALWAYS provide a substantive answer, never 'not specified'.\\
+2. Answer in 1-5 words using exact facts from context.\\[0.3em]
+Return JSON: \{"reasoning":"brief","answer":"concise"\}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{LoCoMo Cat.~3 Inferential (base): User Prompt}}, breakable, colback=orange!3, colframe=orange!40]
+\small\ttfamily
+Question: \{question\}\\[0.3em]
+Context:\\
+\{context\}\\[0.3em]
+This question asks for an INFERENCE or COUNTERFACTUAL judgement (e.g., 'Would X...', 'What would X likely...'). Your job is to synthesize a best-guess answer from the evidence, do NOT refuse.\\[0.3em]
+Rules:\\
+1. NEVER answer 'unknown' / 'not specified' / 'not mentioned'. The answer must always be a substantive judgement.\\
+2. Answer in 1-6 words. Preferred forms:\\
+\ \ \ - 'Would X...' -> 'Likely yes' / 'Likely no' / 'Yes' / 'No' (+ a short reason ONLY if very informative).\\
+\ \ \ - 'What/Which would X...' -> name the most likely option.\\
+3. Choose the option most consistent with the user's stated preferences, history, and values in the context.\\[0.3em]
+Return JSON: \{"reasoning":"brief","answer":"concise"\}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{LoCoMo Cat.~3 Nuanced-Inferential (discovered, 6 subtypes): User Prompt}}, breakable, colback=orange!3, colframe=orange!40]
+\small\ttfamily
+Gated by \texttt{locomo\_cat3\_inferential\_nuanced}. A regex classifier routes each Cat.~3 question to one of six subtypes; each receives a subtype-specific instruction block \texttt{\{specific\}} within a shared template:\\[0.3em]
+Question: \{question\}\\
+Context: \{context\}\\[0.3em]
+\{specific\}\\[0.3em]
+General rules:\\
+1. CRITICAL: NEVER answer 'Unknown', 'Not specified', 'Not mentioned', empty string, or any refusal. Make the MOST PLAUSIBLE guess grounded in the speaker's stated preferences.\\
+2. Prefer exact phrases from context over paraphrased abstract nouns ('Nintendo Switch', not 'a console').\\
+3. For counterfactuals ('would X...'), pick the option most consistent with the speaker's stated preferences.\\
+4. Geography: if the question asks for a STATE / COUNTRY and context only has a CITY / LANDMARK, infer the enclosing jurisdiction.\\
+Return JSON: \{"reasoning":"brief","answer":"<answer>"\}\\[0.5em]
+\normalfont\textbf{Subtype-specific instructions} (abbreviated):\\[0.3em]
+\textbullet\ \textbf{Counting}: enumerate matching events, return spelled-out number (<5) or Arabic digit.\\
+\textbullet\ \textbf{Location-hierarchy}: copy named jurisdiction if in context, else infer from city/landmark.\\
+\textbullet\ \textbf{Open-ended synthesis}: 15--40 word paragraph with hedged claim + supporting details from context.\\
+\textbullet\ \textbf{Either-or}: pick the one option most consistent with stated preferences (NOT 'Yes'/'No').\\
+\textbullet\ \textbf{Yes/No}: default 'Yes'/'No'/'Likely yes'/'Likely no' in 1--3 words; optional clause only for strong counterfactual signal.\\
+\textbullet\ \textbf{Multi-hop default}: copy distinctive noun phrase (1--6 words); optionally append a supporting clause (4--20 words total) when context contains a directly supporting fact.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{LoCoMo Strict answer\_style (evolvable): User Prompt}}, breakable, colback=orange!3, colframe=orange!40]
+\small\ttfamily
+Question: \{question\}\\
+Context: \{context\}\\[0.3em]
+Rules:\\
+1. Answer in 1-10 words. Use EXACT words/phrases from context.\\
+2. Format conventions:\\
+\ \ \ - 'how many/times' -> single Arabic numeral ('2', not 'two').\\
+\ \ \ - 'when' / year questions -> 4-digit year ('2019') or 'YYYY-MM-DD' if date is known; never 'N years ago'.\\
+\ \ \ - 'where' -> place name exactly as in context.\\
+\ \ \ - 'what/who' -> shortest distinctive noun phrase in context.\\
+3. NEVER answer 'Unknown', 'Not specified', 'Not mentioned'. Even if context is indirect, pick the single most plausible answer from what IS mentioned.\\
+4. For multi-item questions (e.g. 'which movies'), list each item separated by a comma.\\[0.3em]
+Return JSON: \{"reasoning":"brief","answer":"concise"\}
+\end{tcolorbox}
+
+\subsection{Answer Generation: MemBench (MCQ)}
+\label{app:prompt_answer_membench}
+
+MemBench is multiple-choice.
+
+\begin{tcolorbox}[title={\textbf{MemBench: System Prompt}}, colback=teal!3, colframe=teal!50]
+\small\ttfamily
+You are a memory-grounded multiple-choice question answerer. You MUST pick exactly ONE letter (A/B/C/D). JSON only.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{MemBench: User Prompt Template}}, breakable, colback=teal!3, colframe=teal!50]
+\small\ttfamily
+Question: \{question\}\\[0.3em]
+Options:\\
+\ \ A) \{opt\_a\}\\
+\ \ B) \{opt\_b\}\\
+\ \ C) \{opt\_c\}\\
+\ \ D) \{opt\_d\}\\[0.3em]
+Context (memory snippets):\\
+\{context\}\\[0.3em]
+Rules:\\
+1. Pick EXACTLY one letter from \{A,B,C,D\}.\\
+2. Base your answer on the context; if context is incomplete still pick the most plausible option.\\
+3. Return JSON: \{"reasoning":"brief","answer":"X"\} where X is a single letter.
+\end{tcolorbox}
+
+\subsection{Answer Verification (Second Pass)}
+\label{app:prompt_verify}
+
+Invoked when \texttt{enable\_answer\_verification} is set (Eq.~\ref{eq:verify}).
+
+\begin{tcolorbox}[title={\textbf{Verifier: System Prompt}}, colback=green!3, colframe=green!40]
+\small\ttfamily
+Answer verifier. JSON output only.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{Verifier Strict (default): User Prompt}}, breakable, colback=green!3, colframe=green!40]
+\small\ttfamily
+Question: \{question\}\\[0.3em]
+Context:\\
+\{context\}\\[0.3em]
+Candidate answer: \{candidate\}\\[0.3em]
+Review the candidate answer. If it says 'Unknown' or 'Not specified', replace it with the most likely answer from the context. Format numbers as Arabic digits, years as YYYY. Keep the answer concise (1-8 words).\\[0.3em]
+Return JSON: \{"reasoning":"brief","answer":"final answer"\}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={\textbf{Verifier Multi-Candidate: Instruction Swap}}, colback=green!3, colframe=green!40]
+\small\ttfamily
+Review the candidate answer. If it is wrong, give the correct answer. If the candidate is 'Unknown' but the context contains any relevant fact, pick the most plausible option. Consider 2-3 candidate answers and pick the best.
+\end{tcolorbox}
+
+\subsection{Diagnosis: LLM-Powered Failure Analysis}
+\label{app:prompt_diagnosis}
+
+Invoked once per evolution round over the per-question raw log $\mathcal{L}_r$ (Eq.~\ref{eq:raw_log}).
+Returns the structured proposal.
+
+\begin{tcolorbox}[title={\textbf{Diagnosis Engine: System + User Prompt}}, breakable, colback=yellow!5, colframe=yellow!50!brown]
+\small\ttfamily
+You are the diagnosis engine of a self-evolving memory system. Your job is to turn evaluation failures into a concrete next-round action that moves the system toward SOTA.\\[0.3em]
+\#\# System Info\\
+- Benchmark: \{benchmark\}\\
+- Total memories: \{total\_memories\}\\
+- Total questions: \{total\_questions\}\\
+- Overall score: \{overall\_f1:.4f\}\\
+- Zero-score count: \{zero\_count\}/\{total\_questions\}\\
+- Current config (JSON): \{current\_config\}\\[0.3em]
+\#\# Failure Analysis Summary\\
+\{failure\_summary\}\\[0.3em]
+\#\# Per-Category Breakdown\\
+\{category\_breakdown\}\\[0.3em]
+\#\# Sample Failures (worst cases)\\
+\{sample\_failures\}\\[0.3em]
+\#\# Tier-1 TODO checklist: levers that are still OFF in the incumbent\\
+\{todo\_checklist\}\\[0.3em]
+\textit{(Dynamically generated: lists each disabled lever whose symptom is present in the current failure data. Prefer picking ONE item per round until empty.)}\\[0.3em]
+chunk\_size\_on\_failure, min\_restatement\_words.\\[0.3em]
+\#\# Decision Rubric\\
+1. If many 'abstention' failures -> raise top\_k, widen max\_context, consider rrf fusion.\\
+2. If many 'wrong answer' failures with high retrieval -> lower max\_context or raise weights for strongest view.\\
+3. If temporal category weakness -> enable time\_decay\_half\_life\_days.\\
+4. If adversarial category weakness -> enable\_entity\_swap=true.\\
+5. If multi-hop weakness -> reflection\_rounds >= 1.\\
+6. If ONE category lags -> per\_category\_overrides (preserve gains elsewhere).\\
+7. Prefer enabling something disabled BEFORE tuning a small int.\\
+8. If residual 'Unknown' or format-mismatch -> enable\_answer\_verification=true.\\
+9. LoCoMo prompt-surface flags are highest-ROI when their symptom matches; propose them early.\\[0.3em]
+\#\# Output\\
+Return JSON with `parameter\_suggestions` as a flat dict of field -> new value. Fields MUST match RetrievalConfig field names exactly. Only include fields you want to change.\\[0.3em]
+\{\{\\
+\ \ "root\_causes": \{\{"extraction\_gap": \{\{...\}\}, "retrieval\_miss": \{\{...\}\}, "answer\_error": \{\{...\}\}\}\},\\
+\ \ "missing\_topics": ["topic1", "topic2"],\\
+\ \ "parameter\_suggestions": \{\{"fusion\_mode": "rrf", "semantic\_top\_k": 15\}\},\\
+\ \ "extraction\_suggestions": \{\{"window\_size": 30\}\},\\
+\ \ "per\_category\_proposals": \{\{"5": \{\{"enable\_entity\_swap": true\}\}\}\},\\
+\ \ "priority\_actions": ["action1", "action2", "action3"]\\
+\}\}\\[0.3em]
+Return ONLY JSON.
+\end{tcolorbox}
+
+

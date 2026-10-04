@@ -1,0 +1,21 @@
+\begin{table}[h]
+    \footnotesize
+    \centering
+    \caption{\textbf{Cost analysis on LoCoMo.}}
+    \label{tab:cost_analysis_chunk}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Setting} & \textbf{L-J} & \textbf{In (K)} & \textbf{Out (K)} & \textbf{Calls} \\
+        \midrule
+        MemoryOS  & 48.64 & 1013 & 165 & 1288 \\
+        A-MEM     & 49.71 & 2850 & 362 & 1548 \\
+        LightMem  & 51.95 & 789  & 209 & 685  \\
+        \midrule
+        \cellcolor{hl-llama}\textbf{Ours} (SS=128)  & \cellcolor{hl-llama}53.14 & \cellcolor{hl-llama}622 & \cellcolor{hl-llama}57 & \cellcolor{hl-llama}376 \\
+        \cellcolor{hl-llama}\textbf{Ours} (SS=256)  & \cellcolor{hl-llama}51.61 & \cellcolor{hl-llama}390 & \cellcolor{hl-llama}19 & \cellcolor{hl-llama}270 \\
+        \cellcolor{hl-llama}\textbf{Ours} (SS=512)  & \cellcolor{hl-llama}53.82 & \cellcolor{hl-llama}249 & \cellcolor{hl-llama}18 & \cellcolor{hl-llama}215 \\
+        \cellcolor{hl-llama}\textbf{Ours} (SS=1024) & \cellcolor{hl-llama}48.11 & \cellcolor{hl-llama}188 & \cellcolor{hl-llama}11 & \cellcolor{hl-llama}187 \\
+        \cellcolor{hl-llama}\textbf{Ours} (SS=2048) & \cellcolor{hl-llama}50.46 & \cellcolor{hl-llama}178 & \cellcolor{hl-llama}10 & \cellcolor{hl-llama}185 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

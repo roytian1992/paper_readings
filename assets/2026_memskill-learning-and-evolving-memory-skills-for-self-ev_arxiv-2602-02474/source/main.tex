@@ -1,0 +1,293 @@
+%%%%%%%% ICML 2026 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2026} with \usepackage[nohyperref]{icml2026} above.
+\usepackage{hyperref}
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+% \usepackage{icml2026}
+
+% For preprint, use
+\PassOptionsToPackage{table}{xcolor}
+\usepackage[preprint]{icml2026}
+
+% If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{icml2026}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+
+
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{pifont}       
+\usepackage{bbding}      
+\usepackage{fontawesome}
+\usepackage{subcaption}
+% \usepackage{tcolorbox}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{mdframed}
+\usepackage[most]{tcolorbox}
+\usepackage{arydshln}
+% \usepackage{lmodern}
+\usepackage{adjustbox}
+\usepackage{wrapfig}
+\usepackage{titletoc}
+
+\usepackage{booktabs,array,colortbl,graphicx}
+
+
+
+\definecolor{table-blue}{RGB}{173, 216, 230}
+\definecolor{row-highlight}{RGB}{220, 230, 242}
+\definecolor{qwen-header}{RGB}{235, 240, 248}
+\definecolor{llama-header}{RGB}{248, 244, 235}
+\definecolor{section-gray}{RGB}{245, 245, 245}
+\definecolor{group-header}{RGB}{230, 235, 245}  
+
+
+\definecolor{zhz_gray}{rgb}{0.8,0.8,0.8}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0} % Custom dark green color
+\definecolor{darkred}{rgb}{0.5, 0.0, 0.0}   % Custom dark red color
+\newcommand{\cmark}{\textcolor{darkgreen}{\ding{51}}}%
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}%
+\newcommand{\wenya}[1]{{\color{blue}[WY: #1]}}
+\newcommand{\zhz}[1]{{\color{red}[ZHZ: #1]}}
+
+
+
+
+\definecolor{row-alt}{RGB}{248, 250, 253}      % very light cool tint
+\definecolor{hl-llama}{RGB}{234, 242, 255}     % soft blue
+\definecolor{hl-qwen}{RGB}{236, 250, 240}      % soft green
+
+
+
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents}
+
+  % It is OKAY to include author information, even for blind submissions: the
+  % style file will automatically remove it for you unless you've provided
+  % the [accepted] option to the icml2026 package.
+
+  % List of affiliations: The first argument should be a (short) identifier you
+  % will use later to specify author affiliations Academic affiliations
+  % should list Department, University, City, Region, Country Industry
+  % affiliations should list Company, City, Region, Country
+
+  % You can specify symbols, otherwise they are numbered in order. Ideally, you
+  % should not use this facility. Affiliations will be numbered in order of
+  % appearance and this is the preferred way.
+  \icmlsetsymbol{equal}{*}
+
+  \begin{icmlauthorlist}
+    \icmlauthor{Haozhen Zhang}{ntu}
+    \icmlauthor{Quanyu Long}{ntu}
+    \icmlauthor{Jianzhu Bao}{ntu}
+    \icmlauthor{Tao Feng}{uiuc}
+    \icmlauthor{Weizhi Zhang}{uic}
+    \icmlauthor{Haodong Yue}{thu}
+    \icmlauthor{Wenya Wang}{ntu}
+    %\icmlauthor{}{sch}
+    % \icmlauthor{Firstname8 Lastname8}{sch}
+    % \icmlauthor{Firstname8 Lastname8}{yyy,comp}
+    %\icmlauthor{}{sch}
+    %\icmlauthor{}{sch}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{ntu}{Nanyang Technological University}
+  \icmlaffiliation{uiuc}{University of Illinois Urbana-Champaign}
+  \icmlaffiliation{uic}{University of Illinois Chicago}
+  \icmlaffiliation{thu}{Tsinghua University}
+
+  \icmlcorrespondingauthor{Haozhen Zhang}{haozhen001@e.ntu.edu.sg}
+  \icmlcorrespondingauthor{Wenya Wang}{wangwy@ntu.edu.sg}
+  % \icmlcorrespondingauthor{Firstname2 Lastname2}{first2.last2@www.uk}
+
+  % You may provide any keywords that you find helpful for describing your
+  % paper; these are used to populate the "keywords" metadata in the PDF but
+  % will not be shown in the document
+  \icmlkeywords{Machine Learning, ICML}
+
+  \vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column listing the
+% affiliations and the copyright notice. The command takes one argument, which
+% is text to display at the start of the footnote. The \icmlEqualContribution
+% command is standard text for equal contribution. Remove it (just {}) if you
+% do not need this facility.
+
+% Use ONE of the following lines. DO NOT remove the command.
+% If you have no special notice, KEEP empty braces:
+\printAffiliationsAndNotice{}  % no special notice (required even if empty)
+% Or, if applicable, use the standard equal contribution text:
+% \printAffiliationsAndNotice{\icmlEqualContribution}
+
+\begin{abstract}
+
+
+
+
+Most Large Language Model (LLM) agent memory systems rely on a small set of static, hand-designed operations for extracting memory. These fixed procedures hard-code human priors about what to store and how to revise memory, making them rigid under diverse interaction patterns and inefficient on long histories.
+To this end, we present \textbf{MemSkill}, which reframes these operations as learnable and evolvable memory skills, structured and reusable routines for extracting, consolidating, and pruning information from interaction traces.
+Inspired by the design philosophy of agent skills, MemSkill employs a \emph{controller} that learns to select a small set of relevant skills, paired with an LLM-based \emph{executor} that produces skill-guided memories.
+Beyond learning skill selection, MemSkill introduces a \emph{designer} that periodically reviews hard cases where selected skills yield incorrect or incomplete memories, and evolves the skill set by proposing refinements and new skills.
+Together, MemSkill forms a closed-loop procedure that improves both the skill-selection policy and the skill set itself.
+Experiments on LoCoMo, LongMemEval, HotpotQA, and ALFWorld demonstrate that MemSkill improves task performance over strong baselines and generalizes well across settings.
+Further analyses shed light on how skills evolve, offering insights toward more adaptive, self-evolving memory management for LLM agents.
+Code is available at \href{https://github.com/ViktorAxelsen/MemSkill}{https://github.com/ViktorAxelsen/MemSkill}
+
+
+
+\end{abstract}
+
+
+
+
+
+\input{0_Intro}
+\input{1_Related}
+\input{2_Method}
+\input{3_Exp}
+\input{4_Conc}
+
+
+
+% \newpage
+
+
+
+
+\section*{Acknowledgements}
+This research/project is supported by the NTU Start-Up Grant (\#023284-00001), Singapore, and the MOE AcRF Tier 1 Seed Grant (RS37/24, \#025041-00001), Singapore.
+
+
+
+
+% \section*{Impact Statement}
+
+
+% MemSkill advances the design of agent memory by shifting emphasis from static, hand-crafted procedures to learnable and evolvable memory skills. This perspective can make long-running LLM agents more practical in settings where interaction histories grow and the information that matters changes over time. By improving how memories are extracted, consolidated, and revised, MemSkill can support more consistent assistance in applications such as multi-session personal assistants, educational tutors, long-form customer support, and interactive research tools, where agents must preserve relevant context while avoiding redundant or stale information.
+
+% Beyond immediate applications, MemSkill also offers a reusable methodology for studying how memory behaviors should be specified and improved. The explicit skill bank provides a concrete interface for inspection and analysis, which may encourage more interpretable and controllable memory systems. More broadly, the idea of iteratively improving memory management behaviors from hard cases can inspire similar self-improvement mechanisms in other agent subsystems, such as tool use or planning, where fixed heuristics remain common.
+
+% As with any memory-enabled agent, responsible use benefits from basic safeguards. For example, deployments should avoid storing unnecessary sensitive information and should provide user-facing controls for memory inspection and removal. These considerations are standard for memory-augmented systems and are not unique to MemSkill, but they become increasingly important as agent memory becomes more effective and widely adopted.
+
+
+
+
+
+
+
+
+
+
+
+% Authors are \textbf{required} to include a statement of the potential broader
+% impact of their work, including its ethical aspects and future societal
+% consequences. This statement should be in an unnumbered section at the end of
+% the paper (co-located with Acknowledgements -- the two may appear in either
+% order, but both must be before References), and does not count toward the paper
+% page limit. In many cases, where the ethical impacts and expected societal
+% implications are those that are well established when advancing the field of
+% Machine Learning, substantial discussion is not required, and a simple
+% statement such as the following will suffice:
+
+% ``This paper presents work whose goal is to advance the field of Machine
+% Learning. There are many potential societal consequences of our work, none
+% which we feel must be specifically highlighted here.''
+
+% The above statement can be used verbatim in such cases, but we encourage
+% authors to think about whether there is content which does warrant further
+% discussion, as this statement will be apparent if the paper is later flagged
+% for ethics review.
+
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+% \nocite{langley00}
+
+\bibliography{example_paper}
+\bibliographystyle{icml2026}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+\appendix
+\onecolumn
+
+
+\input{5_Appendix}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018, and modified by Alexandre Bouchard in
+% 2019 and 2021 and by Csaba Szepesvari, Gang Niu and Sivan Sabato in 2022.
+% Modified again in 2023 and 2024 by Sivan Sabato and Jonathan Scarlett.
+% Previous contributors include Dan Roy, Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.

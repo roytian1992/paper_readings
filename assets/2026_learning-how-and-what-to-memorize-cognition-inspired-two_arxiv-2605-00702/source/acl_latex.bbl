@@ -1,0 +1,368 @@
+\begin{thebibliography}{73}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Alba and Hasher(1983)}]{alba1983memoryschematic}
+Joseph~W Alba and Lynn Hasher. 1983.
+\newblock Is memory schematic?
+\newblock \emph{Psychological Bulletin}, 93(2):203.
+
+\bibitem[{Chen et~al.(2025{\natexlab{a}})Chen, Li, Chang, Huang, Wang, and Li}]{chen2025compress}
+Nuo Chen, Hongguang Li, Jianhui Chang, Juhua Huang, Baoyuan Wang, and Jia Li. 2025{\natexlab{a}}.
+\newblock Compress to impress: Unleashing the potential of compressive memory in real-world long-term conversations.
+\newblock In \emph{Proceedings of the 31st International Conference on Computational Linguistics}, pages 755--773.
+
+\bibitem[{Chen et~al.(2025{\natexlab{b}})Chen, Li, Chang, Huang, Wang, and Li}]{COMEDY}
+Nuo Chen, Hongguang Li, Jianhui Chang, Juhua Huang, Baoyuan Wang, and Jia Li. 2025{\natexlab{b}}.
+\newblock Compress to impress: Unleashing the potential of compressive memory in real-world long-term conversations.
+\newblock In \emph{Proceedings of the 31st International Conference on Computational Linguistics}, pages 755--773.
+
+\bibitem[{Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and Yadav}]{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav. 2025.
+\newblock Mem0: Building production-ready ai agents with scalable long-term memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}.
+
+\bibitem[{Deng et~al.(2026)Deng, Fu, Xu, Wang, Ni, Gao, Li, Liu, Han, Zhao et~al.}]{deng2026enhancing}
+Yimin Deng, Yuqing Fu, Derong Xu, Yejing Wang, Wei Ni, Jingtong Gao, Xiaopeng Li, Chengxu Liu, Xiao Han, Guoshuai Zhao, and 1 others. 2026.
+\newblock Enhancing conversational agents via task-oriented adversarial memory adaptation.
+\newblock \emph{arXiv preprint arXiv:2601.21797}.
+
+\bibitem[{Du et~al.(2024)Du, Wang, Zhao, Liang, Wang, Zhong, Wang, and Wong}]{perltqa}
+Yiming Du, Hongru Wang, Zhengyi Zhao, Bin Liang, Baojun Wang, Wanjun Zhong, Zezhong Wang, and Kam-Fai Wong. 2024.
+\newblock Perltqa: A personal long-term memory dataset for memory classification, retrieval, and fusion in question answering.
+\newblock In \emph{Proceedings of the 10th SIGHAN Workshop on Chinese Language Processing (SIGHAN-10)}, pages 152--164.
+
+\bibitem[{Fang et~al.(2025)Fang, Deng, Xu, Jiang, Tang, Xu, Deng, Yao, Wang, Qiao et~al.}]{fang2025lightmem}
+Jizhan Fang, Xinle Deng, Haoming Xu, Ziyan Jiang, Yuqi Tang, Ziwen Xu, Shumin Deng, Yunzhi Yao, Mengru Wang, Shuofei Qiao, and 1 others. 2025.
+\newblock Lightmem: Lightweight and efficient memory-augmented generation.
+\newblock \emph{arXiv preprint arXiv:2510.18866}.
+
+\bibitem[{Gao et~al.(2025)Gao, Chen, Zhao, Liu, Li, Wang, Wang, Guo, and Tang}]{gao2025llm4rerank}
+Jingtong Gao, Bo~Chen, Xiangyu Zhao, Weiwen Liu, Xiangyang Li, Yichao Wang, Wanyu Wang, Huifeng Guo, and Ruiming Tang. 2025.
+\newblock Llm4rerank: Llm-based auto-reranking framework for recommendations.
+\newblock In \emph{Proceedings of the ACM on Web Conference 2025}, pages 228--239.
+
+\bibitem[{Guti{\'e}rrez et~al.(2025)Guti{\'e}rrez, Shu, Qi, Zhou, and Su}]{hipporag2}
+Bernal~Jim{\'e}nez Guti{\'e}rrez, Yiheng Shu, Weijian Qi, Sizhe Zhou, and Yu~Su. 2025.
+\newblock From rag to memory: Non-parametric continual learning for large language models.
+\newblock \emph{arXiv preprint arXiv:2502.14802}.
+
+\bibitem[{Hu et~al.(2025)Hu, Liu, Yue, Zhang, Liu, Zhu, Lin, Guo, Dou, Xi, Jin, Tan, Yin, Liu, Zhang, Sun, Zhu, Sun, Peng, Cheng, Fan, Guo, Yu, Zhou, Hu, Huo, Wang, Niu, Wang, Yin, Hu, Liao, Li, Wang, Zhou, Liu, Cheng, Zhang, Gui, Pan, Zhang, Torr, Dou, Wen, Huang, Jiang, and Yan}]{hu2025memoryageaiagentssurvey}
+Yuyang Hu, Shichun Liu, Yanwei Yue, Guibin Zhang, Boyang Liu, Fangyi Zhu, Jiahang Lin, Honglin Guo, Shihan Dou, Zhiheng Xi, Senjie Jin, Jiejun Tan, Yanbin Yin, Jiongnan Liu, Zeyu Zhang, Zhongxiang Sun, Yutao Zhu, Hao Sun, Boci Peng, and 28 others. 2025.
+\newblock \href {https://arxiv.org/abs/2512.13564} {Memory in the age of ai agents}.
+\newblock \emph{Preprint}, arXiv:2512.13564.
+
+\bibitem[{Jia et~al.(2024)Jia, Liu, Zhao, Li, Hao, Wang, and Yin}]{jia2024mill}
+Pengyue Jia, Yiding Liu, Xiangyu Zhao, Xiaopeng Li, Changying Hao, Shuaiqiang Wang, and Dawei Yin. 2024.
+\newblock Mill: Mutual verification with large language models for zero-shot query expansion.
+\newblock In \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)}, pages 2498--2518.
+
+\bibitem[{Jiang et~al.(2025{\natexlab{a}})Jiang, Hao, Cho, Li, Yuan, Chen, Ungar, Taylor, and Roth}]{personamem}
+Bowen Jiang, Zhuoqun Hao, Young-Min Cho, Bryan Li, Yuan Yuan, Sihao Chen, Lyle Ungar, Camillo~J Taylor, and Dan Roth. 2025{\natexlab{a}}.
+\newblock Know me, respond to me: Benchmarking llms for dynamic user profiling and personalized responses at scale.
+\newblock \emph{arXiv preprint arXiv:2504.14225}.
+
+\bibitem[{Jiang et~al.(2025{\natexlab{b}})Jiang, Yuan, Shen, Hao, Xu, Chen, Liu, Vijjini, He, Yu et~al.}]{jiang2025personamemv2}
+Bowen Jiang, Yuan Yuan, Maohao Shen, Zhuoqun Hao, Zhangchen Xu, Zichen Chen, Ziyi Liu, Anvesh~Rao Vijjini, Jiashu He, Hanchao Yu, and 1 others. 2025{\natexlab{b}}.
+\newblock Personamem-v2: Towards personalized intelligence via learning implicit user personas and agentic memory.
+\newblock \emph{arXiv preprint arXiv:2512.06688}.
+
+\bibitem[{Kim et~al.(2024)Kim, Ong, Kwon, Kim, Ka, Bae, Jo, Hwang, Lee, Yeo et~al.}]{kim2024theanine}
+Seo~Hyun Kim, Tzu-iunn Ong, Taeyoon Kwon, Namyoung Kim, Keummin Ka, SeongHyeon Bae, Yohan Jo, Seung-won Hwang, Dongha Lee, Jinyoung Yeo, and 1 others. 2024.
+\newblock Theanine: Revisiting memory management in long-term conversations with timeline-augmented response generation.
+\newblock \emph{arXiv e-prints}, pages arXiv--2406.
+
+\bibitem[{Lee et~al.(2024)Lee, Chen, Furuta, Canny, and Fischer}]{ReadAgent}
+Kuang-Huei Lee, Xinyun Chen, Hiroki Furuta, John Canny, and Ian Fischer. 2024.
+\newblock A human-inspired reading agent with gist memory of very long contexts.
+\newblock \emph{arXiv preprint arXiv:2402.09727}.
+
+\bibitem[{Li et~al.(2024{\natexlab{a}})Li, Yang, Zhang, Deng, Wang, and Chua}]{LD-Agent}
+Hao Li, Chenghao Yang, An~Zhang, Yang Deng, Xiang Wang, and Tat-Seng Chua. 2024{\natexlab{a}}.
+\newblock Hello again! llm-powered personalized agent for long-term dialogue.
+\newblock \emph{arXiv preprint arXiv:2406.05925}.
+
+\bibitem[{Li et~al.(2024{\natexlab{b}})Li, Wen, Wang, Li, Yuan, Liu, Liu, Xu, Wang, Sun et~al.}]{li2024personalsurvey}
+Yuanchun Li, Hao Wen, Weijun Wang, Xiangyu Li, Yizhen Yuan, Guohong Liu, Jiacheng Liu, Wenxing Xu, Xiang Wang, Yi~Sun, and 1 others. 2024{\natexlab{b}}.
+\newblock Personal llm agents: Insights and survey about the capability, efficiency and security.
+\newblock \emph{arXiv preprint arXiv:2401.05459}.
+
+\bibitem[{Li et~al.(2025{\natexlab{a}})Li, Cai, Kong, Chen, Chen, Yang, Zhang, Li, Wu, Chen et~al.}]{li2025towards}
+Yuchen Li, Hengyi Cai, Rui Kong, Xinran Chen, Jiamin Chen, Jun Yang, Haojie Zhang, Jiayi Li, Jiayi Wu, Yiqun Chen, and 1 others. 2025{\natexlab{a}}.
+\newblock Towards ai search paradigm.
+\newblock \emph{arXiv preprint arXiv:2506.17188}.
+
+\bibitem[{Li et~al.(2025{\natexlab{b}})Li, Song, Xi, Wang, Tang, Niu, Chen, Yang, Li, Yu et~al.}]{li2025memos}
+Zhiyu Li, Shichao Song, Chenyang Xi, Hanyu Wang, Chen Tang, Simin Niu, Ding Chen, Jiawei Yang, Chunyu Li, Qingchen Yu, and 1 others. 2025{\natexlab{b}}.
+\newblock Memos: A memory os for ai system.
+\newblock \emph{arXiv preprint arXiv:2507.03724}.
+
+\bibitem[{Liu et~al.(2023)Liu, Yang, Shen, Hu, Zhang, Gu, and Zhang}]{Think-in-memory}
+Lei Liu, Xiaoyan Yang, Yue Shen, Binbin Hu, Zhiqiang Zhang, Jinjie Gu, and Guannan Zhang. 2023.
+\newblock Think-in-memory: Recalling and post-thinking enable llms with long-term memory.
+\newblock \emph{arXiv preprint arXiv:2311.08719}.
+
+\bibitem[{Liu et~al.(2025)Liu, Zhao, Wang, Wang, Zhang, Sun, Li, Wang, Jia, Chen et~al.}]{liu2025large}
+Qidong Liu, Xiangyu Zhao, Yuhao Wang, Yejing Wang, Zijian Zhang, Yuqi Sun, Xiang Li, Maolin Wang, Pengyue Jia, Chong Chen, and 1 others. 2025.
+\newblock Large language model enhanced recommender systems: Methods, applications and trends.
+\newblock In \emph{Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V. 2}, pages 6096--6106.
+
+\bibitem[{Long et~al.(2025)Long, He, Ye, Pan, Lin, Li, Zhao, and Li}]{m3-agent}
+Lin Long, Yichen He, Wentao Ye, Yiyuan Pan, Yuan Lin, Hang Li, Junbo Zhao, and Wei Li. 2025.
+\newblock Seeing, listening, remembering, and reasoning: A multimodal agent with long-term memory.
+\newblock \emph{arXiv preprint arXiv:2508.09736}.
+
+\bibitem[{Lu et~al.(2023)Lu, An, Lin, Pergola, He, Yin, Sun, and Wu}]{memochat}
+Junru Lu, Siyu An, Mingbao Lin, Gabriele Pergola, Yulan He, Di~Yin, Xing Sun, and Yunsheng Wu. 2023.
+\newblock Memochat: Tuning llms to use memos for consistent long-range open-domain conversation.
+\newblock \emph{arXiv preprint arXiv:2308.08239}.
+
+\bibitem[{Ouyang et~al.(2025)Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le, Daruki, Tang et~al.}]{ouyang2025reasoningbank}
+Siru Ouyang, Jun Yan, I~Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han, Long~T Le, Samira Daruki, Xiangru Tang, and 1 others. 2025.
+\newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
+\newblock \emph{arXiv preprint arXiv:2509.25140}.
+
+\bibitem[{Packer et~al.(2023)Packer, Wooders, Lin, Fang, Patil, Stoica, and Gonzalez}]{packer2023memgpt}
+Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir~G. Patil, Ion Stoica, and Joseph~E. Gonzalez. 2023.
+\newblock {MemGPT}: Towards llms as operating systems.
+\newblock \emph{arXiv preprint arXiv:2310.08560}.
+
+\bibitem[{Pan et~al.(2025)Pan, Wu, Jiang, Luo, Cheng, Li, Yang, Lin, Zhao, Qiu, and Gao}]{secom}
+Zhuoshi Pan, Qianhui Wu, Huiqiang Jiang, Xufang Luo, Hao Cheng, Dongsheng Li, Yuqing Yang, Chin-Yew Lin, H.~Vicky Zhao, Lili Qiu, and Jianfeng Gao. 2025.
+\newblock Secom: On memory construction and retrieval for personalized conversational agents.
+\newblock In \emph{The Thirteenth International Conference on Learning Representations}.
+
+\bibitem[{Pryzant et~al.(2023)Pryzant, Iter, Li, Lee, Zhu, and Zeng}]{pryzant2023automatic}
+Reid Pryzant, Dan Iter, Jerry Li, Yin Lee, Chenguang Zhu, and Michael Zeng. 2023.
+\newblock Automatic prompt optimization with “gradient descent” and beam search.
+\newblock In \emph{Proceedings of the 2023 conference on empirical methods in natural language processing}, pages 7957--7968.
+
+\bibitem[{Qian et~al.(2025)Qian, Liu, Zhang, Mao, Lian, Dou, and Huang}]{memorag}
+Hongjin Qian, Zheng Liu, Peitian Zhang, Kelong Mao, Defu Lian, Zhicheng Dou, and Tiejun Huang. 2025.
+\newblock \href {https://arxiv.org/abs/2409.05591} {Memorag: Boosting long context processing with global memory-enhanced retrieval augmentation}.
+\newblock \emph{Preprint}, arXiv:2409.05591.
+
+\bibitem[{Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and Chalef}]{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef. 2025.
+\newblock Zep: a temporal knowledge graph architecture for agent memory.
+\newblock \emph{arXiv preprint arXiv:2501.13956}.
+
+\bibitem[{Rezazadeh et~al.(2024)Rezazadeh, Li, Wei, and Bao}]{memtree}
+Alireza Rezazadeh, Zichao Li, Wei Wei, and Yujia Bao. 2024.
+\newblock From isolated conversations to hierarchical schemas: Dynamic tree memory representation for llms.
+\newblock \emph{arXiv preprint arXiv:2410.14052}.
+
+\bibitem[{Sarthi et~al.(2024)Sarthi, Abdullah, Tuli, Khanna, Goldie, and Manning}]{raptor}
+Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, and Christopher~D Manning. 2024.
+\newblock {RAPTOR}: Recursive abstractive processing for tree-organized retrieval.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}.
+
+\bibitem[{Shinn et~al.(2023)Shinn, Cassano, Gopinath, Narasimhan, and Yao}]{shinn2023reflexion}
+Noah Shinn, Federico Cassano, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. 2023.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock \emph{Advances in neural information processing systems}, 36:8634--8652.
+
+\bibitem[{Tan et~al.(2025{\natexlab{a}})Tan, Yang, Liu, Liu, RN, Awalgaonkar, Zhang, Yao, Zhu, Kokane et~al.}]{tan2025personabench}
+Juntao Tan, Liangwei Yang, Zuxin Liu, Zhiwei Liu, Rithesh RN, Tulika~Manoj Awalgaonkar, Jianguo Zhang, Weiran Yao, Ming Zhu, Shirley Kokane, and 1 others. 2025{\natexlab{a}}.
+\newblock Personabench: Evaluating ai models on understanding personal information through accessing (synthetic) private user data.
+\newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2025}, pages 878--893.
+
+\bibitem[{Tan et~al.(2025{\natexlab{b}})Tan, Yan, Hsu, Han, Wang, Le, Song, Chen, Palangi, Lee et~al.}]{RMM}
+Zhen Tan, Jun Yan, I~Hsu, Rujun Han, Zifeng Wang, Long~T Le, Yiwen Song, Yanfei Chen, Hamid Palangi, George Lee, and 1 others. 2025{\natexlab{b}}.
+\newblock In prospect and retrospect: Reflective memory management for long-term personalized dialogue agents.
+\newblock \emph{arXiv preprint arXiv:2503.08026}.
+
+\bibitem[{Tang et~al.(2025{\natexlab{a}})Tang, Qin, Peng, Zhou, Shao, Du, Wei, Xia, Wu, Zhu et~al.}]{tang2025agentkb}
+Xiangru Tang, Tianrui Qin, Tianhao Peng, Ziyang Zhou, Daniel Shao, Tingting Du, Xinming Wei, Peng Xia, Fang Wu, He~Zhu, and 1 others. 2025{\natexlab{a}}.
+\newblock Agent kb: Leveraging cross-domain experience for agentic problem solving.
+\newblock \emph{arXiv preprint arXiv:2507.06229}.
+
+\bibitem[{Tang et~al.(2025{\natexlab{b}})Tang, Wang, Zhao, Lu, Li, and Wen}]{tang2025unleashing}
+Xinyu Tang, Xiaolei Wang, Wayne~Xin Zhao, Siyuan Lu, Yaliang Li, and Ji-Rong Wen. 2025{\natexlab{b}}.
+\newblock Unleashing the potential of large language models as prompt optimizers: Analogical analysis with gradient-based model optimizers.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~39, pages 25264--25272.
+
+\bibitem[{Team(2023)}]{SumMem}
+LangChain Team. 2023.
+\newblock Conversation summary memory.
+
+\bibitem[{Teyler and DiScenna(1986)}]{teyler1986hippocampal}
+Timothy~J Teyler and Pascal DiScenna. 1986.
+\newblock The hippocampal memory indexing theory.
+\newblock \emph{Behavioral neuroscience}, 100(2):147.
+
+\bibitem[{Wang et~al.(2025{\natexlab{a}})Wang, Fu, Cao, Wang, Tian, and Ding}]{RecurSum}
+Qingyue Wang, Yanhe Fu, Yanan Cao, Shuai Wang, Zhiliang Tian, and Liang Ding. 2025{\natexlab{a}}.
+\newblock Recursively summarizing enables long-term dialogue memory in large language models.
+\newblock \emph{Neurocomputing}, page 130193.
+
+\bibitem[{Wang et~al.(2020)Wang, Wei, Dong, Bao, Yang, and Zhou}]{wang2020minilm}
+Wenhui Wang, Furu Wei, Li~Dong, Hangbo Bao, Nan Yang, and Ming Zhou. 2020.
+\newblock Minilm: Deep self-attention distillation for task-agnostic compression of pre-trained transformers.
+\newblock \emph{Advances in neural information processing systems}, 33:5776--5788.
+
+\bibitem[{Wang and Chen(2025)}]{wang2025mirix}
+Yu~Wang and Xi~Chen. 2025.
+\newblock Mirix: Multi-agent memory system for llm-based agents.
+\newblock \emph{arXiv preprint arXiv:2507.07957}.
+
+\bibitem[{Wang et~al.(2025{\natexlab{b}})Wang, Takanobu, Liang, Mao, Hu, McAuley, and Wu}]{wang2025memalpha}
+Yu~Wang, Ryuichi Takanobu, Zhiqi Liang, Yuzhen Mao, Yuanzhe Hu, Julian McAuley, and Xiaojian Wu. 2025{\natexlab{b}}.
+\newblock Mem-$\{$$\backslash$alpha$\}$: Learning memory construction via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2509.25911}.
+
+\bibitem[{Wang et~al.(2025{\natexlab{c}})Wang, Mao, Fried, and Neubig}]{AWM}
+Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig. 2025{\natexlab{c}}.
+\newblock \href {https://openreview.net/forum?id=NTAhi2JEEE} {Agent workflow memory}.
+\newblock In \emph{Forty-second International Conference on Machine Learning}.
+
+\bibitem[{Wen et~al.(2024)Wen, Liang, Sierra, Luckin, Tong, Liu, Cui, and Tang}]{AI4EDU}
+Qingsong Wen, Jing Liang, Carles Sierra, Rose Luckin, Richard Tong, Zitao Liu, Peng Cui, and Jiliang Tang. 2024.
+\newblock \href {https://doi.org/10.1145/3637528.3671498} {Ai for education (ai4edu): Advancing personalized education with llm and adaptive learning}.
+\newblock In \emph{Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining}, KDD '24, page 6743–6744, New York, NY, USA. Association for Computing Machinery.
+
+\bibitem[{Wu et~al.(2025)Wu, Liang, Zhang, Wang, Zhang, Guo, Tang, and Liu}]{wu2025humansurveymemory}
+Yaxiong Wu, Sheng Liang, Chen Zhang, Yichao Wang, Yongyue Zhang, Huifeng Guo, Ruiming Tang, and Yong Liu. 2025.
+\newblock From human memory to ai memory: A survey on memory mechanisms in the era of llms.
+\newblock \emph{arXiv preprint arXiv:2504.15965}.
+
+\bibitem[{Xu et~al.(2025{\natexlab{a}})Xu, Li, Zhang, Lin, Zhu, Zheng, Wu, Zhao, Xu, and Chen}]{xu2025harnessing}
+Derong Xu, Xinhang Li, Ziheng Zhang, Zhenxi Lin, Zhihong Zhu, Zhi Zheng, Xian Wu, Xiangyu Zhao, Tong Xu, and Enhong Chen. 2025{\natexlab{a}}.
+\newblock Harnessing large language models for knowledge graph question answering via adaptive multi-aspect retrieval-augmentation.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~39, pages 25570--25578.
+
+\bibitem[{Xu et~al.(2026)Xu, Wen, Jia, Zhang, Zhang, Wang, Guo, Tang, Zhao, Chen, and Xu}]{xu2026from}
+Derong Xu, Yi~Wen, Pengyue Jia, Yingyi Zhang, Wenlin Zhang, Yichao Wang, Huifeng Guo, Ruiming Tang, Xiangyu Zhao, Enhong Chen, and Tong Xu. 2026.
+\newblock \href {https://openreview.net/forum?id=i2yIvZARnG} {From single to multi-granularity: Toward long-term memory association and selection of conversational agents}.
+\newblock In \emph{The Fourteenth International Conference on Learning Representations}.
+
+\bibitem[{Xu et~al.(2024)Xu, Zhang, Lin, Wu, Zhu, Xu, Zhao, Zheng, and Chen}]{xu-etal-2024-multi}
+Derong Xu, Ziheng Zhang, Zhenxi Lin, Xian Wu, Zhihong Zhu, Tong Xu, Xiangyu Zhao, Yefeng Zheng, and Enhong Chen. 2024.
+\newblock \href {https://aclanthology.org/2024.lrec-main.1044/} {Multi-perspective improvement of knowledge graph completion with large language models}.
+\newblock In \emph{Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING 2024)}, pages 11956--11968, Torino, Italia. ELRA and ICCL.
+
+\bibitem[{Xu et~al.(2023)Xu, Shi, and Choi}]{recomp}
+Fangyuan Xu, Weijia Shi, and Eunsol Choi. 2023.
+\newblock Recomp: Improving retrieval-augmented lms with compression and selective augmentation.
+\newblock \emph{arXiv preprint arXiv:2310.04408}.
+
+\bibitem[{Xu et~al.(2025{\natexlab{b}})Xu, Mei, Gao, Tan, Liang, and Zhang}]{xu2025amem}
+Wujiang Xu, Kai Mei, Hang Gao, Juntao Tan, Zujie Liang, and Yongfeng Zhang. 2025{\natexlab{b}}.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}.
+
+\bibitem[{Yan et~al.(2025)Yan, Yang, Huang, Nie, Ding, Li, Ma, Kersting, Pan, Sch{\"u}tze et~al.}]{memory-r1}
+Sikuan Yan, Xiufeng Yang, Zuchao Huang, Ercong Nie, Zifeng Ding, Zonggen Li, Xiaowen Ma, Kristian Kersting, Jeff~Z Pan, Hinrich Sch{\"u}tze, and 1 others. 2025.
+\newblock Memory-r1: Enhancing large language model agents to manage and utilize memories via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2508.19828}.
+
+\bibitem[{Yang et~al.(2024)Yang, Yang, Zhang, Hui, Zheng, Yu, Li, Liu, Huang, Wei et~al.}]{yang2024qwen2}
+An~Yang, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo~Zheng, Bowen Yu, Chengyuan Li, Dayiheng Liu, Fei Huang, Haoran Wei, and 1 others. 2024.
+\newblock Qwen2. 5 technical report.
+\newblock \emph{arXiv preprint arXiv:2412.15115}.
+
+\bibitem[{Yang et~al.(2023)Yang, Wang, Lu, Liu, Le, Zhou, and Chen}]{yang2023large}
+Chengrun Yang, Xuezhi Wang, Yifeng Lu, Hanxiao Liu, Quoc~V Le, Denny Zhou, and Xinyun Chen. 2023.
+\newblock Large language models as optimizers.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}.
+
+\bibitem[{Yen et~al.(2024)Yen, Gao, and Chen}]{parallelencoding}
+Howard Yen, Tianyu Gao, and Danqi Chen. 2024.
+\newblock Long-context language modeling with parallel context encoding.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 2588--2610.
+
+\bibitem[{Yu et~al.(2025)Yu, Chen, Feng, Chen, Dai, Yu, Zhang, Ma, Liu, Wang et~al.}]{yu2025memagent}
+Hongli Yu, Tinghong Chen, Jiangtao Feng, Jiangjie Chen, Weinan Dai, Qiying Yu, Ya-Qin Zhang, Wei-Ying Ma, Jingjing Liu, Mingxuan Wang, and 1 others. 2025.
+\newblock Memagent: Reshaping long-context llm with multi-conv rl-based memory agent.
+\newblock \emph{arXiv preprint arXiv:2507.02259}.
+
+\bibitem[{Yuan et~al.(2025)Yuan, Lou, Li, Chen, Lu, Lin, Sun, Zhang, and Han}]{yuan2025memsearcher}
+Qianhao Yuan, Jie Lou, Zichao Li, Jiawei Chen, Yaojie Lu, Hongyu Lin, Le~Sun, Debing Zhang, and Xianpei Han. 2025.
+\newblock Memsearcher: Training llms to reason, search and manage memory via end-to-end reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2511.02805}.
+
+\bibitem[{Yuksekgonul et~al.(2025)Yuksekgonul, Bianchi, Boen, Liu, Lu, Huang, Guestrin, and Zou}]{yuksekgonul2025optimizing}
+Mert Yuksekgonul, Federico Bianchi, Joseph Boen, Sheng Liu, Pan Lu, Zhi Huang, Carlos Guestrin, and James Zou. 2025.
+\newblock Optimizing generative ai by backpropagating language model feedback.
+\newblock \emph{Nature}, 639(8055):609--616.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{a}})Zhang, Zhang, Wu, Wu, Xu, Zhao, Gao, Hu, and Chen}]{zhang2025notellm}
+Chao Zhang, Haoxin Zhang, Shiwei Wu, Di~Wu, Tong Xu, Xiangyu Zhao, Yan Gao, Yao Hu, and Enhong Chen. 2025{\natexlab{a}}.
+\newblock Notellm-2: Multimodal large representation models for recommendation.
+\newblock In \emph{Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V. 1}, pages 2815--2826.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{b}})Zhang, Fu, Wang, Wan, Yu, and YAN}]{zhang2025gmemory}
+Guibin Zhang, Muxin Fu, Kun Wang, Guancheng Wan, Miao Yu, and Shuicheng YAN. 2025{\natexlab{b}}.
+\newblock \href {https://openreview.net/forum?id=mmIAp3cVS0} {G-memory: Tracing hierarchical memory for multi-agent systems}.
+\newblock In \emph{The Thirty-ninth Annual Conference on Neural Information Processing Systems}.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{c}})Zhang, Fu, and Yan}]{zhang2025memgen}
+Guibin Zhang, Muxin Fu, and Shuicheng Yan. 2025{\natexlab{c}}.
+\newblock Memgen: Weaving generative latent memory for self-evolving agents.
+\newblock \emph{arXiv preprint arXiv:2509.24704}.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{d}})Zhang, Geng, Yu, Yin, Zhang, Tan, Zhou, Li, Xue, Li, Zhou, Chen, Zhang, Fan, Wang, Huang, Piedrahita-Velez, Liao, Wang, Yang, Ji, Wang, Yan, Torr, and Bai}]{agentrlsurvey}
+Guibin Zhang, Hejia Geng, Xiaohang Yu, Zhenfei Yin, Zaibin Zhang, Zelin Tan, Heng Zhou, Zhongzhi Li, Xiangyuan Xue, Yijiang Li, Yifan Zhou, Yang Chen, Chen Zhang, Yutao Fan, Zihu Wang, Songtao Huang, Francisco Piedrahita-Velez, Yue Liao, Hongru Wang, and 6 others. 2025{\natexlab{d}}.
+\newblock \href {https://arxiv.org/abs/2509.02547} {The landscape of agentic reinforcement learning for llms: A survey}.
+\newblock \emph{Preprint}, arXiv:2509.02547.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{a}})Zhang, Xiang, Yu, Teng, Chen, Chen, Zhuge, Cheng, Hong, Wang et~al.}]{zhang2024aflow}
+Jiayi Zhang, Jinyu Xiang, Zhaoyang Yu, Fengwei Teng, Xionghui Chen, Jiaqi Chen, Mingchen Zhuge, Xin Cheng, Sirui Hong, Jinlin Wang, and 1 others. 2024{\natexlab{a}}.
+\newblock Aflow: Automating agentic workflow generation.
+\newblock \emph{arXiv preprint arXiv:2410.10762}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{b}})Zhang, Jin, Hu, Li, Kang, Luo, Song, and Wang}]{zhang2024revolve}
+Peiyan Zhang, Haibo Jin, Leyang Hu, Xinnuo Li, Liying Kang, Man Luo, Yangqiu Song, and Haohan Wang. 2024{\natexlab{b}}.
+\newblock Revolve: Optimizing ai systems by tracking response evolution in textual optimization.
+\newblock \emph{arXiv preprint arXiv:2412.03092}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{c}})Zhang, Zhang, Liu, Song, Wang, Krishna, and Wu}]{zhang2024offline}
+Shaokun Zhang, Jieyu Zhang, Jiale Liu, Linxin Song, Chi Wang, Ranjay Krishna, and Qingyun Wu. 2024{\natexlab{c}}.
+\newblock Offline training of language model agents with functions as learnable weights.
+\newblock In \emph{Forty-first International Conference on Machine Learning}.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{e}})Zhang, Zhang, Zhang, Yang, Shang, Wei, Zou, Huang, Wang, Gao, Pan, Xiong, Liu, Yu, and Li}]{zhang2025personaagent}
+Weizhi Zhang, Xinyang Zhang, Chenwei Zhang, Liangwei Yang, Jingbo Shang, Zhepei Wei, Henry~Peng Zou, Zijie Huang, Zhengyang Wang, Yifan Gao, Xiaoman Pan, Lian Xiong, Jingguo Liu, Philip~S. Yu, and Xian Li. 2025{\natexlab{e}}.
+\newblock Personaagent: When large language model agents meet personalization at test time.
+\newblock In \emph{First Workshop on Multi-Turn Interactions in Large Language Models}.
+
+\bibitem[{Zhang et~al.(2026{\natexlab{a}})Zhang, Jia, Xu, Wen, Li, Wang, Zhang, Li, Gan, Guo et~al.}]{zhang2026personalize}
+Yingyi Zhang, Pengyue Jia, Derong Xu, Yi~Wen, Xianneng Li, Yichao Wang, Wenlin Zhang, Xiaopeng Li, Weinan Gan, Huifeng Guo, and 1 others. 2026{\natexlab{a}}.
+\newblock Personalize before retrieve: Llm-based personalized query expansion for user-centric retrieval.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~40, pages 16406--16414.
+
+\bibitem[{Zhang et~al.(2026{\natexlab{b}})Zhang, Li, Zhang, Jia, Li, Wang, Xu, Wen, Guo, Liu, and Zhao}]{zhang2026evoking}
+Yingyi Zhang, Junyi Li, Wenlin Zhang, Pengyue Jia, Xianneng Li, Yichao Wang, Derong Xu, Yi~Wen, Huifeng Guo, Yong Liu, and Xiangyu Zhao. 2026{\natexlab{b}}.
+\newblock \href {https://openreview.net/forum?id=f7p0F2X6XN} {Evoking user memory: Personalizing {LLM} via recollection-familiarity adaptive retrieval}.
+\newblock In \emph{The Fourteenth International Conference on Learning Representations}.
+
+\bibitem[{Zhang et~al.(2025{\natexlab{f}})Zhang, Shu, Ma, Lin, Wu, and Sang}]{zhang2025MemoryasAction}
+Yuxiang Zhang, Jiangming Shu, Ye~Ma, Xueyuan Lin, Shangxi Wu, and Jitao Sang. 2025{\natexlab{f}}.
+\newblock Memory as action: Autonomous context curation for long-horizon agentic tasks.
+\newblock \emph{arXiv preprint arXiv:2510.12635}.
+
+\bibitem[{Zhang et~al.(2024{\natexlab{d}})Zhang, Bo, Ma, Li, Chen, Dai, Zhu, Dong, and Wen}]{zhang2024survey_memoery}
+Zeyu Zhang, Xiaohe Bo, Chen Ma, Rui Li, Xu~Chen, Quanyu Dai, Jieming Zhu, Zhenhua Dong, and Ji-Rong Wen. 2024{\natexlab{d}}.
+\newblock A survey on the memory mechanism of large language model based agents.
+\newblock \emph{arXiv preprint arXiv:2404.13501}.
+
+\bibitem[{Zhao et~al.(2024)Zhao, Huang, Xu, Lin, Liu, and Huang}]{zhao2024expel}
+Andrew Zhao, Daniel Huang, Quentin Xu, Matthieu Lin, Yong-Jin Liu, and Gao Huang. 2024.
+\newblock Expel: Llm agents are experiential learners.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~38, pages 19632--19642.
+
+\bibitem[{Zhao et~al.(2025)Zhao, Hong, Liu, Hazarika, and Lin}]{prefeval}
+Siyan Zhao, Mingyi Hong, Yang Liu, Devamanyu Hazarika, and Kaixiang Lin. 2025.
+\newblock Do llms recognize your preferences? evaluating personalized preference following in llms.
+\newblock \emph{arXiv preprint arXiv:2502.09597}.
+
+\bibitem[{Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang}]{memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang. 2024.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~38, pages 19724--19731.
+
+\bibitem[{Zhou et~al.(2025)Zhou, Qu, Wu, Kim, Prakash, Rus, Zhao, Low, and Liang}]{zhou2025mem1}
+Zijian Zhou, Ao~Qu, Zhaoxuan Wu, Sunghwan Kim, Alok Prakash, Daniela Rus, Jinhua Zhao, Bryan Kian~Hsiang Low, and Paul~Pu Liang. 2025.
+\newblock Mem1: Learning to synergize memory and reasoning for efficient long-horizon agents.
+\newblock \emph{arXiv preprint arXiv:2506.15841}.
+
+\end{thebibliography}

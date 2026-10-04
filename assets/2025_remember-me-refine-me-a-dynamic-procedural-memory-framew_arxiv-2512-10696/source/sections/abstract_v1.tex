@@ -1,0 +1,9 @@
+\begin{abstract}
+Procedural memory enables agents to internalize past experiences for enhanced decision-making, yet existing systems predominantly adopt a passive ``store-and-retrieve'' paradigm.
+This approach inevitably leads to \textit{memory degradation}, where the accumulation of redundant or obsolete interactions dilutes critical reasoning signals and hinders adaptation in non-stationary environments.
+To address this, we propose \textbf{\ours} (\textit{Remember Me, Refine Me}), a dynamic framework that shifts the focus from raw retention to \textbf{feedback-driven experience evolution}.
+Instead of indiscriminately archiving interactions, {\ours} employs a \textbf{contrastive distillation strategy}, analyzing the divergence between successful and failed attempts to extract high-value causal insights.
+Crucially, to maintain memory vitality, we introduce a \textbf{utility-based refinement mechanism} that autonomously reinforces validated strategies while pruning ineffective entries, coupled with a \textbf{failure-aware reflection} protocol to adapt memories during distinct task failures.
+Experiments on BFCL-V3 and AppWorld demonstrate that {\ours} establishes a new state-of-the-art, achieving average gains of 10.65\% in Avg@4.
+Notably, our framework enables a Qwen3-8B agent to outperform a parameter-heavier Qwen3-14B baseline, highlighting that self-evolving memory offers a compute-efficient pathway to transcend model scaling limitations.
+\end{abstract}

@@ -1,0 +1,801 @@
+\section{Form: What Carries Memory?}
+\label{sec:what-memory}
+As a starting point for organizing prior work, we begin by examining the most fundamental representational units out of which agent memory can be constructed. We first try to answer: what architectural or representational forms can agent memory take?
+
+Across diverse agent systems, memory is not realized through a single, unified structure. Instead, different task settings call for different storage forms, each with its own structural properties. These architectures endow memory with distinct capabilities, shaping how an agent accumulates information over interactions and maintains behavioral consistency. They ultimately enable memory to fulfill its intended roles across varied task scenarios.
+
+Based on where memory resides and in what form it is represented, we organize these memories into three categories:
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Major Memory Forms}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+\begin{enumerate}
+    \item \textbf{Token-level Memory} (\Cref{ssec:token}): Memory organized as explicit and discrete units that can be individually accessed, modified, and reconstructed. These units remain externally visible and can be stored in a structured form over time.
+    
+    \item \textbf{Parametric Memory} (\Cref{ssec:parametric}): Memory stored within the model parameters, where information is encoded through the statistical patterns of the parameter space and accessed implicitly during forward computation.
+
+    \item \textbf{Latent Memory} (\Cref{ssec:latent}): Memory represented in the model’s internal hidden states, continuous representations, or evolving latent structures. It can persist and update during inference or across interaction cycles, capturing context-dependent internal states.
+\end{enumerate}
+\end{tcolorbox}
+
+
+
+
+The three memory forms outlined above establish the core structural framework for understanding ``what carries memory''. Each form organizes, stores, and updates information in its own way, giving rise to distinct representational patterns and operational behaviors. With this structural taxonomy in place, we can more systematically examine why agents need memory (\Cref{sec:why-memory}) and how memory evolves, adapts, and shapes agent behavior over sustained interactions (\Cref{sec:how-memory}). This classification provides the conceptual foundation for the discussions that follow.
+
+\subsection{Token-level Memory}\label{ssec:token}
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Definition of Token-level Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+Token-level memory stores information as persistent, discrete units that are externally accessible and inspectable. The token here is a broad representational notion: beyond text tokens, it includes visual tokens, audio frames—any discrete element that can be written, retrieved, reorganized, and revised outside model parameters.
+\end{tcolorbox}
+
+Because these units are explicit, token-level memory is typically transparent, easy to edit, and straightforward to interpret, making it a natural layer for retrieval, routing, conflict handling, and coordination with parametric and latent memory. Token-level memory is also the most common memory form and the one with the largest body of existing work.
+
+Although all token-level memories share the property of being stored as discrete units, they differ significantly in how these units are organized. The structural organization of stored tokens plays a central role in determining how efficiently the agent can search, update, or reason over past information. To describe these differences, we categorize token-level memory by inter-unit structural organization, moving from no explicit topology to multi-layer topologies:
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=1\linewidth]{img/sec3-3.1.pdf}
+    \caption{Taxonomy of token-level memory organized by topological complexity and dimensionality: 
+    (a) \textbf{Flat Memory (1D)} stores information as linear sequences or independent clusters without explicit inter-unit topology, commonly used for \textit{Chunk} sets, \textit{Dialogue} logs, and \textit{Experience} pools. 
+    (b) \textbf{Planar Memory (2D)} introduces a single-layer structured layout where units are linked via \textbf{Tree} or \textbf{Graph} structures to capture relational dependencies, supporting diverse node types such as images and chat records. 
+    (c) \textbf{Hierarchical Memory (3D)} employs multi-level forms, such as \textbf{Pyramids} or \textbf{Multi-layer} graphs, to facilitate vertical abstraction and cross-layer reasoning between different data granularities, such as raw docs and synthesized QAs.}
+    
+    \label{fig:sec3-3.1}
+\end{figure}
+
+
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Major Types of Token-level Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+\begin{enumerate}
+    \item \textbf{Flat Memory (1D)}: No explicit inter-unit topology. Memories are accumulated as sequences or bags of units (e.g., snippets, trajectories, chunks)
+    
+    \item \textbf{Planar Memory (2D)}: A structured but single-layer organization within one plane: units are related by a graph, tree, table and so on, with no cross-layer relations. The structure is explicit, but not layered.
+
+    \item \textbf{Hierarchical Memory (3D)}: Structured across multiple layers with inter-layer links, forming a volumetric or stratified memory 
+\end{enumerate}
+\end{tcolorbox}
+
+
+The three types of token-level memory are clearly illustrated in \autoref{fig:sec3-3.1}. From Flat Memory with no topology, to Planar Memory with single-layer structural organization, to Hierarchical Memory with multi-layer interlinked structures, this organizational spectrum governs not only how token-level memory supports search, update, and reasoning, but also how the memory itself is structured and what capabilities it affords. In the subsections that follow, we introduce each organizational form in terms of its strengths and limitations, typical use cases, and representative work. The summary and comparison of representative token-level memory methods are presented in \autoref{tab:token-mem}.
+
+It is worth noting that, following the idea introduced by ReAct~\citep{yao2023react}, a series of studies began focusing on long-horizon interaction tasks~\citep{DBLP:journals/corr/abs-2503-05592,DBLP:journals/corr/abs-2503-09516,DBLP:journals/corr/abs-2501-05366,DBLP:journals/corr/abs-2507-02592,DBLP:journals/corr/abs-2504-21776,DBLP:journals/corr/abs-2505-22648}. Many of these tasks introduce an explicit notion of memory, and because the memory is generally stored in plaintext form, they fall within the scope of token-level memory. Most of them emphasize how to compress or fold accumulated interaction traces so that agents can operate over long sequences without exceeding context limits~\citep{zhou2025mem1learningsynergizememory,DBLP:journals/corr/abs-2510-12635,wuReSumUnlockingLongHorizon2025,DBLP:journals/corr/abs-2510-11967,liDeepAgentGeneralReasoning2025,chen2025iterresearchrethinkinglonghorizonagents}. A more detailed discussion is provided in \Cref{ssec:working_mem} about working memory.
+
+
+
+
+\subsubsection{Flat Memory (1D)}
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Definition of Flat (1D) Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+Flat Memory stores information as accumulations of discrete units, without explicitly modeling semantic or relational dependencies among them. These units may include text chunks, user profiles, experience trajectories, their corresponding vector representations, or multimodal entries. Relationships among these units are not encoded directly in the memory.
+\end{tcolorbox}
+
+To facilitate a clear and coherent presentation, we group prior work on flat memory according to their primary design objectives and technical emphases. This grouping serves \textbf{an organizational purpose} and does not imply that the resulting categories are strictly parallel or mutually exclusive. In practice, certain methods may be applicable to multiple categories, and some approaches involving multimodal information may be discussed in other sections when multimodality is not their central focus. Such an organization allows us to systematically review the literature while preserving flexibility in interpretation.
+
+
+\setlength{\tabcolsep}{4pt} 
+\renewcommand{\arraystretch}{1.1} 
+
+\begin{center}
+\footnotesize
+\begin{longtable}{p{5cm}|llp{5.5cm}p{3.3cm}}
+\caption{
+Comparison of representative token-level memory methods.
+We categorize existing works into three groups based on their topological complexity: \textbf{Flat Memory (1D)} for linear or independent records, \textbf{Planar Memory (2D)} for structured single-layer graphs/trees, and \textbf{Hierarchical Memory (3D)} for multi-level architectures.
+Methods are characterized across four dimensions:
+(1) \textbf{Multi} indicates multimodal capability, where {\color{green}\ding{52}} denotes support for modalities beyond text (e.g., visual) and {\color{red}\ding{55}} implies text-only;
+(2) \textbf{Type} identifies the specific functional category of the memory (e.g., \textit{Fact} for factual memory, \textit{Exp} for experiential memory, \textit{Work} for working memory );
+(3) \textbf{Memory Form} details the content of the stored units;
+and (4) \textbf{Task} lists the primary application domains.
+}\\
+
+\toprule
+{Method} & \makecell{Multi} & \makecell{Type} & \makecell{Memory Form} & {Task} \\
+\midrule
+\endfirsthead
+
+\caption[]{
+Comparison of representative token-level memory methods.
+We categorize existing works into three groups based on their topological complexity: \textbf{Flat Memory (1D)} for linear or independent records, \textbf{Planar Memory (2D)} for structured single-layer graphs/trees, and \textbf{Hierarchical Memory (3D)} for multi-level architectures.
+Methods are characterized across four dimensions:
+(1) \textbf{Multi} indicates multimodal capability, where {\color{green}\ding{52}} denotes support for modalities beyond text (e.g., visual) and {\color{red}\ding{55}} implies text-only;
+(2) \textbf{Type} identifies the specific functional category of the memory (e.g., \textit{Fact} for factual memory, \textit{Exp} for experiential memory, \textit{Work} for working memory );
+(3) \textbf{Memory Structure} details the organization mechanism of the stored units;
+and (4) \textbf{Task} lists the primary application domains.
+(continued)
+}\label{tab:token-mem}\\
+\toprule
+{Method} & \makecell{Multi} & \makecell{Type} & \makecell{Memory Structure} & {Task} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{Continued on next page}\\
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\multicolumn{5}{c}{\textit{Flat Memory Models}}\\
+\midrule
+Reflexion~\citep{shinn_reflexion_2023} & \color{red}\ding{55} & E\&W & Trajectory as short-term and feedback as long-term & QA, Reasoning, Coding \\
+Memento~\citep{DBLP:journals/corr/abs-2508-16153} & \color{red}\ding{55} & Exp & Trajectory case (success/failure). & Reasoning \\
+JARVIS-1~\citep{DBLP:journals/pami/WangCLJHZLHZYML25} & \color{green}\ding{52} & Exp & Plan-environment pairs. & Game \\
+Expel~\citep{DBLP:conf/aaai/Zhao0XLLH24} & \color{red}\ding{55} & Exp & Insights and few-shot examples. & Reasoning \\
+Buffer of Thoughts~\citep{yang2024buffer} & \color{red}\ding{55} & Exp & High-level thought-templates. & Game, Reasoning, Coding \\
+SAGE~\citep{DBLP:journals/ijon/SAGE} & \color{red}\ding{55} & Exp & Dual-store with forgetting mechanism. & Game, Reasoning, Coding \\
+ChemAgent~\citep{tang2025chemagentselfupdatinglibrarylarge} & \color{red}\ding{55} & Exp & Structured sub-tasks and principles. & Chemistry \\
+AgentKB~\citep{tang2025agentkbleveragingcrossdomain} & \color{red}\ding{55} & Exp & 5-tuple experience nodes. & Coding, Reasoning \\
+H\({}^{\mbox{2}}\)R~\citep{DBLP:journals/corr/abs-2509-12810} & \color{red}\ding{55} & Exp & Planning and Execution layers. & Game, Embodied Simulation \\
+AWM~\citep{wang2024agentworkflowmemory} & \color{red}\ding{55} & Exp & Abstracted universal workflows. & Web \\
+PRINCIPLES~\citep{DBLP:journals/corr/abs-2509-17459} & \color{red}\ding{55} & Exp & Rule templates from self-play. & Emotional Companion \\
+ReasoningBank~\citep{ouyang2025reasoningbankscalingagentselfevolving} & \color{red}\ding{55} & Exp & Transferable reasoning strategy items. & Web \\
+Voyager~\citep{wang_voyager_2024} & \color{green}\ding{52} & Exp & Executable skill code library. & Game \\
+DGM~\citep{zhang_darwin_2025} & \color{red}\ding{55} & Exp & Recursive self-modifiable codebase. & Coding \\
+Memp~\citep{fang2025mempexploringagentprocedural} & \color{red}\ding{55} & Exp & Instructions and abstract scripts. & Embodied Simulation, Travel Planning \\
+UFO2~\citep{DBLP:journals/corr/abs-2504-14603} & \color{green}\ding{52} & Exp & System docs and interaction records. & Windows OS \\
+LEGOMem~\citep{han_legomem_2025} & \color{red}\ding{55} & Exp & Vectorized task trajectories. & Office\\
+ToolMem~\citep{xiao_toolmem_2025} & \color{red}\ding{55} & Exp & Tool capability. & Tool Calling \\
+SCM~\citep{wang2025scmenhancinglargelanguage} & \color{red}\ding{55} & Fact & Memory stream and vector database. & Long-context \\
+MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage} & \color{red}\ding{55} & Fact & History and user profile. & Emotional Companion \\
+MPC~\citep{DBLP:conf/acl/LeeHPP023} & \color{red}\ding{55} & Fact & Persona and summary vector pool. & QA
+\\
+RecMind~\citep{wang_recmind_2024} & \color{red}\ding{55} & Fact & User metadata and external knowledge. & Recommendation \\
+InteRecAgent~\citep{DBLP:journals/tois/HuangLLYLX25} & \color{red}\ding{55} & Fact & User profiles and candidate item. & Recommendation \\
+Ego-LLaVA~\citep{shenEncodeStoreRetrieveAugmentingHuman2024} & \color{green}\ding{52} & Fact & Language-encoded chunk embeddings. & Multimodal QA \\
+ChatHaruhi~\citep{DBLP:journals/corr/abs-2308-09597} & \color{red}\ding{55} & Fact & Dialogue database from media. & Role-Playing \\
+Memochat~\citep{lu2023memochattuningllmsuse} & \color{red}\ding{55} & Fact & Memos and categorized dialogue history. & Long-conv QA \\
+RecursiveSum~\citep{wang2025recursivelysummarizingenableslongterm} & \color{red}\ding{55} & Fact & Recursive summaries of short dialogues. & Long-conv QA \\
+MemGPT~\citep{packerMemGPTLLMsOperating2023} & \color{red}\ding{55} & Fact & Virtual memory (Main/External contexts). & Long-conv QA, Doc QA \\
+RoleLLM~\citep{DBLP:conf/acl/WangPQLZWGGN00024} & \color{red}\ding{55} & Fact & Role-specific QA pairs. & Role-Playing \\
+Think-in-memory~\citep{DBLP:journals/corr/abs-2311-08719} & \color{red}\ding{55} & Fact & Hash table of inductive thoughts. & Long-conv QA \\
+PLA~\citep{DBLP:conf/coling/YuanSLWCL25} & \color{red}\ding{55} & Fact & Evolving records of history and summaries. & QA, Human Feedback \\
+COMEDY~\citep{chen2025compress} & \color{red}\ding{55} & Fact & Single-model compressed memory format. & Summary, Compression, QA \\
+Memoro~\citep{DBLP:conf/chi/ZulfikarCM24} & \color{green}\ding{52} & Fact & Speech-to-text vector embeddings. & User Study \\
+Memory Sharing~\citep{DBLP:journals/corr/abs-2404-09982} & \color{red}\ding{55} & Fact & Query-Response pair retrieval. & Literary Creation, Logic, Plan Generation \\
+Conv Agent\citep{DBLP:journals/corr/abs-2406-00057} & \color{red}\ding{55} & Fact & Chain-of-tables and vector entries. & QA \\
+EM-LLM~\citep{DBLP:conf/iclr/FountasBOCLB025} & \color{red}\ding{55} & Fact & Episodic events with Bayesian boundaries. & Long-context \\
+Memocrs~\citep{DBLP:conf/cikm/XiLL0T0024} & \color{red}\ding{55} & Fact & User metadata and knowledge. & Recommendation \\
+SECOM~\citep{panSeCom2025} & \color{red}\ding{55} & Fact & Paragraph-level segmented blocks. & Long-conv QA \\
+Mem0~\citep{Chhikara2025mem0} & \color{red}\ding{55} & Fact & Summary and original dialogue. & Long-conv QA \\
+RMM~\citep{DBLP:conf/acl/rmm2025} & \color{red}\ding{55} & Fact & Reflection-organized flat entries. & Personalization \\
+MEMENTO~\citep{DBLP:journals/corr/abs-2505-16348} & \color{green}\ding{52} & Fact & Interaction history entries. & Personalization \\
+MemGuide~\citep{duMemGuideIntentDrivenMemory2025} & \color{red}\ding{55} & Fact & Dialogue-derived QA pairs. & Long-conv QA \\
+MIRIX~\citep{wang2025mirixmultiagentmemoryllmbased} & \color{green}\ding{52} & Fact & Six optimized flat memory types. & Long-conv QA\\
+SemanticAnchor~\citep{DBLP:journals/corr/SemanticAnchor} & \color{red}\ding{55} & Fact & Syntactic 5-tuple structure. & Long-conv QA \\
+MMS~\citep{DBLP:journals/corr/abs-2508-15294} & \color{red}\ding{55} & Fact & Dual Retrieval and Context units. & Long-conv QA \\
+Memory-R1~\citep{yan2025memory} & \color{red}\ding{55} & Fact & RL-managed mem0 architecture. & Long-conv QA \\
+ComoRAG~\citep{DBLP:journals/corr/comorag} & \color{red}\ding{55} & Fact & Fact/Semantic/Plot units with probes. & Narrative QA \\
+Nemori~\citep{DBLP:journals/corr/abs-2508-03341} & \color{red}\ding{55} & Fact & Predictive calibration store. & Long-conv QA \\
+Livia~\citep{DBLP:journals/corr/abs-2509-05298} & \color{green}\ding{52} & Fact & Pruned interaction history. & Emotional Companion \\
+MOOM~\citep{chen2025moommaintenanceorganizationoptimization} & \color{red}\ding{55} & Fact & Decoupled plot and character stores. & Role-Playing \\
+Mem-$\alpha$~\citep{DBLP:journals/corr/abs-2509-25911} & \color{red}\ding{55} & Fact & Core, Semantic, and Episodic Mem. & Memory Management \\
+Personalized Long term Interaction~\citep{DBLP:journals/corr/abs-2510-07925} & \color{red}\ding{55} & Fact & Hierarchical history and summaries. & Personalization \\
+LightMem~\citep{fang2025lightmem} & \color{red}\ding{55} & Fact & Optimized Long/Short-term store. & Long-conv QA \\
+MEXTRA~\citep{wang2025unveilingprivacyrisksllm} & \color{red}\ding{55} & Fact & Extracted raw dialogue data. & Privacy Attack \\
+MovieChat~\citep{DBLP:conf/cvpr/SongCWZZWCG0ZLH24} & \color{green}\ding{52} & Fact & Short-term features and long-term persistence. & Video Understanding \\
+MA-LMM~\citep{heMALMMMemoryAugmentedLarge2024} & \color{green}\ding{52} & Fact & Visual and Query memory banks. & Video Understanding \\
+VideoAgent~\citep{wangVideoAgentLongFormVideo2024} & \color{green}\ding{52} & Fact & Temporal text descriptions and object tracking. & Video Understanding \\
+Video-RAG~\citep{luo2025videoragvisuallyalignedretrievalaugmentedlong} & \color{green}\ding{52} & Fact & Visually-aligned information . & Video Understanding \\
+KARMA~\citep{wangKARMAAugmentingEmbodied2025} & \color{green}\ding{52} & Fact & 3D scene graph and dynamic object states. & Embodied Task \\
+Embodied VideoAgent~\citep{DBLP:journals/corr/abs-2501-00358} & \color{green}\ding{52} & Fact & Persistent object and sensor store. & MultiModal \\
+Mem2Ego~\citep{DBLP:journals/corr/abs-2502-14254} & \color{green}\ding{52} & Fact & Map, landmark, and visited location stores. & Embodied Navigation \\
+Context-as-Memory~\citep{DBLP:journals/corr/abs-2506-03141} & \color{green}\ding{52} & Fact & Generated context frames. & Video Generation \\
+RCR-Router~\citep{DBLP:journals/corr/rcrrouter} & \color{red}\ding{55} & Fact & Budget-aware semantic subsets. & QA \\
+ELL~\citep{cai2025experiencedriven} & \color{red}\ding{55} & Fact & Liflong memory and skills. & Lifelong Learning \\
+MemRL~\citep{zhang2026memrlselfevolvingagentsruntime} & \color{red}\ding{55} & Exp & RL for memory management. & Web \\
+ReMe~\citep{cao2025remembermerefineme}& \color{red}\ding{55} & Exp & Step level experience and insight. & Web \\
+MMAG~\citep{zeppieri2025mmagmixedmemoryaugmentedgeneration} & \color{red}\ding{55} & Fact & Five interacting memory layers. & User Study \\
+Hindsight~\citep{latimer2025hindsight2020buildingagent} & \color{red}\ding{55} & Fact & Retains, recalls, and reflects. & Long-conv QA \\
+GAM~\citep{yan2025generalagenticmemorydeep} & \color{red}\ding{55} & Fact & Simple memory but search is guided. & Long-conv QA \\
+
+\midrule
+\multicolumn{5}{c}{\textit{Planar Memory Models}}\\
+\midrule
+D-SMART~\citep{Lei2025DSMART} & \color{red}\ding{55} & Fact & Structured memory with reasoning trees. & Long-conv QA \\
+Reflexion~\citep{shinn_reflexion_2023} & \color{red}\ding{55} & Work & Reflective text buffer from experiences. & QA, Reasoning, Coding \\
+PREMem~\citep{DBLP:journals/corr/PREMem} & \color{red}\ding{55} & Fact & Dynamic cross-session linked triples. & Long-conv QA \\
+Query Reconstruct~\citep{xu2025memoryaugmentedqueryreconstructionllmbased} & \color{red}\ding{55} & Exp & Logic graphs built from knowledge bases. & KnowledgeGraph QA \\
+KGT~\citep{sun2024knowledgegraphtuningrealtime} & \color{red}\ding{55} & Fact & KG node from query and feedback. & QA \\
+Optimus-1~\citep{li2024optimus1hybridmultimodalmemory} & \color{green}\ding{52} & F\&E & Knowledge graph and experience pool. & Game \\
+SALI~\citep{pan2024planningimaginationepisodicsimulation} & \color{green}\ding{52} & Exp & Topological graph with spatial nodes & Navigation \\
+HAT~\citep{a2024enhancinglongtermmemoryusing} & \color{red}\ding{55} & Fact & Hierarchical aggregate tree. & Long-conv QA \\
+MemTree~\citep{rezazadehIsolatedConversationsHierarchical2025} & \color{red}\ding{55} & Fact & Dynamic hierarchical conversation tree. & Long-conv QA \\
+TeaFarm~\citep{ong2025lifelongdialogueagentstimelinebased} & \color{red}\ding{55} & Fact & Causal edges connecting memories. & Long-conv QA \\
+COMET~\citep{kim2024commonsenseaugmentedmemoryconstructionmanagement} & \color{red}\ding{55} & Fact & Context-aware memory through graph. & Long-conv QA \\
+Intrinsic Memory~\citep{yuen2025intrinsicmemoryagentsheterogeneous} & \color{red}\ding{55} & Fact & Private internal and shared external mem. & Planning \\
+A-MEM~\citep{xuAMEMAgenticMemory2025} & \color{red}\ding{55} & Fact & Card-based connected mem. & Long-conv QA \\
+Ret-LLM~\citep{modarressi2023ret} & \color{red}\ding{55} & Fact & Triplet table and LSH vectors. & QA \\
+HuaTuo~\citep{wang2023huatuotuningllamamodel} & \color{red}\ding{55} & Fact & Medical Knowledge Graph. & Medical QA \\
+M3-Agent~\citep{long2025seeing} & \color{green}\ding{52} & Fact & Multimodal nodes in graph structure. & Embodied QA \\
+EMem~\citep{zhou2025ememsimplestrongbaselinelongterm} & \color{red}\ding{55} & Fact & Event-centric alternative with pagerank. & Long-conv QA \\
+WorldMM~\citep{yeo2025worldmmdynamicmultimodalmemory} & \color{green}\ding{52} & Fact & Multiple complementary memories. & Video Understanding \\
+Memoria~\citep{sarin2025memoriascalableagenticmemory} & \color{red}\ding{55} & Fact & Knowledge-graph profile and summary. & Long-conv QA \\
+LingoEDU~\citep{zhou2026contextedusfaithfulstructured}& \color{red}\ding{55} & Fact & Relation tree of Elementary Discourse Units. & Long-conv QA \\
+\midrule
+\multicolumn{5}{c}{\textit{Hierarchical Memory Models}}\\
+\midrule
+
+GraphRAG~\citep{edge2025localglobalgraphrag} & \color{red}\ding{55} & Fact & Multi-level community graph indices. & QA, Summarization \\
+H-Mem~\citep{Sun2025HMEM} & \color{red}\ding{55} & Fact & Decoupled index layers and content layers. & Long-conv QA \\
+EMG-RAG~\citep{wang2024craftingpersonalizedagentsretrievalaugmented} & \color{red}\ding{55} & Fact & Three-tiered memory graph. & QA \\
+G-Memory~\citep{Zhang2025GMemory} & \color{red}\ding{55} & Exp & Query-centric three-layer graph structure. & QA, Game, Embodied Task \\
+Zep~\citep{Rasmussen2025Zep} & \color{red}\ding{55} & Fact & Temporal Knowledge Graphs. & Long-conv QA \\
+SGMem~\citep{Wu2025SGMemSG} & \color{red}\ding{55} & Fact & Chunk Graph and Sentence Graph. & Long-conv QA \\
+HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} & \color{red}\ding{55} & Fact & Knowledge with query nodes. & QA \\
+HippoRAG 2~\citep{gutiérrez2025ragmemorynonparametriccontinual} & \color{red}\ding{55} & Fact & KG with phrase and passage. & QA \\
+AriGraph~\citep{anokhin2024arigraph} & \color{red}\ding{55} & Fact & Semantic and Episodic memory graph. & Game \\
+Lyfe Agents~\citep{kaiya2023lyfeagentsgenerativeagents} & \color{red}\ding{55} & Fact & Working, Short \& Long-term layers. & Social Simulation \\
+CAM~\citep{liCAMConstructivistView2025} & \color{red}\ding{55} & Fact & Multilayer graph with topic. & Doc QA \\
+HiAgent~\citep{huHiAgentHierarchicalWorking2025} & \color{red}\ding{55} & E\&W & Goal graphs with recursive cluster. & Agentic Tasks \\
+ILM-TR~\citep{tang2024enhancinglongcontextperformance} & \color{red}\ding{55} & Fact & Hierarchical Memory tree. & Long-context \\
+CompassMem~\citep{hu2026memorymattersmoreeventcentric} & \color{red}\ding{55} & Fact & Hierarchical event-centric Memory. & QA \\
+MAGMA~\citep{jiang2026magmamultigraphbasedagentic} & \color{red}\ding{55} & Fact & Semantic, temporal, causal, entity graphs. & Long-conv QA \\
+EverMemOS~\citep{hu2026evermemosselforganizingmemoryoperating} & \color{red}\ding{55} & Fact & Reusable memories covering multi types. & Long-conv QA \\
+RGMem~\citep{tian2025RGMem} & \color{red}\ding{55} & Fact & Renormalization Group-based memory. & Long-conv QA \\
+MemVerse~\citep{liu2025memversemultimodalmemorylifelong} & \color{green}\ding{52} & Fact & Multimodal hierarchical knowledge graphs. & Reasoning, QA \\
+\end{longtable}
+\end{center}
+
+
+
+
+
+
+\paragraph{Dialogue}
+Some flat memory work focuses on storing and managing dialogue content. Early approaches primarily focused on preventing forgetting by storing raw dialogue history or generating recursive summaries to extend context windows~\citep{wang2025scmenhancinglargelanguage,lu2023memochattuningllmsuse,wang2025recursivelysummarizingenableslongterm,DBLP:conf/coling/YuanSLWCL25}. MemGPT~\citep{packerMemGPTLLMsOperating2023} introduces an operating-system metaphor with hierarchical management, inspiring subsequent works~\citep{li2025memosoperatingmemoryaugmentedgeneration,kang2025memoryosaiagent} to decouple active context from external storage for infinite context management.
+
+To improve retrieval precision, the granularity and structure of memory units have become increasingly diverse and cognitively aligned. Some works, like COMEDY~\citep{chen2025compress}, Memory Sharing~\citep{DBLP:journals/corr/abs-2404-09982} and MemGuide~\citep{duMemGuideIntentDrivenMemory2025} compress information into compact semantic representations or query-response pairs to facilitate direct lookup, while others, like \citet{DBLP:journals/corr/abs-2406-00057} and MIRIX~\citep{wang2025mirixmultiagentmemoryllmbased} adopt hybrid structures ranging from vector-table combinations to multi-functional memory types. Furthermore, research has begun to define memory boundaries based on cognitive psychology, organizing information through syntactic tuples~\citep{DBLP:journals/corr/SemanticAnchor} or segmenting events based on Bayesian surprise and paragraph structures~\citep{DBLP:conf/iclr/FountasBOCLB025, panSeCom2025} , thereby matching human-like cognitive segmentation.
+
+As conversational depth increases, memory evolves to store high-level cognitive processes and narrative complexities. Instead of mere factual records, systems like Think-in-Memory~\citep{DBLP:journals/corr/abs-2311-08719} and RMM~\citep{DBLP:conf/acl/rmm2025} store inductive thoughts and retrospective reflections to guide future reasoning. In complex scenarios such as role-playing or long narratives, approaches like ComoRAG~\citep{DBLP:journals/corr/comorag} and MOOM~\citep{chen2025moommaintenanceorganizationoptimization} decompose memory into factual, plot-level, and character-level components, ensuring the agent maintains a coherent persona and understanding across extended interactions.
+
+Memory has transitioned from static storage to autonomous and adaptive optimization. Mem0\citep{Chhikara2025mem0} established standardized operations for memory maintenance, laying the foundation for intelligent control. Recent advances introduce reinforcement learning to optimize memory construction~\citep{yan2025memory,DBLP:journals/corr/abs-2509-25911}, while other mechanisms focus on dynamic calibration and efficiency, such as predicting missing information~\citep{DBLP:journals/corr/abs-2508-03341}, managing token budgets across multi-agent systems~\citep{DBLP:journals/corr/rcrrouter} , and reducing redundancy in long-term storage~\citep{fang2025lightmem}.
+
+\paragraph{Preference}
+Some memory systems focus on modeling a user’s evolving tastes, interests, and decision patterns, especially in recommendation scenarios where preference understanding is central. Unlike dialogue-centric memory, which focuses on maintaining conversational coherence, preference memory centers on identifying a user's tastes and tendencies. Early efforts such as RecMind ~\citep{wang_recmind_2024} separate user-specific information from external domain knowledge by storing both factual user attributes and item metadata. InteRecAgent ~\citep{DBLP:journals/tois/HuangLLYLX25} folds memory into the recommendation workflow but focuses more on the current candidate set, keeping user profiles and the active item pool to support context-aware recommendations. MR.Rec ~\citep{DBLP:journals/corr/abs-2510-14629} builds a memory index archiving the full interaction process, storing raw item information and per-category preference summaries. In conversational settings, Memocrs ~\citep{DBLP:conf/cikm/XiLL0T0024} proposes a more structured design with a user-specific memory tracking entities and user attitudes, and a general memory aggregating cross-user knowledge.
+
+\paragraph{Profile} 
+A subset of flat memory systems focuses on storing and maintaining stable user profiles, character attributes, or long-term identity information so that agents can behave consistently across turns and tasks. MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage} represents one of the earliest frameworks in this direction: it organizes dialogue history and event summaries by timestamp, gradually building a user profile that supports accurate retrieval of identity-relevant information. AI Persona~\citep{wang2024aipersona} makes the memory system process information not only presented in the dialogue context but also from multi-dimensional human-AI interaction dimensions. MPC~\citep{DBLP:conf/acl/LeeHPP023} extends this idea by storing real-time persona information and dialogue summaries in a memory pool, keeping conversation behavior aligned with a consistent persona over long interactions. \citet{DBLP:journals/corr/abs-2510-07925} proposes a more comprehensive profile-maintenance mechanism, combining long-term and short-term memory with automatically generated summaries after each turn to form a mid-term context, allowing the user profile to evolve continuously through interaction.
+
+In virtual role-playing settings, ChatHaruhi~\citep{DBLP:journals/corr/abs-2308-09597} extracts dialogue from novels and television scripts, enabling the model to maintain character-consistent behavior by retrieving memory. RoleLLM~\citep{DBLP:conf/acl/WangPQLZWGGN00024} takes a more structured approach by building question–answer pairs to capture character-specific knowledge.
+
+\paragraph{Experience}
+Distinct from the static, general knowledge, experience memory stems from the agent's dynamic accumulation during actual interaction tasks, encompassing specific observations, chains of thought, action trajectories, and environmental feedback. It is important to note that this section just provides a brief overview of experiential memory strictly from the perspective of token-level storage; a more comprehensive analysis and detailed discussion of this domain will be presented in \Cref{ssec:experiential_mem}.
+
+The most fundamental form of experience memory involves the direct archival of historical behavioral trajectories. This paradigm enables agents to inform current decision-making by retrieving and reusing past instances, encompassing both successful and failed cases~\citep{DBLP:journals/corr/abs-2508-16153,DBLP:journals/pami/WangCLJHZLHZYML25}.
+
+To address the limited generalizability inherent in raw trajectories, a significant body of research focuses on abstracting specific interactions into higher-level, generalized experiences. As one of the earliest and most influential approaches, Reflexion~\citep{shinn_reflexion_2023} distinguishes short-term memory as the trajectory history and long-term memory as the feedback produced by the self-reflection model. Certain studies compress complex interaction histories into universal workflows, rule templates, or high-level ``thought-templates'' to facilitate cross-problem transfer and reuse~\citep{wang2024agentworkflowmemory,DBLP:journals/corr/abs-2509-17459,yang2024buffer}. Other works emphasize the structural organization and dynamic maintenance of memory. These approaches ensure that stored insights remain adaptable to novel tasks and are efficiently updated by constructing domain-specific structured knowledge bases, employing hierarchical plan-execute memory architectures, or incorporating human-like forgetting and reflection mechanisms~\citep{tang2025chemagentselfupdatinglibrarylarge,tang2025agentkbleveragingcrossdomain,ouyang2025reasoningbankscalingagentselfevolving,DBLP:journals/corr/abs-2509-12810,DBLP:conf/aaai/Zhao0XLLH24,DBLP:journals/ijon/SAGE}.
+
+In contexts involving programming or specific tool utilization, experience memory evolves into executable skills. Within this paradigm, agents consolidate exploration experiences into code repositories, procedural scripts, or tool-usage entries. Leveraging environmental feedback, these systems iteratively refine code quality or even dynamically modify their underlying logic to achieve self-evolution~\citep{DBLP:journals/tmlr/WangX0MXZFA24,DBLP:conf/acl/YinWPL0W25,fang2025mempexploringagentprocedural,xiao_toolmem_2025}. Furthermore, targeting complex environments such as operating systems, some studies distill successful execution records into reusable exemplars or vectorized representations, thereby facilitating an efficient pipeline from offline construction to online allocation~\citep{DBLP:journals/corr/abs-2504-14603,han_legomem_2025}.
+
+
+\paragraph{Multimodal}
+Multimodal memory systems store information in the form of discrete token-level units extracted from raw multimodal data, such as images, video frames, audio segments, and text, enabling agents to capture, compress, and retrieve knowledge across channels and over long spans of experience. In wearable and egocentric settings, early work such as Ego-LLaVA~\citep{shenEncodeStoreRetrieveAugmentingHuman2024} captures first-person video and converts it into lightweight language descriptions. Memoro~\citep{DBLP:conf/chi/ZulfikarCM24} follows a similar philosophy but uses speech-to-text to form embedding-based memory chunks. Building on this direction, Livia~\citep{DBLP:journals/corr/abs-2509-05298} incorporates long-term user memory into an AR system with emotional awareness, applying forgetting curves and pruning strategies. 
+
+For video understanding, the emphasis shifts toward separating transient visual cues from enduring contextual information. MovieChat~\citep{DBLP:conf/cvpr/SongCWZZWCG0ZLH24} adopts a short-term/long-term split, storing recent frame features. MA-LMM~\citep{heMALMMMemoryAugmentedLarge2024} pushes this further with a dual-bank design—one storing raw visual features and the other retaining query embeddings. VideoAgent~\citep{wangVideoAgentLongFormVideo2024} adopts a more semantically organized approach, maintaining a temporal memory of textual clip descriptions alongside object-level memory that tracks entities across frames. In interactive video generation, Context-as-Memory~\citep{DBLP:journals/corr/abs-2506-03141} shows that simply storing previously generated frames as memory can also be highly effective. WorldMM~\citep{yeo2025worldmmdynamicmultimodalmemory} constructs multiple mutually reinforcing memory modules that capture information in both textual and visual modalities.
+
+In embodied scenarios, memory becomes inherently tied to spatial structure and ongoing interaction. KARMA~\citep{wangKARMAAugmentingEmbodied2025} introduces a two-tier memory system: long-term memory stores static objects in a 3D scene graph, while short-term memory tracks object positions and state changes. Embodied VideoAgent~\citep{DBLP:journals/corr/abs-2501-00358} also builds persistent object memories but fuses them with first-person video and additional embodied sensors. Mem2Ego~\citep{DBLP:journals/corr/abs-2502-14254} extends this idea to navigation by separating global maps, landmark descriptions, and visitation histories into three distinct memory stores. Complementing these task-driven designs, MEMENTO~\citep{DBLP:journals/corr/abs-2505-16348} provides an evaluation framework that treats multimodal interaction history as an agent’s memory, enabling systematic assessment of how well embodied systems utilize accumulated perceptual experience.
+
+
+
+
+\paragraph{Discussion}The primary advantage of Flat Memory is their simplicity and scalability: memory can be appended or pruned with minimal cost, and retrieval methods such as similarity search allow flexible access without requiring predefined structure. This makes them suitable for broad recall, episodic accumulation, and rapidly changing interaction histories. However, the lack of explicit relational organization means that coherence and relevance depend heavily on retrieval quality. As the memory grows, redundancy and noise can accumulate, and the model may retrieve relevant units without understanding how they relate, limiting compositional reasoning, long-horizon planning, and abstraction formation. Thus, topology-free collections excel at broad coverage and lightweight updates, but are constrained in tasks requiring structured inference or stable knowledge organization.
+
+
+\subsubsection{Planar Memory (2D)}\label{sec:token-level-2d}
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Definition of Planar (2D) Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+Planar Memory introduces an explicit organizational topology among memory units, but only within a single structural layer, which for short called \textit{2D}. The topology may be a graph, tree, table, implicit connection structure and so on, where relationships such as adjacency, parent–child ordering, or semantic grouping are encoded within one plane, without hierarchical levels or cross-layer references.
+\end{tcolorbox}
+
+The core of Planar memory forms lies in breaking through a single storage pool by establishing explicit association mechanisms, achieving a leap from mere ``storage'' to ``organization''. 
+
+\paragraph{Tree}
+Tree structures organize information hierarchically and can handle different levels of abstraction. HAT~\citep{a2024enhancinglongtermmemoryusing} builds a Hierarchical Aggregate Tree by segmenting long interactions and then aggregating them step by step. This multi-level structure supports coarse-to-fine retrieval and performs better than flat vector indices in long-context question answering. To reduce dialogue fragmentation, MemTree~\citep{rezazadehIsolatedConversationsHierarchical2025} introduces a dynamic representation that infers hierarchical schemas from isolated conversation logs. It gradually summarizes concrete events into higher-level concepts, allowing agents to use both detailed memories and abstract knowledge.
+
+\paragraph{Graph}
+Graph structures dominate the landscape of 2D memory due to their ability to capture complex associations, causality, and temporal dynamics. Foundational works like Ret-LLM~\citep{modarressi2023ret} abstract external storage into addressable triple-based units, enabling the LLM to interact with a relation-centric table that functions like a lightweight knowledge graph. In the medical domain, HuaTuo~\citep{wang2023huatuotuningllamamodel} injects professional knowledge by integrating a structured corpus of Chinese medical knowledge graphs and clinical texts to fine-tune the base model. KGT~\citep{sun2024knowledgegraphtuningrealtime} introduces a real-time personalization mechanism where user preferences and feedback are encoded as nodes and edges in a user-specific knowledge graph. For reasoning-intensive tasks, PREMem~\citep{DBLP:journals/corr/PREMem} shifts part of the inference burden to the memory construction phase, deriving structured memory items and their evolution relations from raw dialogue. Similarly, Memory-augmented Query Reconstruction~\citep{xu2025memoryaugmentedqueryreconstructionllmbased} maintains a dedicated query memory that records past KG queries and reasoning steps, using retrieved records to reconstruct more accurate queries. Building on a timeline perspective, TeaFarm~\citep{ong2025lifelongdialogueagentstimelinebased} organizes dialogue history along segmented timelines and applies structured compression to manage lifelong context. COMET~\citep{kim2024commonsenseaugmentedmemoryconstructionmanagement} further refines conversational memory by using external commonsense bases to parse dialogue and dynamically update a context-aware persona graph with inferred hidden attributes. A-Mem~\citep{xuAMEMAgenticMemory2025} standardizes knowledge into card-like units. It organizes them by relevance and places related memories in the same box, which builds a complete memory network. Intrinsic Memory Agents~\citep{yuen2025intrinsicmemoryagentsheterogeneous} employ a partitioned architecture in which sub-agents maintain their own role-specific private memories while collaboratively reading and writing to a shared memory. Extending to multimodel agents, M3-Agent~\citep{long2025seeing} unifies image, audio, and text into an entity-centric memory graph. SALI~\citep{pan2024planningimaginationepisodicsimulation} constructs a Reality–Imagination Hybrid Memory, unifying real observations and imagined future scenarios into a consistent navigation graph.
+
+\paragraph{Hybrid}
+Complex tasks often require hybrid architectures that segregate distinct cognitive functions while sharing a common memory substrate. Optimus-1~\citep{li2024optimus1hybridmultimodalmemory} explicitly separates static knowledge into a hierarchical directed knowledge graph for planning, and dynamic interactions into an abstract multimodal experience Pool for reflection and self-improvement. D-SMART~\citep{Lei2025DSMART} combines a structured factual memory, implemented as a continuously updated knowledge graph, with a traversal-based reasoning tree. 
+
+
+\paragraph{Discussion}
+The Planar Memory, by effectively establishing links between its nodes, enables memories to leverage collective synergies and thus encode more comprehensive contextual knowledge. Moreover, it supports retrieval mechanisms that go beyond simple iteration, including structured key–value lookups and relational traversal along graph edges. These capabilities make the form strong in storing, organizing, and managing memories. However, it also faces a critical limitation: Without a hierarchical storage mechanism, all memories must be consolidated into a single, monolithic module. As task scenarios grow in complexity and diversity, this redundant and flattened design becomes increasingly inadequate for robust performance. More importantly, the high construction and search costs significantly hinder its practical deployment.
+
+\subsubsection{Hierarchical Memory (3D)}
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Definition of Hierarchical (3D) Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+Hierarchical memory organizes information across layers, using inter-level connections to shape the memories into a volumetric structured space.
+\end{tcolorbox}
+
+
+ Such hierarchies support representations at different degrees of abstraction—from raw observations, to compact event summaries, to higher-level thematic patterns. Cross-layer connections further yield a volumetric memory space through which the system can navigate not only laterally among units but also vertically across abstraction levels.
+
+Hierarchical Memory moves beyond simple stratification, aiming to build complex systems with deep abstraction capabilities and dynamic evolutionary mechanisms. These works typically employ multi-level graph structures or neuroscience-inspired mechanisms to build a more human-like volumetric memory space, where information is richer and the connections between memory units are clearer and more explicit.
+
+\paragraph{Pyramid}
+This category constructs memory as multi-level pyramids, where information is progressively organized into higher layers of abstraction and queried in a coarse-to-fine manner. HiAgent~\citep{huHiAgentHierarchicalWorking2025} manages long-horizon tasks through a subgoal-centered hierarchical working memory, keeping detailed trajectories for the currently active subgoal while compressing completed subgoals into higher-level summaries that can be selectively retrieved when needed. GraphRAG~\citep{edge2025localglobalgraphrag} builds a multi-level graph index via community detection, recursively aggregating entity-level subgraphs into community-level summaries. Extending the idea of clustering memory nodes, Zep~\citep{Rasmussen2025Zep} formalizes agent memory as a Temporal Knowledge Graph, and it similarly performs community partitioning. ILM-TR~\citep{tang2024enhancinglongcontextperformance} employs a tree-structured, pyramidal index coupled with an Inner Loop mechanism, repeatedly querying summaries at different abstraction levels and updating a short-term memory buffer until the retrieved evidence and generated answer stabilize. To ensure controllable personalization, EMG-RAG~\citep{wang2024craftingpersonalizedagentsretrievalaugmented} organizes an Editable Memory Graph into three tiers, where a tree-like type and subclass index (L1, L2) sits above an entity-level memory graph (L3). In multi-agent systems, G-Memory~\citep{Zhang2025GMemory} structures shared experience using a three-tier graph hierarchy of insight, query, and interaction graphs. This design enables query-centric traversal to move vertically between high-level cross-trial insights and compact trajectories of concrete collaborations.
+
+\paragraph{Multi-Layer}
+These forms instead emphasize layered specialization, organizing memory into distinct modules or levels that focus on particular information types or functions. Lyfe Agents~\citep{kaiya2023lyfeagentsgenerativeagents} separates salient long-term records from low-value transient details, allowing the system to maintain a compact, behaviorally important layer of memories. H-Mem~\citep{Sun2025HMEM} explicitly arranges long-term dialogue memory into a multi-level hierarchy ordered by semantic abstraction, where lower layers store fine-grained interaction snippets and higher layers store increasingly compressed summaries. Biologically inspired architectures such as HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} factor memory into an associative indexing component, implemented as an open knowledge graph, and an underlying passage store, using the graph layer to orchestrate multi-hop retrieval over stored content. Its successor, HippoRAG 2~\citep{gutiérrez2025ragmemorynonparametriccontinual}, extends this design into a non-parametric continual-learning setting, enriching the indexing layer with deeper passage integration and online LLM filtering. AriGraph~\citep{anokhin2024arigraph} separates memory by information type within a unified graph, combining a semantic knowledge-graph world model that encodes environment structure with an event-level component that links concrete observations back to the semantic backbone. Similarly, SGMem~\citep{Wu2025SGMemSG} adds a sentence-graph memory level on top of raw dialogue, representing histories as sentence-level graphs within chunked units. CAM~\citep{liCAMConstructivistView2025} layers the reading process itself by incrementally clustering overlapping semantic graphs into a hierarchical schemata structure. Recently, methods such as CompassMem~\citep{hu2026memorymattersmoreeventcentric} and MAGMA~\citep{jiang2026magmamultigraphbasedagentic} have begun exploring hierarchical composition strategies enriched with logical relations, aiming to make memory retrieval and utilization more efficient and comprehensive, so that memory can provide models with benefits beyond mere semantic information.
+
+\paragraph{Discussion}
+By placing memory nodes at the intersection of hierarchical and relational dimensions, Hierarchical Memory allows different memories to interact and form multi-dimensional synergies. This design helps the system encode knowledge that is more holistic and more deeply contextualized. The form also supports powerful retrieval: it enables complex, multi-path queries that move through relational networks within each layer and across abstraction levels between layers. This ability allows the system to retrieve task-relevant memories with high precision, leading to strong task performance.
+However, the structure’s complexity and its dense information organization create challenges for both retrieval efficiency and overall effectiveness. In particular, ensuring that all stored memories remain semantically meaningful and designing the optimal three-dimensional layout of the system remain difficult and critical problems.
+
+
+
+
+
+\subsection{Parametric Memory}\label{ssec:parametric}
+
+{In contrast to token-level memory, which stores information as visible and editable discrete units, parametric memory stores information directly in the model’s parameters.} In this section, we examine methods that embed memory into learnable parameter spaces, allowing the model to internalize and recall information without referring to external storage.
+
+Based on where the memory is stored relative to the core model parameters, we distinguish two primary forms of parametric memory:
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Two Major Types of Parametric Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+\begin{enumerate}
+    \item \textbf{Internal Parametric Memory}: Memory encoded within the original parameters of the model (e.g., weights, biases). These methods directly adjust the base model to incorporate new knowledge or behavior.
+    
+    \item \textbf{External Parametric Memory}: Memory stored in additional or auxiliary parameter sets, such as adapters, LoRA modules, or lightweight proxy models. These methods introduce new parameters to carry memory without modifying the original model weights.
+\end{enumerate}
+\end{tcolorbox}
+
+
+This distinction reflects a key design choice: whether memory is fully absorbed into the base model or attached modularly alongside it. In the subsections that follow, for each form we outline the implementation methods, analyze its strengths and limitations, and list representative systems or work. \autoref{tab:parametric-memory} provides an overview of representative parametric memory methods.
+
+\begin{table*}[!t]
+
+\caption{
+Taxonomy of parametric memory methods.
+We categorize existing works based on the \textit{storage location} relative to the core model: \textbf{Internal Parametric Memory} embeds knowledge directly into the original weights, while \textbf{External Parametric Memory} isolates information within auxiliary parameter sets.
+Based on the training \textbf{phase}, we performed a secondary classification of the articles.
+Methods are compared across three technical dimensions:
+(1) \textbf{Type} defines the nature of the memory,
+(2) \textbf{Task} specifies the target downstream application,
+and (3) \textbf{Optimization} denotes the optimization strategy, such as \textit{SFT}, \textit{FT} (fine-tuning) , and \textit{PE} (prompt engineering).
+}
+\label{tab:parametric-memory}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{p{6cm}|lp{6cm}l}
+\toprule
+{Method} & {Type} & {Task} & {Optimization}  \\
+\midrule
+\multicolumn{4}{c}{\textit{I. Internal Parametric Memory}}\\
+\midrule
+\multicolumn{4}{l}{\textbf{(a) Pre-Train Phase}}\\
+TNL~\citep{lightening-attention} & Working & QA, Reasoning & SFT \\
+StreamingLLM~\citep{attention-sink} & Working & QA, Reasoning & SFT \\
+LMLM~\citep{zhao2025pretraininglimitedmemorylanguage} & Factual & QA, Factual Gen & SFT\\
+HierMemLM~\citep{pt-hier-memory} & Factual & QA, Language Modeling & SFT\\
+Function Token~\citep{zhang2025memoryretrievalconsolidationlarge} & Factual & Language Modeling & Pretrain \\
+
+\midrule
+\multicolumn{4}{l}{\textbf{(b) Mid-Train Phase}}\\
+Agent-Founder~\citep{agent-founder} & Experiential & Tool Calling, Deep Research & SFT \\
+Early Experience~\citep{agent-early-experience} & Experiential & Tool Calling, Embodied Simulation, Reasoning, Web  & SFT \\
+\midrule
+\multicolumn{4}{l}{\textbf{(c) Post-Train Phase}}\\
+Character-LM~\citep{character-lm} & Factual & Role Playing & SFT  \\
+CharacterGLM~\citep{characterGLM} & Factual & Role Playing & SFT \\
+SELF-PARAM~\citep{self-param}  & Factual & QA, Recommendation & KL Tuning \\
+Room~\citep{machine-memory-system}  & Experiential & Embodied Task & RL\\
+KnowledgeEditor~\citep{edit-fact} & Factual & QA, Fact Checking & FT \\ 
+Mend~\citep{mend}& Factual & QA, Fact Checking, Model Editing & FT \\ 
+PersonalityEdit~\cite{personality-edit}  & Factual & QA, Model Editing & FT, PE \\ 
+APP~\citep{app}  & Factual & QA & FT \\ 
+DINM~\citep{dinm} & Experiential & QA, Detoxification & FT \\ 
+AlphaEdit~\citep{fang2025alphaeditnullspaceconstrainedknowledge} & Factual & QA & FT\\
+\midrule
+\multicolumn{4}{c}{\textit{II. External Parametric Memory}} \\
+\midrule
+\multicolumn{4}{l}{\textbf{(a) Adapter-based Modules}}\\
+MLP-Memory~\citep{mlp-memory}  & Factual & QA, Classification, Textual Entailment & SFT \\
+K-Adapter~\citep{DBLP:conf/acl/WangTDWHJCJZ21} & Factual & QA, Entity Typing,  Classification & SFT\\
+WISE~\citep{DBLP:conf/nips/0104L0XY0X0C24}  & Factual & QA, Hallucination Detection & SFT\\
+ELDER~\citep{DBLP:conf/aaai/00010W0025} & Factual & Model Editing & SFT\\
+T-Patcher~\citep{huang2023transformerpatchermistakeworthneuron} & Factual & QA & FT\\
+Sparse Memory FT~\citep{lin2025continuallearningsparsememory} & Factual & QA & SFT\\
+Memory Decoder~\citep{cao2025memorydecoder} & Factual & QA, Language Modeling & SFT\\
+MemLoRA~\citep{bini2025memloradistillingexpertadapters} & Factual & QA & SFT\\
+
+
+\midrule
+\multicolumn{4}{l}{\textbf{(b) Auxiliary LM-based Modules}}\\
+MAC~\citep{amortize-context}  & Factual & QA & SFT  \\
+Retroformer~\citep{yao2024retroformer}  & Experiential & QA, Web Navigation & RL\\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+
+\subsubsection{Internal Parametric Memory}\label{ssec:internal}
+
+{Internal parameter memory injects domain knowledge, personalized knowledge, or priors required by downstream tasks into the model.} We also regard enhancing the model's long-context capability as injecting a prior. The timing of memory injection can be the pre-training phase, continued pre-training phase, mid-training phase, or post-training phase. The memory stored in internal parameters does not add extra parameters or additional modules.
+
+\paragraph{Pre-Train} 
+Some works introduce memory mechanisms during the pre-training phase, aiming to address the issue that long-tail world knowledge is difficult to compress into the limited model parameters.
+LMLM~\citep{zhao2025pretraininglimitedmemorylanguage} and HierMemLM~\citep{pt-hier-memory} store the memory for knowledge retrieval in the model during the pre-training phase, while storing the knowledge itself in an external knowledge base. 
+Some works also optimize the computational efficiency of attention to enhance long-window memory capability~\citep{attention-sink,lightening-attention,lightening-attention-2,flash-attention-2,flash-attention-3}.
+
+\paragraph{Mid-Train}
+During the continued pre-training phase, some works incorporate generalizable experience from downstream tasks. For instance, ~\citet{agent-founder} and ~\citet{agent-early-experience} integrate agent experience. Some works improve the long-window performance or efficiency of LLMs during the mid-training phase, enabling the model to maintain more short-term memory with longer windows in memory-aided tasks~\citep{big-bird,longformer}. 
+
+
+\paragraph{Post-Train} Other works incorporate memory during the post-training phase to adapt to downstream tasks. Some works enable LLMs to memorize personalized user history or styles. Some works allow LLMs to learn from the successes or failures of past similar task executions. Character-LM~\citep{character-lm} and CharacterGLM~\citep{characterGLM} fine-tunes the LLM into different characteristics. During the post-training phase, SELF-PARAM~\citep{self-param} injects additional knowledge through KL divergence distillation without requiring extra parameters. Room~\citep{machine-memory-system} stores knowledge externally while save experience internally. KnowledgeEditor~\citep{edit-fact} modifies internal parameters, aiming to alter only the knowledge that requires editing. MEND~\citep{mend} achieves fast knowledge editing by using small networks to modify the gradients of large models. PersonalityEdit~\citep{personality-edit} proposes an LLM personality editing dataset based on personality theories in psychology. APP~\citep{app} employs multiple training objectives to ensure that adjacent knowledge is minimally disturbed during knowledge editing. DINM~\citep{dinm} proposes a model editing method that enables the model to learn to reject such dangerous requests without affecting its normal functions.
+
+\paragraph{Discussion} 
+The advantages of internal parameters lie in their simple structure, which does not add extra inference overhead or deployment costs to the vanilla model. Their drawback is the difficulty in updating internal parameters: storing new memory requires retraining, which is costly and prone to forgetting old memory. Therefore, internal parameter memory is more suitable for large-scale storage of domain knowledge or task priors, rather than short segments of personalized memory or working memory.
+
+\subsubsection{External Parametric Memory}\label{ssec:exteranl}
+
+
+Storing memory as tokens outside LLMs leads to insufficient understanding of token-form memory content in the input window by the model. Meanwhile, storing memory in the parameters of LLMs has issues, such as difficulty in updating and conflicts with pre-trained knowledge. Some works adopt a compromise approach, which \textbf{introduces memory through external parameters }without altering the original parameters of LLMs.
+
+\paragraph{Adapter} A common line of external parametric memory methods relies on modules that are attached to a frozen base model. MLP-Memory~\citep{mlp-memory} integrates RAG knowledge with Transformer decoders through MLP. K-Adapter~\citep{DBLP:conf/acl/WangTDWHJCJZ21} injects new knowledge by training task-specific adapter modules while keeping the original backbone unchanged, enabling continual knowledge expansion without interfering with pre-trained representations. WISE~\citep{DBLP:conf/nips/0104L0XY0X0C24} further introduces a dual-parameter memory setup—separating pre-trained knowledge and edited knowledge—and a routing mechanism that dynamically selects which parameter memory to use at inference time, thus mitigating conflicts during lifelong editing. ELDER~\citep{DBLP:conf/aaai/00010W0025} advances this direction by maintaining multiple LoRA modules and learning a routing function that adaptively selects or blends them based on input semantics, improving robustness and scalability in long-term editing scenarios. Collectively, these methods leverage additional parameter subspaces to store and retrieve memory in a modular and reversible manner, avoiding the risks of catastrophic interference associated with directly modifying the core model weights.
+
+\paragraph{Auxiliary LM} Beyond Adapter-based storage, another line of work adopts a more architecturally decoupled form of external parametric memory, where memory is stored in a separate model or external knowledge module. MAC~\citep{amortize-context} compresses the information from a new document into a compact modulation through an amortization network, and stores it in a memory bank. Retroformer~\citep{yao2024retroformer} proposes a learning paradigm for memorizing the experiences of successes or failures in past task executions.
+
+\paragraph{Discussion}
+This external parametric memory approach provides a balance between adaptability and model stability. Because memory is encoded into additional parameter modules, it can be added, removed, or replaced without interfering with the base model’s pre-trained representation space. This supports modular updates, task-specific personalization, and controlled rollback, while avoiding the catastrophic forgetting or global weight distortion that may occur in full model fine-tuning.
+
+However, this approach also comes with limitations. External parameter modules must still integrate with the model’s internal representation flow, meaning that their influence is indirect and mediated through the model’s attention and computation pathways. As a result, the effectiveness of memory injection depends on how well the external parameters can interface with internal parametric knowledge. 
+
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.9\linewidth]{img/latent.pdf}
+    \caption{
+    Overview of Latent Memory integration in LLM agents. Unlike explicit text storage, latent memory operates within the model's internal representational space. The framework is categorized by the origin of the latent state: (a) \textbf{Generate}, where auxiliary models synthesize embeddings to interfere with or augment the LLM's forward pass; (b) \textbf{Reuse}, which directly propagates prior computational states such as KV caches or intermediate embeddings; and (c) \textbf{Transform}, which compresses internal states through token selection, merging, or projection to maintain efficient context.
+    }
+    \label{fig:sec3-3.3}
+\end{figure}
+
+
+\subsection{Latent Memory}\label{ssec:latent}
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Definition of Latent Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+Latent memory refers to memory that is carried implicitly in the model’s internal representations (e.g., KV cache, activations, hidden states, latent embeddings), rather than being stored as explicit, human-readable tokens or dedicated parameter sets. 
+\end{tcolorbox}
+
+
+Latent avoids exposing memory in plaintext and introduces practically less inference latency, while potentially offering better performance gains by preserving fine-grained contextual signals within the model’s own representational space. 
+
+
+As shown in \autoref{fig:sec3-3.3}, we organize prior work by the origin of latent memory, which means how the latent state is formed and introduced into the agent. We summarize the works in this part in \autoref{tab:latent-memory}.
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Major Types of Latent Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+\begin{enumerate}
+    \item \textbf{Generate}: latent memory is produced by an independent model or a module, and then supplied to the agent as reusable internal representations.
+    
+    \item \textbf{Reuse}: latent memory is directly carried over from prior computation, most prominently KV-cache reuse (within or across turns), as well as recurrent or stateful controllers that propagate hidden states.
+
+    \item \textbf{Transform}: existing latent state is transformed into new representations(e.g., distillation, pooling, or compression), so the agent can retain essentials while reducing latency and context footprint.
+\end{enumerate}
+\end{tcolorbox}
+
+
+
+
+\begin{table*}[!t]
+\centering
+\caption{
+Taxonomy of latent memory methods.
+We categorize existing works based on the \textit{origin} of the latent state: 
+\textbf{Generate} synthesizes memory via auxiliary modules, 
+\textbf{Reuse} propagates internal computational states, 
+and \textbf{Transform} compresses, modifies or restructs existing latent state.
+Methods are compared across three technical dimensions:
+(1) \textbf{Form} specifies the specific data type of the latent memory,
+(2) \textbf{Type} defines the nature of the recorded content (e.g., Working, Factual, and Experiential),
+and (3) \textbf{Task} denotes the target downstream application.
+}
+\label{tab:latent-memory}
+
+\renewcommand{\arraystretch}{0.97} 
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|lll}
+\toprule
+{Method} & {Form} & {Type} & {Task} \\
+\midrule
+\multicolumn{4}{c}{\textit{I. Generate}}\\
+\midrule
+\multicolumn{4}{l}{\textbf{(a) Single Modal}}\\
+Gist~\citep{DBLP:conf/nips/Mu0G23} & Gist Tokens & Working & Long-context Compression \\
+Taking a Deep Breath~\citep{DBLP:conf/emnlp/LuoZXWLLCS24} & Sentinel Tokens & Working & Long-context QA \\
+SoftCoT~\citep{DBLP:conf/acl/00010ZM25} & Soft Tokens & Working & Reasoning \\
+CARE~\citep{DBLP:journals/corr/abs-2508-15253} & Memory Tokens & Working & QA, Fact Checking \\
+AutoCompressor~\citep{DBLP:conf/emnlp/ChevalierWAC23} & Summary Vectors &Working & QA, Compression \\
+MemoRAG~\citep{DBLP:conf/www/Qian0ZMLD025} & Global Semantic States & Working & QA, Summary \\
+MemoryLLM~\citep{Wang2024MEMORYLLM} & Persistent Tokens & Factual & Long-conv QA, Model Editing \\
+M+~\citep{DBLP:journals/corr/abs-2502-00592} & Cross-layer Token Pools & Factual & QA \\
+LM2~\citep{DBLP:journals/corr/abs-2502-06049} & Matrix Slots & Working & QA, Reasoning \\
+Titans~\citep{DBLP:journals/corr/abs-2501-00663} & Neural Weights (MLP) & Working & QA, Language Modeling\\
+MemGen~\citep{Zhang2025MemGen} & LoRA Fragments & Working, Exp. & QA, Math, Code, Embodied Task, Reasoning \\
+EMU~\citep{DBLP:conf/iclr/NaSM24} & Embeddings w/ Returns & Factual & Game \\
+TokMem~\citep{wu2025tokmemtokenizedproceduralmemory} & Memory Tokens & Exp. & Funcation calling \\
+Nested Learning~\citep{behrouz2025nested} & Nested Optimization & Factual & Language Modeling \\
+Memoria~\citep{park2024memoria} & Three memory layers with engrams & Factual & Language Modeling \\
+
+\midrule
+\multicolumn{4}{l}{\textbf{(b) Multi-Modal}}\\
+CoMem~\citep{Wu2025CoMEM} & Multimodal Embeddings & Factual & Multimodal QA \\
+ACM~\citep{DBLP:journals/corr/abs-2510-09038} & Trajectory Embeddings & Working & Web \\
+Time-VLM~\citep{DBLP:journals/corr/abs-2502-04395} & Patch Embeddings & Working & Video Understanding \\
+Mem Augmented RL  ~\citep{DBLP:conf/iros/MezghaniSLMBBA22} & Novelty State Encoder & Working & Visual Navigation \\
+MemoryVLA~\citep{DBLP:journals/corr/abs-2508-19236} & Perceptual States & Factual, Working & Embodied Task \\
+XMem~\citep{cheng2022xmemlongtermvideoobject} & Key-Value Embeddings & Working & Video Segmentation \\
+
+\midrule
+\multicolumn{4}{c}{\textit{II. Reuse}} \\
+\midrule
+Memorizing Transformers~\citep{DBLP:conf/iclr/WuRHS22} & External KV Cache & Working & Language Modeling \\
+SirLLM~\citep{DBLP:conf/acl/YaoL024} & Entropy-selected KV & Factual & Long-conv QA \\
+Memory${}^{\mbox{3}}$~\citep{DBLP:journals/corr/abs-2407-01178} & Critical KV Pairs & Factual & QA \\
+FOT~\citep{DBLP:conf/nips/TworkowskiSPWMM23} & Memory-Attention KV & Working & QA, Few-shot learning, Language Modeling \\
+LONGMEM~\citep{DBLP:conf/nips/Wang0CLYGW23} & Residual SideNet KV & Working & Language Modeling and Understanding \\
+
+\midrule
+\multicolumn{4}{c}{\textit{III. Transform}} \\
+\midrule
+Scissorhands~\citep{DBLP:conf/nips/LiuDLWXXKS23} & Pruned KV & Working & Image classification \& generation \\
+SnapKV~\citep{DBLP:conf/nips/LiHYVLYCLC24} & Aggregated Prefix KV & Working & Language Modeling \\
+PyramidKV~\citep{DBLP:journals/corr/abs-2406-02069} & Layer-wise Budget & Working & Language Modeling \\
+RazorAttention~\citep{DBLP:conf/iclr/TangLLHKHYW25} & Compensated Window & Working & Language Modeling \\
+H2O~\citep{DBLP:conf/nips/Zhang00CZC0TRBW23} & Heavy Hitter Tokens & Working & QA, Language Modeling  \\
+R${}^3$Mem~\citep{wang2025R3Mem} & Virtual memory tokens with reversible compression & Working & QA, Language Modeling  \\
+
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+
+
+
+\subsubsection{Generate}
+\label{ssec:generate}
+
+
+
+
+A major line of work builds memory by \textbf{generating new latent representations} rather than reusing or transforming existing activations. In this paradigm, the model or an auxiliary encoder creates compact continuous states. These states may appear as special tokens in the sequence or as standalone vectors. They summarize the essential information from long contexts, task trajectories, or multimodal inputs. The generated latent summaries are then stored, inserted, or used as conditions for later reasoning or decision-making. This enables the system to operate beyond its native context length, maintain task-specific intermediate states, and retain knowledge across episodes without revisiting the original input. Although the concrete forms vary across studies, the underlying idea remains consistent. Memory is explicitly produced through learned encoding or compression, and the resulting latent states serve as reusable memory units that support future inference.
+
+This design choice may also raise potential ambiguity with parametric memory, particularly since many methods rely on separately trained models to generate latent representations. In this chapter, however, our classification is grounded in the form of memory rather than the learning mechanism. Crucially, although these approaches generate memory through learned encoding, the produced latent representations are explicitly instantiated and reused as independent memory units, rather than being directly embedded into the model’s parameters or forward-pass activations. We will return to this distinction when discussing individual methods in detail.
+
+\paragraph{Single Modal} In the single-modal setting, a major group of methods focuses on long-context processing and language modeling, where models generate a small set of internal representations to replace long raw inputs ~\citep{DBLP:conf/nips/Mu0G23,DBLP:conf/emnlp/LuoZXWLLCS24,DBLP:conf/acl/00010ZM25,DBLP:conf/emnlp/ChevalierWAC23,DBLP:conf/www/Qian0ZMLD025,Wang2024MEMORYLLM,DBLP:journals/corr/abs-2502-00592}. A typical strategy is to compress long sequences into a few internal tokens or continuous vectors that can be reused during later inference. For example, Gist~\citep{DBLP:conf/nips/Mu0G23} train a language model to produce a set of gist tokens after processing a long prompt. \citet{DBLP:conf/emnlp/LuoZXWLLCS24} introduce a special sentinel token at each chunk boundary and encourage the model to aggregate local semantics into that token. SoftCoT ~\citep{DBLP:conf/acl/00010ZM25} follows a similar direction by generating instance-specific soft tokens from the last hidden state. CARE ~\citep{DBLP:journals/corr/abs-2508-15253} further extends the latent tokens by training a context assessor that compresses retrieved RAG documents into compact memory tokens.
+
+Work such as AutoCompressor~\citep{DBLP:conf/emnlp/ChevalierWAC23} and MemoRAG~\citep{DBLP:conf/www/Qian0ZMLD025} emphasizes vectorized or standalone latent representations. AutoCompressor~\citep{DBLP:conf/emnlp/ChevalierWAC23} encodes entire long documents into a small number of summary vectors serving as soft prompts, while MemoRAG~\citep{DBLP:conf/www/Qian0ZMLD025} uses an LLM to produce compact hidden-state memories capturing global semantic structure. These approaches not only abstract away from raw text but also transform retrieved or contextualized information into new latent memory units optimized for reuse. To support more persistent memory, MemoryLLM ~\citep{Wang2024MEMORYLLM} embeds a set of dedicated memory tokens within the model’s latent space. M+ ~\citep{DBLP:journals/corr/abs-2502-00592} extends this idea into a cross-layer long-term memory architecture. LM2~\citep{DBLP:journals/corr/abs-2502-06049} follows a related but structurally distinct direction by introducing matrix-shaped latent memory slots into every layer.
+
+A different branch of work internalizes the generation of latent memory within the model’s parameter dynamics. Although these works rely on parameterized modules, their operational memory units remain latent representations, placing them firmly within this category. Titans ~\citep{DBLP:journals/corr/abs-2501-00663} compresses long-range information into an online-updated MLP weight, producing latent vectors during inference. MemGen ~\citep{Zhang2025MemGen} dynamically generates latent memory during decoding: two LoRA adapters determine where to insert memory fragments and what latent content to insert. EMU~\citep{DBLP:conf/iclr/NaSM24} trains a state encoder to produce latent embeddings annotated with returns and desirability.
+
+\paragraph{Multi Modal} In multimodal settings, generative latent memory extends to images, audios and videos, encoding them as compact latent representations. CoMem~\citep{Wu2025CoMEM} uses a VLM to compress multimodal knowledge into a set of embeddings that act as plug-and-play memory. Similarly, \citet{DBLP:journals/corr/abs-2510-09038} compresses entire GUI interaction trajectories into fixed-length embeddings and injects them into the VLM input space. For temporal modeling, Time-VLM~\citep{DBLP:journals/corr/abs-2502-04395} divides video or interaction streams into patches and generates a latent embedding for each patch. 
+
+In vision-based navigation, \citet{DBLP:conf/iros/MezghaniSLMBBA22} learns a state encoder that maps visual observations into a latent space and constructs an episodic memory containing only novel observations. MemoryVLA~\citep{DBLP:journals/corr/abs-2508-19236} maintains a Perceptual–Cognitive Memory Bank that stores both perceptual details and high-level semantics as transformer hidden states. In long-video object segmentation, XMem\citep{cheng2022xmemlongtermvideoobject} encodes each frame into key–value latent embeddings and organizes them into a multi-stage memory comprising perceptual, working, and long-term components.
+
+\paragraph{Discussion}
+These single-modal and multimodal approaches share the same fundamental principle: first generate compact latent representations, then maintain and retrieve them as memory entries. The model can actively construct highly information-dense representations tailored to the task, capturing key dynamics, long-range dependencies, or cross-modal relations with minimal storage cost. It also avoids repeatedly processing the full context, enabling more efficient reasoning across extended interactions.
+
+However, the drawbacks are equally evident. The generation process itself may introduce information loss or bias, and the states can drift or accumulate errors over multiple read–write cycles. Moreover, training a dedicated module to generate latent representations introduces additional computational overhead, data requirements, and engineering complexity.
+
+
+
+\subsubsection{Reuse}
+\label{ssec:reuse}
+In contrast to methods that generate new latent representations, another line of work directly \textbf{reuses the model’s internal activations, primarily the key–value (KV) cache}, as latent memory. These approaches do not transform(modify, compress) the stored KV pairs and instead treat the raw activations from forward passes as reusable memory entries. The main challenge is to determine which KV pairs to keep, how to index them, and how to retrieve them efficiently under long-context or continual-processing demands.
+
+
+From a cognitive perspective, \citet{DBLP:journals/corr/abs-2501-02950} provides conceptual grounding by framing biological memory as a key–value system, where keys function as retrieval addresses and values encode stored content—an abstraction closely aligned with KV-based memory in modern LLMs. Memorizing Transformers ~\citep{DBLP:conf/iclr/WuRHS22} explicitly store past KV pairs and retrieve them via K-nearest-neighbor search during inference. 
+FOT~\citep{DBLP:conf/nips/TworkowskiSPWMM23} extends this line of work by introducing memory-attention layers that perform KNN-based retrieval over additional KV memories during inference. LONGMEM ~\citep{DBLP:conf/nips/Wang0CLYGW23} similarly augments long-range retrieval, employing a lightweight residual SideNet that treats historical KV embeddings as a persistent memory store. These systems demonstrate how retrieval-aware organization of latent KV states can substantially enhance access to distant information.
+
+\paragraph{Discussion}
+Reuse-type latent memory methods highlight the effectiveness of directly leveraging the model’s own internal activations as memory, showing that carefully curated KV representations can serve as a powerful and efficient substrate for long-range retrieval and reasoning.
+
+Their greatest strength lies in preserving the full fidelity of the model’s internal activations, ensuring that no information is lost through pruning or compression. This makes them conceptually simple, easy to integrate into existing forms, and highly faithful to the model’s original computation. However, raw KV caches grow rapidly with context length, which increases memory consumption and can make retrieval less efficient. The effectiveness of reuse therefore depends heavily on indexing strategies.
+
+\subsubsection{Transform}
+\label{ssec:transform}
+{Transform-type latent memory methods focus on \textbf{modifying, compressing, or restructuring existing latent states} rather than generating entirely new ones or directly reusing raw KV caches.} These approaches treat KV caches and hidden activations as malleable memory units, reshaping them through selection, aggregation, or structural transformation. In doing so, they occupy a conceptual middle ground between generate-type and reuse-type memory: the model does not create fresh latent representations, but it also does more than simply replay stored KV pairs.
+
+A major line of work focuses on compressing KV caches while preserving essential semantics. Some methods reduce memory usage by keeping only the most influential tokens. Scissorhands~\citep{DBLP:conf/nips/LiuDLWXXKS23} prunes tokens based on attention scores when cache capacity is exceeded, whereas SnapKV~\citep{DBLP:conf/nips/LiHYVLYCLC24} aggregates high-importance prefix KV representations via a head-wise voting mechanism. PyramidKV ~\citep{DBLP:journals/corr/abs-2406-02069} reallocates KV budgets across layers. SirLLM ~\citep{DBLP:conf/acl/YaoL024} builds on this perspective by estimating token importance with a token-entropy criterion and selectively retaining only informative KV entries. Memory${}^{\mbox{3}}$ ~\citep{DBLP:journals/corr/abs-2407-01178} only stores the most critical attention key–value pairs, significantly shrinking storage requirements. RazorAttention ~\citep{DBLP:conf/iclr/TangLLHKHYW25} introduces a more explicit compression scheme: it computes the effective attention span of each head, retains only a limited local window, and uses compensation tokens to preserve information from discarded entries. From a more efficiency-oriented perspective, H2O ~\citep{DBLP:conf/nips/Zhang00CZC0TRBW23} adopts a simpler eviction strategy, retaining only the most recent tokens along with special H2 tokens to reduce memory footprint.
+
+
+\paragraph{Discussion}
+These methods demonstrate how latent memory can be transformed, through selection, retrieval enhancement, or compressed re-encoding, into more effective memory representations, enabling LLMs to extend their usable context length and improve reasoning performance without relying on raw cache reuse.
+
+Their main advantage lies in producing more compact and information-dense memory representations, which reduce storage cost and enable efficient retrieval over long contexts. By reshaping latent states, these methods allow the model to access distilled semantic signals that may be more useful than raw activations. However, transformation introduces the risk of information loss, and the compressed states can become harder to interpret or verify compared with directly reused KV caches. The additional computation required for pruning, aggregation, or re-encoding also increases system complexity. 
+
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{img/comparison.pdf}
+    \caption{Overview of three complementary memory paradigms for LLM agents. Token-level, parametric, and latent memories differ in their representational form, update dynamics, interpretability, and efficiency, leading to distinct strengths, limitations, and application domains in long-horizon and interactive agent systems.}
+    \label{fig:sec3-comparison}
+\end{figure}
+
+\subsection{Adaptation}
+As shown above, such a large body of work has focused on agent memory, clearly demonstrating that memory mechanisms are essential for agent systems~\citep{zhang2025ruc_survey}. The choice of memory type in an agent system reflects how designers expect the agent to behave in a given task. Designers are not simply asking the agent to remember certain information, but also implicitly expressing how they want that information to shape the agent’s behavior. Therefore, choosing the right type of memory for a task is far more than a simple combinatorial choice.
+
+In this section, we start from the features of each memory type and discuss which tasks and scenarios they are best suited for in an ideal setting, as shown in \autoref{fig:sec3-comparison}. We hope this discussion can offer useful ideas and guidance for making practical choices. The examples illustrate only one possible form of memory in these idealized settings and do not imply that other memory types lack unique advantages in the same scenarios.
+
+\paragraph{Token-level Memory}
+Token-level memory remains \emph{symbolic}, \emph{addressable}, and \emph{transparent}, making it particularly well suited for scenarios where explicit reasoning, controllability, and accountability are essential. This type of memory excels in real-time, high-frequency update settings, where an agent must continuously track and revise information, and where the knowledge itself exhibits a clear structure that can be explicitly modeled. Its externalizability allows memory to be easily inspected, audited, transferred, or revised, making it especially suitable for domains requiring precise add/delete/update operations. The high level of interpretability further ensures that an agent's decision process can be traced back to concrete memory units, a crucial property in high-stakes applications. Moreover, token-level memory provides long-term stability and avoids catastrophic forgetting, enabling agents to accumulate reliable knowledge over extended time horizons. Another practical advantage is that token-level memory is often implemented as a plug-and-play module, allowing it to be readily integrated with the latest closed-source or open-source foundation models without modifying their internal parameters.
+
+
+\textbf{Possible Scenarios:}
+\begin{itemize}[itemsep=-0.2em]
+    \item Chatbots and multi-turn dialogue systems.~\citep{zhong2023memorybankenhancinglargelanguage,lu2023memochattuningllmsuse,Chhikara2025mem0}
+    \item Long-horizon or life-long agents requiring stable memory.~\citep{wang2024aipersona, DBLP:journals/corr/abs-2510-07925}
+    \item User-specific personalization profiles.~\citep{wang2024aipersona,DBLP:conf/acl/LeeHPP023}
+    \item Recommendation systems.~\citep{wang_recmind_2024, DBLP:journals/tois/HuangLLYLX25, DBLP:conf/cikm/XiLL0T0024}
+    \item Enterprise or organizational knowledge bases.
+    \item Legal, compliance, and other high-stakes domains requiring verifiable provenance.
+\end{itemize}
+
+\paragraph{Parametric Memory}
+Compared with symbolic memory, parametric memory is \emph{implicit, abstract}, and \emph{generalizable}, making it naturally suited to tasks requiring conceptual understanding and broad pattern induction. It is particularly effective when the agent must rely on general knowledge or rules that apply across diverse contexts, because such regularities can be internalized as distributed representations without requiring explicit external lookup. This internalization supports fluid reasoning and end-to-end processing, enabling the model to generalize systematically to unseen tasks or problem variations. Consequently, parametric memory is better aligned with tasks demanding structural insight, robust abstraction, and deeply ingrained behavioral or stylistic patterns.
+
+\textbf{Possible Scenarios:}
+\begin{itemize}[itemsep=-0.2em]
+    \item Role-playing or persona-consistent behaviors.~\citep{character-lm,characterGLM}
+    \item Mathematical reasoning, coding, games, and structured problem-solving.
+    \item Human alignment and normative behavioral priors.
+    \item Stylized, professional, or domain-expert responses.
+\end{itemize}
+
+\paragraph{Latent Memory}
+Unlike token-level or parametric memory, latent memory sits between explicit data and fixed model weights, enabling a unique balance of flexibility and efficiency. Its low readability provides intrinsic privacy protection, making latent representations suitable for sensitive information processing. At the same time, their high expressive capacity permits rich semantic encoding with minimal information loss, allowing agents to capture subtle correlations across modalities or tasks. Latent memory also supports efficient inference-time retrieval and integration, enabling agents to inject large quantities of compact knowledge. This memory type therefore prioritizes performance and scalability over interpretability, achieving high knowledge density and compression ideal for constrained or highly dynamic environments.
+
+\textbf{Possible Scenarios:}
+\begin{itemize}[itemsep=-0.2em]
+    \item Multimodal or fully integrated agent architectures.~\citep{DBLP:journals/corr/abs-2508-19236,cheng2022xmemlongtermvideoobject,Wu2025CoMEM}
+    \item On-device or edge deployment and cloud-serving environments.
+    \item Encrypted or privacy-sensitive application domains.
+    
+\end{itemize}

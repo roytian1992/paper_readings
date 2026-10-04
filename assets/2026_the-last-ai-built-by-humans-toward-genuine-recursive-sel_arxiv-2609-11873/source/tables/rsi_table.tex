@@ -1,0 +1,702 @@
+% =========================================================
+% Local helpers
+% =========================================================
+
+\providecommand{\techworkcell}[1]{}
+\providecommand{\techemptycell}{}
+\providecommand{\techmechanism}[2]{}
+
+\renewcommand{\techworkcell}[1]{%
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}
+    \centering
+    \fontsize{5.70pt}{6.35pt}\selectfont
+    \setlength{\parskip}{0pt}%
+    #1
+  \end{minipage}%
+}
+
+\renewcommand{\techemptycell}{%
+  \raisebox{-6pt}[0pt][0pt]{%
+    \textcolor{black!32}{---}%
+  }%
+}
+
+\renewcommand{\techmechanism}[2]{%
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}
+    \centering
+    #1\\[-0.10em]
+    #2
+  \end{minipage}%
+}
+
+% =========================================================
+% Main table
+% =========================================================
+
+\begin{table*}[t]
+\centering
+
+\caption{Representative implementation techniques across RSI autonomy levels (L1--L5).}
+\label{tab:rsi-technique-space}
+
+\fontsize{6.60pt}{6.65pt}\selectfont
+\setlength{\tabcolsep}{0.55pt}
+\renewcommand{\arraystretch}{1.00}
+\setlength{\extrarowheight}{0pt}
+
+\begin{tabularx}{\textwidth}{
+  C{1.85cm}
+  >{\centering\arraybackslash}p{3.70cm}
+  *{5}{Y}
+}
+
+\toprule
+\rowcolor{HeaderBlue}
+\makecell[c]{%
+  \textbf{Technique}\\[-0.06em]
+  \textbf{Family}%
+}
+&
+\makecell[c]{%
+  \textbf{Concrete}\\[-0.06em]
+  \textbf{Technique}%
+}
+& \levelhead{L1}{Execution}
+& \levelhead{L2}{Strategy}
+& \levelhead{L3}{Experience}
+& \levelhead{L4}{Deployment}
+& \levelhead{L5}{Meta}
+\\
+
+\midrule
+
+% =========================================================
+% A. Search & Optimization
+% =========================================================
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{A1. Evolutionary}{Search}
+&
+\techemptycell
+&
+\techworkcell{%
+  Promptbreeder~\cite{fernando2024promptbreeder}\\[0.01em]
+  AgentSquare~\cite{shang2025agentsquare}\\[0.01em]
+  C-Evolve~\cite{li2026cevolve}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  DecoEvo~\cite{chen2026decoevo}%
+}
+&
+\techworkcell{%
+  DGM~\cite{zhang2026dgm}\\[0.01em]
+  RQGM~\cite{iacob2026redqueen}%
+}
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{A2. Tree Search}{/ MCTS}
+&
+\techemptycell
+&
+\techworkcell{%
+  AFlow~\cite{zhang2025aflow}%
+}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{A3. Bayesian / Black-box}{Optimization}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{A4. LLM Reflection}{/ Critique}
+&
+\techworkcell{%
+  EDIT~\cite{wu2026edit}%
+}
+&
+\techworkcell{%
+  GEPA~\cite{agrawal2026gepa}\\[0.01em]
+  MPO~\cite{choi2026mpo}%
+}
+&
+\techworkcell{%
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techworkcell{%
+  ReasoningBank~\cite{ouyang2026reasoningbank}\\[0.01em]
+  Trace2Skill~\cite{ni2026trace2skill}\\[0.01em]
+  Metis~\cite{dai2026metis}%
+}
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+\multirow[c]{-5}{1.85cm}[2.0em]{%
+  \groupname{Search \&}{Optimization}%
+}
+&
+\techmechanism{A5. LLM-guided Program}{/ Code Search}
+&
+\techworkcell{%
+  Agent-Agnostic C/C++~\cite{lu2026agentagnostic}\\[0.01em]
+  Harness Engineering~\cite{openai_harness_engineering}\\[0.01em]
+  AIPC~\cite{su2026aipc}%
+}
+&
+\techworkcell{%
+  ADAS~\cite{hu2025adas}\\[0.01em]
+  AFlow~\cite{zhang2025aflow}\\[0.01em]
+  AutoKernel~\cite{jaber2026autokernel}%
+}
+&
+\techworkcell{%
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techworkcell{%
+  Metis~\cite{dai2026metis}\\[0.01em]
+  HarnessDev~\cite{wu2026harnessdev}\\[0.01em]
+  Tax AI~\cite{taxai}%
+}
+&
+\techworkcell{%
+  STOP~\cite{zelikman2024stop}\\[0.01em]
+  HyperAgents~\cite{zhang2026hyperagents}\\[0.01em]
+  AIDE$^{2}$~\cite{weco2026aide2}%
+}
+\\
+
+\addlinespace[0pt]
+
+% =========================================================
+% B. Data, Task & Experience Construction
+% =========================================================
+
+&
+\techmechanism{B1. Offline Synthetic}{Data Generation}
+&
+\techworkcell{%
+  SynthLLM~\cite{synthllm}\\[0.01em]
+  SynthAgent~\cite{wang-etal-2026-synthagent}\\[0.01em]
+  Nemotron-4~\cite{nemotron4_340b}%
+}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techrule
+
+&
+\techmechanism{B2. Self-Play / Adversarial}{Task Generation}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  SSP~\cite{lu2026searchselfplay}\\[0.01em]
+  AZR~\cite{zhao2025absolutezero}\\[0.01em]
+  STP~\cite{dong2025stp}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techrule
+
+&
+\techmechanism{B3. Adaptive Curriculum}{/ Task Scheduling}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  SIMA 2~\cite{deepmind2025sima2}\\[0.01em]
+  SEAgent~\cite{sun2026seagent}\\[0.01em]
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techrule
+
+&
+\techmechanism{B4. Environment}{Generation}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techrule
+
+\multirow[c]{-5}{1.85cm}[2.5em]{%
+  \groupnamethree{Data, Task \&}{Experience}{Construction}%
+}
+&
+\techmechanism{B5. Autonomous Exploration}{/ Interaction}
+&
+\techworkcell{%
+  SynthAgent~\cite{wang-etal-2026-synthagent}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  SIMA 2~\cite{deepmind2025sima2}\\[0.01em]
+  SEAgent~\cite{sun2026seagent}\\[0.01em]
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\addlinespace[0pt]
+
+% =========================================================
+% C. Training & Persistent Update
+% =========================================================
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{C1. Supervised Fine-Tuning}{(SFT)}
+&
+\techworkcell{%
+  EDIT~\cite{wu2026edit}\\[0.01em]
+  SynthAgent~\cite{wang-etal-2026-synthagent}\\[0.01em]
+  Nemotron-4~\cite{nemotron4_340b}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  STP~\cite{dong2025stp}\\[0.01em]
+  PSV~\cite{wilf2026psv}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{C2. Preference Optimization}{(DPO / KTO)}
+&
+\techworkcell{%
+  Nemotron-4~\cite{nemotron4_340b}%
+}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{C3. Reinforcement Learning}{(PPO / GRPO / RLVR)}
+&
+\techworkcell{%
+  EDIT~\cite{wu2026edit}\\[0.01em]
+  REPO~\cite{zeng-etal-2026-teaching}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  AZR~\cite{zhao2025absolutezero}\\[0.01em]
+  R-Zero~\cite{huang2026rzero}\\[0.01em]
+  SEAgent~\cite{sun2026seagent}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{C4. Knowledge}{Distillation}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{C5. Prompt / Context}{Optimization}
+&
+\techemptycell
+&
+\techworkcell{%
+  Promptbreeder~\cite{fernando2024promptbreeder}\\[0.01em]
+  GEPA~\cite{agrawal2026gepa}\\[0.01em]
+  MPO~\cite{choi2026mpo}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  DecoEvo~\cite{chen2026decoevo}\\[0.01em]
+  ACE~\cite{zhang2026agentic}\\[0.01em]
+  PersonaAgent~\cite{zhang2026personaagent}%
+}
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+\multirow[c]{-6}{1.85cm}[2.0em]{%
+  \groupnamethree{Training \&}{Persistent}{Update}%
+}
+&
+\techmechanism{C6. Memory / Skill}{Consolidation}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  VOYAGER~\cite{wang2023voyager}\\[0.01em]
+  SEAgent~\cite{sun2026seagent}%
+}
+&
+\techworkcell{%
+  ReasoningBank~\cite{ouyang2026reasoningbank}\\[0.01em]
+  Metis~\cite{dai2026metis}\\[0.01em]
+  Trace2Skill~\cite{ni2026trace2skill}%
+}
+&
+\techemptycell
+\\
+
+\addlinespace[0pt]
+
+% =========================================================
+% D. Verification & Selection
+% =========================================================
+
+&
+\techmechanism{D1. Execution / Unit-Test}{Verification}
+&
+\techworkcell{%
+  Agent-Agnostic C/C++~\cite{lu2026agentagnostic}\\[0.01em]
+  AIPC~\cite{su2026aipc}\\[0.01em]
+  Harness Engineering~\cite{openai_harness_engineering}%
+}
+&
+\techworkcell{%
+  AutoKernel~\cite{jaber2026autokernel}%
+}
+&
+\techworkcell{%
+  AZR~\cite{zhao2025absolutezero}\\[0.01em]
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techworkcell{%
+  Metis~\cite{dai2026metis}\\[0.01em]
+  HDSO~\cite{shang2026hypothesis}\\[0.01em]
+  Tax AI~\cite{taxai}%
+}
+&
+\techworkcell{%
+  STOP~\cite{zelikman2024stop}\\[0.01em]
+  AIDE$^{2}$~\cite{weco2026aide2}%
+}
+\\
+
+\techrule
+
+&
+\techmechanism{D2. Formal}{Verification}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  STP~\cite{dong2025stp}\\[0.01em]
+  PSV~\cite{wilf2026psv}%
+}
+&
+\techemptycell
+&
+\techemptycell
+\\
+
+\techrule
+
+&
+\techmechanism{D3. Reward Model}{/ LLM-as-a-Judge}
+&
+\techworkcell{%
+  Nemotron-4~\cite{nemotron4_340b}\\[0.01em]
+  REPO~\cite{zeng-etal-2026-teaching}\\[0.01em]
+  HealthBench~\cite{healthbench}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  SIMA 2~\cite{deepmind2025sima2}\\[0.01em]
+  SEAgent~\cite{sun2026seagent}%
+}
+&
+\techworkcell{%
+  ReasoningBank~\cite{ouyang2026reasoningbank}\\[0.01em]
+  DecoEvo~\cite{chen2026decoevo}%
+}
+&
+\techworkcell{%
+  RQGM~\cite{iacob2026redqueen}%
+}
+\\
+
+\techrule
+
+\multirow[c]{-4}{1.85cm}[2.3em]{%
+  \groupname{Verification \&}{Selection}%
+}
+&
+\techmechanism{D4. Regression Testing}{/ Model Selection}
+&
+\techworkcell{%
+  Agent-Agnostic C/C++~\cite{lu2026agentagnostic}\\[0.01em]
+  Harness Engineering~\cite{openai_harness_engineering}%
+}
+&
+\techworkcell{%
+  GEPA~\cite{agrawal2026gepa}\\[0.01em]
+  AutoResearch~\cite{karpathy2026autoresearch}\\[0.01em]
+  AutoKernel~\cite{jaber2026autokernel}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  HarnessDev~\cite{wu2026harnessdev}\\[0.01em]
+  ASPIRE~\cite{wu2026aspire}\\[0.01em]
+  HDSO~\cite{shang2026hypothesis}%
+}
+&
+\techworkcell{%
+  STOP~\cite{zelikman2024stop}\\[0.01em]
+  RQGM~\cite{iacob2026redqueen}\\[0.01em]
+  AIDE$^{2}$~\cite{weco2026aide2}%
+}
+\\
+
+\addlinespace[0pt]
+
+% =========================================================
+% E. Online & Meta-Level Adaptation
+% =========================================================
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{E1. Online / Continual}{Learning}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  SEAgent~\cite{sun2026seagent}\\[0.01em]
+  VOYAGER~\cite{wang2023voyager}%
+}
+&
+\techworkcell{%
+  ReasoningBank~\cite{ouyang2026reasoningbank}\\[0.01em]
+  PANDO~\cite{li2026pando}\\[0.01em]
+  Dynamic Cheatsheet~\cite{suzgun2026dynamic}%
+}
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{E2. Experience Replay}{/ Online Memory Update}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  ReasoningBank~\cite{ouyang2026reasoningbank}\\[0.01em]
+  PANDO~\cite{li2026pando}\\[0.01em]
+  Metis~\cite{dai2026metis}%
+}
+&
+\techemptycell
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+&
+\techmechanism{E3. Self-Modifying}{Code / Policy}
+&
+\techemptycell
+&
+\techworkcell{%
+  ADAS~\cite{hu2025adas}\\[0.01em]
+  AFlow~\cite{zhang2025aflow}\\[0.01em]
+  AutoResearch~\cite{karpathy2026autoresearch}%
+}
+&
+\techemptycell
+&
+\techworkcell{%
+  HarnessDev~\cite{wu2026harnessdev}\\[0.01em]
+  ASPIRE~\cite{wu2026aspire}\\[0.01em]
+  SHAPER~\cite{wang2026shaper}%
+}
+&
+\techworkcell{%
+  STOP~\cite{zelikman2024stop}\\[0.01em]
+  G\"odel Agent~\cite{yin2025godelagent}\\[0.01em]
+  A-Evolve-Training~\cite{shi2026aevolvetraining}%
+}
+\\
+
+\techruleblue
+
+\rowcolor{GroupBlue}
+\multirow[c]{-4}{1.85cm}[3.2em]{%
+  \groupnamethree{Online \&}{Meta-Level}{Adaptation}%
+}
+&
+\techmechanism{E4. Adaptive / Co-Evolving}{Evaluator}
+&
+\techemptycell
+&
+\techemptycell
+&
+\techemptycell
+&
+\techworkcell{%
+  DecoEvo~\cite{chen2026decoevo}%
+}
+&
+\techworkcell{%
+  RQGM~\cite{iacob2026redqueen}%
+}
+\\
+
+\bottomrule
+\end{tabularx}
+
+% =========================================================
+% Reading guide
+% =========================================================
+
+\vspace{0.16em}
+
+\begin{minipage}{0.985\textwidth}
+\fontsize{6.8pt}{7.0pt}\selectfont
+\color{MutedText}
+
+\textbf{Reading guide.}
+Rows group concrete techniques into broader technical families;
+columns indicate the autonomy levels of the specific improvement
+loops examined in the cited works.
+A work may appear in multiple cells when it employs several techniques
+or contains distinct improvement loops.
+Each cell lists up to three representative works.
+An em dash (---) indicates that no representative example is listed here;
+it does not imply incompatibility between the technique and the level.
+
+\vspace{0.10em}
+
+\textbf{Level shorthand.}
+L1: improvement execution \(\cdot\)
+L2: improvement strategy \(\cdot\)
+L3: learning-signal / experience acquisition \(\cdot\)
+L4: environment adaptation \(\cdot\)
+L5: recursive inheritance (meta-improvement).
+
+\end{minipage}
+\end{table*}

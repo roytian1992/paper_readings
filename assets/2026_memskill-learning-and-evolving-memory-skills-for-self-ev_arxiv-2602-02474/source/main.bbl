@@ -1,0 +1,262 @@
+\begin{thebibliography}{37}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chen et~al.(2025)Chen, Wang, Zhu, Yu, Feng, Zhang, Patwary, and
+  You]{chen2025multi}
+Chen, Y., Wang, Y., Zhu, S., Yu, H., Feng, T., Zhang, M., Patwary, M., and You,
+  J.
+\newblock Multi-agent evolve: Llm self-improve through co-evolution.
+\newblock \emph{arXiv preprint arXiv:2510.23595}, 2025.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and
+  Yadav]{chhikara2025mem0}
+Chhikara, P., Khant, D., Aryan, S., Singh, T., and Yadav, D.
+\newblock Mem0: Building production-ready ai agents with scalable long-term
+  memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+
+\bibitem[Fang et~al.(2025)Fang, Deng, Xu, Jiang, Tang, Xu, Deng, Yao, Wang,
+  Qiao, et~al.]{fang2025lightmem}
+Fang, J., Deng, X., Xu, H., Jiang, Z., Tang, Y., Xu, Z., Deng, S., Yao, Y.,
+  Wang, M., Qiao, S., et~al.
+\newblock Lightmem: Lightweight and efficient memory-augmented generation.
+\newblock \emph{arXiv preprint arXiv:2510.18866}, 2025.
+
+\bibitem[Grattafiori et~al.(2024)Grattafiori, Dubey, Jauhri, Pandey, Kadian,
+  Al-Dahle, Letman, Mathur, Schelten, Vaughan, et~al.]{grattafiori2024llama}
+Grattafiori, A., Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A.,
+  Letman, A., Mathur, A., Schelten, A., Vaughan, A., et~al.
+\newblock The llama 3 herd of models.
+\newblock \emph{arXiv preprint arXiv:2407.21783}, 2024.
+
+\bibitem[Hu et~al.(2024)Hu, Lu, and Clune]{hu2024automated}
+Hu, S., Lu, C., and Clune, J.
+\newblock Automated design of agentic systems.
+\newblock \emph{arXiv preprint arXiv:2408.08435}, 2024.
+
+\bibitem[Hu et~al.(2025)Hu, Liu, Yue, Zhang, Liu, Zhu, Lin, Guo, Dou, Xi,
+  et~al.]{hu2025memory}
+Hu, Y., Liu, S., Yue, Y., Zhang, G., Liu, B., Zhu, F., Lin, J., Guo, H., Dou,
+  S., Xi, Z., et~al.
+\newblock Memory in the age of ai agents.
+\newblock \emph{arXiv preprint arXiv:2512.13564}, 2025.
+
+\bibitem[Huang et~al.(2025)Huang, Yu, Wang, Zhang, Li, Li, Huang, Mi, and
+  Yu]{huang2025r}
+Huang, C., Yu, W., Wang, X., Zhang, H., Li, Z., Li, R., Huang, J., Mi, H., and
+  Yu, D.
+\newblock R-zero: Self-evolving reasoning llm from zero data.
+\newblock \emph{arXiv preprint arXiv:2508.05004}, 2025.
+
+\bibitem[Kang et~al.(2025)Kang, Ji, Zhao, and Bai]{kang2025memory}
+Kang, J., Ji, M., Zhao, Z., and Bai, T.
+\newblock Memory os of ai agent.
+\newblock \emph{arXiv preprint arXiv:2506.06326}, 2025.
+
+\bibitem[Kool et~al.(2019)Kool, Van~Hoof, and Welling]{kool2019stochastic}
+Kool, W., Van~Hoof, H., and Welling, M.
+\newblock Stochastic beams and where to find them: The gumbel-top-k trick for
+  sampling sequences without replacement.
+\newblock In \emph{International conference on machine learning}, pp.\
+  3499--3508. PMLR, 2019.
+
+\bibitem[{LangChain}(2025)]{LangMem}
+{LangChain}.
+\newblock Langmem.
+\newblock \url{https://github.com/langchain-ai/langmem}, 2025.
+\newblock GitHub repository.
+
+\bibitem[Lee et~al.(2024)Lee, Chen, Furuta, Canny, and Fischer]{lee2024human}
+Lee, K.-H., Chen, X., Furuta, H., Canny, J., and Fischer, I.
+\newblock A human-inspired reading agent with gist memory of very long
+  contexts.
+\newblock \emph{arXiv preprint arXiv:2402.09727}, 2024.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and
+  Fang]{maharana2024evaluating-locomo}
+Maharana, A., Lee, D.-H., Tulyakov, S., Bansal, M., Barbieri, F., and Fang, Y.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock \emph{arXiv preprint arXiv:2402.17753}, 2024.
+
+\bibitem[Novikov et~al.(2025)Novikov, V{\~u}, Eisenberger, Dupont, Huang,
+  Wagner, Shirobokov, Kozlovskii, Ruiz, Mehrabian,
+  et~al.]{novikov2025alphaevolve}
+Novikov, A., V{\~u}, N., Eisenberger, M., Dupont, E., Huang, P.-S., Wagner,
+  A.~Z., Shirobokov, S., Kozlovskii, B., Ruiz, F.~J., Mehrabian, A., et~al.
+\newblock Alphaevolve: A coding agent for scientific and algorithmic discovery.
+\newblock \emph{arXiv preprint arXiv:2506.13131}, 2025.
+
+\bibitem[Ouyang et~al.(2025)Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le,
+  Daruki, Tang, et~al.]{ouyang2025reasoningbank}
+Ouyang, S., Yan, J., Hsu, I., Chen, Y., Jiang, K., Wang, Z., Han, R., Le,
+  L.~T., Daruki, S., Tang, X., et~al.
+\newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
+\newblock \emph{arXiv preprint arXiv:2509.25140}, 2025.
+
+\bibitem[Packer et~al.(2023)Packer, Fang, Patil, Lin, Wooders, and
+  Gonzalez]{packer2023memgpt}
+Packer, C., Fang, V., Patil, S., Lin, K., Wooders, S., and Gonzalez, J.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock 2023.
+
+\bibitem[Schulman et~al.(2017)Schulman, Wolski, Dhariwal, Radford, and
+  Klimov]{schulman2017proximal}
+Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O.
+\newblock Proximal policy optimization algorithms.
+\newblock \emph{arXiv preprint arXiv:1707.06347}, 2017.
+
+\bibitem[Shridhar et~al.(2020)Shridhar, Yuan, C{\^o}t{\'e}, Bisk, Trischler,
+  and Hausknecht]{shridhar2020alfworld}
+Shridhar, M., Yuan, X., C{\^o}t{\'e}, M.-A., Bisk, Y., Trischler, A., and
+  Hausknecht, M.
+\newblock Alfworld: Aligning text and embodied environments for interactive
+  learning.
+\newblock \emph{arXiv preprint arXiv:2010.03768}, 2020.
+
+\bibitem[Trivedi et~al.(2024)Trivedi, Khot, Hartmann, Manku, Dong, Li, Gupta,
+  Sabharwal, and Balasubramanian]{trivedi2024appworld}
+Trivedi, H., Khot, T., Hartmann, M., Manku, R., Dong, V., Li, E., Gupta, S.,
+  Sabharwal, A., and Balasubramanian, N.
+\newblock Appworld: A controllable world of apps and people for benchmarking
+  interactive coding agents.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, pp.\  16022--16076,
+  2024.
+
+\bibitem[Wang et~al.(2025{\natexlab{a}})Wang, Takanobu, Liang, Mao, Hu,
+  McAuley, and Wu]{wang2025mem}
+Wang, Y., Takanobu, R., Liang, Z., Mao, Y., Hu, Y., McAuley, J., and Wu, X.
+\newblock Mem-$\{$$\backslash$alpha$\}$: Learning memory construction via
+  reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2509.25911}, 2025{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{b}})Wang, Wang, Wang, Zhang, Li, Yang, Jin,
+  Yu, Nguyen, Liu, et~al.]{wang2025ragen}
+Wang, Z., Wang, K., Wang, Q., Zhang, P., Li, L., Yang, Z., Jin, X., Yu, K.,
+  Nguyen, M.~N., Liu, L., et~al.
+\newblock Ragen: Understanding self-evolution in llm agents via multi-turn
+  reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2504.20073}, 2025{\natexlab{b}}.
+
+\bibitem[Wang et~al.(2024)Wang, Mao, Fried, and Neubig]{wang2024agent}
+Wang, Z.~Z., Mao, J., Fried, D., and Neubig, G.
+\newblock Agent workflow memory.
+\newblock \emph{arXiv preprint arXiv:2409.07429}, 2024.
+
+\bibitem[Wei et~al.(2025)Wei, Sachdeva, Coleman, He, Bei, Ning, Ai, Li, He,
+  Chi, et~al.]{wei2025evo}
+Wei, T., Sachdeva, N., Coleman, B., He, Z., Bei, Y., Ning, X., Ai, M., Li, Y.,
+  He, J., Chi, E.~H., et~al.
+\newblock Evo-memory: Benchmarking llm agent test-time learning with
+  self-evolving memory.
+\newblock \emph{arXiv preprint arXiv:2511.20857}, 2025.
+
+\bibitem[Wu et~al.(2024)Wu, Wang, Yu, Zhang, Chang, and Yu]{wu2024longmemeval}
+Wu, D., Wang, H., Yu, W., Zhang, Y., Chang, K.-W., and Yu, D.
+\newblock Longmemeval: Benchmarking chat assistants on long-term interactive
+  memory.
+\newblock \emph{arXiv preprint arXiv:2410.10813}, 2024.
+
+\bibitem[Wu et~al.(2025)Wu, Wang, Mei, Cai, Fu, Yang, Wen, Yang, Shen, Wang,
+  et~al.]{wu2025evolver}
+Wu, R., Wang, X., Mei, J., Cai, P., Fu, D., Yang, C., Wen, L., Yang, X., Shen,
+  Y., Wang, Y., et~al.
+\newblock Evolver: Self-evolving llm agents through an experience-driven
+  lifecycle.
+\newblock \emph{arXiv preprint arXiv:2510.16079}, 2025.
+
+\bibitem[Xu et~al.(2025)Xu, Liang, Mei, Gao, Tan, and Zhang]{xu2025mem}
+Xu, W., Liang, Z., Mei, K., Gao, H., Tan, J., and Zhang, Y.
+\newblock A-mem: Agentic memory for llm agents.
+\newblock \emph{arXiv preprint arXiv:2502.12110}, 2025.
+
+\bibitem[Yan et~al.(2025)Yan, Yang, Huang, Nie, Ding, Li, Ma, Kersting, Pan,
+  Sch{\"u}tze, et~al.]{yan2025memory}
+Yan, S., Yang, X., Huang, Z., Nie, E., Ding, Z., Li, Z., Ma, X., Kersting, K.,
+  Pan, J.~Z., Sch{\"u}tze, H., et~al.
+\newblock Memory-r1: Enhancing large language model agents to manage and
+  utilize memories via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2508.19828}, 2025.
+
+\bibitem[Yang et~al.(2025)Yang, Li, Yang, Zhang, Hui, Zheng, Yu, Gao, Huang,
+  Lv, et~al.]{yang2025qwen3}
+Yang, A., Li, A., Yang, B., Zhang, B., Hui, B., Zheng, B., Yu, B., Gao, C.,
+  Huang, C., Lv, C., et~al.
+\newblock Qwen3 technical report.
+\newblock \emph{arXiv preprint arXiv:2505.09388}, 2025.
+
+\bibitem[Yang et~al.(2018)Yang, Qi, Zhang, Bengio, Cohen, Salakhutdinov, and
+  Manning]{yang2018hotpotqa}
+Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W., Salakhutdinov, R., and
+  Manning, C.~D.
+\newblock Hotpotqa: A dataset for diverse, explainable multi-hop question
+  answering.
+\newblock In \emph{Proceedings of the 2018 conference on empirical methods in
+  natural language processing}, pp.\  2369--2380, 2018.
+
+\bibitem[Yu et~al.(2025)Yu, Chen, Feng, Chen, Dai, Yu, Zhang, Ma, Liu, Wang,
+  et~al.]{yu2025memagent}
+Yu, H., Chen, T., Feng, J., Chen, J., Dai, W., Yu, Q., Zhang, Y.-Q., Ma, W.-Y.,
+  Liu, J., Wang, M., et~al.
+\newblock Memagent: Reshaping long-context llm with multi-conv rl-based memory
+  agent.
+\newblock \emph{arXiv preprint arXiv:2507.02259}, 2025.
+
+\bibitem[Yu et~al.(2024)Yu, Zhang, Pan, Cao, Ma, Li, Wang, and Yu]{yu2024chain}
+Yu, W., Zhang, H., Pan, X., Cao, P., Ma, K., Li, J., Wang, H., and Yu, D.
+\newblock Chain-of-note: Enhancing robustness in retrieval-augmented language
+  models.
+\newblock In \emph{Proceedings of the 2024 conference on empirical methods in
+  natural language processing}, pp.\  14672--14685, 2024.
+
+\bibitem[Zhai et~al.(2025)Zhai, Tao, Chen, Zou, Chen, Fu, Mai, Yu, Deng, Cao,
+  et~al.]{zhai2025agentevolver}
+Zhai, Y., Tao, S., Chen, C., Zou, A., Chen, Z., Fu, Q., Mai, S., Yu, L., Deng,
+  J., Cao, Z., et~al.
+\newblock Agentevolver: Towards efficient self-evolving agent system.
+\newblock \emph{arXiv preprint arXiv:2511.10395}, 2025.
+
+\bibitem[Zhang et~al.(2025{\natexlab{a}})Zhang, Fu, and Yan]{zhang2025memgen}
+Zhang, G., Fu, M., and Yan, S.
+\newblock Memgen: Weaving generative latent memory for self-evolving agents.
+\newblock \emph{arXiv preprint arXiv:2509.24704}, 2025{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2025{\natexlab{b}})Zhang, Ren, Zhan, Zhou, Wang, Zhu,
+  Zhou, and Yan]{zhang2025memevolve}
+Zhang, G., Ren, H., Zhan, C., Zhou, Z., Wang, J., Zhu, H., Zhou, W., and Yan,
+  S.
+\newblock Memevolve: Meta-evolution of agent memory systems.
+\newblock \emph{arXiv preprint arXiv:2512.18746}, 2025{\natexlab{b}}.
+
+\bibitem[Zhao et~al.(2024)Zhao, Huang, Xu, Lin, Liu, and Huang]{zhao2024expel}
+Zhao, A., Huang, D., Xu, Q., Lin, M., Liu, Y.-J., and Huang, G.
+\newblock Expel: Llm agents are experiential learners.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~38, pp.\  19632--19642, 2024.
+
+\bibitem[Zhao et~al.(2025)Zhao, Wu, Yue, Wu, Xu, Lin, Wang, Wu, Zheng, and
+  Huang]{zhao2025absolute}
+Zhao, A., Wu, Y., Yue, Y., Wu, T., Xu, Q., Lin, M., Wang, S., Wu, Q., Zheng,
+  Z., and Huang, G.
+\newblock Absolute zero: Reinforced self-play reasoning with zero data.
+\newblock \emph{arXiv preprint arXiv:2505.03335}, 2025.
+
+\bibitem[Zheng et~al.(2025)Zheng, Fatemi, Jin, Wang, Gandhi, Song, Gu,
+  Srinivasa, Liu, Neubig, et~al.]{zheng2025skillweaver}
+Zheng, B., Fatemi, M.~Y., Jin, X., Wang, Z.~Z., Gandhi, A., Song, Y., Gu, Y.,
+  Srinivasa, J., Liu, G., Neubig, G., et~al.
+\newblock Skillweaver: Web agents can self-improve by discovering and honing
+  skills.
+\newblock \emph{arXiv preprint arXiv:2504.07079}, 2025.
+
+\bibitem[Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang]{zhong2024memorybank}
+Zhong, W., Guo, L., Gao, Q., Ye, H., and Wang, Y.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~38, pp.\  19724--19731, 2024.
+
+\end{thebibliography}

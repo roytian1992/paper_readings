@@ -1,0 +1,6 @@
+|  | 67.57 | 66.02 65.63 |  |  |  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|  |  | 64.85 64.06 |  |  |  |  |  |  |  |  |
+|  |  |  |  |  | 64.06 |  |  |  |  |  |
+|  | ill S (K k = 7) M | m e | ill S (K k = 5) M | m e | ill S (K k = 3) M | m e | oryOS | A | -MEM |  |
+|  | o-trai ,202 fficu docu e LL re(L , th marks mSk ntext lines ing ting. sare ereu fecti alm easin hievi ller ts. O omp ndn nyH dise lsan ge(L MA a place ilek r(w/ thef hede ones ,rem |  | dskil . Bar y,cor ents MA ).Fo most nTa tran izes. uch orep Thes ottie blee as i dsen K g gthe can rall, ingm sier, potQ tangl (ii)e )res d Q thel ping Des urini gner ving |  | bank how spon .e.,5 the basel omp e1,a ers s emS Me noun resu tod tracti put s tivit neral estr nder etre ltiple hile -spec the c olvin tson n). rned eres disab alpri refin ther |  | Hotp LM-j ngto /100/ se m es,w itive dom ongl illco oryO edin s sug logu nand uctur toth imp ults tilize indi kills llma fictra ntrib thes oCo s sh ontr ofth sthe itive exist mpo |  | tQAa ge(L iffer 00). del a inclu etho wea to H isten and hech est t speci evisi and num vesp ross hesk atest hen ntaini ning. tions llba oun n, w lerw pipel esig Refi gsk entc |  |

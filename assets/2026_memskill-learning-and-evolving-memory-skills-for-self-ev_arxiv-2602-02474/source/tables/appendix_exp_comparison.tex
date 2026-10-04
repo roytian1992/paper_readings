@@ -1,0 +1,54 @@
+\begin{table*}[h]
+    \footnotesize
+    \centering
+    \setlength{\tabcolsep}{5.5pt}
+    \caption{\textbf{More comparison results on ALFWorld.}}
+    \label{tab:more_exp_comparison}
+
+    \begin{tabular}{>{\centering\arraybackslash}m{0.5cm} l cc cc c}
+        \toprule
+        \multirow{3}{*}{\textbf{Model}} &
+        \multirow{3}{*}{\textbf{Methods}} &
+        \multicolumn{5}{c}{\textbf{Embodied Interactive Tasks}} \\
+        \cmidrule(lr){3-7}
+        & &
+        \multicolumn{2}{c}{\textbf{ALF-Seen$^\dagger$}} &
+        \multicolumn{2}{c}{\textbf{ALF-Unseen$^\dagger$}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-7}
+        & &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} \\
+        \midrule
+
+        % ===================== Base model block 1 =====================
+        \multirow{4}{*}{\rotatebox[origin=c]{90}{\shortstack{\textbf{LLaMA}}}} &
+        LightMem & 74.29 & 21.69 & 75.37 & 20.69 & 74.83 \\
+        & AWM   & 66.43 & 23.25 & 68.66 & 22.25 & 67.55 \\
+        & Expel   & 67.14 & 23.26 & 66.42 & 22.40 & 66.78 \\
+        & \cellcolor{hl-llama}\textbf{MemSkill} &
+        \cellcolor{hl-llama}\textbf{77.14} & \cellcolor{hl-llama}\textbf{18.91} &
+        \cellcolor{hl-llama}\textbf{83.58} & \cellcolor{hl-llama}\textbf{16.63} &
+        \cellcolor{hl-llama}\textbf{80.36} \\
+        \midrule
+
+        % ===================== Base model block 2 =====================
+        \multirow{4}{*}{\rotatebox[origin=c]{90}{\shortstack{$^\blacktriangle$\textbf{Qwen}}}} &
+        LightMem & 70.71 & 20.48 & 58.21 & 25.62 & 64.46 \\
+        & AWM   & 74.29 & 19.03 & 61.19 & 24.67 & 67.74 \\
+        & Expel   & 75.71 & 18.81 & 71.64 & 20.98 & 73.68 \\
+        & \cellcolor{hl-qwen}\textbf{MemSkill} &
+        \cellcolor{hl-qwen}\textbf{85.71} & \cellcolor{hl-qwen}\textbf{13.84} &
+        \cellcolor{hl-qwen}\textbf{76.87} & \cellcolor{hl-qwen}\textbf{18.16} &
+        \cellcolor{hl-qwen}\textbf{81.29} \\
+        \bottomrule
+
+        \multicolumn{7}{l}{\small \textbf{Bold} indicates the best score within each base model block.} \\
+        \multicolumn{7}{l}{\small $^\blacktriangle$ indicates no training using this base model or dataset.} \\
+        \multicolumn{7}{l}{\small $^\dagger$ indicates evaluation with in-context demonstrations.} \\
+    \end{tabular}
+\end{table*}
+
+
+

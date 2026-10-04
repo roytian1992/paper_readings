@@ -1,0 +1,50 @@
+{
+  "paper_id": "2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473",
+  "source_path": "",
+  "source_archive_path": "sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_1_memory-agent-pipeline-with-three-diagnostic-prob",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_001_1_memory-agent-pipeline-with-three-diagnostic-prob.png",
+      "caption": "Memory-agent pipeline with three diagnostic probes at the retrieval-to-generation boundary.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "pipe.png"
+    },
+    {
+      "id": "source_figure_001_2_memory-agent-pipeline-with-three-diagnostic-prob",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_001_2_memory-agent-pipeline-with-three-diagnostic-prob.png",
+      "caption": "Accuracy across the 3 x 3 grid (k=5). Retrieval method drives 14-23 point differences; write strategy only 3-8.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "result.png"
+    },
+    {
+      "id": "source_figure_002_1_precision-5-vs-accuracy-r-0-98-each-point-is-one",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_002_1_precision-5-vs-accuracy-r-0-98-each-point-is-one.png",
+      "caption": "Precision@5 vs. accuracy (r=0.98). Each point is one of nine configurations.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "scatter.png"
+    },
+    {
+      "id": "source_figure_002_2_precision-5-vs-accuracy-r-0-98-each-point-is-one",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_002_2_precision-5-vs-accuracy-r-0-98-each-point-is-one.png",
+      "caption": "Retrieval failure rate by retrieval method. Hybrid reranking cuts retrieval failures by half or more across all write strategies.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "failure_bar.png"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-13"
+}

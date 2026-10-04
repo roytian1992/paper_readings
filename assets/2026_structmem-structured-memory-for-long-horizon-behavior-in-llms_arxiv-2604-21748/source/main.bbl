@@ -1,0 +1,159 @@
+\begin{thebibliography}{31}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Chaudhri et~al.(2022)Chaudhri, Baru, Chittar, Dong, Genesereth, Hendler, Kalyanpur, Lenat, Sequeda, Vrandečić, and Wang}]{chaudhri2022knowledge}
+Vinay~K. Chaudhri, Chaitanya Baru, Naren Chittar, Xin~Luna Dong, Michael Genesereth, James Hendler, Aditya Kalyanpur, Douglas~B. Lenat, Juan Sequeda, Denny Vrandečić, and Kuansan Wang. 2022.
+\newblock \href {https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/19119} {Knowledge graphs: introduction, history and, perspectives}.
+\newblock \emph{AI Magazine}, 43(1):17--29.
+
+\bibitem[{Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and Yadav}]{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav. 2025.
+\newblock \href {https://arxiv.org/abs/2504.19413} {Mem0: Building production-ready ai agents with scalable long-term memory}.
+\newblock \emph{arXiv preprint arXiv:2504.19413}.
+
+\bibitem[{Dong et~al.(2025)Dong, Lu, Norman, and Michelmann}]{dong2025towards}
+Cody~V Dong, Qihong Lu, Kenneth~A Norman, and Sebastian Michelmann. 2025.
+\newblock \href {https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(25)00179-2} {Towards large language models with human-like episodic memory}.
+\newblock \emph{Trends in Cognitive Sciences}.
+
+\bibitem[{Du et~al.(2025)Du, Li, Zhang, and Song}]{du2025memr3memoryretrievalreflective}
+Xingbo Du, Loka Li, Duzhen Zhang, and Le~Song. 2025.
+\newblock \href {https://arxiv.org/abs/2512.20237} {Memr$^3$: Memory retrieval via reflective reasoning for llm agents}.
+\newblock \emph{Preprint}, arXiv:2512.20237.
+
+\bibitem[{Edge et~al.(2024)Edge, Trinh, Cheng, Bradley, Chao, Mody, Truitt, Metropolitansky, Ness, and Larson}]{edge2024local}
+Darren Edge, Ha~Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva Mody, Steven Truitt, Dasha Metropolitansky, Robert~Osazuwa Ness, and Jonathan Larson. 2024.
+\newblock \href {https://arxiv.org/abs/2404.16130} {From local to global: A graph rag approach to query-focused summarization}.
+\newblock \emph{arXiv preprint arXiv:2404.16130}.
+
+\bibitem[{Fang et~al.(2026)Fang, Deng, Xu, Jiang, Tang, Xu, Deng, Yao, Wang, Qiao, Chen, and Zhang}]{fang2025lightmem}
+Jizhan Fang, Xinle Deng, Haoming Xu, Ziyan Jiang, Yuqi Tang, Ziwen Xu, Shumin Deng, Yunzhi Yao, Mengru Wang, Shuofei Qiao, Huajun Chen, and Ningyu Zhang. 2026.
+\newblock \href {https://openreview.net/forum?id=dyJ0GWpjJB} {Lightmem: Lightweight and efficient memory-augmented generation}.
+\newblock In \emph{The Fourteenth International Conference on Learning Representations}.
+
+\bibitem[{Fang et~al.(2025)Fang, Liang, Wang, Wu, Qiao, Xie, Huang, Chen, and Zhang}]{fang2025memp}
+Runnan Fang, Yuan Liang, Xiaobin Wang, Jialong Wu, Shuofei Qiao, Pengjun Xie, Fei Huang, Huajun Chen, and Ningyu Zhang. 2025.
+\newblock \href {https://arxiv.org/abs/2508.06433} {Memp: Exploring agent procedural memory}.
+\newblock \emph{arXiv preprint arXiv:2508.06433}.
+
+\bibitem[{Gao et~al.(2023)Gao, Xiong, Gao, Jia, Pan, Bi, Dai, Sun, and Wang}]{gao2023retrieval}
+Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, Jinliu Pan, Yuxi Bi, Yi~Dai, Jiawei Sun, and Haofen Wang. 2023.
+\newblock \href {https://arxiv.org/abs/2312.10997} {Retrieval-augmented generation for large language models: A survey}.
+\newblock \emph{arXiv preprint arXiv:2312.10997}.
+
+\bibitem[{Guti{\'e}rrez et~al.(2025)Guti{\'e}rrez, Shu, Qi, Zhou, and Su}]{gutierrez2025rag}
+Bernal~Jim{\'e}nez Guti{\'e}rrez, Yiheng Shu, Weijian Qi, Sizhe Zhou, and Yu~Su. 2025.
+\newblock \href {https://openreview.net/forum?id=LWH8yn4HS2} {From {RAG} to memory: Non-parametric continual learning for large language models}.
+\newblock In \emph{Forty-second International Conference on Machine Learning}.
+
+\bibitem[{Huang et~al.(2025)Huang, Tian, Guo, Zhang, Zhou, Jiang, and Zhou}]{huang2025licomemory}
+Zhengjun Huang, Zhoujin Tian, Qintian Guo, Fangyuan Zhang, Yingli Zhou, Di~Jiang, and Xiaofang Zhou. 2025.
+\newblock \href {https://arxiv.org/abs/2511.01448} {Licomemory: Lightweight and cognitive agentic memory for efficient long-term reasoning}.
+\newblock \emph{arXiv preprint arXiv:2511.01448}.
+
+\bibitem[{Kim et~al.(2025)Kim, Lee, Kim, Kim, and Cho}]{kim2025pre}
+Sangyeop Kim, Yohan Lee, Sanghwa Kim, Hyunjong Kim, and Sungzoon Cho. 2025.
+\newblock \href {https://arxiv.org/abs/2509.10852} {Pre-storage reasoning for episodic memory: Shifting inference burden to memory for personalized dialogue}.
+\newblock \emph{arXiv preprint arXiv:2509.10852}.
+
+\bibitem[{Kolluru et~al.(2020)Kolluru, Adlakha, Aggarwal, Mausam, and Chakrabarti}]{kolluru2020openie6}
+Keshav Kolluru, Vaibhav Adlakha, Samarth Aggarwal, Mausam, and Soumen Chakrabarti. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.emnlp-main.306} {{O}pen{IE}6: {I}terative {G}rid {L}abeling and {C}oordination {A}nalysis for {O}pen {I}nformation {E}xtraction}.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 3748--3761, Online. Association for Computational Linguistics.
+
+\bibitem[{Kwiatkowski et~al.(2019)Kwiatkowski, Palomaki, Redfield, Collins, Parikh, Alberti, Epstein, Polosukhin, Devlin, Lee, Toutanova, Jones, Kelcey, Chang, Dai, Uszkoreit, Le, and Petrov}]{kwiatkowski2019natural}
+Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redfield, Michael Collins, Ankur Parikh, Chris Alberti, Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, Kristina Toutanova, Llion Jones, Matthew Kelcey, Ming-Wei Chang, Andrew~M. Dai, Jakob Uszkoreit, Quoc Le, and Slav Petrov. 2019.
+\newblock \href {https://doi.org/10.1162/tacl_a_00276} {Natural questions: A benchmark for question answering research}.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 7:452--466.
+
+\bibitem[{Li et~al.(2026)Li, Yu, Ni, Zeng, Xu, Zhang, Li, Sang, Duan, Wang, Liu, and Tan}]{li2026timem}
+Kai Li, Xuanqing Yu, Ziyi Ni, Yi~Zeng, Yao Xu, Zheqing Zhang, Xin Li, Jitao Sang, Xiaogang Duan, Xuelei Wang, Chengbao Liu, and Jie Tan. 2026.
+\newblock \href {https://arxiv.org/abs/2601.02845} {Timem: Temporal-hierarchical memory consolidation for long-horizon conversational agents}.
+\newblock \emph{arXiv preprint arXiv:2601.02845}.
+
+\bibitem[{Li et~al.(2025)Li, Xu, Tan, Ma, Cao, and Liu}]{li2025sculptorempoweringllmscognitive}
+Mo~Li, L.~H. Xu, Qitai Tan, Long Ma, Ting Cao, and Yunxin Liu. 2025.
+\newblock \href {https://arxiv.org/abs/2508.04664} {Sculptor: Empowering llms with cognitive agency via active context management}.
+\newblock \emph{Preprint}, arXiv:2508.04664.
+
+\bibitem[{Liu et~al.(2023)Liu, Lin, Hewitt, Paranjape, Bevilacqua, Petroni, and Liang}]{Liu2023LostIT}
+Nelson~F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang. 2023.
+\newblock \href {https://api.semanticscholar.org/CorpusID:259360665} {Lost in the middle: How language models use long contexts}.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 12:157--173.
+
+\bibitem[{Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang}]{maharana2024evaluating}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco Barbieri, and Yuwei Fang. 2024.
+\newblock \href {https://doi.org/10.18653/v1/2024.acl-long.747} {Evaluating very long-term conversational memory of {LLM} agents}.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 13851--13870, Bangkok, Thailand. Association for Computational Linguistics.
+
+\bibitem[{Packer et~al.(2023)Packer, Fang, Patil, Lin, Wooders, and Gonzalez}]{packer2023memgpt}
+Charles Packer, Vivian Fang, Shishir\_G Patil, Kevin Lin, Sarah Wooders, and Joseph\_E Gonzalez. 2023.
+\newblock \href {https://arxiv.org/abs/2310.08560} {Memgpt: Towards llms as operating systems.}
+\newblock \emph{CoRR}, abs/2310.08560.
+
+\bibitem[{Park et~al.(2023)Park, O'Brien, Cai, Morris, Liang, and Bernstein}]{park2023generative}
+Joon~Sung Park, Joseph O'Brien, Carrie~Jun Cai, Meredith~Ringel Morris, Percy Liang, and Michael~S. Bernstein. 2023.
+\newblock \href {https://doi.org/10.1145/3586183.3606763} {Generative agents: Interactive simulacra of human behavior}.
+\newblock In \emph{Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology}, UIST '23, New York, NY, USA. Association for Computing Machinery.
+
+\bibitem[{Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and Chalef}]{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef. 2025.
+\newblock \href {https://arxiv.org/abs/2501.13956} {Zep: a temporal knowledge graph architecture for agent memory}.
+\newblock \emph{arXiv preprint arXiv:2501.13956}.
+
+\bibitem[{Weller et~al.(2025)Weller, Boratko, Naim, and Lee}]{weller2025theoreticallimitationsembeddingbasedretrieval}
+Orion Weller, Michael Boratko, Iftekhar Naim, and Jinhyuk Lee. 2025.
+\newblock \href {https://arxiv.org/abs/2508.21038} {On the theoretical limitations of embedding-based retrieval}.
+\newblock \emph{Preprint}, arXiv:2508.21038.
+
+\bibitem[{Wu et~al.(2025)Wu, Wang, Yu, Zhang, Chang, and Yu}]{wu2024longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai{-}Wei Chang, and Dong Yu. 2025.
+\newblock \href {https://openreview.net/forum?id=pZiyCaVuti} {Longmemeval: Benchmarking chat assistants on long-term interactive memory}.
+\newblock In \emph{{ICLR}}. OpenReview.net.
+
+\bibitem[{Xia et~al.(2025)Xia, Xu, Chai, Fan, Song, Wang, Yin, Lin, Zhang, and Wang}]{xia2025experience}
+Siyu Xia, Zekun Xu, Jiajun Chai, Wentian Fan, Yan Song, Xiaohan Wang, Guojun Yin, Wei Lin, Haifeng Zhang, and Jun Wang. 2025.
+\newblock \href {https://arxiv.org/abs/2511.07800} {From experience to strategy: Empowering llm agents with trainable graph memory}.
+\newblock \emph{arXiv preprint arXiv:2511.07800}.
+
+\bibitem[{Yang et~al.(2018)Yang, Qi, Zhang, Bengio, Cohen, Salakhutdinov, and Manning}]{yang2018hotpotqa}
+Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William Cohen, Ruslan Salakhutdinov, and Christopher~D Manning. 2018.
+\newblock \href {https://aclanthology.org/D18-1259/} {Hotpotqa: A dataset for diverse, explainable multi-hop question answering}.
+\newblock In \emph{Proceedings of the 2018 conference on empirical methods in natural language processing}, pages 2369--2380.
+
+\bibitem[{Yu et~al.(2025)Yu, Cheng, Wang, Liu, Liu, Guo, and Tao}]{yu2025memweaver}
+Shuo Yu, Mingyue Cheng, Daoyu Wang, Qi~Liu, Zirui Liu, Ze~Guo, and Xiaoyu Tao. 2025.
+\newblock \href {https://arxiv.org/abs/2510.07713} {Memweaver: A hierarchical memory from textual interactive behaviors for personalized generation}.
+\newblock \emph{arXiv preprint arXiv:2510.07713}.
+
+\bibitem[{Zhang et~al.(2025)Zhang, Fu, Wan, Yu, Wang, and Yan}]{zhang2025g}
+Guibin Zhang, Muxin Fu, Guancheng Wan, Miao Yu, Kun Wang, and Shuicheng Yan. 2025.
+\newblock \href {https://arxiv.org/abs/2506.07398} {G-memory: Tracing hierarchical memory for multi-agent systems}.
+\newblock \emph{arXiv preprint arXiv:2506.07398}.
+
+\bibitem[{Zhang et~al.(2026)Zhang, Yang, Tan, Deng, and Wang}]{zhang2026himem}
+Ningning Zhang, Xingxing Yang, Zhizhong Tan, Weiping Deng, and Wenyong Wang. 2026.
+\newblock \href {https://arxiv.org/abs/2601.06377} {Himem: Hierarchical long-term memory for llm long-horizon agents}.
+\newblock \emph{arXiv preprint arXiv:2601.06377}.
+
+\bibitem[{Zhong et~al.(2024)Zhong, Guo, Gao, Ye, and Wang}]{zhong2024memorybank}
+Wanjun Zhong, Lianghong Guo, Qiqi Gao, He~Ye, and Yanlin Wang. 2024.
+\newblock \href {https://doi.org/10.1609/aaai.v38i17.29946} {Memorybank: Enhancing large language models with long-term memory}.
+\newblock In \emph{{AAAI}}, pages 19724--19731. {AAAI} Press.
+
+\bibitem[{Zhong and Chen(2021)}]{zhong2021frustratingly}
+Zexuan Zhong and Danqi Chen. 2021.
+\newblock \href {https://doi.org/10.18653/v1/2021.naacl-main.5} {A frustratingly easy approach for entity and relation extraction}.
+\newblock In \emph{Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies}, pages 50--61, Online. Association for Computational Linguistics.
+
+\bibitem[{Zhou and Han(2025)}]{zhou2025simple}
+Sizhe Zhou and Jiawei Han. 2025.
+\newblock \href {https://arxiv.org/abs/2511.17208} {A simple yet strong baseline for long-term conversational memory of llm agents}.
+\newblock \emph{arXiv preprint arXiv:2511.17208}.
+
+\bibitem[{Zhuang et~al.(2026)Zhuang, Chen, Xiao, Zhou, Zhang, Chen, Zhang, and Huang}]{zhuang2025linearrag}
+Luyao Zhuang, Shengyuan Chen, Yilin Xiao, Huachi Zhou, Yujing Zhang, Hao Chen, Qinggang Zhang, and Xiao Huang. 2026.
+\newblock \href {https://openreview.net/forum?id=mCtfkypdm6} {Linear{RAG}: Linear graph retrieval augmented generation on large-scale corpora}.
+\newblock In \emph{The Fourteenth International Conference on Learning Representations}.
+
+\end{thebibliography}

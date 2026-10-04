@@ -1,0 +1,30 @@
+{
+  "paper_id": "2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941",
+  "source_path": "",
+  "source_archive_path": "sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_self-evolves-its-retrieval-configuration-on-loco",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941/figures/source_figure_001_self-evolves-its-retrieval-configuration-on-loco.png",
+      "caption": "\\textbf{\\ours{} self-evolves its retrieval configuration on LoCoMo via AutoResearch.} \\textbf{(a)} A four-step evolution loop (\\textsc{Evaluate}--\\textsc{Diagnose}--\\textsc{Propose}--\\textsc{Guard}) ratchets accepted proposals into the action space; harmful ones (e.g., R2) are auto-reverted. \\textbf{(b)} Overall F1 trajectory (single-backbone GPT-4o): 30.5\\% baseline to 54.3\\% at R7.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/traj_1.pdf"
+    },
+    {
+      "id": "source_figure_002_architecture-three-layers-connected-by-a-self-ev",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941/figures/source_figure_002_architecture-three-layers-connected-by-a-self-ev.png",
+      "caption": "\\textbf{\\ours{} architecture.} Three layers connected by a self-evolution feedback loop. A typed memory store is populated by an LLM-based extractor with retry and chunk-splitting; a multi-view retriever fuses BM25, semantic, and structured-metadata search with optional entity-swap, query decomposition, and answer verification; an LLM-powered diagnosis module reads per-question raw-result logs and proposes structured adjustments to the retrieval configuration; the evolution engine validates adjustments and auto-converges when the primary metric plateaus.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/framework.png"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-07"
+}

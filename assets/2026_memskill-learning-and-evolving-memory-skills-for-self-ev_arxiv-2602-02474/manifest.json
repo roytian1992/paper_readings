@@ -1,0 +1,83 @@
+{
+  "paper_id": "2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474",
+  "source_path": "sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf",
+  "source_archive_path": "sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_comparison-between-a-prior-turn-level-handcrafte",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_001_comparison-between-a-prior-turn-level-handcrafte.png",
+      "caption": "\\textbf{Comparison between (a) prior turn-level, handcrafted operations and (b) MemSkill’s span-level, skill-conditioned generation.} Prior methods interleave handcrafted operations with LLM calls to incrementally extract and revise memory turn by turn, while MemSkill selects a small set of skills from a shared skill bank and applies them in one pass to produce skill-guided memories.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/skill_intro.pdf"
+    },
+    {
+      "id": "source_figure_003_memskill-architecture-overview-given-an-interact",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_003_memskill-architecture-overview-given-an-interact.png",
+      "caption": "\\textbf{MemSkill architecture overview.} Given an interaction trace, MemSkill processes it span by span: the controller selects a Top-$K$ subset of skills from a shared \\emph{skill bank} conditioned on the current text span and retrieved memories, and an LLM executor applies the selected skills in one pass to update the trace-specific \\emph{memory bank}. The constructed memory is then evaluated on memory-dependent training queries to provide task reward for optimizing the controller, while query-centric failures are logged into a sliding hard-case buffer. Periodically, the designer mines representative hard cases to refine existing skills and propose new ones, yielding alternating phases of skill usage and skill evolution. More skill case study can be found in Section~\\ref{sec:case_study} and Appendix~\\ref{appendix:case_study}.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/skill_method.pdf"
+    },
+    {
+      "id": "source_figure_004_skill-generalization-under-distribution-shift-on",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_004_skill-generalization-under-distribution-shift-on.png",
+      "caption": "\\textbf{Skill generalization under distribution shift on HotpotQA.} We transfer the LoCoMo-trained skill bank to HotpotQA and evaluate three context-length settings (50/100/200 concatenated documents) following~\\citep{yu2025memagent}. Bars show LLM-judge (L-J) under LLaMA with different Top-$K$ skill counts, compared to MemoryOS and A-MEM.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/hotpotqa_transfer_bars.pdf"
+    }
+  ],
+  "tables": [
+    {
+      "id": "page_004_table_01",
+      "page": 4,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_004_table_01.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_004_table_01.csv",
+      "row_count": 4
+    },
+    {
+      "id": "page_004_table_02",
+      "page": 4,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_004_table_02.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_004_table_02.csv",
+      "row_count": 2
+    },
+    {
+      "id": "page_007_table_01",
+      "page": 7,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_01.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_01.csv",
+      "row_count": 9
+    },
+    {
+      "id": "page_007_table_02",
+      "page": 7,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_02.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_02.csv",
+      "row_count": 7
+    },
+    {
+      "id": "page_007_table_03",
+      "page": 7,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_03.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_007_table_03.csv",
+      "row_count": 7
+    },
+    {
+      "id": "page_009_table_01",
+      "page": 9,
+      "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_009_table_01.md",
+      "csv_path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/tables/page_009_table_01.csv",
+      "row_count": 5
+    }
+  ],
+  "updated_at": "2026-07-03"
+}

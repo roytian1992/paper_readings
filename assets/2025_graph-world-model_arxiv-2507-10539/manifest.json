@@ -1,0 +1,60 @@
+{
+  "paper_id": "2025_graph-world-model_arxiv-2507-10539",
+  "source_path": "",
+  "source_archive_path": "sources/2025_graph-world-model_arxiv-2507-10539_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_gwm-boosts-zero-shot-few-shot-performance-on-mul",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_001_gwm-boosts-zero-shot-few-shot-performance-on-mul.png",
+      "caption": "\\textbf{GWM boosts zero-shot/few-shot performance on multi-agent collaboration (Agent) and retrieval-augmented generation (RAG) tasks}. Note that ``-T'' and ``-E'' respectively represent the experimental results of GWM-T and GWM-E. It can be observed that GWM can quickly adapt to new tasks with a small amount of domain-specific training data. Moreover, GWM's strong generalization ability can boost the performance of Agent and RAG.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/zero_few_shot.pdf"
+    },
+    {
+      "id": "source_figure_002_multi-modal-world-state-transition-can-be-modele",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_002_multi-modal-world-state-transition-can-be-modele.png",
+      "caption": "\\textbf{Multi-modal world state transition can be modeled via graphs}. We model the current state as a graph and each node contains one or more modalities from image, table, and text. Further, the world action is modeled as an action node that queries the current state nodes. We categorize actions into two types: intended actions, which include three levels—node, edge, and graph—and unintended actions, whose implementation involves similarity computation similar to RAG. Finally, the transition function updates states at three different levels based on state and action: update nodes, update edges, and update graphs.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/r1.pdf"
+    },
+    {
+      "id": "source_figure_003_instantiations-of-gwm-a-multi-modal-generation-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_003_instantiations-of-gwm-a-multi-modal-generation-a.png",
+      "caption": "\\textbf{Instantiations of GWM}. (a) Multi-modal generation and matching contains two sub-tasks. For multi-modal generation, it models modal clusters as nodes, whereas for multi-modal matching, it models nodes for each modality. It includes edges that represent inter-modal correspondences and cross-modal similarities. For these two types of subtasks, there are node-level and edge-level action nodes, respectively. (b) The state nodes of recommendation include user nodes and item nodes. Moreover, its edges are primarily derived from user-item interactions. We model edge-level action nodes to perform interaction prediction. (c) In traditional graph prediction, we follow existing work to construct task nodes and edges, and model three levels of action nodes according to different types of tasks. (d) The state nodes of multi-agent collaboration include agent nodes and multi-modal nodes from external knowledge. Its edges primarily consist of communications between agents and interactions between agents and external knowledge. We set up a graph-level action node to generate content based on the interactions of agents. (e) Retrieval-augmented generation treats each data chunk as a state node and builds edges through the embedding similarity between chunks. For this task, we have established unintended action nodes. (f) For planning and optimization, we model each decision as a state node and construct edges based on their relationships. We have established graph-level action nodes to generate the next decision.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/Instantiations.pdf"
+    },
+    {
+      "id": "source_figure_004_framework-of-gwm-for-both-token-based-and-embedd",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_004_framework-of-gwm-for-both-token-based-and-embedd.png",
+      "caption": "\\textbf{Framework of GWM.} For both token-based and embedding-based GFM, we initially unify the multi-modal current state into graph nodes, conduct message passing, and then combine actions to predict the next state across different modalities through respective decoders. The key distinctions are: 1) Token-based GWM integrates multi-modalities into text, whereas embedding-based GWM uses modality-specific encoders to process them into embeddings; 2) Token-based GWM utilizes text-based methods for message passing, while embedding-based GWM operates at the embedding level; 3) Token-based GWM converts information into prompt form for the decoder, while embedding-based GWM employs a multi-hop projector to manage embedding-level information.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/r2.pdf"
+    },
+    {
+      "id": "source_figure_005_multi-hop-graphs-enhance-gwm-s-performance-acros",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_005_multi-hop-graphs-enhance-gwm-s-performance-acros.png",
+      "caption": "\\textbf{Multi-hop graphs enhance GWM's performance across representative tasks in six domains}. We can observe that the introduction of graphs has benefited GWM-E across all tasks compared to no graph. Moreover, excessive hops can lead to over-smoothing, thereby decreasing performance.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/hops_radar.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-07-22"
+}

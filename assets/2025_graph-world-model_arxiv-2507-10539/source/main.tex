@@ -1,0 +1,196 @@
+%%%%%%%% ICML 2024 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+\usepackage[table]{xcolor} 
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{ragged2e}
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2024} with \usepackage[nohyperref]{icml2024} above.
+\usepackage{hyperref}
+\usepackage{multirow}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+% \usepackage{icml2025}
+
+% If accepted, instead use the following line for the camera-ready submission:
+\usepackage[accepted]{icml2025}
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\newcommand{\xhdr}[1]{{\noindent\bfseries #1}.} % important
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+\DeclareMathOperator{\GCN}{GCN}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mb}{\mathbf}
+\usepackage{enumitem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\para}[1]{{\vspace{3pt} \bf \noindent #1 \hspace{0pt}}}
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+\newcommand{\eg}{\emph{e.g.}}
+\newcommand{\ie}{\emph{i.e.}\xspace}
+
+\usepackage{longtable}  % 用于跨页表格
+\definecolor{royalblue(web)}{rgb}{0.25, 0.41, 0.88}
+\definecolor{blue-violet}{rgb}{0.54, 0.17, 0.89}
+\definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
+\definecolor{darkmagenta}{rgb}{0.55, 0.0, 0.55}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{palatinateblue}{rgb}{0.15, 0.23, 0.89}
+\definecolor{royalblue(web)}{rgb}{0.25, 0.41, 0.88}
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{thulianpink}{rgb}{0.87, 0.44, 0.63}
+\definecolor{amber(sae/ece)}{rgb}{1.0, 0.49, 0.0}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.55}
+\definecolor{alizarin}{rgb}{0.82, 0.1, 0.26}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{darkspringgreen}{rgb}{0.09, 0.45, 0.27}
+\definecolor{columbiablue}{rgb}{0.61, 0.87, 1.0}
+\definecolor{wildblueyonder}{rgb}{0.64, 0.68, 0.82}
+\definecolor{trolleygrey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{paleaqua}{rgb}{0.74, 0.83, 0.9}
+\definecolor{bubblegum}{rgb}{0.99, 0.76, 0.8}
+\definecolor{coralred}{rgb}{1.0, 0.25, 0.25}
+\definecolor{green(ryb)}{rgb}{0.4, 0.69, 0.2}
+\definecolor{flame}{rgb}{0.89, 0.35, 0.13}
+\definecolor{bittersweet}{rgb}{1.0, 0.44, 0.37}
+\definecolor{darksalmon}{rgb}{0.91, 0.59, 0.48}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\definecolor{green(pigment)}{rgb}{0.0, 0.65, 0.31}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.94}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.94}
+\definecolor{forestgreen}{RGB}{34, 139, 34}
+
+\newcommand{\method}{ \texttt{GWM} \xspace}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Graph World Model}
+
+\begin{document}
+
+\twocolumn[
+% \icmltitle{Building World Model using Graph Foundation Model}
+\icmltitle{Graph World Model}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2024
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+
+\icmlauthor{Tao Feng}{yyy}
+\icmlauthor{Yexin Wu}{yyy}
+\icmlauthor{Guanyu Lin}{yyy}
+\icmlauthor{Jiaxuan You}{yyy}
+
+\end{icmlauthorlist}
+
+\icmlaffiliation{yyy}{Department of Computer Science, University of Illinois Urbana Champaign Urbana, IL, USA}
+% \icmlaffiliation{cmu}{School of Computer Science, Carnegie Mellon University, Pittsburgh, PA, USA}
+
+
+\icmlcorrespondingauthor{Tao Feng}{taofeng2@illinois.edu}
+\icmlcorrespondingauthor{Jiaxuan You}{jiaxuan@illinois.edu}
+
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+
+\icmlkeywords{World model, Unstructured data, Multi-modal information, Generalization capabilities}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+% \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\input{000abstract}
+%\vspace{-5mm}
+\input{010intro}
+\input{030proposed}
+\input{040experiments}
+\input{020related}
+\input{050conclusion}
+
+
+
+\section*{Impact Statement}
+The WM serves as a unified framework for prediction, generation, and decision-making across various applications. While traditional WMs are constrained to single-modality and unstructured data, our proposed  GWM enhances them by embedding-level message passing and aggregation to integrate structured and multi-modal data, bridging the gap between unstructured and structured processing. GWM demonstrates significant potential as a foundational graph-based model for real-world multi-modal tasks; however, its current scope is limited by the number of supported modalities and the simplicity of its graph architecture, necessitating further advancements for broader applicability and enhanced relational modeling. Future applications should also prioritize ethical considerations, recognizing that efforts are needed to ensure that GWM's responses are reliable, unbiased, and safe in real-world deployments, thereby preventing potential harm to users. In addition, the data utilized in this work are collected in compliance with applicable laws and licensing agreements. Their usage is also transparent and harmless.
+
+The security of Large Language Models (LLMs) has always been a concern. Unfortunately, current LLMs sometimes produce harmful and biased information unexpectedly. Our proposed method uses LLMs to generate simulated queries and summary responses, which are only used to construct a graph of records and connect text chunks from long documents. However, more work is needed in real-world applications to ensure that LLMs' responses are reliable and harmless, so that they do not harm users. 
+
+
+
+\bibliography{paper}
+\bibliographystyle{icml2025}
+\newpage
+\appendix
+\input{060appendix}
+% \newpage
+% \input{070rebuttal}
+\end{document}
+
+

@@ -1,0 +1,117 @@
+
+%%
+%% ACL 2026 Paper Template
+%% Converted from WWW 2026 template
+%%
+
+\documentclass[11pt]{article}
+
+% For submission (review version), use [review] option
+% For final camera-ready version, remove [review] option
+% \usepackage[review]{acl}
+\usepackage{acl}
+
+% Standard packages
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+% For proper rendering and hyphenation
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{booktabs}   
+\usepackage{graphicx}   
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{amssymb}
+\usepackage{subfigure}
+\usepackage{todonotes}
+\newcommand{\SideNote}[2]{\todo[color=#1,size=\small]{#2}}
+\newcommand{\yunzhi}[1]{\SideNote{blue!40}{#1 --yunzhi}}
+\colorlet{VanillaColor}{yellow!5!white}
+\colorlet{RAGColor}{green!5!white}
+\colorlet{MemoryColor}{cyan!8!white}
+\colorlet{StructuralMemoryColor}{purple!8!white}
+
+% If the title and author information does not fit, uncomment and adjust:
+% \setlength\titlebox{6cm}
+
+%%
+%% Title
+%%
+\title{StructMem: Structured Memory for Long-Horizon Behavior in LLMs}
+
+%%
+%% Author information
+%% For submission (anonymous review), comment out the entire \author block below
+%% For camera-ready version, uncomment the \author block
+%%
+ 
+% Option 1: Detailed author information (recommended)
+\author{
+  Buqiang Xu\textsuperscript{1}\thanks{ \ \ Equal contribution.},
+  Yijun Chen\textsuperscript{1}\footnotemark[1],
+  Jizhan Fang\textsuperscript{1},
+  Ruobin Zhong\textsuperscript{1}, \\
+  \textbf{Yunzhi Yao\textsuperscript{1}},
+  \textbf{Yuqi Zhu\textsuperscript{1,3}},
+  \textbf{Lun Du\textsuperscript{2,3}}, 
+  \textbf{Shumin Deng\textsuperscript{1}}\thanks{ \ \ Corresponding author.}
+  \\
+  \\
+  \textsuperscript{1}Zhejiang University
+  \quad
+  \textsuperscript{2}Ant Group
+  % \textsuperscript{3}National University of Singapore 
+  \\
+  \textsuperscript{3}Zhejiang University - Ant Group Joint Laboratory of Knowledge Graph \\
+}
+
+% Option 2: Simple format (alternative, comment out Option 1 if using this)
+% \author{Buqiang Xu, Ruobin Zhong, Jizhan Fang, Yijun Chen \\
+%   Zhejiang University \\
+%   ZJU-Ant Group Joint Research Center for Knowledge Graphs \\
+%   \texttt{email@domain} 
+%   \And
+%   Yunzhi Yao, Yuqi Zhu, Da Zheng \\
+%   Ant Group \\
+%   ZJU-Ant Group Joint Research Center for Knowledge Graphs \\
+%   \texttt{email@domain}
+%   \And
+%   Huajun Chen, Ningyu Zhang\textsuperscript{*} \\
+%   Zhejiang University \\
+%   ZJU-Ant Group Joint Research Center for Knowledge Graphs \\
+%   \texttt{email@domain}
+% }
+
+\begin{document}
+
+\maketitle
+
+%%
+%% Abstract
+%%
+\begin{abstract}
+\input{tex/0_abstract}
+\end{abstract}
+
+%%
+%% Main content sections
+%%
+\input{tex/1_introduction}
+\input{tex/2_relatedwork}
+\input{tex/3_method}
+\input{tex/4_experiments}
+\input{tex/5_conclusion}
+\input{tex/6_limitations}
+
+\bibliography{sample-base}
+
+\appendix
+\input{tex/7_appendix}
+
+
+\end{document}

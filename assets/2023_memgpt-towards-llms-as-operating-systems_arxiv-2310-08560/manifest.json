@@ -1,0 +1,118 @@
+{
+  "paper_id": "2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560",
+  "source_path": "",
+  "source_archive_path": "sources/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "intro_figure_memory_creation",
+      "kind": "figure",
+      "number": "intro-1",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_memory_creation.png",
+      "caption": "MemGPT writes data to persistent memory after receiving a system alert about limited context space.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_diagrams_wide_memory_creation.pdf"
+    },
+    {
+      "id": "intro_figure_memory_search",
+      "kind": "figure",
+      "number": "intro-2",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_memory_search.png",
+      "caption": "MemGPT searches out-of-context data to bring relevant information into the current context window.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_diagrams_wide_memory_search.pdf"
+    },
+    {
+      "id": "intro_figure_system_flow",
+      "kind": "figure",
+      "number": "intro-3",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_system_flow.png",
+      "caption": "MemGPT augments a fixed-context LLM processor with hierarchical memory and functions for memory management.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_system_flow_2.pdf"
+    },
+    {
+      "id": "source_figure_002_document-qa-task-performance-s-performance-is-un",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/source_figure_002_document-qa-task-performance-s-performance-is-un.png",
+      "caption": "\\textbf{Document QA task performance.} \\ours's performance is unaffected by increased context length. Methods such as truncation can extend the effective context lengths of fixed length models such as GPT-4, but such compression methods will lead to performance degradation as the necessary compression grows. Running \\ours with GPT-4 and GPT-4 Turbo have equivalent results on this task.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/docqa.pdf"
+    },
+    {
+      "id": "source_figure_003_an-example-of-memgpt-left-solving-the-document-q",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/source_figure_003_an-example-of-memgpt-left-solving-the-document-q.png",
+      "caption": "An example of MemGPT (left) solving the document QA task. A database of Wikipedia documents is uploaded to archival storage. MemGPT queries archival storage via function calling, which pulls paginated search results into main context.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/memgpt_docqa_example_2.pdf"
+    },
+    {
+      "id": "method_figure_memory_correction",
+      "kind": "figure",
+      "number": "method-1",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/method_figure_memory_correction.png",
+      "caption": "An example conversation snippet where MemGPT updates stored information in working context memory.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_diagrams_wide_memory_correction.pdf"
+    },
+    {
+      "id": "experiments_figure_docqa_results",
+      "kind": "figure",
+      "number": "experiment-1",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_docqa_results.png",
+      "caption": "Document QA task performance. MemGPT performance is less affected by increased context length than truncation-based fixed-context methods.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/docqa.pdf"
+    },
+    {
+      "id": "experiments_figure_docqa_example",
+      "kind": "figure",
+      "number": "experiment-2",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_docqa_example.png",
+      "caption": "Example of MemGPT solving the document QA task with Wikipedia documents in archival storage and paginated search results pulled into main context.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_docqa_example_2.pdf"
+    },
+    {
+      "id": "experiments_figure_nested_kv_results",
+      "kind": "figure",
+      "number": "experiment-3",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_nested_kv_results.png",
+      "caption": "Nested KV retrieval task performance. MemGPT is the only approach that consistently completes the task beyond two nesting levels.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/nested_kv.pdf"
+    },
+    {
+      "id": "experiments_figure_nested_kv_example",
+      "kind": "figure",
+      "number": "experiment-4",
+      "page": null,
+      "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_nested_kv_example.png",
+      "caption": "Example of MemGPT solving a nested KV task through repeated function queries.",
+      "crop_bbox": [],
+      "source": "manual-source-render",
+      "source_ref": "source/images/memgpt_nested_kv_example.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-22"
+}

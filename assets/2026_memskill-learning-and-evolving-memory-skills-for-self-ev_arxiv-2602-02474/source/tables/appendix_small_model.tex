@@ -1,0 +1,45 @@
+\begin{table*}[h]
+    \footnotesize
+    \centering
+    \setlength{\tabcolsep}{5.5pt}
+    \caption{\textbf{Experimental results on LoCoMo and LongMemEval using Llama-3.1-8B-Instruct.}}
+    \label{tab:exp_small_model}
+
+    \begin{tabular}{>{\centering\arraybackslash}m{0.5cm} l cc cc c}
+        \toprule
+        \multirow{3}{*}{\textbf{Model}} &
+        \multirow{3}{*}{\textbf{Methods}} &
+        \multicolumn{5}{c}{\textbf{Conversational Benchmarks}} \\
+        \cmidrule(lr){3-7}
+        & &
+        \multicolumn{2}{c}{\textbf{LoCoMo}} &
+        \multicolumn{2}{c}{\textbf{$^\blacktriangle$LongMemEval}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-7}
+        & &
+        \textbf{F1} & \textbf{L-J} &
+        \textbf{F1} & \textbf{L-J} &
+        \textbf{L-J} \\
+        \midrule
+
+        % ===================== Base model block 1 =====================
+        \multirow{8}{*}{\rotatebox[origin=c]{90}{\shortstack{\textbf{LLaMA3.1}\\\textbf{8B-Instruct}}}} &
+        ReadAgent  & 17.53 & 21.49 & 9.45 & 18.80 & 20.15 \\
+        & MemoryBank & 18.84 & 22.36 & 13.27 & 24.59 & 23.48 \\
+        & A-MEM      & 19.95 & 25.62 & 16.12 & 25.71 & 25.67 \\
+        & Mem0       & 14.26 & 17.12 & 14.59 & 26.38 & 21.75 \\
+        & LangMem    & 13.36 & 15.71 & 6.52 & 17.16 & 16.44 \\
+        & MemoryOS   & 17.68 & 23.08 & 7.88 & 18.24 & 20.66 \\
+        & LightMem   & 19.74 & 26.85 & 17.68 & 29.40 & 28.13 \\
+        & \cellcolor{hl-llama}\textbf{MemSkill} &
+        \cellcolor{hl-llama}\textbf{20.59} & \cellcolor{hl-llama}\textbf{27.23} & \cellcolor{hl-llama}\textbf{18.13} & \cellcolor{hl-llama}\textbf{30.20} &
+        \cellcolor{hl-llama}\textbf{28.72} \\
+        \bottomrule
+
+        \multicolumn{7}{l}{\small \textbf{Bold} indicates the best score within each base model block.} \\
+        \multicolumn{7}{l}{\small $^\blacktriangle$ indicates no training using this base model or dataset.}
+    \end{tabular}
+\end{table*}
+
+
+

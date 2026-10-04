@@ -1,0 +1,57 @@
+\begin{table*}[h]
+\renewcommand{\arraystretch}{1.2}
+\centering
+\footnotesize
+\caption{The Text2Mem operation inventory and its support in existing frameworks. 
+\checkmark: native support; $\triangle$: partial or indirect; --: unsupported. 
+Basic operations like \texttt{Encode}, \texttt{Delete}, and \texttt{Retrieve} are common, 
+while higher-order controls remain absent.}
+\begin{tabular}{l|l|l|c|c|c}
+\hline
+\textbf{Stage} & \textbf{Operation} & \textbf{Description} & \textbf{MemOS} & \textbf{mem0} & \textbf{Letta} \\
+\hline
+Encoding 
+  & \texttt{Encode} 
+  & Insert a new memory with metadata; embeddings are optional and deferrable later. 
+  & \checkmark & \checkmark & \checkmark \\
+\hline
+\multirow{9}{*}{Storage} 
+  & \texttt{Update}   
+  & Modify specific fields with validation, lineage safety, and strict type checks. 
+  & \checkmark & $\triangle$ & $\triangle$ \\
+  & \texttt{Label}    
+  & Add, replace, or remove tags and edit facets with deduplication constraints. 
+  & $\triangle$ & $\triangle$ & $\triangle$ \\
+  & \texttt{Promote}  
+  & Increase priority or attach reminders to resurface items on a defined cadence. 
+  & -- & -- & -- \\
+  & \texttt{Demote}   
+  & Decrease priority or archive without deleting data to reduce retrieval prominence. 
+  & -- & -- & -- \\
+  & \texttt{Merge}    
+  & Combine records into a primary while preserving lineage links and optional child deletes. 
+  & -- & -- & -- \\
+  & \texttt{Delete}   
+  & Soft or hard delete with policy and lock checks, including time-range filters. 
+  & \checkmark & \checkmark & \checkmark \\
+  & \texttt{Split}    
+  & Break composite entries into smaller linked units via sentences or chunks. 
+  & -- & -- & -- \\
+  & \texttt{Lock}     
+  & Restrict edits via read-only or append-only policies with reason and expiry metadata. 
+  & -- & -- & -- \\
+  & \texttt{Expire}   
+  & Apply TTL or until, triggering actions when expired such as demote or anonymize. 
+  & -- & -- & -- \\
+\hline
+\multirow{2}{*}{Retrieval} 
+  & \texttt{Retrieve} 
+  & Run filtered, ranked queries with permission-aware results and field-level whitelists. 
+  & \checkmark & \checkmark & \checkmark \\
+  & \texttt{Summarize}
+  & Produce concise, focused summaries within token limits aligned to a specified focus. 
+  & $\triangle$ & $\triangle$ & $\triangle$ \\
+\hline
+\end{tabular}
+\label{tab:ops_compare}
+\end{table*}

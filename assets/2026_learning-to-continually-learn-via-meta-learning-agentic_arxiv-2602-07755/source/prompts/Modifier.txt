@@ -1,0 +1,88 @@
+You are a senior AI software engineer. Your task is to build an agent memory system composed of multiple specialized memory layers and a coordinating memory structure. The agent will be used in {task_type}. Yout memory structure aims to help down stream agent to have more relevant advice, experience to help it further finish current task.
+    
+{TASK_DESCRIPTION[task_type]}
+
+You are given the following two base classes:
+<BACKBONE_CODE>
+{basic_classes}
+</BACKBONE_CODE>
+Inherit these two base classes and recorder by writing:
+```python
+from agents.memo_structure import Sub_memo_layer, MemoStructure
+from eval_envs.base_envs import Basic_Recorder
+from utils.hire_agent import Agent, Embedding
+from langchain_chroma import Chroma
+```
+
+<CODE_INPUT>
+{interaction_prompt}
+</CODE_INPUT>
+
+<CODE_USAGE>
+Your memory structure will be used in the agent workflow:
+    - `general_retrieve(recorder)`: used **before** start executing the task, to retreive task relevant information. Your output json will be directly send to agent, so please make sure your output is well organized, include all useful information and avoid redundency, in a agent understandable way.
+    - `general_update(recorder)`: used **after** task is finished, to update the trajectory, reward, or other information.
+<CODE_USAGE>
+
+Here is the basic tools provided:
+<GRAPH_DATABASE_INTERACTION>
+{NXGRAPH_CHEETSHEET}
+</GRAPH_DATABASE_INTERACTION>
+
+<CHROMA_DATABASE_INTERACTION>
+{CHROMA_CHEETSHEET}
+</CHROMA_DATABASE_INTERACTION>
+
+<OTHER_TOOLS>
+{TOOL_CHEETSHEET}
+</OTHER_TOOLS>
+
+### Your Task:
+Modify the code above so that it fully satisfies the following design goals:
+
+1. **Multiple Memory Layers:**   
+   - Create multiple subclasses of `Sub_memo_layer`.
+   - Each layer must have a **clear responsibility** and you might need to maintain its own database(based on nx.graph or chroma).  
+   - Think carefully about **what type of data** belongs in each layer's database.
+
+2. **General Retrieve/Update Orchestration:**  
+   - Create a subclass of `MemoStructure` that orchestrates all layers.  
+   - `general_retrieve()` should intelligently chain the results:  
+     - Output from layer 1 can become input to layer 2.  
+     - You should design a reasonable order of retrieval.  
+   - `general_update()` should propagate updates to relevant layers in a sensible order.  
+   - You are free to reorder calls or preprocess inputs to achieve coherent memory behavior.
+
+3. **Out-of-the-Box Reasoning:**  
+   - Do not just mechanically call each layer one by one - think about the **semantic flow of information**.  
+   - Consider cases like:  
+     - what type of memory layer can be used according to the analysis result or task description, with the aim to better assist the agent to finish it's task? 
+     - what order and input output should be best suitable for the analysis result or task description? 
+     - Think about high-level stategy: what can be a good memory structure, and has good ability to transfer to other area? 
+   - Make sure each layer plays a meaningful role in the system.
+   - Directly perform simple plans or content writing based on if/else patterns should be avoided, since this will hurt the transfer ability.
+   - Keep the retrieved memory clean and useful, aviod cutting off meaningful texts, repeat same patterns in the retrieved memory.
+
+4. **Integration with Utilities:**  
+   - Feel free to use any provided utility functions (e.g., similarity calculation, interaction with databases, hire new agent) if relevant. The tools available will be listed in `TOOLS` section.
+   - You can also create your own tools if neccessary, think out of the box.
+
+5. **Code Quality:**  
+   - Output clean, runnable Python code following PEP8.  
+   - Ensure `general_retrieve()` and `general_update()` accept `Basic_Recorder` and orchestrate the pipeline end-to-end.  
+   - Initialize all layers in `MemoStructure.__init__`.
+   - Do not overuse defensive programming; raise appropriate exceptions when unexpected conditions occur to facilitate debugging.
+
+6. **Coherent Policy Logic:**
+    - Avoid placeholders like pass or # TODO.
+    - Avoid hard-coded if/else branches or enumerated case handling; instead, express the logic through modular policy functions, scoring mechanisms, or composable decision rules.
+    - Instead of enumerating case-specific rules, express generalizable principles that could apply across different families or new unseen tasks.
+    - The logic should be adaptable and compositional, not dependent on predefined constants or string names.
+    - Use abstractions instead of specific family identifiers.
+
+The goal is to ensure the memory policy behaves consistently across tasks and supports generalization, not to hard-code specific task behaviors.
+
+### Important:
+- Think creatively about data flow - outputs of one layer can feed into the next.
+- Each layer's functionality and stored data should be clearly designed.
+- Provide **only the final rewritten code**, no explanations.

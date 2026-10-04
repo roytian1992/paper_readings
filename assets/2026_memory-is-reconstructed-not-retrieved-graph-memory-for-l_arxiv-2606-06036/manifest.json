@@ -1,0 +1,100 @@
+{
+  "paper_id": "2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036",
+  "source_path": "",
+  "source_archive_path": "sources/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_comparison-between-passive-retrieval-and-active",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_001_comparison-between-passive-retrieval-and-active.png",
+      "caption": "Comparison between passive retrieval and active memory reconstruction in MRAgent.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_intro2.png"
+    },
+    {
+      "id": "source_figure_002_illustrative-example-comparing-passive-retrieval",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_002_illustrative-example-comparing-passive-retrieval.png",
+      "caption": "Illustrative example comparing passive retrieval and active reconstruction: passive retrieval only retrieves memory content related to Nate’s video game tournaments based on the query, while active reconstruction infers a critical temporal cue (``July'') through LLM reasoning and identifies Caroline’s corresponding activity.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_motivation.png"
+    },
+    {
+      "id": "source_figure_003_mragent-an-associative-memory-system-with-llm-dr",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_003_mragent-an-associative-memory-system-with-llm-dr.png",
+      "caption": "MRAgent: An Associative Memory System with LLM-Driven Active Memory Reconstruction. (a) MRAgent constructs an associative memory system from dialogues, organizing episodic and semantic memories through Cue–Tag–Content structures that explicitly encode semantic and relational associations through tags. (b) Upon a query, the agent performs active memory reconstruction, where an LLM iteratively reasons over cues and tags to traverse the memory graph and selectively reconstruct task-relevant memory.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_framework.png"
+    },
+    {
+      "id": "source_figure_004_ablation-results-on-locomo-for-multi-hop-queries",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_004_ablation-results-on-locomo-for-multi-hop-queries.png",
+      "caption": "Ablation results on \\textsc{LoCoMo} for multi-hop queries, evaluated using Recall and LLM-Judge (J) under Claude backbone.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_ablation_study.png"
+    },
+    {
+      "id": "source_figure_005_analysis-of-multi-turn-reasoning-on-locomo-under",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_005_analysis-of-multi-turn-reasoning-on-locomo-under.png",
+      "caption": "Analysis of multi-turn reasoning on \\textsc{LoCoMo} under the Claude backbone.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_multi_turns.png"
+    },
+    {
+      "id": "source_figure_006_reasoning-trajectory-of-mragent-over-the-memory",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_006_reasoning-trajectory-of-mragent-over-the-memory.png",
+      "caption": "Reasoning trajectory of MRAgent over the memory graph for a multi-session query. Starting from the cue ``Jonna'', the agent traverses multiple associative tags to retrieve both episodic memories (e.g., screenplay submissions) and semantic information (e.g., background about the screenplay). It then reasons over higher-level topics to recover rejection events and aligns them with previously retrieved submissions, enabling a coherent answer to the query. Here, $D x\\!:\\!x$ denotes concrete event instances.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig-casestudy.png"
+    },
+    {
+      "id": "source_figure_007_active-memory-reconstruction",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_007_active-memory-reconstruction.png",
+      "caption": "Active Memory Reconstruction",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_example.png"
+    },
+    {
+      "id": "source_figure_008_performance-on-multi-hop-queries-in-locomo-as-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_008_performance-on-multi-hop-queries-in-locomo-as-a.png",
+      "caption": "Performance on multi-hop queries in \\textsc{LoCoMo} as a function of the number of reasoning turns ($T$) and the per-round retrieval budget ($K$), evaluated under the Claude backbone using LLM-Judge (J).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/depth_call_heatmap.png"
+    },
+    {
+      "id": "source_figure_009_functional-correspondence-between-human-memory-r",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_009_functional-correspondence-between-human-memory-r.png",
+      "caption": "Functional correspondence between human memory reconstruction and the MRAgent architecture.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "Fig/fig_relatedwork2.png"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-07-31"
+}

@@ -1,0 +1,46 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{2.5cm}p{13cm}}
+\toprule
+\textbf{Query} & \textit{When did Caroline and Melanie go to a pride festival together?} \\
+\midrule
+\textbf{Method} & \textbf{Retrieved Content} \\
+\midrule
+\textbf{Flat Memory} & 
+\textbf{Factual Entries:} \\
+& \quad • Caroline attended pride parade on 2023-08-11 \\
+& \quad • Caroline had a blast at Pride fest last year (recorded 2023-08-17) \\
+& \quad • Melanie enjoyed time with the whole gang at Pride fest (recorded 2023-08-17) \\
+\midrule
+\textbf{Graph Memory} & 
+\textbf{Factual Entries:} \\
+& \quad • Caroline attended pride parade on 2023-08-11 \\
+& \quad • Caroline had a blast at Pride fest last year (recorded 2023-08-17) \\
+& \quad • Melanie enjoyed time with the whole gang at Pride fest (recorded 2023-08-17) \\ 
+& \textbf{Entity-Relation Graph:} \\
+& \quad • caroline $\rightarrow$ attended $\rightarrow$ pride\_parade \\
+& \quad • caroline $\rightarrow$ had\_blast\_at $\rightarrow$ pride\_fest \\
+& \quad • melanie $\rightarrow$ enjoyed\_time\_at $\rightarrow$ pride\_fest \\
+& \quad • melanie $\rightarrow$ expressed\_excitement $\rightarrow$ caroline's\_pride\_involvement \\
+\midrule
+\textbf{StructMem} &
+\textbf{Event Memory:} \\
+& \quad • Caroline attended pride parade on 2023-08-11 \\
+& \quad • Caroline had a blast at Pride fest last year (recorded 2023-08-17) \\
+& \quad • Melanie showed interest in Caroline's pride parade experience \\
+& \quad • Melanie enjoyed time with the whole gang at Pride fest (recorded 2023-08-17) \\ 
+& \quad • Melanie expressed excitement about Caroline's LGBTQ+ community involvement \\
+& \textbf{Synthesis Memory:} \\
+& ``On August 17, 2023... \textbf{As they reminisced about their enjoyable time at Pride fest last year}, Melanie suggested planning a family outing, while Caroline proposed a special outing just for the two of them this summer...'' \\
+\midrule
+\textbf{Prediction} & 
+\textbf{Flat Memory:} ``They haven't gone together.'' \\
+& \textbf{Graph Memory:} ``Last month, June 2023.'' \\
+& \textbf{StructMem:} ``Last year, August 2022.'' \\
+& \textbf{Reference:} 2022 \\
+\bottomrule
+\end{tabular}
+\caption{Case study comparing three memory paradigms on joint participation reasoning. Flat Memory and Graph Memory cannot establish co-participation from isolated entries, while StructMem's synthesis correctly identifies shared experiences.}
+\label{tab:case_study}
+\end{table*}

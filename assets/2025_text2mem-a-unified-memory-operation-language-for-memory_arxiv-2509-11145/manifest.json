@@ -1,0 +1,40 @@
+{
+  "paper_id": "2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145",
+  "source_path": "",
+  "source_archive_path": "sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_ambiguity-and-inconsistency-in-current-systems-v",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_001_ambiguity-and-inconsistency-in-current-systems-v.png",
+      "caption": "Ambiguity and inconsistency in current systems versus Text2Mem’s formalized handling. \\textbf{Left}: The natural language instruction ``I'd rather not bring up anything about lunch for now'' is underspecified. Scope, action, and duration are unclear, leading to inconsistent behaviors across agents (temporary suppression, hard deletion, or ignoring). \\textbf{Right}: Text2Mem resolves the ambiguity by instantiating a schema-based Demote operation with explicit arguments. The validator, parser, and adapter guarantee consistent execution across heterogeneous backends.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/problem.pdf"
+    },
+    {
+      "id": "source_figure_002_illustration-of-the-text2mem-execution-pathway-n",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_002_illustration-of-the-text2mem-execution-pathway-n.png",
+      "caption": "Illustration of the Text2Mem execution pathway. Natural language instructions are normalized into memory operation schema instances, which are validated, parsed into typed operation objects, and finally executed through adapters to real memory frameworks or, alternatively, through a SQL-based prototype backend for controlled verification.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/text2mem.pdf"
+    },
+    {
+      "id": "source_figure_003_overview-of-the-text2mem-benchmark-pipeline-the",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_003_overview-of-the-text2mem-benchmark-pipeline-the.png",
+      "caption": "\\textbf{Overview of the Text2Mem Benchmark pipeline.} The process consists of three generation stages and two evaluation layers. \\textbf{Step~1:} Scenarios are converted into realistic natural-language requests. \\textbf{Step~2:} The requests are translated into executable memory operation schemas (\\texttt{schema\\_list}) with corresponding \\texttt{prerequisites}. \\textbf{Step~3:} Expected outcomes are defined for automatic verification after execution. Two evaluation layers assess system performance: \\textbf{Plan-level evaluation} measures string-match accuracy and execution success rate of generated schemas; \\textbf{Execution-level evaluation} measures expectation match rate and retrieval-based metrics to quantify behavioral correctness after running the \\texttt{schema\\_list} in the Text2Mem system.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figs/benchmark.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-22"
+}

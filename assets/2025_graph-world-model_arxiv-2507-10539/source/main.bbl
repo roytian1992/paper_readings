@@ -1,0 +1,465 @@
+\begin{thebibliography}{91}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bai et~al.(2024)Bai, Tu, Zhang, Peng, Wang, Lv, Cao, Xu, Hou, Dong, et~al.]{bai2024longbench}
+Bai, Y., Tu, S., Zhang, J., Peng, H., Wang, X., Lv, X., Cao, S., Xu, J., Hou, L., Dong, Y., et~al.
+\newblock Longbench v2: Towards deeper understanding and reasoning on realistic long-context multitasks.
+\newblock \emph{arXiv preprint arXiv:2412.15204}, 2024.
+
+\bibitem[Beltagy et~al.(2020)Beltagy, Peters, and Cohan]{beltagy2020longformer}
+Beltagy, I., Peters, M.~E., and Cohan, A.
+\newblock Longformer: The long-document transformer.
+\newblock \emph{arXiv preprint arXiv:2004.05150}, 2020.
+
+\bibitem[Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal, Neelakantan, Shyam, Sastry, Askell, Agarwal, Herbert-Voss, Krueger, Henighan, Child, Ramesh, Ziegler, Wu, Winter, Hesse, Chen, Sigler, Litwin, Gray, Chess, Clark, Berner, McCandlish, Radford, Sutskever, and Amodei]{brown2020languagemodelsfewshotlearners}
+Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D.
+\newblock Language models are few-shot learners, 2020.
+\newblock URL \url{https://arxiv.org/abs/2005.14165}.
+
+\bibitem[Bruce et~al.(2024)Bruce, Dennis, Edwards, Parker-Holder, Shi, Hughes, Lai, Mavalankar, Steigerwald, Apps, et~al.]{bruce2024genie}
+Bruce, J., Dennis, M.~D., Edwards, A., Parker-Holder, J., Shi, Y., Hughes, E., Lai, M., Mavalankar, A., Steigerwald, R., Apps, C., et~al.
+\newblock Genie: Generative interactive environments.
+\newblock In \emph{Forty-first International Conference on Machine Learning}, 2024.
+
+\bibitem[Cao et~al.(2023)Cao, You, and Leskovec]{cao2023relational}
+Cao, K., You, J., and Leskovec, J.
+\newblock Relational multi-task learning: Modeling relations between data and tasks.
+\newblock \emph{arXiv preprint arXiv:2303.07666}, 2023.
+
+\bibitem[Chen et~al.(2021)Chen, Lu, Rajeswaran, Lee, Grover, Laskin, Abbeel, Srinivas, and Mordatch]{chen2021decision}
+Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., Abbeel, P., Srinivas, A., and Mordatch, I.
+\newblock Decision transformer: Reinforcement learning via sequence modeling.
+\newblock \emph{Advances in neural information processing systems}, 34:\penalty0 15084--15097, 2021.
+
+\bibitem[Chen et~al.(2024{\natexlab{a}})Chen, Zhao, Jaiswal, Shah, and Wang]{chen2024llaga}
+Chen, R., Zhao, T., Jaiswal, A., Shah, N., and Wang, Z.
+\newblock Llaga: Large language and graph assistant.
+\newblock \emph{arXiv preprint arXiv:2402.08170}, 2024{\natexlab{a}}.
+
+\bibitem[Chen et~al.(2022)Chen, Hong, Xie, Peng, You, Ding, and Shao]{chen2022gndan}
+Chen, S., Hong, Z., Xie, G., Peng, Q., You, X., Ding, W., and Shao, L.
+\newblock Gndan: Graph navigated dual attention network for zero-shot learning.
+\newblock \emph{IEEE transactions on neural networks and learning systems}, 35\penalty0 (4):\penalty0 4516--4529, 2022.
+
+\bibitem[Chen et~al.(2024{\natexlab{b}})Chen, Mao, Li, Jin, Wen, Wei, Wang, Yin, Fan, Liu, et~al.]{chen2024exploring}
+Chen, Z., Mao, H., Li, H., Jin, W., Wen, H., Wei, X., Wang, S., Yin, D., Fan, W., Liu, H., et~al.
+\newblock Exploring the potential of large language models (llms) in learning on graphs.
+\newblock \emph{ACM SIGKDD Explorations Newsletter}, 25\penalty0 (2):\penalty0 42--61, 2024{\natexlab{b}}.
+
+\bibitem[Cui \& Gao()Cui and Gao]{cui2023universal}
+Cui, H. and Gao, Y.
+\newblock A universal world model learned from large scale and diverse videos.
+\newblock In \emph{NeurIPS 2023 Foundation Models for Decision Making Workshop}.
+
+\bibitem[Diederik(2014)]{diederik2014adam}
+Diederik, P.~K.
+\newblock Adam: A method for stochastic optimization.
+\newblock \emph{(No Title)}, 2014.
+
+\bibitem[Edge et~al.(2024)Edge, Trinh, Cheng, Bradley, Chao, Mody, Truitt, and Larson]{edge2024local}
+Edge, D., Trinh, H., Cheng, N., Bradley, J., Chao, A., Mody, A., Truitt, S., and Larson, J.
+\newblock From local to global: A graph rag approach to query-focused summarization.
+\newblock \emph{arXiv preprint arXiv:2404.16130}, 2024.
+
+\bibitem[Ektefaie et~al.(2023)Ektefaie, Dasoulas, Noori, Farhat, and Zitnik]{ektefaie2023multimodal}
+Ektefaie, Y., Dasoulas, G., Noori, A., Farhat, M., and Zitnik, M.
+\newblock Multimodal learning with graphs.
+\newblock \emph{Nature Machine Intelligence}, 5\penalty0 (4):\penalty0 340--350, 2023.
+
+\bibitem[Fey et~al.(2023)Fey, Hu, Huang, Lenssen, Ranjan, Robinson, Ying, You, and Leskovec]{fey2023relational}
+Fey, M., Hu, W., Huang, K., Lenssen, J.~E., Ranjan, R., Robinson, J., Ying, R., You, J., and Leskovec, J.
+\newblock Relational deep learning: Graph representation learning on relational databases.
+\newblock \emph{arXiv preprint arXiv:2312.04615}, 2023.
+
+\bibitem[Gao \& Xu(2020)Gao and Xu]{gao2020ci}
+Gao, J. and Xu, C.
+\newblock Ci-gnn: Building a category-instance graph for zero-shot video classification.
+\newblock \emph{IEEE Transactions on Multimedia}, 22\penalty0 (12):\penalty0 3088--3100, 2020.
+
+\bibitem[Gao et~al.(2023)Gao, Xiong, Gao, Jia, Pan, Bi, Dai, Sun, and Wang]{gao2023retrieval}
+Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., and Wang, H.
+\newblock Retrieval-augmented generation for large language models: A survey.
+\newblock \emph{arXiv preprint arXiv:2312.10997}, 2023.
+
+\bibitem[Ha \& Schmidhuber(2018)Ha and Schmidhuber]{ha2018recurrent}
+Ha, D. and Schmidhuber, J.
+\newblock Recurrent world models facilitate policy evolution.
+\newblock \emph{Advances in neural information processing systems}, 31, 2018.
+
+\bibitem[Hamilton et~al.(2017{\natexlab{a}})Hamilton, Ying, and Leskovec]{hamilton2017graphsage}
+Hamilton, W., Ying, Z., and Leskovec, J.
+\newblock Inductive representation learning on large graphs.
+\newblock \emph{Advances in neural information processing systems}, 30, 2017{\natexlab{a}}.
+
+\bibitem[Hamilton et~al.(2017{\natexlab{b}})Hamilton, Ying, and Leskovec]{hamilton2017inductive}
+Hamilton, W., Ying, Z., and Leskovec, J.
+\newblock Inductive representation learning on large graphs.
+\newblock \emph{Advances in neural information processing systems}, 30, 2017{\natexlab{b}}.
+
+\bibitem[He et~al.(2020{\natexlab{a}})He, Deng, Wang, Li, Zhang, and Wang]{he2020lightgcn}
+He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., and Wang, M.
+\newblock Lightgcn: Simplifying and powering graph convolution network for recommendation.
+\newblock In \emph{Proceedings of the 43rd International ACM SIGIR conference on research and development in Information Retrieval}, pp.\  639--648, 2020{\natexlab{a}}.
+
+\bibitem[He et~al.(2020{\natexlab{b}})He, Deng, Wang, Li, Zhang, and Wang]{lightgcn}
+He, X., Deng, K., Wang, X., Li, Y., Zhang, Y., and Wang, M.
+\newblock Lightgcn: Simplifying and powering graph convolution network for recommendation.
+\newblock In \emph{Proceedings of the 43rd International ACM SIGIR conference on research and development in Information Retrieval}, pp.\  639--648, 2020{\natexlab{b}}.
+
+\bibitem[Heumos et~al.(2023)Heumos, Schaar, Lance, Litinetskaya, Drost, Zappia, L{\"u}cken, Strobl, Henao, Curion, et~al.]{heumos2023best}
+Heumos, L., Schaar, A.~C., Lance, C., Litinetskaya, A., Drost, F., Zappia, L., L{\"u}cken, M.~D., Strobl, D.~C., Henao, J., Curion, F., et~al.
+\newblock Best practices for single-cell analysis across modalities.
+\newblock \emph{Nature Reviews Genetics}, 24\penalty0 (8):\penalty0 550--572, 2023.
+
+\bibitem[Ho \& Ermon(2016)Ho and Ermon]{ho2016generative}
+Ho, J. and Ermon, S.
+\newblock Generative adversarial imitation learning.
+\newblock \emph{Advances in neural information processing systems}, 29, 2016.
+
+\bibitem[Hu et~al.(2021)Hu, Shen, Wallis, Allen-Zhu, Li, Wang, Wang, and Chen]{hu2021lora}
+Hu, E.~J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W.
+\newblock Lora: Low-rank adaptation of large language models.
+\newblock \emph{arXiv preprint arXiv:2106.09685}, 2021.
+
+\bibitem[Hu et~al.(2020)Hu, Fey, Zitnik, Dong, Ren, Liu, Catasta, and Leskovec]{hu2020open}
+Hu, W., Fey, M., Zitnik, M., Dong, Y., Ren, H., Liu, B., Catasta, M., and Leskovec, J.
+\newblock Open graph benchmark: Datasets for machine learning on graphs.
+\newblock \emph{Advances in neural information processing systems}, 33:\penalty0 22118--22133, 2020.
+
+\bibitem[Hussein et~al.(2017)Hussein, Gaber, Elyan, and Jayne]{hussein2017imitation}
+Hussein, A., Gaber, M.~M., Elyan, E., and Jayne, C.
+\newblock Imitation learning: A survey of learning methods.
+\newblock \emph{ACM Computing Surveys (CSUR)}, 50\penalty0 (2):\penalty0 1--35, 2017.
+
+\bibitem[Isinkaye et~al.(2015)Isinkaye, Folajimi, and Ojokoh]{isinkaye2015recommendation}
+Isinkaye, F.~O., Folajimi, Y.~O., and Ojokoh, B.~A.
+\newblock Recommendation systems: Principles, methods and evaluation.
+\newblock \emph{Egyptian informatics journal}, 16\penalty0 (3):\penalty0 261--273, 2015.
+
+\bibitem[Jiang et~al.(2018)Jiang, Dun, Huang, and Lu]{jiang2018graph}
+Jiang, J., Dun, C., Huang, T., and Lu, Z.
+\newblock Graph convolutional reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:1810.09202}, 2018.
+
+\bibitem[Jin et~al.(2024)Jin, Pang, Guo, Wang, You, and Han]{jin2024instructg2i}
+Jin, B., Pang, Z., Guo, B., Wang, Y.-X., You, J., and Han, J.
+\newblock Instructg2i: Synthesizing images from multimodal attributed graphs.
+\newblock \emph{arXiv preprint arXiv:2410.07157}, 2024.
+
+\bibitem[Jin et~al.(2018)Jin, Barzilay, and Jaakkola]{jin2018junction}
+Jin, W., Barzilay, R., and Jaakkola, T.
+\newblock Junction tree variational autoencoder for molecular graph generation.
+\newblock \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Kipf \& Welling(2016)Kipf and Welling]{kipf2016semi}
+Kipf, T.~N. and Welling, M.
+\newblock Semi-supervised classification with graph convolutional networks.
+\newblock \emph{arXiv preprint arXiv:1609.02907}, 2016.
+
+\bibitem[Kipf \& Welling(2017)Kipf and Welling]{Thomas2017GCN}
+Kipf, T.~N. and Welling, M.
+\newblock Semi-supervised classification with graph convolutional networks.
+\newblock In \emph{{ICLR} (Poster)}. OpenReview.net, 2017.
+
+\bibitem[Ko et~al.(2022)Ko, Lee, Park, and Choi]{ko2022survey}
+Ko, H., Lee, S., Park, Y., and Choi, A.
+\newblock A survey of recommendation systems: recommendation models, techniques, and application fields.
+\newblock \emph{Electronics}, 11\penalty0 (1):\penalty0 141, 2022.
+
+\bibitem[Lewis et~al.(2020)Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal, K{\"u}ttler, Lewis, Yih, Rockt{\"a}schel, et~al.]{lewis2020retrieval}
+Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., K{\"u}ttler, H., Lewis, M., Yih, W.-t., Rockt{\"a}schel, T., et~al.
+\newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
+\newblock \emph{Advances in Neural Information Processing Systems}, 33:\penalty0 9459--9474, 2020.
+
+\bibitem[Li \& Liang(2021)Li and Liang]{li2021prefix}
+Li, X.~L. and Liang, P.
+\newblock Prefix-tuning: Optimizing continuous prompts for generation.
+\newblock \emph{arXiv preprint arXiv:2101.00190}, 2021.
+
+\bibitem[Lin et~al.(2023)Lin, Asai, Li, Oguz, Lin, Mehdad, Yih, and Chen]{lin2023train}
+Lin, S.-C., Asai, A., Li, M., Oguz, B., Lin, J., Mehdad, Y., Yih, W.-t., and Chen, X.
+\newblock How to train your dragon: Diverse augmentation towards generalizable dense retrieval.
+\newblock \emph{arXiv preprint arXiv:2302.07452}, 2023.
+
+\bibitem[Liu et~al.(2023{\natexlab{a}})Liu, Feng, Kong, Liang, Tao, Chen, and Zhang]{liu2023one}
+Liu, H., Feng, J., Kong, L., Liang, N., Tao, D., Chen, Y., and Zhang, M.
+\newblock One for all: Towards training one graph model for all classification tasks.
+\newblock \emph{arXiv preprint arXiv:2310.00149}, 2023{\natexlab{a}}.
+
+\bibitem[Liu et~al.(2024{\natexlab{a}})Liu, Li, Wu, and Lee]{liu2024visual}
+Liu, H., Li, C., Wu, Q., and Lee, Y.~J.
+\newblock Visual instruction tuning.
+\newblock \emph{Advances in neural information processing systems}, 36, 2024{\natexlab{a}}.
+
+\bibitem[Liu et~al.(2024{\natexlab{b}})Liu, Yan, Zaharia, and Abbeel]{liu2024world}
+Liu, H., Yan, W., Zaharia, M., and Abbeel, P.
+\newblock World model on million-length video and language with blockwise ringattention.
+\newblock \emph{CoRR}, 2024{\natexlab{b}}.
+
+\bibitem[Liu et~al.(2022)Liu, Ounis, and Macdonald]{liu2022mlp}
+Liu, S., Ounis, I., and Macdonald, C.
+\newblock An mlp-based algorithm for efficient contrastive graph recommendations.
+\newblock In \emph{Proceedings of the 45th international ACM SIGIR conference on research and development in information retrieval}, pp.\  2431--2436, 2022.
+
+\bibitem[Liu et~al.(2023{\natexlab{b}})Liu, Zhang, Li, Liu, and Yang]{liu2023dynamic}
+Liu, Z., Zhang, Y., Li, P., Liu, Y., and Yang, D.
+\newblock Dynamic llm-agent network: An llm-agent collaboration framework with agent team optimization.
+\newblock \emph{arXiv preprint arXiv:2310.02170}, 2023{\natexlab{b}}.
+
+\bibitem[Madotto et~al.(2021)Madotto, Lin, Winata, and Fung]{madotto2021few}
+Madotto, A., Lin, Z., Winata, G.~I., and Fung, P.
+\newblock Few-shot bot: Prompt-based learning for dialogue systems.
+\newblock \emph{arXiv preprint arXiv:2110.08118}, 2021.
+
+\bibitem[McAuley et~al.(2015)McAuley, Targett, Shi, and Van Den~Hengel]{mcauley2015image}
+McAuley, J., Targett, C., Shi, Q., and Van Den~Hengel, A.
+\newblock Image-based recommendations on styles and substitutes.
+\newblock In \emph{Proceedings of the 38th international ACM SIGIR conference on research and development in information retrieval}, pp.\  43--52, 2015.
+
+\bibitem[Min et~al.(2022)Min, Rong, Xu, Bian, Zhao, Huang, Luo, Lin, and Ananiadou]{Erxue2022recommender}
+Min, E., Rong, Y., Xu, T., Bian, Y., Zhao, P., Huang, J., Luo, D., Lin, K., and Ananiadou, S.
+\newblock Masked transformer for neighhourhood-aware click-through rate prediction.
+\newblock \emph{CoRR}, abs/2201.13311, 2022.
+
+\bibitem[Munikoti et~al.(2023)Munikoti, Agarwal, Das, Halappanavar, and Natarajan]{munikoti2023challenges}
+Munikoti, S., Agarwal, D., Das, L., Halappanavar, M., and Natarajan, B.
+\newblock Challenges and opportunities in deep reinforcement learning with graph neural networks: A comprehensive review of algorithms and applications.
+\newblock \emph{IEEE transactions on neural networks and learning systems}, 2023.
+
+\bibitem[Ni et~al.(2023)Ni, Cheng, Liu, Fu, Li, He, Zhang, and Yuan]{ni2023content}
+Ni, Y., Cheng, Y., Liu, X., Fu, J., Li, Y., He, X., Zhang, Y., and Yuan, F.
+\newblock A content-driven micro-video recommendation dataset at scale.
+\newblock \emph{arXiv preprint arXiv:2309.15379}, 2023.
+
+\bibitem[Oquab et~al.(2023)Oquab, Darcet, Moutakanni, Vo, Szafraniec, Khalidov, Fernandez, Haziza, Massa, El-Nouby, et~al.]{oquab2023dinov2}
+Oquab, M., Darcet, T., Moutakanni, T., Vo, H., Szafraniec, M., Khalidov, V., Fernandez, P., Haziza, D., Massa, F., El-Nouby, A., et~al.
+\newblock Dinov2: Learning robust visual features without supervision.
+\newblock \emph{arXiv preprint arXiv:2304.07193}, 2023.
+
+\bibitem[Peng et~al.(2023)Peng, Li, He, Galley, and Gao]{peng2023instruction}
+Peng, B., Li, C., He, P., Galley, M., and Gao, J.
+\newblock Instruction tuning with gpt-4.
+\newblock \emph{arXiv preprint arXiv:2304.03277}, 2023.
+
+\bibitem[Peng et~al.(2024)Peng, Zhu, Liu, Bo, Shi, Hong, Zhang, and Tang]{peng2024graph}
+Peng, B., Zhu, Y., Liu, Y., Bo, X., Shi, H., Hong, C., Zhang, Y., and Tang, S.
+\newblock Graph retrieval-augmented generation: A survey.
+\newblock \emph{arXiv preprint arXiv:2408.08921}, 2024.
+
+\bibitem[Prates et~al.(2019)Prates, Avelar, Lemos, Lamb, and Vardi]{prates2019learning}
+Prates, M., Avelar, P.~H., Lemos, H., Lamb, L.~C., and Vardi, M.~Y.
+\newblock Learning to solve np-complete problems: A graph neural network for decision tsp.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~33, pp.\  4731--4738, 2019.
+
+\bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal, Sastry, Askell, Mishkin, Clark, et~al.]{radford2021learning}
+Radford, A., Kim, J.~W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., et~al.
+\newblock Learning transferable visual models from natural language supervision.
+\newblock In \emph{International conference on machine learning}, pp.\  8748--8763. PMLR, 2021.
+
+\bibitem[Raffel et~al.(2020)Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li, and Liu]{raffel2020exploring}
+Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W., and Liu, P.~J.
+\newblock Exploring the limits of transfer learning with a unified text-to-text transformer.
+\newblock \emph{Journal of machine learning research}, 21\penalty0 (140):\penalty0 1--67, 2020.
+
+\bibitem[Robertson et~al.(2009)Robertson, Zaragoza, et~al.]{robertson2009probabilistic}
+Robertson, S., Zaragoza, H., et~al.
+\newblock The probabilistic relevance framework: Bm25 and beyond.
+\newblock \emph{Foundations and Trends{\textregistered} in Information Retrieval}, 3\penalty0 (4):\penalty0 333--389, 2009.
+
+\bibitem[Rombach et~al.(2022)Rombach, Blattmann, Lorenz, Esser, and Ommer]{rombach2022high}
+Rombach, R., Blattmann, A., Lorenz, D., Esser, P., and Ommer, B.
+\newblock High-resolution image synthesis with latent diffusion models.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pp.\  10684--10695, 2022.
+
+\bibitem[Schlichtkrull et~al.(2017)Schlichtkrull, Kipf, Bloem, Van Den~Berg, Titov, and Welling]{schlichtkrull2017modeling}
+Schlichtkrull, M., Kipf, T., Bloem, P., Van Den~Berg, R., Titov, I., and Welling, M.
+\newblock Modeling relational data with graph convolutional networks. arxiv.
+\newblock \emph{arXiv preprint arXiv:1703.06103}, 2017.
+
+\bibitem[Schmidgall et~al.(2024)Schmidgall, Ziaei, Harris, Reis, Jopling, and Moor]{schmidgall2024agentclinic}
+Schmidgall, S., Ziaei, R., Harris, C., Reis, E., Jopling, J., and Moor, M.
+\newblock Agentclinic: a multimodal agent benchmark to evaluate ai in simulated clinical environments.
+\newblock \emph{arXiv preprint arXiv:2405.07960}, 2024.
+
+\bibitem[Shridhar et~al.(2020)Shridhar, Yuan, C{\^o}t{\'e}, Bisk, Trischler, and Hausknecht]{shridhar2020alfworld}
+Shridhar, M., Yuan, X., C{\^o}t{\'e}, M.-A., Bisk, Y., Trischler, A., and Hausknecht, M.
+\newblock Alfworld: Aligning text and embodied environments for interactive learning.
+\newblock \emph{arXiv preprint arXiv:2010.03768}, 2020.
+
+\bibitem[Siebenborn et~al.(2022)Siebenborn, Belousov, Huang, and Peters]{siebenborn2022crucial}
+Siebenborn, M., Belousov, B., Huang, J., and Peters, J.
+\newblock How crucial is transformer in decision transformer?
+\newblock \emph{arXiv preprint arXiv:2211.14655}, 2022.
+
+\bibitem[Stuart \& Satija(2019)Stuart and Satija]{stuart2019integrative}
+Stuart, T. and Satija, R.
+\newblock Integrative single-cell analysis.
+\newblock \emph{Nature reviews genetics}, 20\penalty0 (5):\penalty0 257--272, 2019.
+
+\bibitem[Stuart et~al.(2019)Stuart, Butler, Hoffman, Hafemeister, Papalexi, Mauck, Hao, Stoeckius, Smibert, and Satija]{stuart2019comprehensive}
+Stuart, T., Butler, A., Hoffman, P., Hafemeister, C., Papalexi, E., Mauck, W.~M., Hao, Y., Stoeckius, M., Smibert, P., and Satija, R.
+\newblock Comprehensive integration of single-cell data.
+\newblock \emph{cell}, 177\penalty0 (7):\penalty0 1888--1902, 2019.
+
+\bibitem[Veli{\v{c}}kovi{\'c} et~al.(2017{\natexlab{a}})Veli{\v{c}}kovi{\'c}, Cucurull, Casanova, Romero, Lio, and Bengio]{velivckovic2017gat}
+Veli{\v{c}}kovi{\'c}, P., Cucurull, G., Casanova, A., Romero, A., Lio, P., and Bengio, Y.
+\newblock Graph attention networks.
+\newblock \emph{arXiv preprint arXiv:1710.10903}, 2017{\natexlab{a}}.
+
+\bibitem[Veli{\v{c}}kovi{\'c} et~al.(2017{\natexlab{b}})Veli{\v{c}}kovi{\'c}, Cucurull, Casanova, Romero, Lio, and Bengio]{velivckovic2017graph}
+Veli{\v{c}}kovi{\'c}, P., Cucurull, G., Casanova, A., Romero, A., Lio, P., and Bengio, Y.
+\newblock Graph attention networks.
+\newblock \emph{arXiv preprint arXiv:1710.10903}, 2017{\natexlab{b}}.
+
+\bibitem[Wan et~al.(2019)Wan, Misra, Nakashole, and McAuley]{wan-etal-2019-fine}
+Wan, M., Misra, R., Nakashole, N., and McAuley, J.
+\newblock Fine-grained spoiler detection from large-scale review corpora.
+\newblock In Korhonen, A., Traum, D., and M{\`a}rquez, L. (eds.), \emph{Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics}, pp.\  2605--2610, Florence, Italy, July 2019. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/P19-1248}.
+\newblock URL \url{https://aclanthology.org/P19-1248/}.
+
+\bibitem[Wang et~al.()Wang, Wang, Srinivasan, Ioannidis, Rangwala, and ANUBHAI]{wangbiobridge}
+Wang, Z., Wang, Z., Srinivasan, B., Ioannidis, V.~N., Rangwala, H., and ANUBHAI, R.
+\newblock Biobridge: Bridging biomedical foundation models via knowledge graphs.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}.
+
+\bibitem[Wei et~al.(2022)Wei, Wang, Schuurmans, Bosma, Xia, Chi, Le, Zhou, et~al.]{wei2022chain}
+Wei, J., Wang, X., Schuurmans, D., Bosma, M., Xia, F., Chi, E., Le, Q.~V., Zhou, D., et~al.
+\newblock Chain-of-thought prompting elicits reasoning in large language models.
+\newblock \emph{Advances in neural information processing systems}, 35:\penalty0 24824--24837, 2022.
+
+\bibitem[Wei et~al.(2019{\natexlab{a}})Wei, Wang, Nie, He, Hong, and Chua]{mmgcn}
+Wei, Y., Wang, X., Nie, L., He, X., Hong, R., and Chua, T.-S.
+\newblock Mmgcn: Multi-modal graph convolution network for personalized recommendation of micro-video.
+\newblock In \emph{Proceedings of the 27th ACM international conference on multimedia}, pp.\  1437--1445, 2019{\natexlab{a}}.
+
+\bibitem[Wei et~al.(2019{\natexlab{b}})Wei, Wang, Nie, He, Hong, and Chua]{wei2019mmgcn}
+Wei, Y., Wang, X., Nie, L., He, X., Hong, R., and Chua, T.-S.
+\newblock Mmgcn: Multi-modal graph convolution network for personalized recommendation of micro-video.
+\newblock In \emph{Proceedings of the 27th ACM international conference on multimedia}, pp.\  1437--1445, 2019{\natexlab{b}}.
+
+\bibitem[Wei et~al.(2020{\natexlab{a}})Wei, Wang, Nie, He, and Chua]{grcn}
+Wei, Y., Wang, X., Nie, L., He, X., and Chua, T.-S.
+\newblock Graph-refined convolutional network for multimedia recommendation with implicit feedback.
+\newblock In \emph{Proceedings of the 28th ACM international conference on multimedia}, pp.\  3541--3549, 2020{\natexlab{a}}.
+
+\bibitem[Wei et~al.(2020{\natexlab{b}})Wei, Wang, Nie, He, and Chua]{wei2020graph}
+Wei, Y., Wang, X., Nie, L., He, X., and Chua, T.-S.
+\newblock Graph-refined convolutional network for multimedia recommendation with implicit feedback.
+\newblock In \emph{Proceedings of the 28th ACM international conference on multimedia}, pp.\  3541--3549, 2020{\natexlab{b}}.
+
+\bibitem[Wu et~al.(2019)Wu, Souza, Zhang, Fifty, Yu, and Weinberger]{wu2019simplifying}
+Wu, F., Souza, A., Zhang, T., Fifty, C., Yu, T., and Weinberger, K.
+\newblock Simplifying graph convolutional networks.
+\newblock In \emph{International conference on machine learning}, pp.\  6861--6871. PMLR, 2019.
+
+\bibitem[Wu et~al.(2024{\natexlab{a}})Wu, Yin, Feng, He, Li, Hao, and Long]{wu2024ivideogpt}
+Wu, J., Yin, S., Feng, N., He, X., Li, D., Hao, J., and Long, M.
+\newblock ivideogpt: Interactive videogpts are scalable world models.
+\newblock \emph{arXiv preprint arXiv:2405.15223}, 2024{\natexlab{a}}.
+
+\bibitem[Wu et~al.(2022)Wu, Sun, Zhang, Xie, and Cui]{wu2022graph}
+Wu, S., Sun, F., Zhang, W., Xie, X., and Cui, B.
+\newblock Graph neural networks in recommender systems: a survey.
+\newblock \emph{ACM Computing Surveys}, 55\penalty0 (5):\penalty0 1--37, 2022.
+
+\bibitem[Wu et~al.(2020)Wu, Lian, Xu, Wu, and Chen]{wu2020social}
+Wu, Y., Lian, D., Xu, Y., Wu, L., and Chen, E.
+\newblock Graph convolutional networks with markov random field reasoning for social spammer detection.
+\newblock In \emph{Proceedings of the AAAI conference on artificial intelligence}, volume~34, pp.\  1054--1061, 2020.
+
+\bibitem[Wu et~al.(2024{\natexlab{b}})Wu, Fan, Min, Prabhumoye, McAleer, Bisk, Salakhutdinov, Li, and Mitchell]{wu2024agentkit}
+Wu, Y., Fan, Y., Min, S.~Y., Prabhumoye, S., McAleer, S., Bisk, Y., Salakhutdinov, R., Li, Y., and Mitchell, T.
+\newblock Agentkit: Flow engineering with graphs, not coding.
+\newblock \emph{arXiv preprint arXiv:2404.11483}, 2024{\natexlab{b}}.
+
+\bibitem[Wu et~al.(2018)Wu, Ramsundar, Feinberg, Gomes, Geniesse, Pappu, Leswing, and Pande]{wu2018moleculenet}
+Wu, Z., Ramsundar, B., Feinberg, E.~N., Gomes, J., Geniesse, C., Pappu, A.~S., Leswing, K., and Pande, V.
+\newblock Moleculenet: a benchmark for molecular machine learning.
+\newblock \emph{Chemical science}, 9\penalty0 (2):\penalty0 513--530, 2018.
+
+\bibitem[Yang et~al.(2021)Yang, Liu, Dou, Ma, and Yu]{yang2021consisrec}
+Yang, L., Liu, Z., Dou, Y., Ma, J., and Yu, P.~S.
+\newblock Consisrec: Enhancing gnn for social recommendation via consistent neighbor aggregation.
+\newblock In \emph{Proceedings of the 44th international ACM SIGIR conference on Research and development in information retrieval}, pp.\  2141--2145, 2021.
+
+\bibitem[Yang et~al.(2024)Yang, Zhou, Li, Tao, Li, Shen, He, Jiang, and Shi]{yang2024embodied}
+Yang, Y., Zhou, T., Li, K., Tao, D., Li, L., Shen, L., He, X., Jiang, J., and Shi, Y.
+\newblock Embodied multi-modal agent trained by an llm from a parallel textworld.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  26275--26285, 2024.
+
+\bibitem[Yao et~al.(2024)Yao, Yu, Zhao, Shafran, Griffiths, Cao, and Narasimhan]{yao2024tree}
+Yao, S., Yu, D., Zhao, J., Shafran, I., Griffiths, T., Cao, Y., and Narasimhan, K.
+\newblock Tree of thoughts: Deliberate problem solving with large language models.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36, 2024.
+
+\bibitem[Ying et~al.(2018)Ying, He, Chen, Eksombatchai, Hamilton, and Leskovec]{ying2018graph}
+Ying, R., He, R., Chen, K., Eksombatchai, P., Hamilton, W.~L., and Leskovec, J.
+\newblock Graph convolutional neural networks for web-scale recommender systems.
+\newblock \emph{ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)}, 2018.
+
+\bibitem[You et~al.(2018)You, Liu, Ying, Pande, and Leskovec]{you2018graph}
+You, J., Liu, B., Ying, R., Pande, V., and Leskovec, J.
+\newblock Graph convolutional policy network for goal-directed molecular graph generation.
+\newblock \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2018.
+
+\bibitem[You et~al.(2022)You, Du, and Leskovec]{you2022roland}
+You, J., Du, T., and Leskovec, J.
+\newblock Roland: graph learning framework for dynamic graphs.
+\newblock In \emph{Proceedings of the 28th ACM SIGKDD conference on knowledge discovery and data mining}, pp.\  2358--2366, 2022.
+
+\bibitem[Zhang et~al.(2021)Zhang, Yang, and Stadie]{zhang2021world}
+Zhang, L., Yang, G., and Stadie, B.~C.
+\newblock World model as a graph: Learning latent landmarks for planning.
+\newblock In \emph{International conference on machine learning}, pp.\  12611--12620. PMLR, 2021.
+
+\bibitem[Zhang et~al.(2023{\natexlab{a}})Zhang, Rao, and Agrawala]{zhang2023adding}
+Zhang, L., Rao, A., and Agrawala, M.
+\newblock Adding conditional control to text-to-image diffusion models.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}, pp.\  3836--3847, 2023{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2023{\natexlab{b}})Zhang, Dong, Li, Zhang, Sun, Wang, Li, Hu, Zhang, Wu, et~al.]{zhang2023instruction}
+Zhang, S., Dong, L., Li, X., Zhang, S., Sun, X., Wang, S., Li, J., Hu, R., Zhang, T., Wu, F., et~al.
+\newblock Instruction tuning for large language models: A survey.
+\newblock \emph{arXiv preprint arXiv:2308.10792}, 2023{\natexlab{b}}.
+
+\bibitem[Zhang et~al.(2019)Zhang, Kishore, Wu, Weinberger, and Artzi]{zhang2019bertscore}
+Zhang, T., Kishore, V., Wu, F., Weinberger, K.~Q., and Artzi, Y.
+\newblock Bertscore: Evaluating text generation with bert.
+\newblock \emph{arXiv preprint arXiv:1904.09675}, 2019.
+
+\bibitem[Zhao et~al.(2024)Zhao, Zhang, Yu, Wang, Geng, Fu, Yang, Zhang, and Cui]{zhao2024retrieval}
+Zhao, P., Zhang, H., Yu, Q., Wang, Z., Geng, Y., Fu, F., Yang, L., Zhang, W., and Cui, B.
+\newblock Retrieval-augmented generation for ai-generated content: A survey.
+\newblock \emph{arXiv preprint arXiv:2402.19473}, 2024.
+
+\bibitem[Zheng et~al.(2022)Zheng, Zhang, and Grover]{zheng2022online}
+Zheng, Q., Zhang, A., and Grover, A.
+\newblock Online decision transformer.
+\newblock In \emph{international conference on machine learning}, pp.\  27042--27059. PMLR, 2022.
+
+\bibitem[Zhou(2023)]{zhou2023mmrec}
+Zhou, X.
+\newblock Mmrec: Simplifying multimodal recommendation.
+\newblock In \emph{Proceedings of the 5th ACM International Conference on Multimedia in Asia Workshops}, pp.\  1--2, 2023.
+
+\bibitem[Zhou \& Shen(2023)Zhou and Shen]{zhou2023tale}
+Zhou, X. and Shen, Z.
+\newblock A tale of two graphs: Freezing and denoising graph structures for multimodal recommendation.
+\newblock In \emph{Proceedings of the 31st ACM International Conference on Multimedia}, pp.\  935--943, 2023.
+
+\bibitem[Zhu et~al.(2022)Zhu, Li, and Elhoseiny]{zhu2022value}
+Zhu, D., Li, L.~E., and Elhoseiny, M.
+\newblock Value memory graph: A graph-structured world model for offline reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2206.04384}, 2022.
+
+\bibitem[Zhuge et~al.(2024)Zhuge, Wang, Kirsch, Faccio, Khizbullin, and Schmidhuber]{zhuge2024language}
+Zhuge, M., Wang, W., Kirsch, L., Faccio, F., Khizbullin, D., and Schmidhuber, J.
+\newblock Language agents as optimizable graphs.
+\newblock \emph{arXiv preprint arXiv:2402.16823}, 2024.
+
+\end{thebibliography}

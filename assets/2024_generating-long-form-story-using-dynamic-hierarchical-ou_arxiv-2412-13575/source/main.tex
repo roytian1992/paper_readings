@@ -1,0 +1,98 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\documentclass[11pt]{article}
+\pdfoutput=1
+
+\usepackage{makecell}
+
+\usepackage[]{acl}
+
+
+\usepackage{times}
+\usepackage{latexsym}
+
+
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+\usepackage[namelimits]{amsmath} 
+
+\usepackage{microtype}
+
+
+\usepackage{subcaption}
+\usepackage{inconsolata}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{colortbl}
+\definecolor{mycyan}{cmyk}{.2,0,0,0}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{booktabs} 
+\usepackage{longtable}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{footnote}  
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\fixevan}[1]{\footnote{\textcolor{red}{\textbf{FIX-EVAN!!!} #1}}}
+\newcommand{\warn}[1]{\textcolor{red}{#1}}
+\newcommand{\OURMEYHOD}{\textsc{OURMEYHOD}}
+\newcommand{\eat}[1]{}
+\def\hjw{\textcolor{black}}
+\def\wyf{\textcolor{black}}
+\def\wqyr{\textcolor{black}}
+\newcommand{\methodname}{DOME}
+
+\title{Generating Long-form Story Using Dynamic Hierarchical \\Outlining with Memory-Enhancement}
+
+\author{
+    Qianyue Wang \textsuperscript{\rm 1 \rm 2}\footnotemark[1]~
+    Jinwu Hu \textsuperscript{\rm 1 \rm 2}\footnotemark[1]~
+    Zhengping Li \textsuperscript{\rm 1}~
+    Yufeng Wang \textsuperscript{\rm 1 \rm 3}\\
+    \textbf{Daiyuan Li} \textsuperscript{\rm 1}~
+    \textbf{Yu Hu} \textsuperscript{\rm 4}~ 
+    \textbf{Mingkui Tan} \textsuperscript{\rm 1} \footnotemark[2] ~\\ 
+    \textsuperscript{\scriptsize{\rm 1}}\small{South China University of Technology,}~
+    \textsuperscript{\rm 2}\small{Pazhou Laboratory,}~
+    \textsuperscript{\rm 3}\small{Peng Cheng Laboratory,}~ \\
+    \textsuperscript{\rm 4}\small{Hong Kong Polytechnic University}\\
+}
+
+\begin{document}
+\maketitle
+\footnotetext[1]{Equal contribution: 202420145083@scut.mail.edu.cn, fhujinwu@gmail.com} 
+\footnotetext[2]{Corresponding author: mingkuitan@scut.edu.cn}
+
+\begin{abstract}
+\hjw{Long-form story generation task aims to produce coherent and sufficiently lengthy text, essential for applications such as novel writing and interactive storytelling. \wqyr{However, existing methods, including LLMs, rely on rigid outlines or lack macro-level planning, making it difficult to achieve both contextual consistency and coherent plot development in long-form story generation.} To address \wqyr{this} issues, we propose \textbf{D}ynamic Hierarchical \textbf{O}utlining with \textbf{M}emory-\textbf{E}nhancement long-form story generation method, named \textbf{DOME}, to generate the long-form story with coherent content and plot. Specifically, the Dynamic Hierarchical Outline (DHO) mechanism incorporates the novel writing theory into outline planning and fuses the plan and writing stages together, improving the coherence of the plot by ensuring the plot completeness and \wqyr{adapting to the uncertainty during story generation. }%fluency of story development.
+A Memory-Enhancement Module (MEM) based on temporal knowledge graphs is introduced to store and access \wqyr{the} generated content, reducing contextual conflicts and improving story coherence. Finally, we propose a Temporal Conflict Analyzer leveraging temporal knowledge graphs to \wqyr{automatically} evaluate the contextual consistency of long-form story. 
+Experiments demonstrate that DOME significantly improves the fluency, coherence, and overall quality of generated long stories compared to state-of-the-art methods.}
+\end{abstract}
+
+\input{section/1_Introduction}
+
+\input{section/2_RelatedWork}
+
+\input{section/Problem_definition}
+
+\input{section/3_Method}
+
+\input{section/4_Experiment}
+
+\input{section/5_Analysis}
+
+
+\newpage
+
+\input{section/6_Limitation}
+
+\section*{Ethics Statement}
+\hjw{This work fully complies with the \href{https://www.aclweb.org/portal/content/acl-code-ethics}{ACL Ethics Policy}. We declare that there are no ethical issues in this paper, to the best of our knowledge.}
+
+\bibliography{mainbib}
+\newpage
+\input{section/Appendix}
+
+\end{document}

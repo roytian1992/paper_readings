@@ -1,0 +1,68 @@
+
+
+\begin{table*}[h]
+    \footnotesize
+    \centering
+    \setlength{\tabcolsep}{5.5pt}
+    \caption{\textbf{More comparison results on ALFWorld \textit{without} in-context demonstrations.}}
+    \label{tab:more_exp_alfworld}
+
+    \begin{tabular}{>{\centering\arraybackslash}m{0.5cm} l cc cc c}
+        \toprule
+        \multirow{3}{*}{\textbf{Model}} &
+        \multirow{3}{*}{\textbf{Methods}} &
+        \multicolumn{5}{c}{\textbf{Embodied Interactive Tasks}} \\
+        \cmidrule(lr){3-7}
+        & &
+        \multicolumn{2}{c}{\textbf{ALF-Seen}} &
+        \multicolumn{2}{c}{\textbf{ALF-Unseen}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-7}
+        & &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} \\
+        \midrule
+
+        % ===================== Base model block 1 =====================
+        \multirow{12}{*}{\rotatebox[origin=c]{90}{\shortstack{\textbf{LLaMA3.3}\\\textbf{70B-Instruct}}}} &
+        No-Memory   & 17.14 & 43.74 & 20.15 & 42.99 & 18.65 \\
+        & CoN   & 40.71 & 33.44 & 30.60 & 37.66 & 35.66 \\
+        & ReadAgent   & 32.86 & 37.09 & 38.06 & 34.78 & 35.46 \\
+        & MemoryBank   & 25.00 & 39.96 & 32.84 & 36.54 & 28.92 \\
+        & A-MEM   & 24.29 & 40.51 & 28.36 & 38.83 & 26.33 \\
+        & Mem0   & 32.86 & 36.47 & 32.09 & 37.32 & 32.48 \\
+        & LangMem   & 37.86 & 34.39 & 35.07 & 35.70 & 36.47 \\
+        & MemoryOS   & 15.71 & 43.74 & 14.18 & 44.54 & 14.95 \\
+        & LightMem   & 45.71 & 31.76 & 46.27 & 30.66 & 45.99 \\
+        & AWM   & 35.71 & 35.87 & 39.55 & 34.93 & 37.63 \\
+        & Expel   & 42.14 & 34.61 & 43.28 & 33.25 & 42.71 \\
+        & \cellcolor{hl-llama}\textbf{MemSkill} &
+        \cellcolor{hl-llama}\textbf{55.71} & \cellcolor{hl-llama}\textbf{26.87} &
+        \cellcolor{hl-llama}\textbf{59.70} & \cellcolor{hl-llama}\textbf{25.88} &
+        \cellcolor{hl-llama}\textbf{57.71} \\
+        \midrule
+
+        % ===================== Base model block 2 =====================
+        \multirow{12}{*}{\rotatebox[origin=c]{90}{\shortstack{$^\blacktriangle$\textbf{Qwen3-Next}\\\textbf{80B-A3B-Instruct}}}} &
+        No-Memory   & 18.57 & 42.48 & 26.12 & 39.35 & 22.35 \\
+        & CoN   & 57.86 & 25.81 & 53.73 & 28.40 & 55.80 \\
+        & ReadAgent   & 53.57 & 27.88 & 54.48 & 27.41 & 54.03 \\
+        & MemoryBank   & 37.86 & 35.15 & 38.06 & 34.99 & 37.96 \\
+        & A-MEM   & 25.00 & 40.28 & 29.10 & 39.04 & 27.05 \\
+        & Mem0   & 38.57 & 33.64 & 41.04 & 33.16 & 39.81 \\
+        & LangMem   & 37.14 & 34.42 & 31.34 & 37.17 & 34.24 \\
+        & MemoryOS   & 19.29 & 42.43 & 18.66 & 42.95 & 18.98 \\
+        & LightMem   & 30.71 & 36.81 & 26.87 & 38.96 & 28.79 \\
+        & AWM   & 47.86 & 31.24 & 47.01 & 31.69 & 47.44 \\
+        & Expel   & 54.29 & 28.90 & 55.22 & 29.57 & 54.76 \\
+        & \cellcolor{hl-qwen}\textbf{MemSkill} &
+        \cellcolor{hl-qwen}\textbf{65.71} & \cellcolor{hl-qwen}\textbf{22.49} &
+        \cellcolor{hl-qwen}\textbf{61.94} & \cellcolor{hl-qwen}\textbf{24.59} &
+        \cellcolor{hl-qwen}\textbf{63.83} \\
+        \bottomrule
+
+        \multicolumn{7}{l}{\small \textbf{Bold} indicates the best score within each base model block.} \\
+        \multicolumn{7}{l}{\small $^\blacktriangle$ indicates no training using this base model or dataset.} \\
+    \end{tabular}
+\end{table*}

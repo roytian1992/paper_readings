@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\PassOptionsToPackage{numbers, compress}{natbib}
+\usepackage[preprint]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+\newcommand{\ours}{\textsc{EvolveMem}}
+\newcommand{\recall}{\textsc{Recall}}
+\newcommand{\promote}{\textsc{Promote}}
+
+\title{\ours{}: Self-Evolving Memory Architecture via AutoResearch for LLM Agents}
+
+\author{
+  Jiaqi Liu$^{1}$ \quad
+  Xinyu Ye$^{1}$\thanks{Corresponding Authors} \quad
+  Peng Xia$^{1}$ \quad
+  Zeyu Zheng$^{2}$ \\[2pt]
+  \textbf{Cihang Xie}$^{3}$ \quad
+  \textbf{Mingyu Ding}$^{1}$ \quad
+  \textbf{Huaxiu Yao}$^{1}$\footnotemark[1] \\[4pt]
+  $^{1}$UNC-Chapel Hill \quad
+  $^{2}$UC Berkeley \quad
+  $^{3}$UCSC
+}
+
+\begin{document}
+
+\maketitle
+
+\input{section/abstract}
+
+\input{section/intro}
+\input{section/related_work}
+\input{section/method}
+\input{section/experiments}
+\input{section/conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{main}
+
+\appendix
+\input{section/appendix}
+
+
+
+\end{document}

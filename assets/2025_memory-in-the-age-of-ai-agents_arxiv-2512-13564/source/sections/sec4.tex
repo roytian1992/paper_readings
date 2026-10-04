@@ -1,0 +1,682 @@
+\section{Functions: Why Agents Need Memory?}
+\label{sec:why-memory}
+The transition from large language models as general-purpose, stateless text processors to autonomous, goal-directed agents is not merely an incremental step but a fundamental paradigm shift. This shift exposes the critical limitation of statelessness. By definition, an agent must persist, adapt, and interact coherently over time. Achieving this relies not merely on a large context window but fundamentally on the capacity for \textbf{memory}. This section addresses the \textit{functions}, or \textit{fundamental purpose}, of agent memory, prioritizing the question of \textit{why it is essential} over \textit{how it is implemented}. We posit that agent memory is not a monolithic component but a set of distinct functional capabilities, each serving a unique objective in enabling persistent, intelligent behavior.
+
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{img/sec4-all-new.pdf}
+    \caption{
+    The functional taxonomy of agent memory. We organize memory capabilities based on their \textit{functions} (purpose) into three primary pillars spanning two temporal domains: (1) \textbf{Factual Memory} serves as a persistent declarative knowledge base to ensure interaction \textit{consistency}, \textit{coherence}, and \textit{adaptability}; (2) \textbf{Experiential Memory} encapsulates procedural knowledge to enable \textit{continual learning} and \textit{self-evolution} across episodes; and (3) \textbf{Working Memory} provides mechanisms for the active management of transient context.}
+    \label{fig:sec4-all}
+\end{figure}
+
+To provide a systematic analysis, this section organizes the \textit{why} of memory around a functional taxonomy that maps directly to an agent's core requirements. At the highest level, we distinguish between two temporal categories: \textbf{long-term memory}, which serves as the persistent, cross-session store for accumulated knowledge, and \textbf{short-term memory}, which functions as the transient, in-session workspace for active reasoning. 
+This high-level temporal split is further resolved into three primary functional pillars, which form the structure of our analysis. An overview of this taxonomy is provided in \autoref{fig:sec4-all}.
+
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Primary Memory Functions}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=10pt,
+  left=5pt,   
+  right=5pt,
+]
+\begin{enumerate}
+    \item \textbf{Factual Memory} (\Cref{ssec:factual_memory}): The agent's declarative knowledge base, established to ensure consistency, coherence, and adaptability by recalling explicit facts, user preferences, and environmental states. 
+    This system answers the question: ``What does the agent know?''
+    \item \textbf{Experiential Memory} (\Cref{ssec:experiential_mem}): The agent's procedural and strategic knowledge, accumulated to enable continual learning and self-evolution by abstracting from past trajectories, failures, and successes. 
+    This system answers: ``How does the agent improve?''
+    \item \textbf{Working Memory} (\Cref{ssec:working_mem}): The agent's capacity-limited, dynamically controlled scratchpad for active context management during a single task or session. This system answers: ``What is the agent thinking about now?''
+\end{enumerate}
+
+\end{tcolorbox}
+
+
+These three memory systems are not isolated but form a dynamic, interconnected architecture that defines the agent's \textbf{cognitive loop}. The cycle begins with \textit{encoding}, in which the outcomes of the agent's interactions, such as newly acquired facts or the results of a failed plan, are consolidated into long-term memory through summarization, reflection, or abstraction. \textit{Processing} subsequently occurs within working memory, which functions as the active workspace for immediate inference. To support this reasoning, the system relies on \textit{retrieval} to populate the workspace with relevant context and skills drawn from the persistent stores of factual and experiential memory. 
+This encoding-processing-retrieval sequence constitutes the central architectural pattern enabling agents to learn from the past simultaneously and reason in the present.
+
+
+
+\subsection{Factual Memory}
+\label{ssec:factual_memory}
+
+Factual memory refers to the capacity of an agent to store and retrieve explicit, declarative \textbf{facts} about past events, user-specific information, and the state of the external environment.
+This information encompasses a wide range of content, including dialogue history, user preferences, and relevant properties of the external world.
+By allowing the agent to exploit historical information when interpreting current inputs, factual memory serves as the cornerstone for context awareness, personalized responses, and extended task planning.
+
+To understand the structural composition of agent memory, we draw upon the cognitive science framework of \textit{declarative memory}~\citep{riedelDeclarativeMemory2015}.
+In neuroscience, declarative memory denotes long-term storage for information that can be consciously accessed and is commonly analyzed in terms of two major components: \textit{episodic} and \textit{semantic} memory~\citep{squireMemorySystemsBrain2004}.
+\textit{Episodic memory} stores personally experienced events associated with specific temporal and spatial contexts---the \textit{what}, \textit{where}, and \textit{when} of an episode~\citep{tulvingEpisodicSemanticMemory1972,tulvingEpisodicMemoryMind2002}. Its central characteristic is the capacity to mentally re-experience past events.
+\textit{Semantic memory} retains general factual knowledge, concepts, and word meanings independent of the specific occasion on which they were acquired~\citep{squireMemorySystemsBrain2004}.
+While supported by a unitary declarative system in the human brain, these components represent distinct levels of abstraction.
+
+In agent systems, this biological distinction is operationalized not as a rigid dichotomy but as a processing \textit{continuum}.
+Systems typically initiate this process by logging concrete interaction histories as episodic traces, such as dialogue turns, user actions, and environment states~\citep{zhong2023memorybankenhancinglargelanguage,wang_recmind_2024,Chhikara2025mem0}.
+Subsequent processing stages apply summarization~\citep{wang2025recursivelysummarizingenableslongterm,chen2025compress}, reflection~\citep{DBLP:conf/acl/rmm2025,park2023generativeagentsinteractivesimulacra,wang2025recursivelysummarizingenableslongterm}, entity extraction~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm}, and fact induction~\citep{Rasmussen2025Zep}.
+The resulting abstractions are stored in structures such as vector databases~\citep{zhong2023memorybankenhancinglargelanguage}, key-value stores, or knowledge graphs~\citep{Rasmussen2025Zep,sun2024knowledgegraphtuningrealtime}, governed by procedures for deduplication and consistency checking.
+Through this sequence, raw event streams are gradually transformed into reusable semantic fact bases.
+
+% Functional Goals
+Functionally, this architecture ensures that the agent exhibits three fundamental properties during interaction: \textbf{consistency}, \textbf{coherence}, and \textbf{adaptability}.
+\begin{itemize}
+    \item \textbf{Consistency} implies stable behavior and self-presentation over time. By maintaining a persistent internal state regarding user-specific facts and its own commitments, the agent avoids contradictions and arbitrary changes of stance.
+    \item \textbf{Coherence} is reflected in robust context awareness. The agent can recall and integrate relevant interaction history, refer to past user inputs, and preserve topical continuity, ensuring responses form a logically connected dialogue rather than isolated utterances.
+    \item \textbf{Adaptability} demonstrates the ability to personalize behavior based on stored user profiles and historical feedback. Consequently, response style and decision-making progressively align with the user's specific needs and characteristics.
+\end{itemize}
+
+For exposition, we further organize factual memory according to the primary entity it refers to. This entity-centric taxonomy, together with representative methods and their technical design choices, is systematically summarized in \autoref{tab:factual_mem}.
+This perspective highlights two central application domains:
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Two Types of Factual Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize}
+    \item \textbf{User factual memory} (\Cref{user_factual_mem}) denotes facts that sustain the consistency of interactions between humans and agents, including identities, stable preferences, task constraints, and historical commitments.
+    \item \textbf{Environment factual memory} (\Cref{env_factual_mem}) denotes facts that sustain consistency with respect to the external world, such as document states, resource availability, and the capabilities of other agents.
+\end{itemize}
+\end{tcolorbox}
+
+% factual memory table
+{
+% \begin{table*}[!t]
+% \centering
+\label{tab:factual_mem}
+\footnotesize
+
+% \resizebox{\textwidth}{!}{
+
+% \begin{tabular}{p{6.5cm}|llp{5cm}l}
+\begin{xltabular}{\textwidth}{p{5cm}|llXl}
+\caption{
+Taxonomy of factual memory methods. We categorize existing works based on the primary target entity: \textbf{User Factual Memory} focuses on sustaining interaction consistency, while \textbf{Environment Factual Memory} ensures consistency with the external world. Methods are compared across three technical dimensions: (1) \textbf{Carrier} (\Cref{sec:what-memory}) identifies the storage medium, (2) \textbf{Structure} follows the taxonomy of token-level memory (\Cref{ssec:token}), and (3) \textbf{Optimization} denotes the integration strategy, where \textit{PE} encompasses prompt engineering and inference-time techniques without parameter updates, distinct from gradient-based methods like \textit{SFT} and \textit{RL}.
+} \\
+\toprule
+{Method} & {Carrier} & {Structure} & {Task} & {Optimization} \\
+\midrule
+\endfirsthead
+
+\caption[]{Taxonomy of factual memory methods. (continued)}\\
+\toprule
+{Method} & {Carrier} & {Form} & {Task}  & {Optimization}  \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{Continued on next page}\\
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+
+\multicolumn{5}{c}{\textit{I. User factual Memory}}\\
+\midrule
+\multicolumn{5}{l}{\textbf{(a) Dialogue Coherence}}\\
+MemGPT~\citep{packer2023memgpt} & Token-level & 1D & Long-term dialogue & PE \\
+TiM~\citep{DBLP:journals/corr/abs-2311-08719}  & Token-level & 2D & QA & PE \\
+MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage}  & Token-level & 1D & Emotional Companion & PE \\
+AI Persona~\citep{wang2024aipersona}   & Token-level & 1D & Emotional Companion & PE \\
+Encode-Store-Retrieve~\citep{shenEncodeStoreRetrieveAugmentingHuman2024}  & Token-level & 1D & Multimodal QA & PE \\
+Livia~\citep{DBLP:journals/corr/abs-2509-05298}   & Token-level & 1D & Emotional Companion & PE \\
+mem0~\citep{Chhikara2025mem0}  & Token-level & 1D & Long-term dialogue, QA & PE \\
+RMM~\citep{DBLP:conf/acl/rmm2025} & Token-level & 2D & Personalization & PE, RL \\
+D-SMART~\citep{Lei2025DSMART}& Token-level & 2D & Reasoning & PE \\
+Comedy~\citep{chen2025compress} & Token-level & 1D & Summary, Compression, QA & PE \\
+MEMENTO~\citep{DBLP:journals/corr/abs-2505-16348}  & Token-level & 1D & Embodied, Personalization & PE \\
+O-Mem~\citep{wang2025omem}  & Token-level & 3D & Personalized Dialogue & PE \\
+DAM-LLM~\citep{lu2025dynamicaffectivememorymanagement} & Token-level & 1D & Emotional Companion & PE \\
+MemInsight~\citep{salama2025meminsightautonomousmemoryaugmentation} & Token-level & 1D & Personalized Dialogue & PE \\
+EMem~\citep{zhou2025ememsimplestrongbaselinelongterm} & Token-level & 1D & Personalized Dialogue & PE \\
+RGMem~\citep{tian2025RGMem} & Token-level & 1D & Long-conv QA & PE \\
+Memoria~\citep{sarin2025memoriascalableagenticmemory} & Token-level & 1D  & Long-conv QA & PE \\
+MemVerse~\citep{liu2025memversemultimodalmemorylifelong} & \color{green}\ding{52} & Fact & Multimodal hierarchical knowledge graphs. & Reasoning, QA \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{(b) Goal Consistency}}\\
+RecurrentGPT~\citep{zhou2023recurrentgpt}  & Token-level & 1D & Long-Context Generation, Personalized Interactive Fiction & PE \\
+Memolet~\citep{yenMemoletReifyingReuse2024} & Token-level & 2D & QA, Document Reasoning & PE \\
+MemGuide~\citep{duMemGuideIntentDrivenMemory2025}  & Token-level & 1D & Long-conv QA & PE, SFT \\
+SGMem~\citep{Wu2025SGMemSG} & Token-level& 2D & Long-context & PE\\
+A-Mem~\citep{xuAMEMAgenticMemory2025}  & Token-level & 2D & QA, Reasoning & PE \\
+M3-agent~\citep{long2025seeing}  & Token-level & 2D & Multimodal QA & PE, SFT \\
+WorldMM~\citep{yeo2025worldmmdynamicmultimodalmemory} & Token-level & 1D & Multimodal QA & PE \\
+EverMemOS~\citep{hu2026evermemosselforganizingmemoryoperating} & Token-level & 1D & Long-conv QA & PE \\
+
+
+\midrule
+\multicolumn{5}{c}{\textit{II. Environment factual Memory}}\\
+\midrule
+
+\multicolumn{5}{l}{\textbf{(a) Knowledge Persistence}}\\
+MemGPT~\citep{packer2023memgpt} & Token-level & 1D & Document QA & PE \\
+CALYPSO~\citep{zhuCALYPSOLLMsDungeon2023} & Token-level & 1D & Tabletop Gaming & PE \\ 
+AriGraph~\citep{anokhin2024arigraph} & Token-level & 3D & Game, Multi-op QA & PE \\
+HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} & Token-level & 3D & QA & PE \\
+WISE~\citep{DBLP:conf/nips/0104L0XY0X0C24}&Parametric&/&Document Reasoning, QA&SFT\\
+MemoryLLM~\citep{Wang2024MEMORYLLM} & Parametric &/&Document Reasoning&SFT\\
+Memoria~\citep{park2024memoria} & latent & / & Language Modeling & PE \\
+Zep~\citep{Rasmussen2025Zep} & Token-level & 3D & Document analysis & PE \\
+MemTree~\citep{rezazadehIsolatedConversationsHierarchical2025} & Token-level & 2D & Document Reasoning, Dialogue & PE \\
+LMLM~\citep{zhao2025pretraininglimitedmemorylanguage}  & Token-level & 1D & QA & SFT \\
+M+ ~\citep{DBLP:journals/corr/abs-2502-00592}& Latent&/&Document Reasoning, QA&SFT\\
+CAM~\citep{liCAMConstructivistView2025} & Token-level & 3D & Multi-hop QA & SFT, RFT \\
+MemAct~\citep{DBLP:journals/corr/abs-2510-12635} & Token-level & 1D & Multi-obj QA & RL \\
+Mem-$\alpha$~\citep{DBLP:journals/corr/abs-2509-25911}&Token-Level&1D&Document Reasoning&RL\\
+WebWeaver~\citep{liWebWeaverStructuringWebScale2025} & Token-level & 1D & Deep Research & SFT \\
+MemLoRA~\citep{bini2025memloradistillingexpertadapters} & Parametric & / & QA & SFT\\
+Memory Decoder~\citep{cao2025memorydecoder} & Parametric & / & QA, Language Modeling & SFT\\
+
+
+\midrule
+\multicolumn{5}{l}{\textbf{(b) Shared Access}}\\
+GameGPT~\citep{chenGameGPTMultiagentCollaborative2023} & Token-level & 1D & Game Development & PE \\
+Generative Agent~\citep{park2023generativeagentsinteractivesimulacra} & Token-level & 2D & Social Simulation & PE \\
+S³~\citep{gaoS^mbox3SocialnetworkSimulation2023}  & Token-level & 1D & Social Simulation & PE \\
+Memory Sharing~\citep{DBLP:journals/corr/abs-2404-09982}  & Token-level & 1D & Document Reasoning & PE \\
+MetaGPT~\citep{hong2023metagpt} & Token-level & 1D & Software Development & PE \\
+G-Memory~\citep{zhang2025g}  & Token-level & 3D & QA & PE \\
+OASIS ~\citep{yang2025oasisopenagentsocial}&Token-level, Parametric&1D& Social Simulation& PE \\
+\bottomrule
+% \end{tabular}
+\end{xltabular}
+ % }
+% \end{table*}
+
+}
+\subsubsection{User factual memory}
+\label{user_factual_mem}
+
+
+User factual memory persists verifiable facts about a specific user across sessions and tasks, including identity, preferences, routines, historical commitments, and salient events.
+
+ Its primary function is to prevent characteristic failure modes of stateless interaction, such as coreference drift, repeated elicitation, and contradictory responses, thereby reducing interruptions to long-horizon goals~\citep{DBLP:conf/acl/rmm2025,zhong2023memorybankenhancinglargelanguage}.
+Engineering practice typically comprises selection and compression, structured organization, retrieval and reuse, and consistency governance, aiming to sustain \textit{long-range dialogic and behavioral coherence} under bounded access cost.
+
+\paragraph{Dialogue Coherence} Dialogue coherence requires an agent to preserve conversational context, user-specific facts, and a stable persona over extended periods. This ensures that later turns remain sensitive to earlier disclosures and affective cues, rather than degrading into repeated clarifications or inconsistent replies. To achieve this, modern systems implement user factual memory through two complementary strategies: \textit{heuristic selection} and \textit{semantic abstraction}.
+
+To navigate finite context windows efficiently, a primary strategy is to \textit{selectively} retain and rank interaction histories.
+Rather than retaining all raw logs, systems~\citep{DBLP:journals/corr/abs-2509-05298,zhong2023memorybankenhancinglargelanguage,park2023generativeagentsinteractivesimulacra,Lei2025DSMART} maintain structured stores of past interactions, ranking entries by metrics such as \textit{relevance}, \textit{recency}, \textit{importance}, or \textit{distinctiveness}.
+By filtering retrieval based on these scores, high-value items are preserved and periodically condensed into higher-level summaries, conditioning subsequent responses to maintain continuity without overwhelming the agent's working memory.
+
+Beyond mere selection, advanced frameworks emphasize the \textit{transformation and abstraction} of raw dialogue fragments into higher-level semantic representations.
+Approaches such as Think in Memory~\citep{DBLP:journals/corr/abs-2311-08719} and Reflective Memory Management~\citep{DBLP:conf/acl/rmm2025} convert raw interaction traces into \textit{thought} representations or reflections via iterative update operations. This allows the agent to query a stable semantic memory, keeping later replies topically consistent and less repetitive. Similarly, COMEDY~\citep{chen2025compress} employs a single language model to generate, compress, and reuse memory while updating compact user profiles. 
+These methods effectively stabilize \textit{persona} and \textit{preference} expression over long conversational histories by decoupling memory storage from the raw token surface form.
+
+
+
+\paragraph{Goal Consistency}
+Goal consistency requires an agent to maintain and refine an explicit task representation over time. This ensures that clarifying questions, information requests, and actions remain strictly aligned with the primary objective, minimizing intent drift.
+
+To mitigate such drift, systems utilize factual memory to dynamically track and update the task state.
+Approaches like RecurrentGPT~\citep{zhou2023recurrentgpt}, Memolet~\citep{yenMemoletReifyingReuse2024}, and MemGuide~\citep{duMemGuideIntentDrivenMemory2025} retain confirmed information while highlighting unresolved elements. By guiding retrieval based on task intent, these methods help agents satisfy missing constraints and maintain focus across sessions.
+
+For complex, long-horizon tasks, memory forms are often \textit{structured} to facilitate localized retrieval centered on the active goal~\citep{Wu2025SGMemSG}.
+For instance, A-Mem~\citep{xuAMEMAgenticMemory2025} organizes memories as an interconnected graph of linked notes, while H-Mem~\citep{limbacherHMemHarnessingSynaptic2020} employs associative mechanisms to recall prerequisite facts when subsequent steps depend on prior observations.
+
+In embodied scenarios, factual memory grounds agent behavior in user-specific habits and environmental context.
+Systems such as M3-Agent~\citep{long2025seeing} and MEMENTO~\citep{DBLP:journals/corr/abs-2505-16348} persist data on household members, object locations, and routines, reusing this information to minimize redundant exploration and repeated instructions.
+Similarly, Encode-Store-Retrieve~\citep{shenEncodeStoreRetrieveAugmentingHuman2024} processes egocentric visual streams into text-addressable entries, allowing agents to answer questions based on past visual experiences without requiring user repetition.
+
+
+ \paragraph{Summary}
+Collectively, these mechanisms transform ephemeral interaction traces into a persistent cognitive substrate.
+By integrating retrieval-based ranking with generative abstraction, user factual memory upgrades the system from simple similarity matching to the active maintenance of explicit goals and constraints.
+This foundation yields a dual benefit: it fosters a sense of familiarity and trust through long-term behavioral coherence, while simultaneously enhancing operational efficiency by increasing task success rates, reducing redundancy, and lowering error recovery overhead.
+
+
+\subsubsection{Environment factual memory}
+\label{env_factual_mem}
+
+
+Environment factual memory pertains to entities and states \textit{external} to the user, encompassing long documents, codebases, tools, and interaction traces.
+
+
+
+This memory paradigm addresses incomplete factual recall and unverifiable provenance, minimizes contradictions and redundancy in multi-agent collaboration, and stabilizes long-horizon tasks in heterogeneous environments. The central objective is to furnish an updatable, retrievable, and governable external fact layer, providing a stable reference across sessions and stages.
+Concretely, we categorize existing implementations along two complementary dimensions: \textit{knowledge persistence} and \textit{multi-agent shared access}.
+
+\paragraph{Knowledge Persistence}
+Knowledge memory refers to persistent representations of world knowledge and domain-specific knowledge that support long document analysis, factual question answering, multihop reasoning, and reliable retrieval of code and data resources.
+
+In terms of \textit{knowledge organization}, existing research focuses on structuring external data to enhance reasoning capabilities. For instance, HippoRAG~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm} utilizes knowledge graphs to facilitate evidence propagation, while MemTree~\citep{rezazadehIsolatedConversationsHierarchical2025} employs a dynamic hierarchical structure to optimize aggregation and targeted access in growing corpora. Regarding storage form, LMLM~\citep{zhao2025pretraininglimitedmemorylanguage} explicitly decouples factual knowledge from model weights by externalizing it into a database, thereby enabling direct knowledge edits and provenance verification without retraining. In narrative domains, CALYPSO~\citep{zhuCALYPSOLLMsDungeon2023} distills lengthy game contexts into bite-sized prose, preserving critical story state accessibility.
+
+In scenarios requiring continuous \textit{knowledge updates}, parameter-centric approaches integrate persistence directly into the \textit{model architecture}. Methods such as MEMORYLLM~\citep{Wang2024MEMORYLLM}, M+~\citep{DBLP:journals/corr/abs-2502-00592}, and WISE~\citep{DBLP:conf/nips/0104L0XY0X0C24} incorporate trainable memory pools or side networks to absorb new information. Rather than relying solely on static external retrieval, these designs focus on the challenge of model editing, allowing agents to adapt to dynamic environments and correct obsolete facts while preserving the stability of the pre-trained backbone.
+
+
+\paragraph{Shared Access} 
+Shared memory establishes a visible and manageable common factual foundation for \textit{multi-agent collaboration}, serving to align goals, carry intermediate artifacts, and eliminate redundant work. By maintaining a centralized repository of past queries and responses, frameworks such as Memory Sharing~\citep{gaoMemorySharingLarge2024} enable agents to access and build on peers' accumulated insights asynchronously. This mechanism ensures that individual agents directly benefit from collective knowledge, thereby suppressing contradictory conclusions and enhancing overall system efficiency.
+
+For complex project coordination, systems such as MetaGPT~\citep{hong2023metagpt} and GameGPT~\citep{chenGameGPTMultiagentCollaborative2023} utilize shared message pools as central workspaces for publishing plans and partial results. Similarly, G-Memory~\citep{zhang2025g} employs hierarchical memory graphs as a unified coordination medium. These architectures facilitate consistency maintenance around the current project state, which reduces communication overhead and enables the extraction of reusable workflows from historical collaborations.
+
+In the domain of social simulation, platforms like Generative Agents~\citep{park2023generativeagentsinteractivesimulacra} and S${}^3$~\citep{gaoS^mbox3SocialnetworkSimulation2023}, alongside large-scale simulators such as OASIS~\citep{yang2025oasisopenagentsocial} and AgentSociety~\citep{piaoAgentSocietyLargeScaleSimulation2025}, model the global environment and public interaction logs as a shared memory substrate. This substrate is incrementally updated and observed by the population, allowing information to diffuse naturally among agents and supporting coherent, history-aware social dynamics at scale.
+
+
+\paragraph{Summary} environment factual memory furnishes a continuously updatable, auditable, and reusable external fact layer. On the knowledge axis, it improves completeness, interpretability, and editability of factual recall through structured organization and long-term memory modules. On the collaboration axis, it maintains cross-agent and cross-stage consistency through sharing and governance, thereby enabling robust decision-making and execution under long horizons, multiple actors, and multi-source information.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{img/sec4-4.2.pdf}
+    \caption{
+    Taxonomy of experiential memory paradigms. We classify approaches based on the \textit{abstraction level} of stored knowledge: (1) \textbf{Case-based Memory}  preserves raw trajectories and solutions as concrete exemplars; (2) \textbf{Strategy-based Memory}  abstracts experiences into high-level strategies, templates, or workflows; (3) \textbf{Skill-based Memory} distills procedural knowledge into executable functions and APIs; and (4) \textbf{Hybrid Memory}  integrates multiple representations. Together, these systems mirror human \textit{procedural memory} to enable continual learning and self-evolution. This figure draws inspiration from \cite{gaoSurveySelfEvolvingAgents2025b}.
+    }
+    \label{fig:experiential_mem}
+\end{figure}
+
+\subsection{Experiential Memory}
+\label{ssec:experiential_mem}
+Experiential memory encapsulates the mechanism by which agents encode historical trajectories, distilled strategies, and interaction outcomes into durable, retrievable representations. Unlike working memory, which manages transient context, experiential memory focuses on the long-term accumulation and transfer of knowledge \textit{across} distinct episodes.
+
+Theoretically grounded in cognitive science, this paradigm parallels human \textit{nondeclarative memory}, specifically the \textit{procedural} and \textit{habit} systems~\citep{squireMemorySystemsBrain2004,segerCriticalReviewHabit2011}. Biological systems rely on distributed neural circuits for implicit skill acquisition~\citep{reberNeuralBasisImplicit2013}. In contrast, agentic experiential memory typically employs explicit data structures, such as vector databases or symbolic logs. This implementation difference grants agents a unique capability absent in biological counterparts: the ability to introspect, edit, and reason over their own procedural knowledge.
+
+Crucially, experiential memory serves as a foundation for \textbf{continual learning} and \textbf{self-evolution} in the \textit{era of experience}~\citep{suttonWelcomeEraExperience2025,gaoSurveySelfEvolvingAgents2025b}. By maintaining a repository of structured experiences, agents achieve a non-parametric path to adaptation and avoid the prohibitive costs of frequent parametric updates. This mechanism effectively closes the learning loop by converting interaction feedback into reusable knowledge. Through this process, agents rectify past errors, abstract generalizable heuristics, and compile routine behaviors. Consequently, such adaptation minimizes redundant computations and refines decision-making over time~\citep{DBLP:conf/aaai/Zhao0XLLH24,shinn_reflexion_2023}.
+
+To systematically analyze existing literature, we classify experiential memory based on the \textit{abstraction level} of the stored information.
+An overview of this abstraction-based taxonomy and representative paradigms is illustrated in \autoref{fig:experiential_mem}.
+Representative methods under this abstraction-based taxonomy, together with their storage carriers, representation forms, and optimization strategies, are summarized in \autoref{tab:experiential_mem}.
+
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Three Types of Experiential Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize}
+    \item \textbf{Case-based Memory} (\Cref{case_based_mem}) stores minimally processed records of historical episodes, prioritizing high informational fidelity to support direct replay and imitation. By retaining the original alignment between situations and outcomes, it serves as a repository of concrete, verifiable evidence that functions as in-context exemplars for evidence-driven learning.
+    \item \textbf{Strategy-based Memory} (\Cref{strategy_based_mem}) distills transferable reasoning patterns, workflows, and high-level insights from past trajectories to guide planning across diverse scenarios. Acting as a cognitive scaffold, it decouples decision-making logic from specific contexts, thereby enhancing cross-task generalization and constraining the search space for complex reasoning.
+    \item \textbf{Skill-based Memory} (\Cref{skill_based_mem}) encapsulates executable procedural capacities, ranging from atomic code snippets to standardized API protocols, that operationalize abstract strategies into verifiable actions. This category serves as the agent's active execution substrate, enabling the modular expansion of capabilities and the efficient handling of tool-use environments.
+\end{itemize}
+\end{tcolorbox}
+
+
+
+{
+\label{tab:experiential_mem}
+\footnotesize
+\begin{xltabular}{\textwidth}{p{4.5cm}|llXc}
+\caption{
+Taxonomy of experiential memory methods.
+We categorize existing works based on the \textit{abstraction level} of stored knowledge: \textbf{Case-based Memory} preserves raw records for direct replay, \textbf{Strategy-based Memory} distills abstract heuristics for planning, and \textbf{Skill-based Memory} compiles executable capabilities for action. 
+Methods are compared across three technical dimensions: 
+(1) \textbf{Carrier} (\Cref{sec:what-memory}) identifies the storage medium, (2) \textbf{Form} specifies the representation format of the experience,
+and (3) \textbf{Optimization} denotes the integration strategy, where \textit{PE} encompasses prompt engineering and inference-time techniques without parameter updates, distinct from gradient-based methods like \textit{SFT} and \textit{RL}.
+} \label{tab:experiential_mem} \\
+
+
+\toprule
+{Method} & {Carrier} & {Form} & {Task}  & {Optimization}  \\
+\midrule
+\endfirsthead
+
+\caption[]{Taxonomy of experiential memory methods.
+We categorize existing works based on the \textit{abstraction level} of stored knowledge: \textbf{Case-based Memory} preserves raw records for direct replay, \textbf{Strategy-based Memory} distills abstract heuristics for planning, and \textbf{Skill-based Memory} compiles executable capabilities for action. (continued)}\\
+\toprule
+{Method} & {Carrier} & {Form} & {Task}  & {Optimization}  \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{Continued on next page}\\
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\multicolumn{5}{c}{\textit{I. Case-based Memory}}\\
+\midrule
+Expel~\citep{DBLP:conf/aaai/Zhao0XLLH24} & Token-level  & Solution  & Reasoning &  PE   \\
+Synapse~\citep{zheng_synapse_2024} & Token-level & Solution & Web Interaction, Instruction-guided Web Task &  PE \\
+Fincon~\citep{yu2024fincon} & Token-level & Solution &  Financial &  PE \\
+MapCoder~\citep{islam_mapcoder_2024} & Token-level & Solution &  Coding & PE \\
+Memento~\citep{DBLP:journals/corr/abs-2508-16153}  & Token-level & Trajectory & Reasoning  & RL \\
+COLA~\citep{zhao_cola_2025} & Token-level & Trajectory  &  GUI, Web Navigation, Reasoning & PE\\
+Continuous Memory~\citep{DBLP:journals/corr/abs-2510-09038} & Latent & Trajectory & GUI  & SFT \\
+JARVIS-1~\citep{DBLP:journals/pami/WangCLJHZLHZYML25} & Token-level & Trajectory & Game, GUI Interaction  & PE \\
+MemGen~\citep{Zhang2025MemGen} & Latent & Trajectory & Web Search, Embodied Simulation, Reasoning, Math, Code  & RL, SFT \\
+Early Experience~\citep{agent-early-experience} & Parametric &  Trajectory &Embodied Simulation, Reasoning, Web Navigation  & SFT \\
+DreamGym~\citep{chen2025scalingagentlearningexperience} & Token-level & Trajectory & Web Interaction, Embodied Simulation, Shopping & RL \\
+MemRL~\citep{zhang2026memrlselfevolvingagentsruntime} & Token-level & Trajectory &Coding, Embodied Simulation, Reasoning  & RL \\
+
+
+\midrule
+\multicolumn{5}{c}{\textit{II. Strategy-based Memory}}\\
+\midrule
+Reflexion~\citep{shinn2023reflexion} & Token-level & Insight & Embodied Simulation, Reasoning, Coding & PE \\
+Buffer of Thoughts~\citep{yang2024buffer} & Token-level & Pattern & Game, Reasoning, Coding &  PE \\
+AWM~\citep{wang2024agentworkflowmemory} & Token-level & Workflow & Web Interaction, Instruction-guided Web Task &  PE \\
+RecMind~\citep{wang_recmind_2024} & Token-level & Pattern &  Recommendation &  PE \\
+H\({}^{\mbox{2}}\)R~\citep{DBLP:journals/corr/abs-2509-12810} & Token-level & Insight & Game, Embodied Simulation & 
+  PE \\
+ReasoningBank ~\citep{ouyang2025reasoningbankscalingagentselfevolving} & Token-level & Insight & Web Interaction, Instruction-guided Web Task &  PE\\
+R2D2~\citep{huang_r2d2_2025} & Token-level & Insight &  Web Interaction &  PE \\
+BrowserAgent~\citep{yu_browseragent_2025} & Token-level & Insight &  General QA, Web search &  RL, SFT \\
+Agent KB~\citep{tang2025agentkbleveragingcrossdomain}  & Token-level & Workflow & Code, Reasoning &    PE \\
+
+ToolMem~\citep{xiao_toolmem_2025} & Token-level & Insight & Reasoning, Image Generation & PE \\
+PRINCIPLES~\citep{DBLP:journals/corr/abs-2509-17459} & Token-level & Pattern & Emotional Companion &  PE\\
+SE-Agent~\citep{sun2025seagent} & Token-level & Insight & Coding  & PE\\
+ACE~\citep{DBLP:journals/corr/abs-2510-04618} & Token-level & Insight & Coding, Tool calling, Financial &  PE \\
+Flex~\citep{cai2025flexcontinuousagentevolution} & Token-level & Insight & Math, Chemistry, Biology & PE \\
+AgentEvolver~\citep{zhai2025agentevolverefficientselfevolvingagent} & Parametric & Pattern & Tool-augmented Task & RL \\
+Dynamic Cheatsheet~\citep{suzgun2025dynamiccheatsheettesttimelearning} & Token-level & Insight & Math, Reasoning, Game & PE \\
+Training-Free GRPO~\citep{cai2025trainingfreegrouprelativepolicy}  & Token-level & Insight & Math, Reasoning, Web Search & PE \\
+MemEvolve~\citep{zhang2025memevolvemetaevolutionagentmemory} & Token-level & Solution,Insight & Web Search, Reasoning  & PE \\
+
+\midrule
+\multicolumn{5}{c}{\textit{III. Skill-based Memory}}\\
+\midrule
+CREATOR~\citep{qian_creator_2023} & Token-level & Function and Script & Reasoning, Math & PE \\
+Gorilla~\citep{patil_gorilla_2024} & Token-level & API & Tool calling & SFT \\
+ToolRerank~\citep{zheng_toolrerank_2024}  & Token-level & API &  Tool calling & PE \\
+Voyager~\citep{wang_voyager_2024} & Token-level & Code Snippet & Game &  PE \\
+RepairAgent~\citep{bouzenia_repairagent_2024} & Token-level & Function and Script & Coding & PE \\
+COLT~\citep{qu_colt_2024} & Token-level & API & Tool calling & SFT \\
+ToolLLM~\citep{qin2024toolllm} & Token-level & API & Tool Calling &  SFT \\
+LEGOMem~\citep{han_legomem_2025} & Token-level & Function and Script & Office &   PE \\
+Darwin Gödel Machine~\citep{zhang_darwin_2025} & Token-level & Code Snippet & Code &  PE \\
+Huxley-Gödel Machine~\citep{wang2025huxleygodelmachinehumanlevelcoding} & Token-level & Code Snippet & Code & PE \\
+Memp\(^{\mbox{p}}\)~\citep{fang2025mempexploringagentprocedural} & Token-level & Function and Script & Embodied Simulation, Travel Planning &  PE\\
+SkillWeaver~\citep{skillweaver} &  Token-level & Function and Script & Web Interaction, Instruction-guided Web Task &  PE \\
+Alita~\citep{qiu2025alitageneralistagentenabling} & Token-level & MCP & Math, Reasoning, VQA &   PE \\
+Alita-G~\citep{qiuAlitaGSelfEvolvingGenerative2025a} & Token-level & MCP & Math, Reasoning, VQA &   PE \\
+LearnAct~\citep{DBLP:journals/corr/abs-2504-13805} & Token-level & Function and Script & Mobile GUI & PE \\
+ToolGen~\citep{wang2025toolgen} & Parametric & API & Tool calling & SFT \\
+MemTool~\citep{lumer2025memtool} & Token-level & MCP & Tool calling & SFT \\
+ToolRet~\citep{shiRetrievalModelsArent2025} & Token-level & API & Web, Code, Tool Retrieval & SFT \\
+DRAFT~\citep{quExplorationMasteryEnabling2025} & Token-level & API & Tool calling & PE \\
+ASI~\citep{wang2025inducingprogrammaticskillsagentic} & Token-level & Functions and Scripts & Web Interaction & PE \\
+
+\end{xltabular}
+
+}
+
+
+\subsubsection{Case-based Memory}
+\label{case_based_mem}
+Case-based memory stores minimally processed records of historical \textit{events}, prioritizing fidelity to ensure that episodes can be replayed or reused as in-context exemplars. Unlike strategy templates or skill modules, cases avoid extensive abstraction, thereby preserving the original alignment between situations and solutions.
+
+\paragraph{Trajectories}
+This category preserves interaction sequences to enable replay and evidence-driven learning. To optimize retrieval in text-based environments, Memento~\citep{DBLP:journals/corr/abs-2508-16153} employs soft Q-learning to dynamically refine the probability of selecting high-utility past trajectories. In multimodal settings, JARVIS-1~\citep{DBLP:journals/pami/WangCLJHZLHZYML25}, EvoVLA~\citep{liu2025evovlaselfevolvingvisionlanguageactionmodel} and Auto-scaling Continuous Memory~\citep{DBLP:journals/corr/abs-2510-09038} retain visual context, with the former storing survival experiences in Minecraft and the latter compressing GUI history into continuous embeddings. Furthermore, the early experience paradigm~\citep{agent-early-experience} constructs reward-free, agent-generated interaction traces and integrates them into model parameters via mid-training to enhance generalization.
+
+\paragraph{Solutions}
+This category treats memory as a repository of proven solutions. ExpeL~\citep{DBLP:conf/aaai/Zhao0XLLH24} autonomously gathers experience through trial-and-error, storing successful trajectories as exemplars while extracting textual insights to guide future actions. Synapse~\citep{zheng_synapse_2024} similarly injects abstracted state-action episodes as contextual examples to align problem-solving patterns. In program synthesis, MapCoder ~\citep{islam_mapcoder_2024} keeps relevant example code as a playbook-like case that multi-agent pipelines retrieve and adapt to improve reliability on complex tasks. In the financial domain, FinCon~\citep{yu2024fincon} maintains an episodic memory of past actions, PnL trajectories, and belief updates to facilitate robust cross-round decision-making.
+ 
+
+\paragraph{Summary}
+Case-based memory offers high informational fidelity and provides verifiable evidence for imitation. However, the reliance on raw data imposes challenges regarding retrieval efficiency and context window consumption. Distinguished from executable skills or abstract strategies, cases do not encompass orchestration logic or function interfaces. Instead, they serve as the factual substrate upon which higher-level reasoning operates.
+
+
+\subsubsection{Strategy-based Memory}
+\label{strategy_based_mem}
+Unlike case libraries that retain \textit{what happened}, strategy-based memory extracts transferable knowledge of \textit{how to act}, encompassing reusable reasoning patterns, task decompositions, insights, abstractions, and cross-situational workflows. It elevates experiences into editable, auditable, and composable high-level knowledge, thereby reducing dependence on lengthy trajectory replay and improving cross-task generalization and efficiency. 
+We focus on non-code or weakly code-based templates and workflows in this section, while executable functions, APIs, MCP protocols, and code snippets are classified under \Cref{skill_based_mem}.
+Based on the granularity and structural complexity of the retained knowledge, we categorize strategy-based memory into three distinct types: atomic \textbf{Insights}, sequential \textbf{Workflows}, and schematic \textbf{Patterns}.
+
+\paragraph{Insights}
+This category of approaches focuses on distilling discrete pieces of knowledge, such as granular decision \textit{rules} and reflective \textit{heuristics}, from past trajectories.
+H${}^2$R~\citep{DBLP:journals/corr/abs-2509-12810} explicitly decouples planning-level and execution-level memories, enabling high-level planning insights and low-level operational rules to be retrieved separately for fine-grained transfer in multi-task scenarios. 
+R2D2~\citep{huang_r2d2_2025} integrates remembering, reflecting, and dynamic decision-making for web navigation, deriving corrective insights from both failed and successful cases to inform subsequent episodes.
+For long-horizon web automation, BrowserAgent~\citep{yu_browseragent_2025} persists key conclusions as explicit memory to stabilize extended chains of reasoning and mitigate context drift.
+
+\paragraph{Workflows}
+Distinct from atomic, static insights, \textit{workflows} encapsulate strategies as structured \textit{sequences} of actions—executable routines abstracted from prior trajectories to guide multi-step execution at inference time.
+Agent Workflow Memory (AWM)~\citep{wang2024agentworkflowmemory} induces reusable workflows on Mind2Web ~\citep{deng_mind2web_2023} and WebArena ~\citep{zhou2023webarena} and uses them as high-level scaffolds to guide subsequent generation, improving success rates and reducing steps without updating base model weights. This demonstrates that strategy templates can act as a top-level controller that complements case-level evidence.
+Agent KB~\citep{tang2025agentkbleveragingcrossdomain} establishes a unified knowledge base that treats workflows as transferable procedural knowledge. It employs hierarchical retrieval, accessing workflows first to structure the strategic approach and enabling problem-solving logic reuse across diverse agent architectures.
+
+\paragraph{Patterns}
+At a higher level of abstraction, reasoning patterns function as \textit{cognitive templates} that encapsulate the structure of problem-solving, enabling agents to tackle complex reasoning tasks by instantiating these \textit{generalizable skeletons}. Buffer of Thoughts~\citep{yang2024buffer} maintains a meta-buffer of thought templates that are retrieved and instantiated to solve new problems. Similarly, ReasoningBank~\citep{ouyang2025reasoningbankscalingagentselfevolving} abstracts both successes and failures into reusable reasoning units, facilitating test-time expansion and robust learning. RecMind's self-inspiring planning algorithm~\citep{wang_recmind_2024} generates intermediate self-guidance to structure subsequent planning and tool use. In the domain of dialogue agents, PRINCIPLES~\citep{DBLP:journals/corr/abs-2509-17459} builds a synthetic strategy memory via offline self-play to guide strategy planning at inference, thereby eliminating the need for additional training. 
+These advances indicate a paradigmatic shift from descriptive rules to portable reasoning structures.
+
+\paragraph{Summary}
+Strategy-based memory, which encompasses insights, workflows, and patterns, serves as a high-level scaffold to guide generative reasoning. 
+Unlike case-based memory that relies on retrieving specific, raw trajectories which may be noisy or context-dependent, this form of memory distills generalizable schemas to effectively constrain the search space and improve robustness on unseen tasks. 
+However, a key distinction is that these strategies function as structural guidelines rather than executable actions; they direct the planning process but do not interact with the environment directly. 
+This limitation necessitates skill-based memory, discussed in the following section, which stores callable capabilities and tools. 
+Ultimately, robust agents typically synergize these components: strategies provide the abstract planning logic, while skills handle the grounded execution.
+
+
+\subsubsection{Skill-based Memory}
+\label{skill_based_mem}
+Skill memory captures an agent’s procedural capacity and operationalizes abstract strategy into verifiable actions. It encodes what the agent can do, complements declarative knowledge of what the agent knows, and anchors the perception–reasoning–action loop by providing invocable, testable, and composable executables. Recent evidence shows that language models can learn when and how to call tools and scale reliably with large tool repertoires, establishing skill memory as the execution substrate of modern agents.
+
+Skill memory spans a continuum from internal, fine-grained code to externalized, standardized interfaces. The unifying criteria are straightforward: skills must be \textbf{callable} by the agent, their outcomes must be verifiable to support learning, and they must compose with other skills to form larger routines. 
+
+
+\paragraph{Code Snippets}
+Executable code stored as reusable snippets offers the fastest path from experience to capability. In open-ended tasks, agents distill successful sub-trajectories into interpretable programs and reuse them across environments. Voyager ~\citep{wang_voyager_2024} exemplifies this pattern with an ever-growing skill library; the Darwin Gödel Machine ~\citep{zhang_darwin_2025} goes further by safely rewriting its own code under empirical validation, yielding self-referential and progressively more capable skill sets.
+
+\paragraph{Functions and Scripts}
+Abstracting complex behaviors into modular functions or scripts enhances reusability and generalization. Recent advancements empower agents to autonomously create specialized tools for problem-solving~\citep{qian_creator_2023,yuan_craft_2024}, and to refine tool-use capabilities through demonstrations and environmental feedback across diverse domains such as mobile GUIs, web navigation, and software engineering~\citep{fang2025mempexploringagentprocedural,skillweaver,bouzenia_repairagent_2024}. Furthermore, emergent mechanisms for procedural memory enable agents to distill execution trajectories into retrievable scripts, facilitating efficient generalization to novel scenarios~\citep{DBLP:journals/corr/abs-2504-13805,han_legomem_2025}.
+
+\paragraph{APIs}
+APIs serve as the universal interface for encapsulated skills. While earlier work focused on fine-tuning models to correctly invoke tools~\citep{schick2023toolformer,patil_gorilla_2024}, the exponential growth of API libraries has shifted the primary bottleneck to retrieval. Standard information retrieval methods often fail to capture the functional semantics of tools~\citep{shiRetrievalModelsArent2025}. Consequently, recent approaches have moved towards learning-based retrieval and reranking strategies that account for tool documentation quality, hierarchical relationships, and collaborative usage patterns to bridge the gap between user intent and executable functions~\citep{zheng_toolrerank_2024,gao_ptr_2024,qu_colt_2024,quExplorationMasteryEnabling2025}.
+
+\paragraph{MCPs}
+To reduce protocol fragmentation in API-based ecosystems, the Model Context Protocol provides an open standard that unifies how agents discover and use tools and data, including code-execution patterns that load tools on demand and cut context overhead ~\citep{qiu2025alitageneralistagentenabling,qiuAlitaGSelfEvolvingGenerative2025a}. Broad platform support indicates a convergence toward a common interface layer.
+
+
+Beyond standard executables, research explores learnable memories of tool capabilities to handle uncertain neural tools, parametric integration that embeds tool symbols to unify retrieval and calling, and architecture-as-skill perspectives where specialized agents are callable modules within a modular design space ~\citep{xiao_toolmem_2025,wang2025toolgen,zhao_cola_2025}. Collectively, these strands reframe skill memory as a learnable, evolving, and orchestrable capability layer.
+
+\paragraph{Summary}
+In conclusion, skill-based memory constitutes the active execution substrate of the agent, evolving from static code snippets and modular scripts to standardized APIs and learnable architectures. It bridges the gap between abstract planning and environmental interaction by operationalizing insights from case-based and strategy-based memories into verifiable procedures. As mechanisms for tool creation, retrieval, and interoperability (e.g., MCP) mature, skill memory moves beyond simple storage, enabling a continuous loop of capability synthesis, refinement, and execution that drives open-ended agent evolution.
+
+\subsubsection{Hybrid memory}
+\label{experiential_hybrid_mem}
+Advanced agent architectures increasingly adopt a \textbf{hybrid} design that integrates multiple forms of experiential memory to balance grounded evidence with generalizable logic. By maintaining a spectrum of knowledge spanning raw episodes, distilled rules, and executable skills, these systems dynamically select the most appropriate memory format, ensuring both retrieval precision and broad generalization across contexts.
+
+A prominent direction involves coupling \textit{case-based} and \textit{strategy-based} memories to facilitate complementary reasoning. For example, ExpeL~\citep{DBLP:conf/aaai/Zhao0XLLH24} synergizes concrete trajectories with abstract textual insights, allowing agents to recall specific solutions while applying general heuristics. Agent KB~\citep{tang2025agentkbleveragingcrossdomain} employs a hierarchical structure where high-level workflows guide planning and specific solution paths provide execution details. Similarly, R2D2~\citep{huang_r2d2_2025} integrates a replay buffer of historical traces with a reflective mechanism that refines decision strategies from past errors, effectively bridging case retrieval and strategic abstraction. Complementing these, Dynamic Cheatsheet~\citep{suzgun2025dynamiccheatsheettesttimelearning} prevents redundant computation by storing accumulated strategies and problem-solving insights for immediate reuse at inference time.
+
+
+Furthermore, recent frameworks strive to unify the lifecycle of memory, incorporating Skill-based components or establishing comprehensive cognitive architectures~\citep{sun2025sophiapersistentagentframework,cai2025experiencedriven}. In scientific reasoning, ChemAgent~\citep{tang2025chemagentselfupdatinglibrarylarge} constructs a self-updating library that pairs execution cases with decomposable skill modules, enabling the model to refine its chemical reasoning through accumulated experience. Taking a holistic approach, LARP~\citep{yan2023larplanguageagentroleplay} establishes a cognitive architecture for open-world games that harmonizes semantic memory for world knowledge, episodic memory for interaction cases, and procedural memory for learnable skills, ensuring consistent role-playing and robust decision-making. Finally, evolutionary systems like G-Memory~\citep{Zhang2025GMemory} and Memp~\citep{fang2025mempexploringagentprocedural} implement dynamic transitions, where repeated successful cases are gradually compiled into efficient skills, automating the shift from heavy retrieval to rapid execution. A recent effort, MemVerse~\citep{liu2025memversemultimodalmemorylifelong} combines both parametric memory and token-level prcedural memory.
+
+
+\subsection{Working Memory}
+\label{ssec:working_mem}
+In cognitive science, working memory is defined as a capacity-limited, dynamically controlled mechanism that supports higher-order cognition by selecting, maintaining, and transforming task-relevant information in the moment~\citep{baddeleyWorkingMemoryTheories2012}. Beyond mere temporary storage, it implies active control under resource constraints.
+This perspective is grounded in frameworks such as the multicomponent model and the embedded-processes account, both of which emphasize attentional focus, interference control, and bounded capacity~\citep{cowanWorkingMemoryUnderpins2014}.
+
+When transposed to LLMs, the standard context window functions primarily as a passive, read-only buffer. Although the model can consume the window's contents during inference, it lacks explicit mechanisms to select, sustain, or transform the current workspace dynamically.
+Recent behavioral evidence suggests that current models do not exhibit human-like working memory characteristics, underscoring the necessity for explicitly engineered, operable working memory mechanisms~\citep{huangLanguageModelsNot2025}.
+
+Throughout this section, we define working memory as the set of mechanisms for the \textbf{active management and manipulation} of context within a single episode~\citep{DBLP:journals/corr/abs-2510-12635}.
+The objective is to transform the context window from a passive buffer into a controllable, updatable, and interference-resistant workspace.
+This transition offers immediate benefits: it increases the density of task-relevant information under fixed attention budgets, suppresses redundancy and noise, and enables the rewriting or compression of representations to preserve coherent chains of thought. We categorize these mechanisms based on the interaction dynamics.
+Representative working memory approaches under this interaction-based taxonomy, together with their storage carriers, task domains, and optimization strategies, are systematically summarized in \autoref{tab:working_mem_taxonomy}.
+
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Two Types of Working Memory}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=10pt,
+  left=5pt,   
+  right=5pt,
+]
+
+\begin{itemize}
+    \item \textbf{Single-turn Working Memory} (\Cref{single_turn_working_mem}) focuses on \textbf{input condensation and abstraction}. In this setting, the system must process massive immediate inputs such as long documents or high-dimensional multimodal streams within a single forward pass. The goal is to dynamically filter and rewrite evidence to construct a bounded computational scratchpad, thereby maximizing the effective information payload per token.
+    \item \textbf{Multi-turn Working Memory} (\Cref{multi_turn_working_mem}) addresses \textbf{temporal state maintenance}. In sequential interactions, the challenge is to prevent historical accumulation from overwhelming the attention mechanism. This involves maintaining task states, goals, and constraints through a continuous loop of reading, executing, and updating, ensuring that intermediate artifacts are folded and consolidated across turns.
+    
+\end{itemize}
+\end{tcolorbox}
+
+
+In summary, working memory for LLMs represents a paradigm shift towards active, within-episode context management. By aligning with the cognitive requirement of active manipulation, it suppresses interference and provides a practical solution to the engineering constraints of long-context inference.
+
+
+\begin{table*}[!t] 
+\centering 
+\caption{
+Taxonomy of working memory methods. We categorize approaches into \textbf{Single-turn} and \textbf{Multi-turn} settings based on interaction dynamics.
+Methods are compared across three technical dimensions: 
+(1) \textbf{Carrier} (\Cref{sec:what-memory}) identifies the storage medium, (2) \textbf{Task} specifies the evaluation domain or application scenario, and (3) \textbf{Optimization} denotes the integration strategy, where PE encompasses prompt engineering and inference-time techniques without parameter updates, distinct from gradient-based methods like SFT and RL.
+} 
+\label{tab:working_mem_taxonomy} 
+\resizebox{\textwidth}{!}{
+\begin{tabular}{p{6.5cm}|lp{8cm}c}
+\toprule {Method} & {Carrier} & {Task} & {Optimization} \\
+
+\midrule 
+\multicolumn{4}{c}{\textit{I. Single-turn Working Memory}}\\ 
+\midrule 
+
+\multicolumn{4}{l}{\textbf{(a) Input Condensation}}\\
+
+Gist~\citep{DBLP:conf/nips/Mu0G23} & Latent  & Instruction Fine-tuning & SFT \\ 
+ICAE~\citep{geIncontextAutoencoderContext2024} & Latent  & Language Modeling, Instruction Fine-tuning & Pretrain, LoRA\\ 
+AutoCompressors~\citep{DBLP:conf/emnlp/ChevalierWAC23} & Latent  & Langague Modeling & SFT \\ 
+LLMLingua~\citep{jiangLLMLinguaCompressingPrompts2023} & Token-level  & Reasoning, Conversation, Summarization & PE \\ 
+LongLLMLingua~\citep{jiangLongLLMLinguaAcceleratingEnhancing2024} & Token-level  & Multi-doc QA, Long-context, Multi-hop QA & PE \\ 
+CompAct~\citep{yoonCompActCompressingRetrieved2024} & Token-level  & Document QA & SFT \\ 
+HyCo2~\citep{liaoHardSoftHybrid2025} & Hybrid  & Summarization, Open-domain QA, Multi-hop QA & SFT \\
+Sentence-Anchor~\citep{tarasov2025sentenceanchoredgistcompressionlongcontext} & Latent & Document QA & SFT\\
+MELODI~\citep{chen2024melodiexploringmemorycompression} & Hybrid & Pretraining & Pretrain \\
+R${}^3$Mem~\citep{wang2025R3Mem} & Latent & Document QA, Language Modeling & PEFT  \\
+
+\midrule
+\multicolumn{4}{l}{\textbf{(b) Observation Abstraction}}\\
+Synapse~\citep{zheng_synapse_2024} & Token-level  & Computer Control, Web Navigation & PE \\
+VideoAgent~\citep{wangVideoAgentLongFormVideo2024} & Token-level  & Long-term Video Understanding & PE \\ 
+MA-LMM~\citep{heMALMMMemoryAugmentedLarge2024} & Latent  & Long-term Video Understanding & SFT \\
+Context as Memory~\citep{DBLP:journals/corr/abs-2506-03141} & Token-level  & Long-term Video Generation & PE \\
+
+
+\midrule
+\multicolumn{4}{c}{\textit{II. Multi-turn Working Memory}}\\
+\midrule
+
+\multicolumn{4}{l}{\textbf{(c) State Consolidation}}\\
+MEM1~\citep{zhou2025mem1learningsynergizememory} & Latent & Retrieval, Open-domain QA, Shopping & RL \\ 
+MemGen~\citep{Zhang2025MemGen} & Latent & Reasoning, Embodied Action, Web Search, Coding & RL \\ 
+MemAgent~\citep{yu2025memagent} & Token-level & Long-term Doc. QA & RL \\
+ReMemAgent~\citep{shi2025lookreasonforwardrevisitable} & Token-level& Long-term Doc. QA & RL \\
+ReSum~\citep{wuReSumUnlockingLongHorizon2025} & Token-level & Long-horizon Web Search & RL \\ 
+MemSearcher~\citep{yuanMemSearcherTrainingLLMs2025} & Token-level & Multi-hop QA & SFT, RL \\
+ACON~\citep{kangACONOptimizingContext2025} & Token-level & App use, Multi-objective QA & PE \\
+IterResearch~\citep{chen2025iterresearchrethinkinglonghorizonagents} & Token-level & Reasoning, Web Navigation, Long-Horizon QA & RL \\
+SUPO~\citep{lu2025scalingllmmultiturnrl} & Token-level & Long-horizon task & RL\\
+AgentDiet~\citep{xiao2025improvingefficiencyllmagent} & Token-level & Long-horizon task & PE\\
+SUMER~\citep{zheng2025goaldirectedsearchoutperformsgoalagnostic} & Token-level & QA & RL\\
+Sculptor~\citep{liSculptorEmpoweringLLMs2025} & Token-level & Multi-Needle QA & PE,RL \\
+AgeMem~\citep{yuAgenticMemoryLearning2026} &  Token-level & QA, Embodied Action & PE,RL \\
+
+
+\midrule
+\multicolumn{4}{l}{\textbf{(d) Hierarchical Folding}}\\
+HiAgent~\citep{huHiAgentHierarchicalWorking2025} & Token-level & Long-horizon Agent Task & PE \\ 
+Context-Folding~\citep{DBLP:journals/corr/abs-2510-11967} & Token-level & Deep Research, SWE & RL \\
+AgentFold~\citep{ye2025agentfold} & Token-level & Web Search & SFT \\
+DeepAgent~\citep{liDeepAgentGeneralReasoning2025} & Token-level & Tool Use, Shopping, Reasoning & RL \\ 
+
+\midrule
+\multicolumn{4}{l}{\textbf{(e) Cognitive Planning}}\\
+SayPlan~\citep{ranaSayPlanGroundingLarge2023} & Token-level &  3D Scene Graph, Robotics & PE \\ 
+KARMA~\citep{wangKARMAAugmentingEmbodied2025} & Token-level & Household & PE \\ 
+Agent-S~\citep{agasheAgentOpenAgentic2025} & Token-level & Computer Use & PE \\ 
+PRIME~\citep{DBLP:journals/corr/PRIME} & Token-level & Multi-hop QA, Knowledge-intensive Reasoning & PE \\ 
+
+\bottomrule 
+\end{tabular} 
+} 
+
+\end{table*}
+
+\subsubsection{Single-turn Working Memory}
+\label{single_turn_working_mem}
+Single-turn working memory addresses the challenge of processing massive immediate inputs, including long documents~\citep{DBLP:conf/emnlp/ChevalierWAC23} and high-dimensional multimodal streams~\citep{wangVideoAgentLongFormVideo2024}, within a single forward pass.
+Rather than passively consuming the entire context, the objective is to actively construct a writable workspace. This involves filtering and transforming raw information to increase density and operability under fixed attention and memory budgets~\citep{jiangLLMLinguaCompressingPrompts2023,jiangLongLLMLinguaAcceleratingEnhancing2024}.
+We categorize these mechanisms into \textit{input condensation}, which reduces physical token count, and \textit{observation abstraction}, which transforms data into structured semantic representations.
+
+\paragraph{Input Condensation}
+Input condensation techniques aim to preprocess the context to minimize token usage while preserving essential information~\citep{jiangLLMLinguaCompressingPrompts2023}. These methods generally fall into three paradigms: hard, soft, and hybrid condensation~\citep{liaoHardSoftHybrid2025}.
+
+\textit{Hard condensation} discretely selects tokens based on importance metrics. Approaches like LLMLingua~\citep{jiangLLMLinguaCompressingPrompts2023} and LongLLMLingua~\citep{jiangLongLLMLinguaAcceleratingEnhancing2024} estimate token perplexity to discard predictable or task-irrelevant content, while CompAct~\citep{yoonCompActCompressingRetrieved2024} adopts an iterative strategy to retain segments that maximize information gain. Although efficient, hard selection risks severing syntactic or semantic dependencies.
+\textit{Soft condensation} encodes variable-length contexts into dense latent vectors (memory slots). Methods such as Gist~\citep{DBLP:conf/nips/Mu0G23}, In-Context Autoencoder (ICAE)~\citep{geIncontextAutoencoderContext2024}, and AutoCompressors~\citep{DBLP:conf/emnlp/ChevalierWAC23} train models to compress prompts into valid summary tokens or distinct memory embeddings. This achieves high compression ratios but requires additional training and may obscure fine-grained details. 
+\textit{Hybrid} approaches like HyCo2~\citep{liaoHardSoftHybrid2025} attempt to reconcile these \textit{trade-offs} by combining global semantic adapters (soft) with token-level retention probabilities (hard).
+
+\paragraph{Observation Abstraction} While condensation focuses on reduction, \textit{observation abstraction} aims to transform raw observations into structured formats that facilitate reasoning.
+This mechanism maps dynamic, high-dimensional observation spaces into fixed-size memory states, preventing agents from being overwhelmed by raw data.
+
+In complex interactive environments, abstraction converts verbose inputs into concise state descriptions.
+Synapse~\citep{zheng_synapse_2024} rewrites unstructured HTML DOM trees into task-relevant state summaries to guide GUI automation. Similarly, in multimodal settings, processing every frame of a video stream is computationally prohibitive. Working memory mechanisms address this by extracting semantic structures: Context as Memory~\citep{DBLP:journals/corr/abs-2506-03141} filters frames based on field-of-view overlap, VideoAgent~\citep{wangVideoAgentLongFormVideo2024} converts streams into temporal event descriptions, and MA-LMM~\citep{heMALMMMemoryAugmentedLarge2024} maintains a bank of visual features. These methods effectively rewrite high-dimensional, redundant streams into low-dimensional, semantically rich representations operable within a limited context window for efficient processing.
+
+\paragraph{Summary}
+Single-turn working memory functions as an \textit{active compression layer} that maximizes the utility of the context window for immediate reasoning. By employing input condensation and observation abstraction, these mechanisms effectively increase the information density of the operational workspace, ensuring that critical evidence is retained despite capacity constraints. However, this optimization is strictly \textit{intra-turn}; it addresses the breadth and complexity of static inputs rather than the temporal continuity of dynamic interactions.
+
+
+\subsubsection{Multi-turn Working Memory}
+\label{multi_turn_working_mem}
+Multi-turn working memory addresses a fundamentally different problem space than the single-turn setting. In long-horizon interactions, the primary bottleneck shifts from instantaneous context capacity to the continuous maintenance of \textbf{task state} and \textbf{historical relevance}. Even with extended context windows, the accumulation of history inevitably saturates attention budgets, increases latency, and induces goal drift~\citep{luScalingLLMMultiturn2025}.
+To mitigate this, working memory in multi-turn settings functions as an externalized state carrier, organizing a continuous loop of reading, evaluation, and writing. The objective is to preserve critical state information accessible and consistent within a bounded resource budget. We categorize these mechanisms by their state management strategies: \textit{state consolidation}, \textit{hierarchical folding}, and \textit{cognitive planning}.
+
+\paragraph{State Consolidation} In continuous interaction streams, state consolidation maps an ever-growing trajectory into a fixed-size state space through dynamic updates.
+Treating interaction as a streaming environment, MemAgent~\citep{yu2025memagent}, and MemSearcher~\citep{yuanMemSearcherTrainingLLMs2025} employ recurrent mechanisms to update fixed-budget memory and discard redundancy, answering queries from a compact, evolving state. ReSum~\citep{wuReSumUnlockingLongHorizon2025} extends this by periodically distilling history into reasoning states, utilizing reinforcement learning to optimize summary-conditioned behavior for indefinite exploration.
+
+Beyond heuristic summarization, ACON~\citep{kangACONOptimizingContext2025} frames state consolidation as an optimization problem, jointly compressing environment observations and interaction histories into a bounded condensation and iteratively refining compression guidelines from failure cases. IterResearch~\citep{chen2025iterresearchrethinkinglonghorizonagents} further adopts an MDP-inspired formulation with iterative workspace reconstruction, where an evolving report serves as persistent memory and periodic synthesis mitigates context suffocation and noise contamination in long-horizon research.
+
+Regarding state representation, approaches vary to ensure constant-size footprints. MEM1~\citep{zhou2025mem1learningsynergizememory} maintains a shared internal state that merges new observations with prior memory. Distinct from explicit text, MemGen~\citep{Zhang2025MemGen} injects latent memory tokens directly into the reasoning stream.
+
+
+\paragraph{Hierarchical Folding} For complex, long-horizon tasks, state maintenance requires structure beyond linear summarization. Hierarchical folding decomposes the task trajectory based on \textit{subgoals}, maintaining fine-grained traces only while a subtask is active, and \textit{folding} the completed sub-trajectory into a concise summary upon completion.
+
+This \textit{decompose-then-consolidate} strategy allows the working memory to expand and contract dynamically. HiAgent~\citep{huHiAgentHierarchicalWorking2025} instantiates this by using subgoals as memory units, retaining only active action–observation pairs and writing back a summary after subgoal completion. Context-Folding~\citep{DBLP:journals/corr/abs-2510-11967} and AgentFold~\citep{ye2025agentfold} extend this by making the folding operation a learnable policy, training agents to autonomously determine when to branch into sub-trajectories and how to abstract them into high-level states. DeepAgent~\citep{liDeepAgentGeneralReasoning2025} further applies this to tool-use reasoning, compressing interactions into structured episodic and working memories to support fine-grained credit assignment. By replacing finished sub-trajectories with stable high-level abstractions, these methods preserve essential context while keeping the active window small.
+
+\paragraph{Cognitive Planning} At the highest level of abstraction, working memory creates and maintains an externalized \textit{plan} or \textit{world model}. The state functions not merely as a summary of the past, but as a forward-looking structure that guides future actions.
+
+PRIME~\citep{DBLP:journals/corr/PRIME} integrates retrieval directly into the planning loop, ensuring that memory updates actively support complex reasoning steps.
+In embodied and agentic environments, treating the language model as a high-level planner elevates the plan to the core of working memory. Approaches like SayPlan employ 3D scene graphs as queryable environmental memory to scale planning across large spaces~\citep{ranaSayPlanGroundingLarge2023}. In GUI and household tasks, systems like Agent-S~\citep{agasheAgentOpenAgentic2025} and KARMA~\citep{wangKARMAAugmentingEmbodied2025} stabilize long-horizon performance by anchoring reasoning to a hierarchical plan, using memory-augmented retrieval to bridge long-term knowledge with short-term execution.
+
+By making plans and structured environment representations the readable and writable core of working memory, agents can maintain goal consistency and revise strategies robustly against perception failures~\citep{songLLMPlannerFewShotGrounded2023}.
+
+
+\paragraph{Summary}
+Multi-turn working memory pivots on the construction of an operable \textbf{state carrier} rather than the retention of raw history. By integrating \textit{state consolidation} to compress continuous streams, \textit{hierarchical folding} to structure sub-trajectories, and \textit{cognitive planning} to anchor future actions, these mechanisms effectively decouple reasoning performance from interaction length. This paradigm enables agents to maintain temporal coherence and goal alignment over indefinite horizons while adhering to strict computational and memory constraints.
+

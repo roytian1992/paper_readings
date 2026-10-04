@@ -1,0 +1,11 @@
+\begin{abstract}
+Procedural memory is fundamental to large language model (LLM) agents, accumulating and reusing past experiences for enhanced decision-making. 
+However, existing memory-driven systems often store coarse-grained, trajectory-level experiences, which potentially introduce redundancy or interference in agent reasoning. 
+Motivated by the need for finer granularity, we propose a novel memory framework called {\ours} that distills keypoint-level experiences from historical interactions, each capturing a critical decision step that directly influences task outcomes. 
+To ensure long-term memory quality, {\ours} employs an LLM-independent, utility-based refinement mechanism that incorporates only reliable experiences and prunes ineffective ones. 
+Our framework enables agents to leverage prior knowledge effectively, avoid blind exploration, and maintain a high-quality, dynamic experience pool that evolves with their improving capabilities. 
+Experiments on BFCL-V3 and AppWorld show that {\ours} significantly boosts the agent's task-solving ability, yielding average absolute performance gains of 10.65\% Avg@4 and 10.53\% Pass@4 compared to the naive Qwen3-8B baseline. 
+Ablation studies confirm the advantage of fine-grained experience collection and further reveal that combining robust experience refinement with failure-aware reflection promisingly strengthens the agent experience-driven inference. 
+\end{abstract}
+
+

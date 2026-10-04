@@ -1,0 +1,87 @@
+% Shared packages and lightweight drafting commands for the RSI survey.
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{balance}
+\usepackage{etoolbox}
+\usepackage{capt-of}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+
+% Preamble
+\usepackage[table]{xcolor}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{amssymb}
+\usepackage{caption}
+\hypersetup{hidelinks}
+\usepackage{fix-cm}
+
+\setlist[itemize]{leftmargin=0.6cm,topsep=1pt,itemsep=0pt}
+\setlist[enumerate]{leftmargin=0.6cm,topsep=1pt,itemsep=0pt}
+\renewcommand{\arraystretch}{1.25}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% Compatibility definitions retained for the restored author block in main.tex.
+\definecolor{github_purple}{rgb}{0.302,0.165,0.498}
+\newcommand{\githubicon}{\raisebox{-0.55ex}{\includegraphics[width=0.5cm]{figures/github_icon.png}}}
+
+% Insert the full-width teaser inside IEEEtran's title block.
+% \newcommand{\insertfig}{
+%   \begin{center}
+%     \setcounter{figure}{0}
+%     % \includegraphics[width=\textwidth]{figures/overview-v2.png}
+%     \includegraphics[width=\textwidth]{figures/rsi-overview-v5.pdf}
+%     \captionof{figure}{An Overview of Recursive Self-Improvement.}
+%     \label{fig:overview}
+%     \vspace{-3em}
+%   \end{center}
+% }
+
+% \makeatletter
+% \apptocmd{\@maketitle}{\centering\insertfig}{}{}
+% \makeatother
+
+\newcommand{\zxh}[1]{\textcolor{blue}{#1}}
+\newcommand{\dy}[1]{\textcolor[RGB]{56,87,35}{#1}} %段毅
+\newcommand{\dyemf}[1]{\textcolor{teal}{#1}} %段毅
+
+
+\newcommand{\ly}[1]{\textcolor[RGB]{232,130,92}{#1}} %刘滢
+\newcommand{\tzr}[1]{\textcolor[RGB]{61,115,178}{#1}} %汤子瑞
+\newcommand{\zj}[1]{\textcolor[RGB]{0,32,96}{#1}} %周俊
+
+\newcommand{\chd}[1]{\textcolor[RGB]{112,48,160}{#1}} %陈昊东
+\newcommand{\lym}[1]{\textcolor[RGB]{194,41,74}{#1}} %刘禹谋
+\definecolor{wykcolor}{RGB}{170,95,0}
+\newcommand{\wyk}[1]{\textcolor{black}{#1}} %吴宇锴
+
+% L1 improvement-loop step box
+\newcommand{\LoneStep}[1]{%
+  \fcolorbox{black!35}{white}{%
+    \rule{0pt}{2.2ex}\hspace{3pt}\footnotesize #1\hspace{3pt}}%
+}
+
+\newcommand{\subsep}{%
+    \arrayrulecolor{gray!20}\hline
+    \arrayrulecolor{black}
+}
+
+
+\newcommand{\bfit}[1]{\textbf{\textit{#1}}}
+\newcommand{\RSI}{{RSI}}
+\newcommand{\AISystem}{AI system}
+\newcommand{\Improver}{\emph{improver}}
+\newcommand{\Verifier}{\emph{verifier}}
+% \newcommand{\AcceptanceRule}{\emph{acceptance rule}}
+\newcommand{\Successor}{\emph{successor}}
+% \newcommand{\ImprovementLoop}{\emph{improvement loop}}
+% \newcommand{\AuthorityFrontier}{\emph{improvement authority frontier}}
+\newcommand{\hi}[1]{\vspace{.25em} \noindent {\bf #1}\xspace}
+
+\titleformat*{\paragraph}{\bfseries}

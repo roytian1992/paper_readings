@@ -1,0 +1,110 @@
+{
+  "paper_id": "2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954",
+  "source_path": "",
+  "source_archive_path": "sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_darwin-g-odel-machine-the-dgm-iteratively-builds",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_001_darwin-g-odel-machine-the-dgm-iteratively-builds.png",
+      "caption": "\\textbf{Darwin G\\\"odel Machine.} The DGM iteratively builds a growing archive of agents by interleaving self-modification with downstream task evaluation. Agents in the archive are selected for self-modification through open-ended exploration.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/conceptual.pdf"
+    },
+    {
+      "id": "source_figure_002_1_self-improvement-and-open-ended-exploration-enab",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_002_1_self-improvement-and-open-ended-exploration-enab.png",
+      "caption": "\\textbf{Self-improvement and open-ended exploration enable the DGM to continue making progress and improve its performance.} The DGM automatically discovers increasingly better coding agents and performs better on both (Left) SWE-bench and (Right) Polyglot. It outperforms baselines that lack either self-improvement or open-ended exploration, showing that both components are essential for continual self-improvement. These scores are obtained from evaluating on the benchmark subsets detailed in \\Cref{sec:benchmarks}.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_comparisons.pdf"
+    },
+    {
+      "id": "source_figure_002_2_self-improvement-and-open-ended-exploration-enab",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_002_2_self-improvement-and-open-ended-exploration-enab.png",
+      "caption": "\\textbf{Self-improvement and open-ended exploration enable the DGM to continue making progress and improve its performance.} The DGM automatically discovers increasingly better coding agents and performs better on both (Left) SWE-bench and (Right) Polyglot. It outperforms baselines that lack either self-improvement or open-ended exploration, showing that both components are essential for continual self-improvement. These scores are obtained from evaluating on the benchmark subsets detailed in \\Cref{sec:benchmarks}.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_comparisons_polyglot.pdf"
+    },
+    {
+      "id": "source_figure_003_1_the-dgm-automatically-self-improves-to-become-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_003_1_the-dgm-automatically-self-improves-to-become-a.png",
+      "caption": "\\textbf{The DGM automatically self-improves to become a better coding agent.} (Left) Archive of coding agents generated during the DGM run on SWE-bench. Each node represents a coding agent, with node 0 corresponding to the base agent. Node color indicates performance on SWE-bench (percentage of solved tasks), while border color reflects the number of tasks for which the agent was evaluated. Edges show which agents self-modified to produce the offsprings. Many paths to innovation traverse lower-performing nodes, and key innovations (like node 24) lead to an explosion of innovations built on top of them. Both properties underscore the benefits of open-ended search. (Right) Progress plot of the DGM on SWE-bench. The light blue line shows the average score of all agents possessing basic codebase-editing functionality. The blue line tracks the best score achieved by any agent in the archive at each iteration. The dark line shows the lineage of the final best-discovered agent and its precursor nodes, which includes two performance dips. This illustrates the benefits of open-ended search, which explores a diverse set of interesting stepping stones instead of focusing only on branching off the best solution found so far.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_archive.pdf"
+    },
+    {
+      "id": "source_figure_003_2_the-dgm-automatically-self-improves-to-become-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_003_2_the-dgm-automatically-self-improves-to-become-a.png",
+      "caption": "\\textbf{The DGM automatically self-improves to become a better coding agent.} (Left) Archive of coding agents generated during the DGM run on SWE-bench. Each node represents a coding agent, with node 0 corresponding to the base agent. Node color indicates performance on SWE-bench (percentage of solved tasks), while border color reflects the number of tasks for which the agent was evaluated. Edges show which agents self-modified to produce the offsprings. Many paths to innovation traverse lower-performing nodes, and key innovations (like node 24) lead to an explosion of innovations built on top of them. Both properties underscore the benefits of open-ended search. (Right) Progress plot of the DGM on SWE-bench. The light blue line shows the average score of all agents possessing basic codebase-editing functionality. The blue line tracks the best score achieved by any agent in the archive at each iteration. The dark line shows the lineage of the final best-discovered agent and its precursor nodes, which includes two performance dips. This illustrates the benefits of open-ended search, which explores a diverse set of interesting stepping stones instead of focusing only on branching off the best solution found so far.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_progress.pdf"
+    },
+    {
+      "id": "source_figure_004_transfer-between-models-benchmarks-and-tasks-the",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_004_transfer-between-models-benchmarks-and-tasks-the.png",
+      "caption": "\\textbf{Transfer between Models, Benchmarks, and Tasks.} The superior performance of DGM-discovered agents can be transferred across (Left) different models, (Middle) benchmarks, and (Right) different programming language tasks in Polyglot, such as from Python tasks to C++ tasks.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/transfer_model_task.pdf"
+    },
+    {
+      "id": "source_figure_005_dgm-without-self-improving-agents-keeping-the-me",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_005_dgm-without-self-improving-agents-keeping-the-me.png",
+      "caption": "\\textbf{DGM without self-improving agents.} Keeping the meta-agent that is modifying and producing the next coding agents the same, DGM w/o self-improve is unable to continuously improve over time. (Left) Archive of coding agents generated during the DGM w/o self-improve run on SWE-bench. Each node represents a coding agent, with node 0 corresponding to the base agent. Node color indicates performance on SWE-bench (percentage of solved tasks), while border color reflects the number of tasks for which the agent was evaluated. Edges show which agents self-modified to produce the offsprings. (Right) Progress plot of the DGM w/o self-improve on SWE-bench. The light green line shows the average score of all agents possessing basic codebase-editing functionality. The green line tracks the best score achieved by any agent in the archive at each iteration. The dark line shows the lineage of the final best-discovered agent and its precursor nodes.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_wo_selfimprove.pdf"
+    },
+    {
+      "id": "source_figure_006_dgm-without-open-ended-exploration-removing-the",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_006_dgm-without-open-ended-exploration-removing-the.png",
+      "caption": "\\textbf{DGM without open-ended exploration.} Removing the archive, DGM w/o open-ended exploration always uses the most recent agent to self-modify and makes very little progress on SWE-bench. (Left) Archive of coding agents generated during the DGM w/o open-ended exploration run on SWE-bench. Each node represents a coding agent, with node 0 corresponding to the base agent. Node color indicates performance on SWE-bench (percentage of solved tasks), while border color reflects the number of tasks for which the agent was evaluated. Edges show which agents self-modified to produce the offsprings. (Right) Progress plot of the DGM w/o open-ended on SWE-bench. The orange line shows the average score of all agents possessing basic codebase-editing functionality. The light orange line tracks the best score achieved by any agent in the archive at each iteration. The dark line shows the lineage of the final best-discovered agent and its precursor nodes.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/dgm_wo_openended.pdf"
+    },
+    {
+      "id": "source_figure_007_transfer-between-models-on-polyglot",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_007_transfer-between-models-on-polyglot.png",
+      "caption": "\\textbf{Transfer between Models on Polyglot}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/transfer_model_polyglot.pdf"
+    },
+    {
+      "id": "source_figure_008_the-dgm-solving-hallucination-of-tool-use-in-fms",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_008_the-dgm-solving-hallucination-of-tool-use-in-fms.png",
+      "caption": "\\textbf{The DGM solving hallucination of tool use in FMs.} Archive of coding agents generated during the DGM run on SWE-bench to solve hallucination from FMs. Each node represents an agent, with node 0 corresponding to the base agent. Node color indicates solved hallucination score, while border color reflects whether the agent has basic codebase-editing functionality. Edges show which agents self-modified to produce the offsprings.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "solve_halluc/dgm_halluc.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-10-03"
+}

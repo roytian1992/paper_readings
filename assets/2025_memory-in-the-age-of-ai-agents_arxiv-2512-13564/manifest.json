@@ -1,0 +1,121 @@
+{
+  "paper_id": "2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564",
+  "source_path": "sources/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.pdf",
+  "source_archive_path": "sources/arXiv-2512.13564v2.tar.gz",
+  "source_extract_path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/source",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_overview",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_001_overview.png",
+      "caption": "Figure 1 overview of agent memory organized by Forms, Functions, and Dynamics.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/main.png",
+      "number": "1"
+    },
+    {
+      "id": "source_figure_002_concept-comparison",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_002_concept-comparison.png",
+      "caption": "Figure 2 conceptual comparison of Agent Memory, LLM Memory, RAG, and Context Engineering.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/concept.pdf",
+      "number": "2"
+    },
+    {
+      "id": "source_figure_003_token-level-taxonomy",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_003_token-level-taxonomy.png",
+      "caption": "Figure 3 taxonomy of token-level memory.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/sec3-3.1.pdf",
+      "number": "3"
+    },
+    {
+      "id": "source_figure_004_latent-memory",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_004_latent-memory.png",
+      "caption": "Figure 4 overview of latent memory integration in LLM agents.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/latent.pdf",
+      "number": "4"
+    },
+    {
+      "id": "source_figure_005_memory-paradigms",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_005_memory-paradigms.png",
+      "caption": "Figure 5 comparison of token-level, parametric, and latent memory paradigms.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/comparison.pdf",
+      "number": "5"
+    },
+    {
+      "id": "source_figure_006_functional-taxonomy",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_006_functional-taxonomy.png",
+      "caption": "Figure 6 functional taxonomy of agent memory.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/sec4-all-new.pdf",
+      "number": "6"
+    },
+    {
+      "id": "source_figure_007_experiential-memory",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_007_experiential-memory.png",
+      "caption": "Figure 7 taxonomy of experiential memory paradigms.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/sec4-4.2.pdf",
+      "number": "7"
+    },
+    {
+      "id": "source_figure_008_memory-dynamics",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_008_memory-dynamics.png",
+      "caption": "Figure 8 operational dynamics of agent memory.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/sec5-whole.pdf",
+      "number": "8"
+    },
+    {
+      "id": "source_figure_009_memory-evolution",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_009_memory-evolution.png",
+      "caption": "Figure 9 landscape of memory evolution mechanisms.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/sec5-mem-evolution.pdf",
+      "number": "9"
+    },
+    {
+      "id": "source_figure_011_rl-memory",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_011_rl-memory.png",
+      "caption": "Figure 11 evolution of RL-enabled agent memory systems.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/frontier-rl-memory-new.pdf",
+      "number": "11"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-05-29"
+}

@@ -1,0 +1,216 @@
+\section{Experiments}
+\label{sec:experiments}
+
+We evaluate \ours{} on two long-term-memory benchmarks: LoCoMo and MemBench. Our experiments address the following questions: (1)~Does the self-evolution mechanism produce substantial gains from the baseline configuration, and how does \ours{} compare to current baselines? (2)~How does the evolution trajectory unfold, and what new dimensions does the diagnosis LLM discover? (3)~What is the contribution of each component? (4)~Do evolved configurations transfer across benchmarks, indicating that the self-evolution process captures universal retrieval principles rather than benchmark-specific heuristics?
+
+\subsection{Experimental Setup}
+\label{sec:setup}
+
+\noindent \textbf{Benchmarks.} We evaluate on two benchmarks covering different interaction regimes:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item \textbf{LoCoMo} \citep{maharana2024evaluating}: multi-session dialogues (19--32 sessions per sample, 369--689 turns) with 5 QA categories (single-hop, temporal, multi-hop/inferential, open-domain, adversarial name-swap). We report on the full LoCoMo-10 release: 10 conversations, 1{,}986 QA pairs.
+    \item \textbf{MemBench} \citep{membench2025}: a memory-tool-use benchmark with 7 LowLevel categories (simple, comparative, aggregative, conditional, knowledge\_update, post\_processing, noisy). We evaluate 28 samples drawn as $7\text{ categories}\times 2\text{ topics}\times 2\text{ samples each}$.
+\end{itemize}
+
+
+\noindent \textbf{Protocols \& Baselines.} LoCoMo uses token-level F1 and BLEU-1 (accuracy); MemBench uses exact-match multiple-choice accuracy. 
+% We additionally report a GPT-5.1 LLM-judge metric on LoCoMo that accepts paraphrases and number-format differences.  
+On LoCoMo we compare against six memory systems: MemVerse \citep{liu2025memverse}, Mem0 \citep{chhikara2025mem0}, Claude-Mem, A-MEM \citep{xu2025amem}, MemGPT \citep{packer2023memgpt}, and SimpleMem \citep{liu2026simplemem}. On MemBench we compare against RecentMemory  \citep{membench2025}, MemGPT \citep{packer2023memgpt}, MemoryBank \citep{zhong2024memorybank}, and SCMemory \citep{wang2024scm}. 
+
+\noindent \textbf{Implementation.} \ours{} uses SQLite/FTS5 for storage and BAAI/bge-base-en-v1.5 (768-dim) for embeddings. The initial configuration $\theta_0$ uses BM25-only fusion ($\text{mode}{=}\textsc{sum}$, semantic and structured views disabled), $k_{\text{kw}}{=}5$, $B_{\text{ctx}}{=}8$, with entity-swap and query decomposition disabled, providing a minimal starting point for the self-evolution process. The evolution loop runs up to $R_{\max}{=}7$ rounds.
+
+\begin{table*}[t]
+\centering
+\caption{\textbf{LoCoMo comparison} (token-F1 and BLEU-1) across two LLM backbones. Best baseline is \underline{underlined}; best overall is \textbf{bold}.}
+\label{tab:locomo_comparison}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ll cc cc cc cc cc cc}
+\toprule
+& & \multicolumn{2}{c}{\textbf{MultiHop}} & \multicolumn{2}{c}{\textbf{SingleHop}} & \multicolumn{2}{c}{\textbf{Temporal}} & \multicolumn{2}{c}{\textbf{OpenDomain}} & \multicolumn{2}{c}{\textbf{Adversarial}} & \multicolumn{2}{c}{\textbf{Overall}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}\cmidrule(lr){11-12}\cmidrule(lr){13-14}
+\textbf{Backbone} & \textbf{Method} & F1 & BLEU & F1 & BLEU & F1 & BLEU & F1 & BLEU & F1 & BLEU & F1 & BLEU \\
+\midrule
+\multirow{7}{*}{GPT-4o}
+& MemVerse    & 0.260 & 0.217 & 0.157 & 0.130 & 0.196 & 0.175 & 0.192 & 0.165 & \textbf{0.944} & \textbf{0.944} & 0.365 & 0.342 \\
+& Mem0        & 0.309 & 0.261 & 0.156 & 0.132 & 0.217 & 0.186 & 0.295 & 0.262 & 0.857 & 0.859 & 0.397 & 0.371 \\
+& Claude-Mem  & 0.294 & 0.254 & 0.153 & 0.133 & 0.167 & 0.132 & 0.243 & 0.215 & 0.915 & 0.915 & 0.383 & 0.360 \\
+& A-MEM       & 0.295 & 0.250 & 0.174 & 0.157 & 0.200 & 0.171 & 0.266 & 0.234 & 0.898 & 0.897 & 0.394 & 0.370 \\
+& MemGPT      & 0.305 & 0.257 & 0.188 & 0.166 & \underline{0.246} & \underline{0.227} & 0.305 & 0.268 & 0.843 & 0.839 & 0.404 & 0.376 \\
+& SimpleMem   & \textbf{0.318} & \underline{0.328} & \underline{0.195} & \underline{0.393} & 0.235 & 0.206 & \underline{0.402} & \underline{0.347} & 0.802 & 0.691 & \underline{0.432} & \underline{0.407} \\
+& \ours{}     & 0.316 & \textbf{0.410} & \textbf{0.329} & \textbf{0.399} & \textbf{0.384} & \textbf{0.589} & \textbf{0.496} & \textbf{0.490} & \underline{0.936} & \underline{0.847} & \textbf{0.543} & \textbf{0.569} \\
+\midrule
+\multirow{7}{*}{GPT-5.1}
+& MemVerse    & 0.287 & 0.240 & 0.173 & 0.150 & \underline{0.277} & 0.249 & 0.297 & 0.276 & 0.780 & 0.778 & 0.383 & 0.362 \\
+& Mem0        & 0.292 & 0.249 & 0.160 & 0.136 & 0.261 & 0.242 & 0.298 & 0.274 & 0.819 & 0.818 & 0.390 & 0.369 \\
+& Claude-Mem  & 0.289 & 0.246 & 0.171 & 0.146 & 0.264 & 0.244 & 0.292 & 0.271 & 0.814 & 0.814 & 0.388 & 0.368 \\
+& A-MEM       & 0.287 & 0.242 & 0.164 & 0.144 & 0.246 & 0.218 & 0.284 & 0.263 & \underline{0.826} & \underline{0.825} & 0.385 & 0.365 \\
+& MemGPT      & 0.288 & 0.243 & 0.165 & 0.140 & 0.249 & 0.230 & 0.294 & 0.273 & 0.806 & 0.803 & 0.385 & 0.364 \\
+& SimpleMem   & \underline{0.305} & \underline{0.294} & \underline{0.178} & \underline{0.165} & 0.272 & \underline{0.253} & \underline{0.305} & \underline{0.276} & 0.807 & 0.802 & \underline{0.418} & \underline{0.376} \\
+& \ours{}     & \textbf{0.352} & \textbf{0.339} & \textbf{0.337} & \textbf{0.350} & \textbf{0.541} & \textbf{0.387} & \textbf{0.519} & \textbf{0.510} & \textbf{0.902} & \textbf{0.870} & \textbf{0.572} & \textbf{0.536} \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{-1em}
+\end{table*}
+
+
+\subsection{Main Results}
+\label{sec:main_results}
+
+Tables~\ref{tab:locomo_comparison} and~\ref{tab:membench_comparison} report the full comparison.  See Appendix~\ref{app:efficiency} for efficiency analysis and Appendix~\ref{app:case_study} for a per-question case study illustrating how each evolution round contributes a distinct mechanism. \ours{} substantially outperforms all published methods on both benchmarks and both backbone models.
+
+\noindent \textbf{Comparison on LoCoMo.} On GPT-4o, \ours{} achieves an overall F1 of 0.543, outperforming SimpleMem (0.432) by 25.7\% relative. The largest gains appear in temporal (+63.4\%) and single-hop (+68.7\%) categories, driven by the recency-weighted fusion and semantic retrieval that the evolution engine activates in early rounds. On GPT-5.1, \ours{} leads on all columns with an overall relative gain of 36.8\% over SimpleMem, with temporal reaching 98.9\% relative improvement. The gains are consistent across backbones, confirming that the evolved pipeline is not model-specific.
+
+
+
+
+\begin{table}[t]
+\centering
+\caption{\textbf{MemBench comparison} (accuracy \%) across two backbones. \textit{Recall} aggregates \textsc{simple} and \textsc{knowledge\_update}; \textit{Reasoning} aggregates \textsc{comparative}, \textsc{aggregative}, and \textsc{conditional}; \textit{Robustness} aggregates \textsc{post\_processing} and \textsc{noisy}. Best overall is \textbf{bold}.}
+\label{tab:membench_comparison}
+\vspace{0.8em}
+\footnotesize 
+\setlength{\tabcolsep}{3.5pt} 
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}l cccc p{0.5em} cccc@{}} 
+\toprule
+& \multicolumn{4}{c}{\textbf{GPT-4o}} && \multicolumn{4}{c}{\textbf{GPT-5.1}} \\
+\cmidrule{2-5} \cmidrule{7-10}
+\textbf{Method} & \textbf{Recall} & \textbf{Reasoning} & \textbf{Robustness} & \textbf{Overall} && \textbf{Recall} & \textbf{Reasoning} & \textbf{Robustness} & \textbf{Overall} \\
+\midrule
+RecentMem & \underline{62.5} & \underline{50.0} & 62.5 & \underline{57.1} && \underline{75.0} & 50.0 & \underline{62.5} & 60.7 \\
+MemGPT    & \underline{62.5} & \underline{50.0} & 62.5 & \underline{57.1} && \underline{75.0} & \underline{58.3} & 50.0 & 60.7 \\
+MemBank   & 37.5 & 33.3 & \textbf{75.0} & 46.4 && \underline{75.0} & 50.0 & \textbf{75.0} & \underline{64.3} \\
+SCMem     & \underline{62.5} & 25.0 & 37.5 & 39.3 && 50.0 & 25.0 & 25.0 & 32.1 \\
+\ours{}   & \textbf{87.5} & \textbf{66.7} & 50.0 & \textbf{67.9} && \textbf{87.5} & \textbf{66.7} & 62.5 & \textbf{71.4} \\
+\bottomrule
+\end{tabular}
+\vspace{-1.5em}
+\end{table}
+
+
+\noindent \textbf{Comparison on MemBench.} \ours{} attains the best overall accuracy on both backbones (67.9\% on GPT-4o, 71.4\% on GPT-5.1), exceeding the strongest baseline by 18.9\% and 11.0\% relative. Gains concentrate in Recall (+40.0\% on GPT-4o) and Reasoning (+33.4\%), reflecting temporal-disambiguation prompts and category-specific query decomposition discovered by the evolution engine. Robustness remains the weakest dimension; failure-log inspection localizes the gap to \textsc{post\_processing}, where relevant memories are absent from the store, indicating a coverage limitation that retrieval-level adjustments cannot resolve.
+
+
+
+\subsection{Self-Evolution Trajectory and Dimension Discovery}
+\label{sec:evolution_analysis}
+\begin{wraptable}{r}{0.55\textwidth}
+\centering
+\small
+\vspace{-1.5em}
+\caption{Self-evolution trajectory on LoCoMo (single-backbone GPT-4o). Each round records the structured adjustment proposed by the diagnosis module and validated by the meta-analyzer.}
+\label{tab:evolution_curve}
+\vspace{-0.4em}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}cl>{\raggedright\arraybackslash}p{4.2cm}c@{}}
+\toprule
+\textbf{Round} & \textbf{Stage} & \textbf{Automated change} & \textbf{F1 (\%)} \\
+\midrule
+R0 & weak & BM25-only, $k{=}5$, $B_{\text{ctx}}{=}8$ & 30.5 \\
+R1 & auto & intent planning + RRF fusion & 35.8 \\
+R2 & revert & MMR diversity on Cat.~3 (reverted) & 34.8 \\
+R3 & auto & entity-swap for Cat.~5 & 37.2 \\
+R4 & auto & per-category answer-style flags & 38.5 \\
+R5 & auto & query decomposition for Cat.~1/4 & 38.1 \\
+R6 & auto & Cat.~3 inferential subtypes + Cat.~5 entity-swap expansion & 45.4 \\
+R7 & auto & answer verification + hyperparameter sweep + ctx-budget tuning & \textbf{54.3} \\
+\bottomrule
+\end{tabular}
+\vspace{-1.0em}
+\end{wraptable}
+
+Table~\ref{tab:evolution_curve} traces the self-evolution trajectory from $\theta_0$ under GPT-4o. Every round is fully autonomous: the diagnosis module reads the previous round's per-question raw log, analyzes failure patterns, and proposes a targeted adjustment that the meta-analyzer validates under Eq.~\ref{eq:meta_update}. The early rounds progressively activate retrieval mechanisms that were dormant in $\theta_0$, including the semantic view (R1), entity-swap (R3), and query decomposition (R5), while also tuning fusion modes, view weights, and per-category answer styles. R2 illustrates the revert guard: the proposed change regressed overall F1, so the meta-analyzer automatically rolled back. R6 refines per-category answer styles with inferential subtype handling for Cat.~3, and R7 introduces a second-pass answer verifier together with cross-category context-budget tuning.
+
+Three configuration dimensions activated by the diagnosis LLM account for most of the gain over $\theta_0$, and each is independently verifiable in the ablation study (Table~\ref{tab:ablation}). Adversarial entity-swap, activated at R3, strips person names from queries before retrieval and recovers a parallel evidence pool that the original lexical view discards. Query decomposition, activated at R5, splits complex multi-hop questions into single-hop sub-queries and merges the results. Answer verification, introduced at R7, runs a second LLM pass that reviews low-confidence responses against the retrieved evidence. Each was discovered by the diagnosis LLM through inspecting raw failure logs and proposing structural improvements, rather than by a benchmark-specific patch. The full trajectory from 30.5\% at R0 to 54.3\% at R7, a 78.0\% relative improvement, is produced end-to-end by the autonomous evolution loop without manual intervention.
+
+
+\subsection{Cross-Benchmark Transfer and Generalization}
+\label{app:transfer}
+
+\begin{wraptable}{r}{0.50\textwidth}
+\centering
+\small
+\vspace{-1.0em}
+\caption{Cross-benchmark transfer (GPT-4o). $\mathcal{C}_L$ is evolved on LoCoMo only, $\mathcal{C}_{LM}$ continues evolution on MemBench from $\mathcal{C}_L$, and $\mathcal{C}_M$ is evolved on MemBench from scratch. \textbf{Bold} marks the best in each column.}
+\label{tab:transfer}
+\vspace{-0.4em}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l c c@{}}
+\toprule
+\textbf{Configuration} & \textbf{LoCoMo} & \textbf{MemBench} \\
+\midrule
+Baseline & 0.305 & / \\
+\addlinespace[2pt]
+$\mathcal{C}_L$~{\scriptsize(LoCoMo only)} & 0.543 & 0.543 \\
+$\mathcal{C}_{LM}$~{\scriptsize(LoCoMo$\to$MemBench)} & \textbf{0.593} & \textbf{0.792} \\
+$\mathcal{C}_M$~{\scriptsize(MemBench only)} & / & 0.679 \\
+\bottomrule
+\end{tabular}
+\vspace{-1.0em}
+\end{wraptable}
+
+A central claim of \ours{} is that self-evolution discovers generalizable retrieval principles rather than benchmark-specific heuristics. To test this, we evolve $\mathcal{C}_L$ on LoCoMo for seven rounds, apply it zero-shot to MemBench, then continue evolving to produce $\mathcal{C}_{LM}$ and evaluate on both benchmarks. Table~\ref{tab:transfer} reports the results, with $\mathcal{C}_M$ (evolved on MemBench from scratch) as reference. \textbf{(1)~Zero-shot transfer is effective.} $\mathcal{C}_L$ attains 54.3\% on MemBench without any MemBench-specific tuning, confirming that retrieval principles acquired on LoCoMo transfer to a benchmark with distinct question style and data distribution. \textbf{(2)~Continued evolution from a LoCoMo prior outperforms scratch evolution.} $\mathcal{C}_{LM}$ reaches 79.2\% on MemBench, exceeding the natively evolved $\mathcal{C}_M$ (67.9\%) by 16.6\% relative. \textbf{(3)~Positive rather than catastrophic transfer.} $\mathcal{C}_{LM}$ also improves LoCoMo F1 from 0.543 to 0.593 (+9.2\% relative), a Pareto improvement on both benchmarks.
+
+
+
+
+\subsection{Ablation Study}
+\label{sec:ablation}
+
+Table~\ref{tab:ablation} ablates key components on LoCoMo by removing each one from the full system and re-running the evolution procedure.
+
+
+\begin{wraptable}{r}{0.48\textwidth}
+\centering
+\small
+\vspace{-0.5em}
+\caption{Ablation study on LoCoMo (F1~\%). Each row removes one component from the full system; $\Delta$ is the drop relative to the full setting.}
+\label{tab:ablation}
+\vspace{-0.4em}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Configuration} & \textbf{F1 (\%)} & \textbf{$\Delta$} \\
+\midrule
+\ours{}                                                   & \textbf{54.3} & -- \\
+\midrule
+$-$ Extraction quality control                            & 31.08 & $-$23.22 \\
+$-$ Semantic search                                       & 43.98 & $-$10.32 \\
+$-$ LLM-powered diagnosis                                 & 44.67 & $-$9.63 \\
+$-$ BM25 keyword search                                   & 47.43 & $-$6.87 \\
+$-$ Entity-swap retrieval                                 & 51.20 & $-$3.10 \\
+$-$ Query decomposition                                   & 51.46 & $-$2.84 \\
+$-$ Structured metadata search                            & 51.97 & $-$2.33 \\
+$-$ Self-evolution                                        & 52.27 & $-$2.03 \\
+$-$ Answer verification                                   & 52.47 & $-$1.83 \\
+\midrule
+Baseline (all disabled)                                   & 30.50 & $-$23.80 \\
+\bottomrule
+\end{tabular}
+\vspace{-2.0em}
+\end{wraptable}
+
+
+\noindent \textbf{Extraction quality control.} Removing the three extraction guards (retries, chunk-splitting, coverage
+  verification) is the single most damaging ablation ($-$23.22\,F1), nearly halving extraction yield and starving the
+  retriever of raw material. Extraction quality is thus the foundation on which all downstream improvements rest.  
+  
+  \noindent \textbf{Multi-view retrieval.} Semantic search contributes the most ($-$10.32), followed by BM25 ($-$6.87) and   
+  structured metadata ($-$2.33), indicating that fuzzy conceptual matching captures paraphrased and abstractly-stated
+  queries that keyword matching misses. All three views contribute positively, validating the multi-view design. 
+  
+  \noindent \textbf{LLM-powered diagnosis vs.\ random search.} Replacing the diagnosis module with random perturbations over 
+  the same action space costs $-$9.63\,F1, confirming that reading per-question failure logs provides meaningful
+  signal.    
+
+  \noindent \textbf{Discovered dimensions.} The three diagnosis-discovered components (entity-swap, query
+  decomposition, answer verification) jointly contribute $-$7.77\,F1, demonstrating value beyond the initial action
+  space.
+
+  \noindent \textbf{Sensitivity.} Ablation drops span an order of magnitude ($-$23.22 to $-$1.83), and no single component dominates: the evolution loop discovered complementary rather than redundant retrieval components.
+
+
+

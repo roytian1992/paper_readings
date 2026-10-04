@@ -1,0 +1,191 @@
+% =========================================================
+% RSI_TABLE_STYLE.TEX
+% Only visual/style definitions live here.
+% Do NOT put \usepackage, \begin{document}, or table content here.
+% =========================================================
+
+% =========================================================
+% Colors
+% =========================================================
+\definecolor{Qone}{HTML}{9ECAE1}
+\definecolor{Qtwo}{HTML}{6BAED6}
+\definecolor{Qthree}{HTML}{4292C6}
+\definecolor{Qfour}{HTML}{2171B5}
+\definecolor{Qfive}{HTML}{084594}
+
+\definecolor{HeaderBlue}{HTML}{E8F1F8}
+\definecolor{GroupBlue}{HTML}{F2F7FB}
+\definecolor{RuleBlue}{HTML}{AFC6D8}
+\definecolor{CitationColor}{HTML}{172B4D}
+\definecolor{MutedText}{HTML}{4F5B66}
+
+% =========================================================
+% Column types
+% =========================================================
+\newcolumntype{Y}{>{\centering\arraybackslash\hspace{0pt}}X}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% =========================================================
+% Empty cells
+% =========================================================
+\newcommand{\empt}{\textcolor{black!30}{---}}
+
+% =========================================================
+% Capability stars
+% =========================================================
+\newcommand{\cstar}[1]{%
+  \textcolor{#1}{\raisebox{-0.06ex}{\ensuremath{\scriptstyle\bigstar}}}%
+}
+
+\newcommand{\starjoin}{\ensuremath{\mkern-5mu}}
+
+\newcommand{\qstarsone}{%
+  \cstar{Qone}%
+}
+
+\newcommand{\qstarstwo}{%
+  \cstar{Qtwo}\starjoin
+  \cstar{Qtwo}%
+}
+
+\newcommand{\qstarsthree}{%
+  \cstar{Qthree}\starjoin
+  \cstar{Qthree}\starjoin
+  \cstar{Qthree}%
+}
+
+\newcommand{\qstarsfour}{%
+  \cstar{Qfour}\starjoin
+  \cstar{Qfour}\starjoin
+  \cstar{Qfour}\starjoin
+  \cstar{Qfour}%
+}
+
+\newcommand{\qstarsfive}{%
+  \cstar{Qfive}\starjoin
+  \cstar{Qfive}\starjoin
+  \cstar{Qfive}\starjoin
+  \cstar{Qfive}\starjoin
+  \cstar{Qfive}%
+}
+
+\newcommand{\capabilitystars}[1]{%
+  \ifcase#1\relax
+  \or\qstarsone
+  \or\qstarstwo
+  \or\qstarsthree
+  \or\qstarsfour
+  \or\qstarsfive
+  \fi
+}
+
+% =========================================================
+% Coarse target tags used as citation superscripts
+%
+% M = Model
+% P = Prompt
+% S = Memory / Skills
+% W = Agent / Workflow
+% D = Data / Experience
+% T = Trainer
+% E = Evaluator
+% I = Improver
+% G = Goal / Task
+% =========================================================
+\newcommand{\targettag}[1]{%
+  \textsuperscript{%
+    \raisebox{0.05ex}{%
+      \scriptsize
+      \textcolor{MutedText}{\textbf{#1}}%
+    }%
+  }%
+}
+
+% =========================================================
+% Work token
+%
+% Usage:
+%   \work{bibkey}{target}{capability}
+%
+% Example:
+%   \work{zhao2025absolutezero}{M}{3}
+%
+% Visual form:
+%   [Ref]^M ★★★
+% =========================================================
+\newcommand{\work}[3]{%
+  \mbox{%
+    \textcolor{CitationColor}{\textbf{\cite{#1}}}%
+    \targettag{#2}%
+    \hspace{0.10em}%
+    \capabilitystars{#3}%
+  }%
+}
+
+\newcommand{\workcell}[1]{%
+  \makecell[c]{#1}%
+}
+
+% =========================================================
+% Header / group helpers
+% =========================================================
+\newcommand{\levelhead}[2]{%
+  \makecell[c]{%
+    \textbf{#1}\\[-0.08em]
+    \scriptsize\color{MutedText}#2%
+  }%
+}
+
+\newcommand{\groupname}[2]{%
+  \makecell[c]{%
+    \textbf{\color{CitationColor}#1}\\[-0.08em]
+    \textbf{\color{CitationColor}#2}%
+  }%
+}
+
+\newcommand{\groupnamethree}[3]{%
+  \makecell[c]{%
+    \textbf{\color{CitationColor}#1}\\[-0.08em]
+    \textbf{\color{CitationColor}#2}\\[-0.08em]
+    \textbf{\color{CitationColor}#3}%
+  }%
+}
+
+\newcommand{\mechanism}[2]{%
+  \makecell[c]{%
+    #1\\[-0.08em]
+    #2%
+  }%
+}
+
+% =========================================================
+% Internal separator rules
+%
+% Current table has 7 columns:
+% Stage | Mechanism | L1 | L2 | L3 | L4 | L5
+%
+% The first segment is hidden so the internal horizontal
+% rule does not cut through the merged Stage label.
+% =========================================================
+\newcommand{\techrule}{%
+  \arrayrulecolor{white}%
+  \hhline{->{\arrayrulecolor{RuleBlue!68}}------}%
+  \arrayrulecolor{black}%
+}
+
+\newcommand{\techruleblue}{%
+  \arrayrulecolor{GroupBlue}%
+  \hhline{->{\arrayrulecolor{RuleBlue!68}}------}%
+  \arrayrulecolor{black}%
+}
+
+% =========================================================
+% Caption style
+% =========================================================
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  justification=raggedright,
+  singlelinecheck=false,
+  skip=5pt
+}

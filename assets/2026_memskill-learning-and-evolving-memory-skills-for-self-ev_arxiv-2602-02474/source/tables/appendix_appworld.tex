@@ -1,0 +1,76 @@
+\begin{table*}[t]
+    \footnotesize
+    \centering
+    \setlength{\tabcolsep}{5pt}
+    \caption{\textbf{More comparison results on AppWorld \textit{with} and \textit{without} in-context demonstrations.}}
+    \label{tab:more_exp_appworld}
+
+    \begin{tabular}{>{\centering\arraybackslash}m{0.5cm} l cc cc c | cc cc c}
+        \toprule
+        \multirow{3}{*}{\textbf{Model}} &
+        \multirow{3}{*}{\textbf{Methods}} &
+        \multicolumn{10}{c}{\textbf{Interactive Tool-Use Benchmark}} \\
+        \cmidrule(lr){3-7} \cmidrule(lr){8-12}
+        & &
+        \multicolumn{2}{c}{\textbf{Test-N}} &
+        \multicolumn{2}{c}{\textbf{Test-C}} &
+        \multicolumn{1}{c|}{\textbf{Avg.}} &
+        \multicolumn{2}{c}{\textbf{Test-N$^\dagger$}} &
+        \multicolumn{2}{c}{\textbf{Test-C$^\dagger$}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-7}
+        \cmidrule(lr){8-9} \cmidrule(lr){10-11} \cmidrule(lr){12-12}
+        & &
+        \textbf{PR} & \textbf{\#Steps$\downarrow$} &
+        \textbf{PR} & \textbf{\#Steps$\downarrow$} &
+        \textbf{PR} &
+        \textbf{PR} & \textbf{\#Steps$\downarrow$} &
+        \textbf{PR} & \textbf{\#Steps$\downarrow$} &
+        \textbf{PR} \\
+        \midrule
+
+        % ===================== Base model block 1 =====================
+        \multirow{10}{*}{\rotatebox[origin=c]{90}{\shortstack{\textbf{LLaMA3.3}\\\textbf{70B-Instruct}}}} &
+        No-Memory   & 22.80 & 36.71 & 19.10 & 37.92 & 20.95 & 54.03 & 14.21 & 38.78 & 19.12 & 46.41 \\
+        & ReadAgent  & 23.43 & 34.82 & 20.49 & 31.36 & 21.96 & 53.76 & 14.54 & 38.67 & 19.24 & 46.22 \\
+        & MemoryBank & 23.28 & 35.66 & 19.96 & 33.34 & 21.62 & 53.66 & 14.89 & 38.46 & 18.84 & 46.06 \\
+        & A-MEM      & 22.13 & 38.46 & 17.60 & 38.46 & 19.87 & 52.85 & 14.31 & 38.16 & 18.78 & 45.51 \\
+        & Mem0       & 27.02 & 27.04 & 21.62 & 30.64 & 24.32 & 54.32 & 14.14 & 39.73 & 18.55 & 47.03 \\
+        & MemoryOS   & 23.24 & 38.26 & 19.17 & 36.17 & 21.21 & 53.14 & 13.62 & 38.52 & 17.83 & 45.83 \\
+        & LightMem   & 25.42 & 30.73 & 21.32 & 30.33 & 23.37 & 51.25 & 14.10 & 39.12 & 18.50 & 45.19 \\
+        & AWM        & 29.00 & \textbf{17.73} & 21.83 & \textbf{20.48} & 25.42 & 54.68 & 14.26 & 39.54 & 18.64 & 47.11 \\
+        & Expel      & 25.29 & 29.96 & 21.20 & 30.63 & 23.25 & 52.88 & 13.56 & 39.49 & 17.91 & 46.19 \\
+        & \cellcolor{hl-llama}\textbf{MemSkill} &
+        \cellcolor{hl-llama}\textbf{31.12} & \cellcolor{hl-llama}29.38 &
+        \cellcolor{hl-llama}\textbf{22.29} & \cellcolor{hl-llama}32.17 &
+        \cellcolor{hl-llama}\textbf{26.71} &
+        \cellcolor{hl-llama}\textbf{54.84} & \cellcolor{hl-llama}\textbf{13.25} &
+        \cellcolor{hl-llama}\textbf{39.79} & \cellcolor{hl-llama}\textbf{17.59} &
+        \cellcolor{hl-llama}\textbf{47.32} \\
+        \midrule
+
+        % ===================== Base model block 2 =====================
+        \multirow{10}{*}{\rotatebox[origin=c]{90}{\shortstack{$^\blacktriangle$\textbf{Qwen3-Next}\\\textbf{80B-A3B-Instruct}}}} &
+        No-Memory   & 22.41 & 38.39 & 19.99 & 36.78 & 21.20 & 47.68 & 16.81 & 38.42 & 19.70 & 43.05 \\
+        & ReadAgent  & 26.29 & 34.77 & 20.36 & 35.07 & 23.33 & 46.83 & 17.59 & 37.65 & 21.12 & 42.24 \\
+        & MemoryBank & 24.41 & 36.94 & 20.28 & 36.19 & 22.35 & 46.50 & 16.98 & 37.18 & 22.03 & 41.84 \\
+        & A-MEM      & 23.03 & 37.17 & 18.39 & 37.43 & 20.71 & 45.44 & 17.49 & 38.14 & 21.40 & 41.79 \\
+        & Mem0       & 40.42 & \textbf{18.48} & 22.16 & 22.97 & 31.29 & 50.19 & 15.11 & 39.64 & 20.33 & 44.92 \\
+        & MemoryOS   & 25.00 & 35.98 & 21.46 & 35.20 & 23.23 & 50.98 & 16.11 & 38.03 & 21.32 & 44.51 \\
+        & LightMem   & 36.90 & 23.71 & 23.44 & 27.05 & 30.17 & 48.91 & 17.23 & 40.85 & 21.14 & 44.88 \\
+        & AWM        & 27.02 & 23.90 & 22.05 & 22.63 & 24.54 & 53.23 & 16.77 & 41.26 & 22.95 & 47.25 \\
+        & Expel      & 25.00 & 22.20 & 20.40 & \textbf{21.00} & 22.70 & 49.88 & 16.86 & 39.17 & 20.06 & 44.53 \\
+        & \cellcolor{hl-qwen}\textbf{MemSkill} &
+        \cellcolor{hl-qwen}\textbf{43.05} & \cellcolor{hl-qwen}26.11 &
+        \cellcolor{hl-qwen}\textbf{25.41} & \cellcolor{hl-qwen}31.39 &
+        \cellcolor{hl-qwen}\textbf{34.23} &
+        \cellcolor{hl-qwen}\textbf{54.53} & \cellcolor{hl-qwen}\textbf{15.05} &
+        \cellcolor{hl-qwen}\textbf{42.30} & \cellcolor{hl-qwen}\textbf{19.23} &
+        \cellcolor{hl-qwen}\textbf{48.42} \\
+        \bottomrule
+
+        \multicolumn{12}{l}{\small \textbf{Bold} indicates the best score within each base model block.} \\
+        \multicolumn{12}{l}{\small $^\blacktriangle$ indicates no training using this base model or dataset.} \\
+        \multicolumn{12}{l}{\small $^\dagger$ indicates evaluation with in-context demonstrations.} \\
+    \end{tabular}
+\end{table*}

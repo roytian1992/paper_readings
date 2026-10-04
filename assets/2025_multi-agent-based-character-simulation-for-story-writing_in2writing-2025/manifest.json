@@ -1,0 +1,123 @@
+{
+  "paper_id": "2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025",
+  "source_path": "sources/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025.pdf",
+  "source_archive_path": "",
+  "pages": [
+    {
+      "id": "page_002",
+      "page": 2,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/pages/page_002.png",
+      "captions": [
+        "Figure 1: Overview of the character-simulation-based story-writing system."
+      ]
+    },
+    {
+      "id": "page_005",
+      "page": 5,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/pages/page_005.png",
+      "captions": [
+        "Figure 2: Writing prompts clustered using UMAP and k-means."
+      ]
+    },
+    {
+      "id": "page_006",
+      "page": 6,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/pages/page_006.png",
+      "captions": [
+        "Figure 3: Experimental overview."
+      ]
+    },
+    {
+      "id": "page_007",
+      "page": 7,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/pages/page_007.png",
+      "captions": [
+        "Figure 4: System strength across evaluation criteria."
+      ]
+    }
+  ],
+  "crops": [
+    {
+      "id": "figure_1_overview",
+      "kind": "figure",
+      "number": "1",
+      "page": 2,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_1_overview.png",
+      "caption": "Figure 1: Overview of the character-simulation-based story-writing system.",
+      "source": "manual-crop",
+      "source_ref": "pages/page_002.png",
+      "crop_bbox": [
+        120,
+        135,
+        1070,
+        670
+      ]
+    },
+    {
+      "id": "algorithm_1_scene_role_playing",
+      "kind": "algorithm",
+      "number": "1",
+      "page": 5,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/algorithm_1_scene_role_playing.png",
+      "caption": "Algorithm 1: Scene-level role-playing loop.",
+      "source": "manual-crop",
+      "source_ref": "pages/page_005.png",
+      "crop_bbox": [
+        125,
+        150,
+        1065,
+        690
+      ]
+    },
+    {
+      "id": "figure_2_prompt_clusters",
+      "kind": "figure",
+      "number": "2",
+      "page": 5,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_2_prompt_clusters.png",
+      "caption": "Figure 2: Writing prompts from the Tell Me A Story dataset clustered into 14 groups using UMAP and k-means.",
+      "source": "manual-crop",
+      "source_ref": "pages/page_005.png",
+      "crop_bbox": [
+        125,
+        700,
+        595,
+        1085
+      ]
+    },
+    {
+      "id": "figure_3_experiment_overview",
+      "kind": "figure",
+      "number": "3",
+      "page": 6,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_3_experiment_overview.png",
+      "caption": "Figure 3: Experimental overview for plan synthesis and writing task.",
+      "source": "manual-crop",
+      "source_ref": "pages/page_006.png",
+      "crop_bbox": [
+        130,
+        135,
+        1060,
+        375
+      ]
+    },
+    {
+      "id": "figure_4_llm_eval_strength",
+      "kind": "figure",
+      "number": "4",
+      "page": 7,
+      "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_4_llm_eval_strength.png",
+      "caption": "Figure 4: System strength across evaluation criteria according to the LLM-based evaluator.",
+      "source": "manual-crop",
+      "source_ref": "pages/page_007.png",
+      "crop_bbox": [
+        125,
+        130,
+        1075,
+        615
+      ]
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-18"
+}

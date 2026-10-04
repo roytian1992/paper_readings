@@ -1,0 +1,444 @@
+
+\lstdefinestyle{prompt}{
+    basicstyle=\ttfamily\fontsize{7pt}{8pt}\selectfont,
+    frame=none,
+    breaklines=true,
+    backgroundcolor=\color{white},
+    breakatwhitespace=true,
+    breakindent=0pt,
+    escapeinside={(*@}{@*)},
+    numbers=none,
+    numbersep=5pt,
+    xleftmargin=5pt,
+    aboveskip=2pt,
+    belowskip=2pt,
+}
+
+\tcbset{
+  aibox/.style={
+    top=10pt,
+    colback=white,
+    % colframe=black,
+    % colbacktitle=black,
+    enhanced,
+    center,
+    % attach boxed title to top left={yshift=-0.1in,xshift=0.15in},
+    % boxed title style={boxrule=0pt,colframe=white,},
+  }
+}
+\newtcolorbox{AIbox}[2][]{aibox, title=#2,#1}
+
+% Slightly darker frame colors (recommended for visibility)
+\colorlet{PBRedFrame}{red!60}
+\colorlet{PBPurpleFrame}{purple!60}
+\colorlet{PBOrangeFrame}{orange!60}
+\colorlet{PBBlueFrame}{blue!50}
+
+% ========== Frame-only box templates (white background) ==========
+\tcbset{
+  aiboxFrameOnly/.style={
+    aibox,
+    colback=white,      % keep background pure white
+    colframe=black,     % default (overridden in variants)
+    boxrule=0.8pt,
+    arc=2pt,
+    left=6pt,right=6pt,top=6pt,bottom=6pt,
+  },
+}
+
+\newtcolorbox{AIboxRedFrame}[2][]{aiboxFrameOnly, colframe=PBRedFrame, title=#2,#1}
+\newtcolorbox{AIboxPurpleFrame}[2][]{aiboxFrameOnly, colframe=PBPurpleFrame, title=#2,#1}
+\newtcolorbox{AIboxOrangeFrame}[2][]{aiboxFrameOnly, colframe=PBOrangeFrame, title=#2,#1}
+\newtcolorbox{AIboxBlueFrame}[2][]{aiboxFrameOnly, colframe=PBBlueFrame, title=#2,#1}
+
+% \begin{figure*}[!ht] 
+% \begin{AIboxBlueFrame}{xxxx}
+% \vspace{1mm}
+% {
+% xxxxxx
+% }
+% \end{AIboxBlueFrame}
+% \vspace{-1em}
+% \caption{xxxxx}
+% \label{prompt:xxxxx}
+% \end{figure*}
+
+% \begin{figure*}[!ht] 
+% \begin{AIboxRedFrame}{xxxx}
+% \vspace{1mm}
+% {
+% xxxxxx
+% }
+% \end{AIboxRedFrame}
+% \vspace{-1em}
+% \caption{xxxxx}
+% \label{prompt:xxxxx}
+% \end{figure*}
+
+% \begin{figure*}[!ht] 
+% \begin{AIboxPurpleFrame}{xxxx}
+% \vspace{1mm}
+% {
+% xxxxxx
+% }
+% \end{AIboxPurpleFrame}
+% \vspace{-1em}
+% \caption{xxxxx}
+% \label{prompt:xxxxx}
+% \end{figure*}
+
+% \begin{figure*}[!ht] 
+% \begin{AIboxOrangeFrame}{xxxx}
+% \vspace{1mm}
+% {
+% xxxxxx
+% }
+% \end{AIboxOrangeFrame}
+% \vspace{-1em}
+% \caption{xxxxx}
+% \label{prompt:xxxxx}
+% \end{figure*}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Case Study}
+Figures~\ref{fig:case_pm1_weekend}--\ref{fig:case_pb2_work} show four representative cases from PersonaMem and PersonaBench. In the two PersonaMem multiple-choice examples (Figures~\ref{fig:case_pm1_weekend} and \ref{fig:case_pm2_fulfill}), \ourmodel selects the ground-truth option (\textbf{(d)} and \textbf{(a)}), whereas all baselines choose different options, indicating that they fail to preserve or exploit the preference-relevant evidence needed for preference-aligned recommendations. In the two PersonaBench factual QA examples (Figures~\ref{fig:case_pb1_age} and \ref{fig:case_pb2_work}), \ourmodel correctly outputs the user’s age (\textbf{39}) and work location (\textbf{University}), while baselines frequently return \emph{Unknown/Not specified} or claim missing information, consistent with information being unavailable at answer time due to memory evolution and/or retrieval failures.
+
+% -------------------------
+% PersonaMem Case 1
+% -------------------------
+\begin{figure*}[!t]
+\begin{AIboxRedFrame}{CASE STUDY (PersonaMem-1): Preference-Aligned Recommendation (MCQ)}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{User question:} I'm planning a weekend getaway and want to try something creatively fulfilling. What would you suggest? \\
+
+\textbf{Question type:} \textit{provide\_preference\_aligned\_recommendations} \\
+
+\textbf{Topic:} \textit{musicRecommendation} \\
+
+\textbf{Options:} \\
+\textbf{(a)} How about spending the weekend learning traditional island cooking techniques or delving into the art of Polynesian tattoo design? Imagine mastering the skills of preparing intricate island feasts or crafting culturally rich tattoos on a canvas. This experience would not only honor your heritage but also keep those traditions alive through your newfound expertise. It’s a fantastic way to celebrate your roots and create something truly meaningful! \\
+\textbf{(b)} Why not explore the vibrant world of painting by setting up an easel in an art studio or your backyard? Picture yourself dipping brushes into vivid colors, creating masterpieces on canvas inspired by your surroundings. This artistic journey allows you to express emotions through visual art and discover new techniques that can be both relaxing and rewarding, offering a delightful escape from the ordinary. \\
+\textbf{(c)} Consider indulging in the art of storytelling by crafting a compelling narrative or writing poetry in a cozy nook. Envision weaving intricate tales or rhythmic verses that captivate the mind and soul, drawing inspiration from your own experiences or the world around you. This literary venture not only sharpens your writing skills but also provides a channel for introspection and endless creativity. \\
+\textbf{(d)} How about diving into a soundscape adventure by capturing the symphony of nature in an enchanting forest or by a tranquil lake? Imagine blending the serene rustling of leaves, the melodic rush of water streams, and the rhythmic patter of rain to craft a unique auditory tapestry. This will not only ignite your creativity but also allow you to relive those serene landscapes through your sound engineering skills. It’s a perfect way to reconnect with nature's music and create something truly spectacular! \\
+
+\textbf{Correct answer:} \textbf{(d)} \\
+\textbf{Predictions:} \textbf{Ours: (d)}; MemAgent: (a); Mem-$\alpha$: (a); A-Mem: (a); LightMem: (a); Mem0: (c).
+}
+\end{AIboxRedFrame}
+\vspace{-1em}
+\caption{PersonaMem case study (MCQ). \textbf{Our method} matches the ground-truth option \textbf{(d)}, while all baselines select different options.}
+\label{fig:case_pm1_weekend}
+\end{figure*}
+
+% -------------------------
+% PersonaMem Case 2
+% -------------------------
+\begin{figure*}[!t]
+\begin{AIboxRedFrame}{CASE STUDY (PersonaMem-2): Suggesting New Ideas for Music Expression (MCQ)}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{User question:} How can I find a more fulfilling way to express my love for music? \\
+
+\textbf{Question type:} \textit{suggest\_new\_ideas} \\
+
+\textbf{Topic:} \textit{musicRecommendation} \\
+
+\textbf{Options:} \\
+\textbf{(a)} You might consider exploring different avenues like writing about your musical journey or experimenting with performing live in settings that inspire you. Also, giving yourself the freedom to simply enjoy music without external pressures could rekindle your passion. \\
+\textbf{(b)} Exploring sound engineering might offer a fulfilling way to express your love for music. Like one user who was inspired by a chance meeting with an audio engineer at a festival, you could dive into the world of creating digital music remixes. By blending different influences and styles, you may find inspiration in exploring the nuances of sound capturing and creating unique auditory landscapes that surpass traditional music boundaries. \\
+\textbf{(c)} Collaborating with others who share your musical interests can also be a rewarding path. A user found fulfillment through working with musicians from diverse backgrounds, mixing traditional and electronic elements to expand their creative horizons. Such group efforts can enhance not only your musical explorations but also build lasting relationships, as you contribute unique perspectives to a collective musical vision. \\
+\textbf{(d)} Consider getting involved in music criticism by writing album reviews. As highlighted by a diligent user after attending a workshop, reviews can be instrumental in shaping listener perspectives and enhancing understanding. By delving deeper into the contexts and intentions behind albums, you can enrich your musical experience and articulate your insights, potentially helping others to connect more deeply with the music. \\
+
+\textbf{Correct answer:} \textbf{(a)} \\
+\textbf{Predictions:} \textbf{Ours: (a)}; MemAgent: (c); Mem-$\alpha$: (c); A-Mem: (b); LightMem: (d); Mem0: (c).
+}
+\end{AIboxRedFrame}
+\vspace{-1em}
+\caption{PersonaMem case study (MCQ). \textbf{Our method} selects the correct option \textbf{(a)}, whereas each baseline chooses a different option.}
+\label{fig:case_pm2_fulfill}
+\end{figure*}
+
+% -------------------------
+% PersonaBench Case 3
+% -------------------------
+\begin{figure*}[!t]
+\begin{AIboxOrangeFrame}{CASE STUDY (PersonaBench-1): Basic User Fact (Open-form QA)}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{User question:} At what age am I right now? \\
+\textbf{Question type:} \textit{Basic information} \\
+
+\textbf{Correct answer:} \textbf{39} \\
+\textbf{Predictions:} \\
+\textbf{Ours: 39}; \\
+MemAgent: Not specified; \\
+Mem-$\alpha$: Not specified; \\
+A-Mem: Unknown; \\
+LightMem: Information not provided; \\
+Mem0: Not specified.
+}
+\end{AIboxOrangeFrame}
+\vspace{-1em}
+\caption{PersonaBench case study (open-form QA). \textbf{Our method} outputs the correct age (\textbf{39}); baselines answer with missing/unknown information.}
+\label{fig:case_pb1_age}
+\end{figure*}
+
+% -------------------------
+% PersonaBench Case 4
+% -------------------------
+\begin{figure*}[!t]
+\begin{AIboxOrangeFrame}{CASE STUDY (PersonaBench-2): Work Location (Open-form QA)}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{User question:} What is the address of my work location? \\
+\textbf{Question type:} \textit{Basic information} \\
+
+\textbf{Correct answer:} \textbf{University} \\
+\textbf{Predictions:} \\
+\textbf{Ours: University}; \\
+MemAgent: Unknown;\\
+Mem-$\alpha$: Not specified; \\
+A-Mem: Not specified; \\
+LightMem: The provided information does not include the address of your work location.; \\
+Mem0: There is no relevant information provided.
+}
+\end{AIboxOrangeFrame}
+\vspace{-1em}
+\caption{PersonaBench case study (open-form QA). \textbf{Our method} recovers the correct work location (\textbf{University}), while baselines report missing or unknown information.}
+\label{fig:case_pb2_work}
+\end{figure*}
+
+
+
+\section{Prompts}
+
+\subsection{Meta Prompt for Guideline Optimization}
+We implement a three-stage meta-prompt pipeline to optimize the guideline prompt used for memory evolution. As shown in Figure~\ref{prompt:template_loss}, \texttt{TEMPLATE\_LOSS} performs a contrastive diagnosis by comparing a \texttt{correct\_sample} and a \texttt{wrong\_sample}, identifying why the correct update succeeds, why the incorrect update fails, and what systematic issues exist in \texttt{template\_evolve}. Based on multiple such analyses, Figure~\ref{prompt:template_aggr} uses \texttt{TEMPLATE\_AGGR} to aggregate diverse feedback into a single coherent summary, resolving inconsistencies and retaining the most consistent actionable points. Figure~\ref{prompt:template_optim} uses \texttt{TEMPLATE\_OPTIM} to revise \texttt{template\_evolve} by following the aggregated feedback while preserving the required placeholders, producing an instruction prompt for guideline optimization.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[!ht] 
+\begin{AIboxBlueFrame}{TEMPLATE\_LOSS: Contrastive Feedback for Memory Update}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_LOSS} = """ \\
+Below are two examples of memory updates: one labeled as \texttt{correct\_case} and the other as \texttt{wrong\_case}. \\
+These examples illustrate the process of updating memory blocks based on a user's question using \texttt{template\_evolve} \\
+by querying a Large Language Model. \\
+
+Your task is to apply \textbf{contrastive learning principles} to thoroughly compare the correct and incorrect samples. \\
+Analyze the reasons why the \textbf{correct sample is successful} and identify the factors contributing to the \textbf{failure of the wrong sample}. \\
+Critically evaluate the issues present in \texttt{template\_evolve}, and propose how it can better capture \textbf{user preferences}. \\
+Provide \textbf{actionable suggestions and feedback} for optimizing the template. \\
+
+\texttt{<correct\_sample>} \\
+\textcolor{blue}{\{correct\_sample\}} \\
+\texttt{</correct\_sample>} \\
+
+\texttt{<wrong\_sample>} \\
+\textcolor{blue}{\{wrong\_sample\}} \\
+\texttt{</wrong\_sample>} \\
+
+\textbf{\# Definitions:} \\
+\# - \texttt{user\_question\_or\_message}: Represents the question or message provided by the user. \\
+\# - \texttt{correct\_answer}: Denotes the correct answer to the given question. \\
+\# - \texttt{model\_response}: Indicates the model's response, derived by combining the \texttt{user\_question\_or\_message} with the \texttt{memory\_bank}. \\
+\# - \texttt{memory\_bank}: Refers to a storage area that is updated during the memory refinement process. \\
+
+\textbf{\# The template requiring further refinement and optimization is as follows:} \\
+
+\texttt{<template\_evolve>} \\
+\textcolor{blue}{\{template\_evolve\}} \\
+\texttt{</template\_evolve>} \\
+
+\textbf{\# Please provide suggestions and feedback on how this template can be improved and optimized.} \\
+\# Do not directly update the template content; focus solely on providing recommendations. \\
+"""
+}
+\end{AIboxBlueFrame}
+\vspace{-1em}
+\caption{Meta prompt for generating contrastive feedback by comparing a correct and an incorrect memory-update case, and for diagnosing weaknesses in \texttt{template\_evolve} (TEMPLATE\_LOSS).}
+\label{prompt:template_loss}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure*}[!ht] 
+\begin{AIboxBlueFrame}{TEMPLATE\_AGGR: Feedback Aggregation into a Coherent Summary}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_AGGR} = """ \textbf{You are provided with multiple feedback responses from different analyses.} Your task is to \textbf{synthesize these into a single, coherent feedback summary.} Ensure that the final feedback: \\
+1. \textbf{Captures the key insights} from each response. \\
+2. \textbf{Resolves any conflicting points} by identifying the most consistent and relevant information. \\
+3. Provides a \textbf{clear and concise summary} that reflects the overall consensus of the feedback. \\
+
+\textbf{Feedback Responses:} \\
+\textcolor{blue}{\{feedback\_responses\}} \\
+
+\textbf{Final Feedback Summary:} \\
+"""
+}
+\end{AIboxBlueFrame}
+\vspace{-1em}
+\caption{Meta prompt for synthesizing multiple analysis outputs into a single consolidated feedback summary (TEMPLATE\_AGGR).}
+\label{prompt:template_aggr}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{figure*}[!ht] 
+\begin{AIboxBlueFrame}{TEMPLATE\_OPTIM: Template Refinement Under Placeholder Constraints}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_OPTIM} = """ \\
+Please refine and optimize the following instruction template \texttt{template\_evolve} based on the provided feedback. \\
+
+\textbf{\# CRITICAL RULES:} \\
+\textbf{\# 1. You MUST preserve the following placeholder tokens in the template:} \\
+\# \ \ \ For \texttt{template\_evolve\_new}: \textcolor{blue}{\{memory\}}, \textcolor{blue}{\{chunk\}} \\
+\# \ \ \ These placeholders are \textbf{REQUIRED} and must appear exactly as shown (with curly braces) in your output. \\
+\# \ \ \ If any of these placeholders are missing, the template will fail to work. \\
+\textbf{\# 2. Do NOT add any new placeholders.} Only use the placeholders listed above. \\
+\# \ \ \ Output the optimized prompt text directly without introducing any additional placeholder tokens. \\
+
+\textbf{\# Below is the template that needs to be revised and improved:} \\
+
+\texttt{<template\_evolve>} \\
+\textcolor{blue}{\{template\_evolve\}} \\
+\texttt{</template\_evolve>} \\
+
+\textbf{\# Please comprehensively adhere to the feedback provided below to update the template:} \\
+
+\texttt{<feedback>} \\
+\textcolor{blue}{\{feedback\}} \\
+\texttt{</feedback>} \\
+
+\textbf{\# Place the optimized version of the template within the following tags:} \\
+
+\texttt{<template\_evolve\_new>} \\
+\texttt{</template\_evolve\_new>} \\
+"""
+}
+\end{AIboxBlueFrame}
+\vspace{-1em}
+\caption{Meta prompt for updating \texttt{template\_evolve} using aggregated feedback while strictly preserving required placeholders and forbidding new ones (TEMPLATE\_OPTIM).}
+\label{prompt:template_optim}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Prompt for Memory Evolution and Final Answer Generation}
+To enable long-horizon personalization, we first prompt the model to evolve a structured user memory profile from newly observed dialogue chunks under evidence-bounded extraction and conflict-aware consolidation (Fig.~\ref{prompt:template_evolve_step50}). Notably, this prompt is progressively optimized rather than manually fixed: starting from a generic read \& update instruction, it gradually evolves into a more constrained memory policy that emphasizes recency and usefulness, and finally enforces evidence-bounded updates, explicit conflict resolution, and selective exclusion of privacy-sensitive or unsupported content. This evolution is motivated by two recurring failure modes observed during optimization: unresolved conflicts can lead to inconsistent memory, while over-collection of one-off details can make the profile noisy and less useful for personalization.
+
+For fair comparison, we then adopt shared final-answer prompts across all compared methods. As shown in Fig.~\ref{prompt:final_mcq}, for multiple-choice benchmarks (PersonaMem, and PrefEval), the template instructs the model to select the most appropriate option based on user preferences in memory and to output only the option letter, enforcing a strict and comparable output format. For PersonaBench, which requires open-form answers, we use a separate template (Fig.~\ref{prompt:final_open}) that constrains the output to only the name(s) of the relevant entity/entities and explicitly avoids any additional explanation, thereby standardizing response granularity and ensuring fair evaluation under identical prompting conditions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure*}[!ht]
+\begin{AIboxPurpleFrame}{TEMPLATE\_EVOLVE\_STEP50: Evidence-Bound Memory Update from a New Chunk}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_EVOLVE\_STEP50} = """ \\
+
+\textbf{You are given a question with options, some new memory, and previous user memory.} Read the new section and update the user memory by prioritizing \textbf{recent and relevant information} that aligns with the user's \textbf{preferences and experiences}. \\
+
+\textbf{<memory>} \textcolor{blue}{\{memory\}} \textbf{</memory>} \\
+
+\textbf{<section>} \textcolor{blue}{\{chunk\}} \textbf{</section>} \\
+
+\textbf{Update rules:} \\
+- \textbf{Evidence-bound:} Extract candidate memory items from chunk. Every stored item must be \textbf{directly supported} by chunk. \\
+- \textbf{Relevance \& stability:} Store \textbf{long-term preferences}, \textbf{stable facts}, \textbf{recurring habits}, \textbf{long-term goals}, and \textbf{interaction preferences}. Do \textbf{not} store one-off details (e.g., transient locations, momentary moods) unless explicitly stated as long-term. \\
+- \textbf{Conflict handling:} If new info contradicts existing memory, prefer the \textbf{most recent supported} info as active, and mark the older one as \textbf{deprecated} with a short reason. \\
+- \textbf{Privacy:} Do \textbf{NOT} store highly sensitive or uniquely identifying data (exact address, account credentials, financial/medical specifics, etc.). \\
+- \textbf{No domain bias:} Do not assume any specific hobbies or interests unless stated in chunk. \\
+- If chunk contains explicit user corrections/ratings about previous outputs, store them under \textbf{"interaction\_feedback"}. Otherwise, do not create feedback entries. \\
+- Merge into a \textbf{structured memory profile}. Keep it concise, non-redundant, and internally consistent. \\
+
+"""
+}
+\end{AIboxPurpleFrame}
+\vspace{-1em}
+\caption{Meta prompt for updating the user memory profile from a newly observed dialogue chunk with evidence-bounded extraction and conflict-aware consolidation (TEMPLATE\_EVOLVE\_STEP50).}
+\label{prompt:template_evolve_step50}
+\end{figure*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[!ht]
+\begin{AIboxPurpleFrame}{TEMPLATE\_FINAL (MCQ): PersonaMem  / PrefEval}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_FINAL} = """ \textbf{You are presented with a question and its corresponding options.} Find the most appropriate option to the question based on \textbf{user preference in memory} and give your final answer (a), (b), (c), or (d). Put the answer in \textbf{\textbackslash boxed\{\}}. \\
+
+\textbf{<question>} \textcolor{blue}{\{question\}} \textbf{</question>} \\
+
+\textbf{<options>} \textcolor{blue}{\{options\}} \textbf{</options>} \\
+
+\textbf{<memory>} \textcolor{blue}{\{memory\}} \textbf{</memory>} \\
+
+\textbf{Your answer:} \\
+"""
+}
+\end{AIboxPurpleFrame}
+\vspace{-1em}
+\caption{Shared prompt for final answer generation on multiple-choice benchmarks (PersonaMem, and PrefEval).}
+\label{prompt:final_mcq}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[!ht]
+\begin{AIboxPurpleFrame}{TEMPLATE\_FINAL\_OPEN (Open QA): PersonaBench}
+\vspace{1mm}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\textbf{TEMPLATE\_FINAL\_OPEN} = """ \textbf{You are provided with the following relevant information about a user:} \\
+
+\textbf{<memory>} \textcolor{blue}{\{memory\}} \textbf{</memory>} \\
+
+Answer the question below as \textbf{directly and concisely as possible}, using only the \textbf{name(s) of the relevant entity or entities}. \textbf{Avoid adding any extra words or explanations.} \\
+
+\textbf{<question>} \textcolor{blue}{\{question\}} \textbf{</question>} \\
+
+\textbf{Your answer:} \\
+"""
+}
+\end{AIboxPurpleFrame}
+\vspace{-1em}
+\caption{Shared prompt for final answer generation on PersonaBench, constraining outputs to only the relevant entity name(s).}
+\label{prompt:final_open}
+\end{figure*}
+

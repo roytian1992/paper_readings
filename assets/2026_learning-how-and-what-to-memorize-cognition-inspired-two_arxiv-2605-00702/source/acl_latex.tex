@@ -1,0 +1,214 @@
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[final]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+
+%Including images in your LaTeX document requires adding
+%additional package(s)
+\usepackage{graphicx}
+
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings, xcolor}
+\usepackage{colortbl}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{bbding}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{bbding}
+\usepackage{graphicx} 
+\usepackage{wrapfig}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\tcbuselibrary{skins}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{float}
+\usepackage{bbding}
+\usepackage{fancyvrb}
+\usepackage{tcolorbox}
+% \usepackage{geometry}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{etoc}
+\usepackage{makecell}
+\usepackage{color, xspace}
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\ourmodel}{{\texttt{\textbf{MemCoE}}}\xspace}
+\newcommand{\moduleone}{{\texttt{\textbf{MGI}}}\xspace}
+\newcommand{\moduletwo}{{\texttt{\textbf{GMPO}}}\xspace}
+
+\newcommand{\red}[1]{\textcolor{RedOrange}{\scriptsize$\uparrow$ #1}}
+\newcommand{\blue}[1]{\textcolor{RoyalBlue}{\scriptsize$\uparrow$ #1}}
+\definecolor{PrefrontalBlue}{RGB}{61,114,181}
+\definecolor{HippoOrange}{RGB}{191,93,27}
+
+\newcommand{\yy}[1]{{\color{teal} [Yingyi-#1]}}
+\newcommand{\wl}[1]{{\color{purple} [Wenlin-#1]}}
+\newcommand{\pf}[1]{{\color{blue} [Pengfei-#1]}}
+\newcommand{\lsc}[1]{{\color{blue} [Shuochen-#1]}}
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory }
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a separate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+% \author{First Author \\
+%   Affiliation / Address line 1 \\
+%   Affiliation / Address line 2 \\
+%   Affiliation / Address line 3 \\
+%   \texttt{email@domain} \\\And
+%   Second Author \\
+%   Affiliation / Address line 1 \\
+%   Affiliation / Address line 2 \\
+%   Affiliation / Address line 3 \\
+%   \texttt{email@domain} \\}
+
+\author{Derong Xu\textsuperscript{1,2}, Shuochen Liu\textsuperscript{1}, Pengfei Luo\textsuperscript{1}, Pengyue Jia\textsuperscript{2}, Yingyi Zhang\textsuperscript{2,3},\\ 
+{\bf Yi Wen\textsuperscript{2}, Yimin Deng\textsuperscript{2,4}, Wenlin Zhang\textsuperscript{2}, Enhong Chen\textsuperscript{1}, Xiangyu Zhao\textsuperscript{2,}\thanks{Corresponding authors.}, Tong Xu\textsuperscript{1,}\footnotemark[1]}\\
+        \textsuperscript{1}University of Science and Technology of China \& State Key Laboratory of\\ Cognitive Intelligence,
+        \textsuperscript{2}City University of Hong Kong \\
+        \textsuperscript{3}Dalian University of Technology, 
+        \textsuperscript{4}Xi'an Jiaotong University \\
+derongxu@mail.ustc.edu.cn, xianzhao@cityu.edu.hk, tongxu@ustc.edu.cn
+}
+
+
+% derongxu@mail.ustc.edu.cn
+% shuochenliu@mail.ustc.edu.cn
+% pfluo@mail.ustc.edu.cn
+% jia.pengyue@my.cityu.edu.hk
+% yingyizhang@mail.dlut.edu.cn
+% yiwen23-c@my.cityu.edu.hk
+% dymanne@stu.xjtu.edu.cn
+% cheneh@ustc.edu.cn
+% xy.zhao@cityu.edu.hk
+% tongxu@ustc.edu.cn
+ 
+%\author{
+%  \textbf{First Author\textsuperscript{1}},
+%  \textbf{Second Author\textsuperscript{1,2}},
+%  \textbf{Third T. Author\textsuperscript{1}},
+%  \textbf{Fourth Author\textsuperscript{1}},
+%\\
+%  \textbf{Fifth Author\textsuperscript{1,2}},
+%  \textbf{Sixth Author\textsuperscript{1}},
+%  \textbf{Seventh Author\textsuperscript{1}},
+%  \textbf{Eighth Author \textsuperscript{1,2,3,4}},
+%\\
+%  \textbf{Ninth Author\textsuperscript{1}},
+%  \textbf{Tenth Author\textsuperscript{1}},
+%  \textbf{Eleventh E. Author\textsuperscript{1,2,3,4,5}},
+%  \textbf{Twelfth Author\textsuperscript{1}},
+%\\
+%  \textbf{Thirteenth Author\textsuperscript{3}},
+%  \textbf{Fourteenth F. Author\textsuperscript{2,4}},
+%  \textbf{Fifteenth Author\textsuperscript{1}},
+%  \textbf{Sixteenth Author\textsuperscript{1}},
+%\\
+%  \textbf{Seventeenth S. Author\textsuperscript{4,5}},
+%  \textbf{Eighteenth Author\textsuperscript{3,4}},
+%  \textbf{Nineteenth N. Author\textsuperscript{2,5}},
+%  \textbf{Twentieth Author\textsuperscript{1}}
+%\\
+%\\
+%  \textsuperscript{1}Affiliation 1,
+%  \textsuperscript{2}Affiliation 2,
+%  \textsuperscript{3}Affiliation 3,
+%  \textsuperscript{4}Affiliation 4,
+%  \textsuperscript{5}Affiliation 5
+%\\
+%  \small{
+%    \textbf{Correspondence:} \href{mailto:email@domain}{email@domain}
+%  }
+%}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Large language model (LLM) agents require long-term user memory for consistent personalization, but limited context windows hinder tracking evolving preferences over long interactions. Existing memory systems mainly rely on static, hand-crafted update rules; although reinforcement learning (RL)-based agents learn memory updates, sparse outcome rewards provide weak supervision, resulting in unstable long-horizon optimization. Drawing on memory schema theory and the functional division between \emph{prefrontal regions} and \emph{hippocampus regions}, we introduce MemCoE, a cognition-inspired two-stage optimization framework that learns \textbf{\texttt{how}} memory should be organized and \textbf{\texttt{what}} information to update. In the first stage, we propose \textbf{Memory Guideline Induction} to optimize a global guideline via contrastive feedback interpreted as textual gradients; in the second stage, \textbf{Guideline-Aligned Memory Policy Optimization} uses the induced guideline to define structured process rewards and performs multi-turn RL to learn a guideline-following memory evolution policy. We evaluate on three personalization memory benchmarks, covering explicit/implicit preference and different sizes and noise, and observe consistent improvements over strong baselines with favorable \textbf{robustness}, \textbf{transferability}, and \textbf{efficiency}\footnote{https://github.com/Applied-Machine-Learning-Lab/ACL2026\_MemCoE}.
+
+\end{abstract}
+
+\input{section/intro}
+\input{section/relatedwork}
+\input{section/method}
+\input{section/experiment}
+\input{section/conclusion}
+
+
+% Bibliography entries for the entire Anthology, followed by custom entries
+%\bibliography{anthology,custom}
+% Custom bibliography entries only
+\bibliography{custom}
+
+\newpage
+\appendix
+
+\input{section/appendix}
+\input{section/caseandprompt}
+
+\end{document}

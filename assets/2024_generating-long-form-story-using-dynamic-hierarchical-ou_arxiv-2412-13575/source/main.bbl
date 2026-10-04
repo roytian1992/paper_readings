@@ -1,0 +1,214 @@
+\begin{thebibliography}{43}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Achiam et~al.(2023)Achiam, Adler, Agarwal, Ahmad, Akkaya, Aleman, Almeida, Altenschmidt, Altman, Anadkat et~al.}]{achiam2023gpt}
+Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia~Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et~al. 2023.
+\newblock Gpt-4 technical report.
+\newblock \emph{arXiv preprint arXiv:2303.08774}.
+
+\bibitem[{AI@Meta(2024)}]{llama3}
+AI@Meta. 2024.
+\newblock \href {https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md} {Llama 3 model card}.
+
+\bibitem[{Bai et~al.(2023)Bai, Bai, Chu, Cui, Dang, Deng, Fan, Ge, Han, Huang et~al.}]{bai2023qwen}
+Jinze Bai, Shuai Bai, Yunfei Chu, Zeyu Cui, Kai Dang, Xiaodong Deng, Yang Fan, Wenbin Ge, Yu~Han, Fei Huang, et~al. 2023.
+\newblock Qwen technical report.
+\newblock \emph{arXiv preprint arXiv:2309.16609}.
+
+\bibitem[{Brahman et~al.(2020)Brahman, Petrusca, and Chaturvedi}]{brahman2020cue}
+Faeze Brahman, Alexandru Petrusca, and Snigdha Chaturvedi. 2020.
+\newblock Cue me in: Content-inducing approaches to interactive story generation.
+\newblock \emph{arXiv preprint arXiv:2010.09935}.
+
+\bibitem[{Campbell(1949)}]{TheoryFive}
+Joseph Campbell. 1949.
+\newblock The hero with a thousand faces.
+
+\bibitem[{Chen et~al.(2024)Chen, Xiao, Zhang, Luo, Lian, and Liu}]{chen2024bge}
+Jianlv Chen, Shitao Xiao, Peitian Zhang, Kun Luo, Defu Lian, and Zheng Liu. 2024.
+\newblock Bge m3-embedding: Multi-lingual, multi-functionality, multi-granularity text embeddings through self-knowledge distillation.
+\newblock \emph{arXiv preprint arXiv:2402.03216}.
+
+\bibitem[{Chiang et~al.(2024)Chiang, Zheng, Sheng, Angelopoulos, Li, Li, Zhang, Zhu, Jordan, Gonzalez et~al.}]{chiang2024chatbot}
+Wei-Lin Chiang, Lianmin Zheng, Ying Sheng, Anastasios~Nikolas Angelopoulos, Tianle Li, Dacheng Li, Hao Zhang, Banghua Zhu, Michael Jordan, Joseph~E Gonzalez, et~al. 2024.
+\newblock Chatbot arena: An open platform for evaluating llms by human preference.
+\newblock \emph{arXiv preprint arXiv:2403.04132}.
+
+\bibitem[{Choromanski et~al.(2020)Choromanski, Likhosherstov, Dohan, Song, Gane, Sarlos, Hawkins, Davis, Mohiuddin, Kaiser et~al.}]{choromanski2020rethinking}
+Krzysztof Choromanski, Valerii Likhosherstov, David Dohan, Xingyou Song, Andreea Gane, Tamas Sarlos, Peter Hawkins, Jared Davis, Afroz Mohiuddin, Lukasz Kaiser, et~al. 2020.
+\newblock Rethinking attention with performers.
+\newblock \emph{arXiv preprint arXiv:2009.14794}.
+
+\bibitem[{Fan et~al.(2018)Fan, Lewis, and Dauphin}]{facebook2018}
+Angela Fan, Mike Lewis, and Yann Dauphin. 2018.
+\newblock \href {https://api.semanticscholar.org/CorpusID:44134226} {Hierarchical neural story generation}.
+\newblock In \emph{Annual Meeting of the Association for Computational Linguistics}.
+
+\bibitem[{Freytag()}]{TheorySeven}
+Gustav Freytag.
+\newblock \href {https://api.semanticscholar.org/CorpusID:176979401} {Die technik des dramas}.
+
+\bibitem[{He et~al.(2019)He, Zhou, Xiao, Liu, Yuan, Xu et~al.}]{he2019integrating}
+Bin He, Di~Zhou, Jinghui Xiao, Qun Liu, Nicholas~Jing Yuan, Tong Xu, et~al. 2019.
+\newblock Integrating graph contextualized knowledge into pre-trained language models.
+\newblock \emph{arXiv preprint arXiv:1912.00147}.
+
+\bibitem[{Ji et~al.(2020)Ji, Pan, Cambria, Marttinen, and Yu}]{KGSurvey}
+Shaoxiong Ji, Shirui Pan, E.~Cambria, Pekka Marttinen, and Philip~S. Yu. 2020.
+\newblock \href {https://api.semanticscholar.org/CorpusID:211010433} {A survey on knowledge graphs: Representation, acquisition, and applications}.
+\newblock \emph{IEEE Transactions on Neural Networks and Learning Systems}, 33:494--514.
+
+\bibitem[{Lahitani et~al.(2016)Lahitani, Permanasari, and Setiawan}]{lahitani2016cosine}
+Alfirna~Rizqi Lahitani, Adhistya~Erna Permanasari, and Noor~Akhmad Setiawan. 2016.
+\newblock Cosine similarity to determine similarity measure: Study case in online essay assessment.
+\newblock In \emph{2016 4th International conference on cyber and IT service management}, pages 1--6. IEEE.
+
+\bibitem[{Liu et~al.(2024)Liu, Lin, Hewitt, Paranjape, Bevilacqua, Petroni, and Liang}]{liu2024lostinmiddle}
+Nelson~F Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, and Percy Liang. 2024.
+\newblock Lost in the middle: How language models use long contexts.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 12:157--173.
+
+\bibitem[{Liu et~al.(2023)Liu, Yuan, Fu, Jiang, Hayashi, and Neubig}]{liu2023pre}
+Pengfei Liu, Weizhe Yuan, Jinlan Fu, Zhengbao Jiang, Hiroaki Hayashi, and Graham Neubig. 2023.
+\newblock Pre-train, prompt, and predict: A systematic survey of prompting methods in natural language processing.
+\newblock \emph{ACM Computing Surveys}, 55(9):1--35.
+
+\bibitem[{Liu et~al.(2021)Liu, Wang, Niu, Wu, and Che}]{liu-etal-2021-durecdial}
+Zeming Liu, Haifeng Wang, Zheng-Yu Niu, Hua Wu, and Wanxiang Che. 2021.
+\newblock \href {https://doi.org/10.18653/v1/2021.emnlp-main.356} {{D}u{R}ec{D}ial 2.0: A bilingual parallel corpus for conversational recommendation}.
+\newblock In \emph{Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing}, pages 4335--4347, Online and Punta Cana, Dominican Republic. Association for Computational Linguistics.
+
+\bibitem[{Pan et~al.(2023{\natexlab{a}})Pan, Luo, Wang, Chen, Wang, and Wu}]{KGForLLMSurvey}
+Shirui Pan, Linhao Luo, Yufei Wang, Chen Chen, Jiapu Wang, and Xindong Wu. 2023{\natexlab{a}}.
+\newblock \href {https://api.semanticscholar.org/CorpusID:259165563} {Unifying large language models and knowledge graphs: A roadmap}.
+\newblock \emph{IEEE Transactions on Knowledge and Data Engineering}, 36:3580--3599.
+
+\bibitem[{Pan et~al.(2023{\natexlab{b}})Pan, Luo, Wang, Chen, Wang, and Wu}]{Pan2023UnifyingLL}
+Shirui Pan, Linhao Luo, Yufei Wang, Chen Chen, Jiapu Wang, and Xindong Wu. 2023{\natexlab{b}}.
+\newblock \href {https://api.semanticscholar.org/CorpusID:259165563} {Unifying large language models and knowledge graphs: A roadmap}.
+\newblock \emph{IEEE Transactions on Knowledge and Data Engineering}, 36:3580--3599.
+
+\bibitem[{Pan et~al.(2024)Pan, Luo, Wang, Chen, Wang, and Wu}]{pan2024unifying}
+Shirui Pan, Linhao Luo, Yufei Wang, Chen Chen, Jiapu Wang, and Xindong Wu. 2024.
+\newblock Unifying large language models and knowledge graphs: A roadmap.
+\newblock \emph{IEEE Transactions on Knowledge and Data Engineering}.
+
+\bibitem[{Reinanda et~al.(2020)Reinanda, Meij, de~Rijke et~al.}]{reinanda2020knowledge}
+Ridho Reinanda, Edgar Meij, Maarten de~Rijke, et~al. 2020.
+\newblock Knowledge graphs: An information retrieval perspective.
+\newblock \emph{Foundations and Trends{\textregistered} in Information Retrieval}, 14(4):289--444.
+
+\bibitem[{Riedl and Young(2010)}]{riedl2010narrative}
+Mark~O Riedl and Robert~Michael Young. 2010.
+\newblock Narrative planning: Balancing plot and character.
+\newblock \emph{Journal of Artificial Intelligence Research}, 39:217--268.
+
+\bibitem[{Roddick and Spiliopoulou(2002)}]{roddick2002survey}
+John~F Roddick and Myra Spiliopoulou. 2002.
+\newblock A survey of temporal knowledge discovery paradigms and methods.
+\newblock \emph{IEEE Transactions on Knowledge and data engineering}, 14(4):750--767.
+
+\bibitem[{Si et~al.(2023)Si, Gan, Yang, Wang, Wang, Boyd-Graber, and Wang}]{si2023prompting}
+Chenglei Si, Zhe Gan, Zhengyuan Yang, Shuohang Wang, Jianfeng Wang, Jordan~Lee Boyd-Graber, and Lijuan Wang. 2023.
+\newblock \href {https://openreview.net/forum?id=98p5x51L5af} {Prompting {GPT}-3 to be reliable}.
+\newblock In \emph{The Eleventh International Conference on Learning Representations}.
+
+\bibitem[{Su et~al.(2021)Su, Han, Zhang, Lin, Li, Liu, Zhou, and Sun}]{su2021cokebert}
+Yusheng Su, Xu~Han, Zhengyan Zhang, Yankai Lin, Peng Li, Zhiyuan Liu, Jie Zhou, and Maosong Sun. 2021.
+\newblock Cokebert: Contextual knowledge selection and embedding towards enhanced pre-trained language models.
+\newblock \emph{AI Open}, 2:127--134.
+
+\bibitem[{Sun et~al.(2021{\natexlab{a}})Sun, Wang, Feng, Ding, Pang, Shang, Liu, Chen, Zhao, Lu et~al.}]{sun2021ernie}
+Yu~Sun, Shuohuan Wang, Shikun Feng, Siyu Ding, Chao Pang, Junyuan Shang, Jiaxiang Liu, Xuyi Chen, Yanbin Zhao, Yuxiang Lu, et~al. 2021{\natexlab{a}}.
+\newblock Ernie 3.0: Large-scale knowledge enhanced pre-training for language understanding and generation.
+\newblock \emph{arXiv preprint arXiv:2107.02137}.
+
+\bibitem[{Sun et~al.(2021{\natexlab{b}})Sun, Shi, Qi, and Zhang}]{sun2021jointlk}
+Yueqing Sun, Qi~Shi, Le~Qi, and Yu~Zhang. 2021{\natexlab{b}}.
+\newblock Jointlk: Joint reasoning with language models and knowledge graphs for commonsense question answering.
+\newblock \emph{arXiv preprint arXiv:2112.02732}.
+
+\bibitem[{Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, and Polosukhin}]{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin. 2017.
+\newblock Attention is all you need.
+\newblock \emph{Advances in neural information processing systems}, 30.
+
+\bibitem[{Vogler and Montez(2007)}]{TheoryTwelve}
+Christopher Vogler and Michele Montez. 2007.
+\newblock \href {https://api.semanticscholar.org/CorpusID:193909189} {The writer's journey: Mythic structure for writers}.
+
+\bibitem[{Wang et~al.(2023{\natexlab{a}})Wang, Yang, Liu, and Klein}]{improving-pacing}
+Yichen Wang, Kevin Yang, Xiaoming Liu, and Dan Klein. 2023{\natexlab{a}}.
+\newblock \href {https://doi.org/10.18653/v1/2023.findings-emnlp.723} {Improving pacing in long-form story planning}.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 10788--10845, Singapore. Association for Computational Linguistics.
+
+\bibitem[{Wang et~al.(2023{\natexlab{b}})Wang, Yang, Liu, and Klein}]{wang-etal-2023-improving-pacing}
+Yichen Wang, Kevin Yang, Xiaoming Liu, and Dan Klein. 2023{\natexlab{b}}.
+\newblock \href {https://doi.org/10.18653/v1/2023.findings-emnlp.723} {Improving pacing in long-form story planning}.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 10788--10845, Singapore. Association for Computational Linguistics.
+
+\bibitem[{Wen et~al.(2023)Wen, Wang, and Sun}]{wen2023mindmap}
+Yilin Wen, Zifeng Wang, and Jimeng Sun. 2023.
+\newblock Mindmap: Knowledge graph prompting sparks graph of thoughts in large language models.
+\newblock \emph{arXiv preprint arXiv:2308.09729}.
+
+\bibitem[{Xie et~al.(2023)Xie, Cohn, and Lau}]{xie-etal-2023-next}
+Zhuohan Xie, Trevor Cohn, and Jey~Han Lau. 2023.
+\newblock \href {https://doi.org/10.18653/v1/2023.inlg-main.23} {The next chapter: A study of large language models in storytelling}.
+\newblock In \emph{Proceedings of the 16th International Natural Language Generation Conference}, pages 323--351, Prague, Czechia. Association for Computational Linguistics.
+
+\bibitem[{Yang et~al.(2023)Yang, Klein, Peng, and Tian}]{DOC}
+Kevin Yang, Dan Klein, Nanyun Peng, and Yuandong Tian. 2023.
+\newblock \href {https://api.semanticscholar.org/CorpusID:254877751} {Doc: Improving long story coherence with detailed outline control}.
+\newblock In \emph{Annual Meeting of the Association for Computational Linguistics}.
+
+\bibitem[{Yang et~al.(2022)Yang, Peng, Tian, and Klein}]{Re3}
+Kevin Yang, Nanyun Peng, Yuandong Tian, and Dan Klein. 2022.
+\newblock \href {https://api.semanticscholar.org/CorpusID:252873593} {Re3: Generating longer stories with recursive reprompting and revision}.
+\newblock In \emph{Conference on Empirical Methods in Natural Language Processing}.
+
+\bibitem[{Yao et~al.(2018)Yao, Peng, Weischedel, Knight, Zhao, and Yan}]{planAndWrite}
+Lili Yao, Nanyun Peng, Ralph~M. Weischedel, Kevin Knight, Dongyan Zhao, and Rui Yan. 2018.
+\newblock \href {https://api.semanticscholar.org/CorpusID:53306064} {Plan-and-write: Towards better automatic storytelling}.
+\newblock \emph{ArXiv}, abs/1811.05701.
+
+\bibitem[{Young et~al.(2024)Young, Chen, Li, Huang, Zhang, Zhang, Li, Zhu, Chen, Chang et~al.}]{young2024yi}
+Alex Young, Bei Chen, Chao Li, Chengen Huang, Ge~Zhang, Guanwei Zhang, Heng Li, Jiangcheng Zhu, Jianqun Chen, Jing Chang, et~al. 2024.
+\newblock Yi: Open foundation models by 01. ai.
+\newblock \emph{arXiv preprint arXiv:2403.04652}.
+
+\bibitem[{Zhang et~al.(2024)Zhang, Dong, Chen, Zha, Yu, and Huang}]{KGForQA}
+Qinggang Zhang, Junnan Dong, Hao Chen, Daochen Zha, Zailiang Yu, and Xiao Huang. 2024.
+\newblock \href {http://arxiv.org/abs/2312.06185} {Knowgpt: Knowledge graph based prompting for large language models}.
+
+\bibitem[{Zhang et~al.(2022)Zhang, Bosselut, Yasunaga, Ren, Liang, Manning, and Leskovec}]{zhang2022greaselm}
+Xikun Zhang, Antoine Bosselut, Michihiro Yasunaga, Hongyu Ren, Percy Liang, Christopher~D Manning, and Jure Leskovec. 2022.
+\newblock Greaselm: Graph reasoning enhanced language models for question answering.
+\newblock \emph{arXiv preprint arXiv:2201.08860}.
+
+\bibitem[{Zhang et~al.(2018)Zhang, Galley, Gao, Gan, Li, Brockett, and Dolan}]{zhang2018generating}
+Yizhe Zhang, Michel Galley, Jianfeng Gao, Zhe Gan, Xiujun Li, Chris Brockett, and Bill Dolan. 2018.
+\newblock Generating informative and diverse conversational responses via adversarial information maximization.
+\newblock \emph{Advances in Neural Information Processing Systems}, 31.
+
+\bibitem[{Zhang et~al.(2023)Zhang, Li, Cui, Cai, Liu, Fu, Huang, Zhao, Zhang, Chen et~al.}]{zhang2023siren}
+Yue Zhang, Yafu Li, Leyang Cui, Deng Cai, Lemao Liu, Tingchen Fu, Xinting Huang, Enbo Zhao, Yu~Zhang, Yulong Chen, et~al. 2023.
+\newblock Siren's song in the ai ocean: a survey on hallucination in large language models.
+\newblock \emph{arXiv preprint arXiv:2309.01219}.
+
+\bibitem[{Zhang et~al.(2019)Zhang, Han, Liu, Jiang, Sun, and Liu}]{zhang2019ernie}
+Zhengyan Zhang, Xu~Han, Zhiyuan Liu, Xin Jiang, Maosong Sun, and Qun Liu. 2019.
+\newblock Ernie: Enhanced language representation with informative entities.
+\newblock \emph{arXiv preprint arXiv:1905.07129}.
+
+\bibitem[{Zheng et~al.(2024)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li, Li, Xing, Zhang, Gonzalez, and Stoica}]{llm-as-a-judge}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi~Lin, Zhuohan Li, Dacheng Li, Eric~P. Xing, Hao Zhang, Joseph~E. Gonzalez, and Ion Stoica. 2024.
+\newblock Judging llm-as-a-judge with mt-bench and chatbot arena.
+\newblock In \emph{Proceedings of the 37th International Conference on Neural Information Processing Systems}, NIPS '23, Red Hook, NY, USA. Curran Associates Inc.
+
+\bibitem[{Zhou et~al.(2023)Zhou, Jiang, Cui, Wang, Xiao, Hou, Cotterell, and Sachan}]{RecurrentGPT}
+Wangchunshu Zhou, Yuchen Jiang, Peng Cui, Tiannan Wang, Zhenxin Xiao, Yifan Hou, Ryan Cotterell, and Mrinmaya Sachan. 2023.
+\newblock \href {https://api.semanticscholar.org/CorpusID:258832617} {Recurrentgpt: Interactive generation of (arbitrarily) long text}.
+\newblock \emph{ArXiv}, abs/2305.13304.
+
+\end{thebibliography}

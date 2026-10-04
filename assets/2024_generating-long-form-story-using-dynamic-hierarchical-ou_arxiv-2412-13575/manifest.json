@@ -1,0 +1,110 @@
+{
+  "paper_id": "2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575",
+  "source_path": "",
+  "source_archive_path": "sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_illustration-and-comparison-of-three-strategies",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_001_illustration-and-comparison-of-three-strategies.png",
+      "caption": "Illustration and comparison of three strategies of long-form story generation. (a) applying a fixed hierarchical outline to guide the story generation, which is challenging to adapt to the uncertainty in story creation. (b) adapting to the uncertainty through interaction with humans, which allows for flexibility but lacks a high-level storyline to guide story development. Our method shown in (c) aims to enhance story coherence from both plot and expression and enjoys the advantages of the former two strategies to improve the coherence of the plot and reduce contextual conflicts.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/Methods_compare.pdf"
+    },
+    {
+      "id": "source_figure_002_general-diagram-of-proposed-the-story-generation",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_002_general-diagram-of-proposed-the-story-generation.png",
+      "caption": "General diagram of proposed \\methodname. The story generation process is divided into several stages based on the amount of rough outline. At stage $i$, we expand rough outline $i$ into several detailed outlines based on the relevant content provided by MEM, and these outlines generate partial story sequentially based on their relevant content querying from MEM. Every generated partial story is stored in a temporal Knowledge graph for the following query.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/our_method3.pdf"
+    },
+    {
+      "id": "source_figure_003_the-details-of-querying-for-the-relevant-content",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_003_the-details-of-querying-for-the-relevant-content.png",
+      "caption": "The details of querying for the relevant content. Notably the last arrow points to the historical information semantically related to the input content.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/query.pdf"
+    },
+    {
+      "id": "source_figure_004_the-criterion-of-filtering-on-semantic-relevance",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_004_the-criterion-of-filtering-on-semantic-relevance.png",
+      "caption": "The criterion of filtering on semantic relevance.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/r4.png"
+    },
+    {
+      "id": "source_figure_005_scalability-results-of-applying-on-different-llm",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_005_scalability-results-of-applying-on-different-llm.png",
+      "caption": "Scalability results of applying~\\methodname~on different LLMs. Left: the increase rates of $Ent$-2 metric. Right: the decrease rates of $CR.$ metric.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/eval-bar2.pdf"
+    },
+    {
+      "id": "source_figure_022_the-interface-for-human-interface-in-comparison",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_022_the-interface-for-human-interface-in-comparison.png",
+      "caption": "The interface for human interface in comparison experiment.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/zw.vivighr.vip1.png"
+    },
+    {
+      "id": "source_figure_023_the-interface-for-human-interface-in-ablation-ex",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_023_the-interface-for-human-interface-in-ablation-ex.png",
+      "caption": "The interface for human interface in ablation experiment.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/zw.vivighr.vip3.png"
+    },
+    {
+      "id": "source_figure_024_the-interface-for-human-interface-in-scalability",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_024_the-interface-for-human-interface-in-scalability.png",
+      "caption": "The interface for human interface in scalability experiment.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/zw.vivighr.vip4.png"
+    },
+    {
+      "id": "source_figure_025_the-rules-for-grouping-quadruples",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_025_the-rules-for-grouping-quadruples.pdf",
+      "caption": "The rules for grouping quadruples.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/grules.pdf"
+    },
+    {
+      "id": "source_figure_030_five-stages-novel-writing-theory-from-joseph-cam",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_030_five-stages-novel-writing-theory-from-joseph-cam.png",
+      "caption": "\\hjw{Five stages novel writing theory from Joseph Campbell \\cite{TheoryFive}.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "images/novel_theory.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-18"
+}

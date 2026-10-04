@@ -1,0 +1,240 @@
+{
+  "paper_id": "2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748",
+  "source_path": "",
+  "source_archive_path": "sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_three-paradigms-of-memory-systems",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_001_three-paradigms-of-memory-systems.png",
+      "caption": "Three paradigms of Memory systems.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/2026ACL-Intro.pdf"
+    },
+    {
+      "id": "source_figure_002_structmem-s-hierarchical-memory-organization-eve",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_002_structmem-s-hierarchical-memory-organization-eve.png",
+      "caption": "StructMem's hierarchical memory organization. \\textbf{Event-Level Binding} constructs event-level structure by extracting dual perspectives and anchoring them temporally. \\textbf{Cross-Event Consolidation} constructs cross-event structure through semantic retrieval, event reconstruction, and consolidation synthesis.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/2026ACL-Demo.pdf"
+    },
+    {
+      "id": "source_figure_003_1_analysis-of-efficiency-across-memory-paradigms-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_1_analysis-of-efficiency-across-memory-paradigms-a.png",
+      "caption": "Analysis of efficiency across memory paradigms and internal mechanisms of StructMem.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/scalability_combined.pdf"
+    },
+    {
+      "id": "source_figure_003_2_analysis-of-efficiency-across-memory-paradigms-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_2_analysis-of-efficiency-across-memory-paradigms-a.png",
+      "caption": "Analysis of efficiency across memory paradigms and internal mechanisms of StructMem.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/components_comparison.pdf"
+    },
+    {
+      "id": "source_figure_003_3_analysis-of-efficiency-across-memory-paradigms-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_3_analysis-of-efficiency-across-memory-paradigms-a.png",
+      "caption": "Analysis of efficiency across memory paradigms and internal mechanisms of StructMem.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/entry_retrieve_ablation_study.pdf"
+    },
+    {
+      "id": "source_figure_003_4_analysis-of-efficiency-across-memory-paradigms-a",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_4_analysis-of-efficiency-across-memory-paradigms-a.png",
+      "caption": "Analysis of efficiency across memory paradigms and internal mechanisms of StructMem.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figure/global_retrieve.pdf"
+    },
+    {
+      "id": "source_figure_004_factual-entry-extraction-prompt-part-1",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_004_factual-entry-extraction-prompt-part-1.png",
+      "caption": "Factual entry extraction prompt (Part 1).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/fact_1.pdf"
+    },
+    {
+      "id": "source_figure_005_factual-entry-extraction-prompt-part-2",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_005_factual-entry-extraction-prompt-part-2.png",
+      "caption": "Factual entry extraction prompt (Part 2).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/fact_2.pdf"
+    },
+    {
+      "id": "source_figure_006_relational-entry-extraction-prompt-part-1",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_006_relational-entry-extraction-prompt-part-1.png",
+      "caption": "Relational entry extraction prompt (Part 1).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/relation_1.pdf"
+    },
+    {
+      "id": "source_figure_007_relational-entry-extraction-prompt-part-2",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_007_relational-entry-extraction-prompt-part-2.png",
+      "caption": "Relational entry extraction prompt (Part 2).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/relation_2.pdf"
+    },
+    {
+      "id": "source_figure_008_narrative-synthesis-prompt-for-synthesis",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_008_narrative-synthesis-prompt-for-synthesis.png",
+      "caption": "Narrative synthesis prompt for Synthesis.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Synthesis.pdf"
+    },
+    {
+      "id": "source_figure_009_entity-extraction-prompt",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_009_entity-extraction-prompt.png",
+      "caption": "Entity extraction prompt",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/entity_extract.pdf"
+    },
+    {
+      "id": "source_figure_010_entity-deduplicate-prompt",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_010_entity-deduplicate-prompt.png",
+      "caption": "Entity deduplicate prompt",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/entity_dedup.pdf"
+    },
+    {
+      "id": "source_figure_011_relation-extraction-prompt",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_011_relation-extraction-prompt.png",
+      "caption": "Relation extraction prompt",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/relation_extract.pdf"
+    },
+    {
+      "id": "source_figure_012_relation-deduplicate-prompt",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_012_relation-deduplicate-prompt.png",
+      "caption": "Relation deduplicate prompt",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/relation_dedup.pdf"
+    },
+    {
+      "id": "source_figure_013_question-answering-prompt-for-structmem-system",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_013_question-answering-prompt-for-structmem-system.png",
+      "caption": "Question answering prompt for StructMem system.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/StructMem_qa.pdf"
+    },
+    {
+      "id": "source_figure_014_question-answering-prompt-for-flat-memory-system",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_014_question-answering-prompt-for-flat-memory-system.png",
+      "caption": "Question answering prompt for flat memory systems.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Flat_qa.pdf"
+    },
+    {
+      "id": "source_figure_015_question-answering-prompt-for-graph-based-memory",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_015_question-answering-prompt-for-graph-based-memory.png",
+      "caption": "Question answering prompt for graph-based memory systems.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Graph_qa.pdf"
+    },
+    {
+      "id": "source_figure_016_evaluate-prompt-for-assessing-response-quality",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_016_evaluate-prompt-for-assessing-response-quality.png",
+      "caption": "Evaluate prompt for assessing response quality.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/eval.pdf"
+    },
+    {
+      "id": "source_figure_017_prompt-for-assessing-extraction-fidelity",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_017_prompt-for-assessing-extraction-fidelity.png",
+      "caption": "Prompt for assessing extraction fidelity.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Extraction_Fidelity.pdf"
+    },
+    {
+      "id": "source_figure_018_prompt-for-assessing-consolidation-fidelity-part",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_018_prompt-for-assessing-consolidation-fidelity-part.png",
+      "caption": "Prompt for assessing consolidation fidelity (Part 1).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Consolidation_Fidelity_1.pdf"
+    },
+    {
+      "id": "source_figure_019_prompt-for-assessing-consolidation-fidelity-part",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_019_prompt-for-assessing-consolidation-fidelity-part.png",
+      "caption": "Prompt for assessing consolidation fidelity (Part 2).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Consolidation_Fidelity_2.pdf"
+    },
+    {
+      "id": "source_figure_020_narrative-synthesis-prompt-for-unconstrained-syn",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_020_narrative-synthesis-prompt-for-unconstrained-syn.png",
+      "caption": "Narrative synthesis prompt for Unconstrained Synthesis. The text highlighted in gray represents the grounding constraints that are active in our default \\textit{Constrained} setting but disabled for the \\textit{Unconstrained} variant to evaluate their impact on memory fidelity.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "prompts/Unconstrained_Synthesize.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-07-03"
+}

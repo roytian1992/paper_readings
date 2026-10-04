@@ -1,0 +1,160 @@
+{
+  "paper_id": "2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702",
+  "source_path": "",
+  "source_archive_path": "sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_preference-retention-during-multi-round-memory-e",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_001_preference-retention-during-multi-round-memory-e.png",
+      "caption": "Preference retention during multi-round memory evolution on PrefEval (Explicit). We insert a user preference at round 0 and then run memory evolution for subsequent rounds, where each round uses a 4K-token dialogue context. A strong judge model (\\texttt{Gemini-2.5-Pro}) verifies whether the preference remains in the memory bank after each round.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/preference_retention_gap.pdf"
+    },
+    {
+      "id": "source_figure_002_error-analysis-decomposing-failures-into-the-mem",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_002_error-analysis-decomposing-failures-into-the-mem.png",
+      "caption": "Error analysis decomposing failures into the memory evolution stage and the response generation stage. We use the same setup as Figure~\\ref{fig:preference_retention_gap}, where successful evolution means the memory bank captures the user preference, and successful generation means the final answer is correct given the evolved memory.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/pie-error-analysis.pdf"
+    },
+    {
+      "id": "source_figure_003_1_scaling-analysis-on-personamem-128k-we-increase",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_003_1_scaling-analysis-on-personamem-128k-we-increase.png",
+      "caption": "Scaling analysis on PersonaMem (128K). We increase the total dialogue tokens (each evolution round processes 4K tokens) and report the resulting memory bank size (left) and memory evolving time (right).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/memory_bank_size.pdf"
+    },
+    {
+      "id": "source_figure_003_2_scaling-analysis-on-personamem-128k-we-increase",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_003_2_scaling-analysis-on-personamem-128k-we-increase.png",
+      "caption": "Scaling analysis on PersonaMem (128K). We increase the total dialogue tokens (each evolution round processes 4K tokens) and report the resulting memory bank size (left) and memory evolving time (right).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/memory_evolving_time.pdf"
+    },
+    {
+      "id": "source_figure_004_1_personamem-32k",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_1_personamem-32k.png",
+      "caption": "PersonaMem (32K)",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/optim_step_personamem_32k.pdf"
+    },
+    {
+      "id": "source_figure_004_2_personamem-32k",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_2_personamem-32k.png",
+      "caption": "PersonaMem (32K)",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/optim_step_personamem_128k.pdf"
+    },
+    {
+      "id": "source_figure_004_3_personamem-32k",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_3_personamem-32k.png",
+      "caption": "PersonaMem (32K)",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/optim_step_prefeval_explicit.pdf"
+    },
+    {
+      "id": "source_figure_004_4_personamem-32k",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_4_personamem-32k.png",
+      "caption": "PersonaMem (32K)",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/optim_step_prefeval_implicit.pdf"
+    },
+    {
+      "id": "source_figure_005_test-set-accuracy-of-rl-based-baselines-across-r",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_005_test-set-accuracy-of-rl-based-baselines-across-r.png",
+      "caption": "Test set Accuracy of RL-based baselines across RL training steps.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/training_curves.pdf"
+    },
+    {
+      "id": "source_figure_016_efficiency-analysis-on-personamem-we-report-the",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_016_efficiency-analysis-on-personamem-we-report-the.png",
+      "caption": "Efficiency analysis on PersonaMem. We report the performance--time balance of memory construction/evolution over 20 dialogue histories (32K), where circle size indicates the standard deviation of runtime.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/efficiency_tradeoff.pdf"
+    },
+    {
+      "id": "source_figure_017_retrieval-top-k-on-personamem-32k",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_017_retrieval-top-k-on-personamem-32k.png",
+      "caption": "Retrieval Top-$K$ on PersonaMem (32K).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/topk_curve.pdf"
+    },
+    {
+      "id": "source_figure_018_effect-of-tokens-per-evolve-round-on-personamem",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_018_effect-of-tokens-per-evolve-round-on-personamem.png",
+      "caption": "Effect of tokens per evolve round on PersonaMem (32K).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/dual_yaxis_tokens_rounds.pdf"
+    },
+    {
+      "id": "source_figure_019_impact-of-prompt-quality-on-personamem-averaged",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_019_impact-of-prompt-quality-on-personamem-averaged.png",
+      "caption": "Impact of prompt quality on PersonaMem, averaged over three random runs with different seeds; error bars indicate standard deviation.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/prompt_bar.pdf"
+    },
+    {
+      "id": "source_figure_020_top-with-a-limited-context-window-the-agent-fail",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_020_top-with-a-limited-context-window-the-agent-fail.png",
+      "caption": "Top: With a limited context window, the agent fails to capture preferences. Bottom: Inspired by \\textcolor{PrefrontalBlue}{\\textbf{\\texttt{Prefrontal}}} $\\rightarrow$ \\textcolor{HippoOrange}{\\textbf{\\texttt{Hippocampus}}}, we decouple agent memory into \\textcolor{PrefrontalBlue}{\\textbf{\\texttt{Memory Guideline}}} (for organizing) $\\rightarrow$ \\textcolor{HippoOrange}{\\textbf{\\texttt{Agent Memory}}} (for updating).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/intro.pdf"
+    },
+    {
+      "id": "source_figure_021_overview-of-our-proposed-it-performs-two-stage-o",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_021_overview-of-our-proposed-it-performs-two-stage-o.png",
+      "caption": "Overview of our proposed \\ourmodel. It performs two-stage optimization for evolving user memory: (1) {Memory Guideline Induction} (\\moduleone) iteratively refines a natural-language guideline; (2) {Guideline-Aligned Memory Policy Optimization} (\\moduletwo) fixes the induced guideline to define guideline-aligned rewards and applies multi-turn GRPO to learn what information to update in evolving memory bank.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "img/method.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-07"
+}

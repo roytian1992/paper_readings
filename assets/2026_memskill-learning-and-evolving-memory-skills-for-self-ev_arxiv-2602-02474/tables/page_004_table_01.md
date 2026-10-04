@@ -1,0 +1,5 @@
+|  |  |  |  |  |  | Skill Evolution (Designer) Refine Existing Skills Propose New Skills LLM-based Feedback Analyze Failures Two-stage Skill Evolusion Aggregate Cases from Each Cluster Filter by Reward Score and Fail Count Difficulty Filtering Divided by Groups Cluster Hard Cases Select Representative Hard Cases Trigger Periodically |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  | sesaC draH daeR |  |
+| Fail Model Prediction Model Predic Reward Score Mod Reward Sc Ground Truth Re Ground Tru Fa.i.l .C.o.u.n t G r F a.i.l .C.o. u.n F ...... | Fail ion | ure C Fa | ase 3 ilure C | ase N |  |  |
+|  |  | tion el Prediction ore Model Prediction ward Score th Reward Score ound Truth t Ground Truth a.i.l .C.o.u.n t F a.i.l .C.o.u.nt |  |  |  |  |

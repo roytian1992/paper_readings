@@ -1,0 +1,41 @@
+\section{Related Work}
+\label{sec:related}
+
+\noindent \textbf{Memory systems for LLM agents.}
+Persistent memory has become a core component of LLM agent architectures \citep{hu2025memory, zhang2024survey, sumers2024coala, wei2025evomemory}. Reflexion \citep{shinn2023reflexion} and Generative Agents \citep{park2023generative} maintain episodic buffers indexed by recency and importance. MemGPT \citep{packer2023memgpt} introduces OS-inspired tiered memory; MemoryBank \citep{zhong2024memorybank} applies Ebbinghaus-inspired forgetting. SCM \citep{wang2024scm} extracts entity-aware summaries; Mem0 \citep{chhikara2025mem0} builds knowledge graphs; A-MEM \citep{xu2025amem} creates Zettelkasten-style networks; MemSkill \citep{zhang2026memskill} evolves reusable memory skills. SimpleMem \citep{liu2026simplemem, omni_simplemem2026}, SeCom \citep{pan2025secom}, and RMM \citep{tan2025rmm} address retrieval quality through semantic compression, topic-level segmentation, and reflective refinement respectively. LongMem \citep{wang2023longmem} and MemoryLLM \citep{wang2024memoryllm} embed long-term knowledge directly into model parameters. All these systems evolve stored \emph{content} but keep the retrieval infrastructure frozen. \ours{} addresses this gap by making the full retrieval configuration self-evolving via LLM-powered closed-loop diagnosis, an approach we characterize as AutoResearch applied to the system's own architecture. Table~\ref{tab:comparison} summarizes key architectural differences.
+
+\begin{wraptable}{r}{0.55\textwidth}
+  \centering
+  \small       
+  \vspace{-1em}
+  \caption{Comparison of memory systems. \ours{} is the first to combine content evolution with self-evolving
+  retrieval infrastructure via AutoResearch. \textbf{C.E.}: content evolution. \textbf{P.E.}: policy/parameter evolution.
+  \textbf{T.M.}: typed memory. \textbf{Cons.}: consolidation. \textbf{O.E.}: offline evaluation.}
+  \vspace{-0.5em} 
+  \label{tab:comparison}                                                
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lccccc@{}}
+  \toprule                                           
+  \textbf{System} & \textbf{C.E.} & \textbf{P.E.} & \textbf{T.M.} & \textbf{Cons.} & \textbf{O.E.} \\
+  \midrule                                                
+  MemGPT \citep{packer2023memgpt} & \checkmark & & & \checkmark & \\
+  SCM \citep{wang2024scm} & \checkmark & & & \checkmark & \\       
+  SimpleMem \citep{liu2026simplemem} & \checkmark & & & \checkmark & \\
+  Mem0 \citep{chhikara2025mem0} & \checkmark & & & \checkmark & \\
+  A-MEM \citep{xu2025amem} & \checkmark & & & \checkmark & \\     
+  Memory-R1 \citep{liang2025memoryr1} & \checkmark & & & & \\ 
+  Agentic Memory \citep{yu2026agenticmemory} & \checkmark & & \checkmark & & \\                                       
+  MemoryBank \citep{zhong2024memorybank} & \checkmark & & & \checkmark & \\                                           
+  MemEvolve \citep{zhang2025memevolve} & \checkmark & \checkmark & & & \\
+  \midrule                                   
+  \ours{} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+  \bottomrule  
+  \end{tabular}                                                   
+  \vspace{-1.0em} 
+  \end{wraptable}          
+\noindent \textbf{Adaptive retrieval.}
+RAG \citep{lewis2020retrieval, guu2020realm} enriches LLM inputs with external knowledge. Recent variants adapt \emph{when} and \emph{what} to retrieve: Self-RAG \citep{asai2024selfrag} uses reflection tokens, CRAG \citep{yan2024corrective} adds corrective quality checks, FLARE \citep{jiang2023active} triggers retrieval when generation confidence drops, and Adaptive-RAG \citep{jeong2024adaptiverag} routes queries by estimated complexity. LLM-powered database tuning \citep{giannakouris2025lambdatune} and reinforcement-learning-based index optimization \citep{wang2025litune} demonstrate that retrieval parameters can be auto-optimized from workload statistics. These approaches adapt retrieval triggers or post-retrieval filtering, but none adapts the retrieval \emph{parameters} (scoring weights, fusion mode, context budgets) over a deployed system's lifetime. \ours{} fills this gap through offline evolution over a structured action space.
+
+\noindent \textbf{Self-improving agents and AutoResearch.}
+Self-improvement has been explored via self-play \citep{chen2024self}, iterative refinement \citep{madaan2023self}, and evolutionary optimization \citep{gao2025survey}. Voyager \citep{wangvoyager} builds an expanding skill library; ExpeL \citep{zhao2024expel} extracts reusable insights from task trajectories; EvolveR \citep{wu2025evolver} closes an experience-driven evolution loop; SkillRL \citep{xia2026skillrl} evolves agents via recursive skill augmentation; MemRL \citep{zhang2026memrl} applies runtime RL to episodic memory; Memory-R1 \citep{liang2025memoryr1} applies RL to memory operations; Agentic Memory \citep{yu2026agenticmemory} optimizes memory management with GRPO. MemEvolve \citep{zhang2025memevolve} jointly evolves agent knowledge and memory architecture. AutoResearchClaw \citep{liu2026autoresearchclaw} demonstrates that LLMs can conduct fully autonomous research pipelines, executing the complete cycle of hypothesis generation, experimental design, and result interpretation without human intervention. \ours{} applies this AutoResearch paradigm to a specific and previously unexplored target: the system autonomously researches its own retrieval infrastructure through iterative diagnosis-driven evolution, discovering architectural improvements that would otherwise require manual researcher effort. Unlike prior self-improving agents that optimize behavioral policies or stored content, \ours{} targets the retrieval mechanism itself as the research subject. Our consolidation mechanisms draw on complementary learning systems theory \citep{mcclelland1995there} and Ebbinghaus forgetting \citep{ebbinghaus1885memory}.
+

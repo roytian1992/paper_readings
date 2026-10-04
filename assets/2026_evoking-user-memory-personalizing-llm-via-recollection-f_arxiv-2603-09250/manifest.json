@@ -1,0 +1,200 @@
+{
+  "paper_id": "2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250",
+  "source_path": "",
+  "source_archive_path": "sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_comparison-between-standard-familiarity-based-re",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_001_comparison-between-standard-familiarity-based-re.png",
+      "caption": "Comparison between standard familiarity-based retrieval and recollection-based retrieval in user health narratives. And the brain figure motivated by~\\citep{rugg2007event, yonelinas2024role}.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Intro.pdf"
+    },
+    {
+      "id": "source_figure_002_the-overall-architecture-of-rf-mem-a-dual-proces",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_002_the-overall-architecture-of-rf-mem-a-dual-proces.png",
+      "caption": "The overall architecture of \\textbf{RF-Mem}. A dual-process memory retrieval system dynamically switches between the Familiarity and the Recollection paths.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/framework.pdf"
+    },
+    {
+      "id": "source_figure_003_illustration-of-adaptive-study-setup-offline-ind",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_003_illustration-of-adaptive-study-setup-offline-ind.png",
+      "caption": "Illustration of adaptive study setup. Offline indexes (e.g., MemoryBank or origin memory) provide different storage, while RF-Mem serves as an online retrieval layer that adapts to them.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/adaptive_study.pdf"
+    },
+    {
+      "id": "source_figure_004_illustration-of-the-adaptive-study-setup-nearlin",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_004_illustration-of-the-adaptive-study-setup-nearlin.png",
+      "caption": "\\revise{Illustration of the adaptive study setup. Nearline query expansion (e.g., HyDE) enriches the query representation, and RF-Mem operates as the online retrieval layer.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Query_expansion.pdf"
+    },
+    {
+      "id": "source_figure_005_illustration-of-adaptive-study-setup-iterative-r",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_005_illustration-of-adaptive-study-setup-iterative-r.png",
+      "caption": "\\revise{Illustration of adaptive study setup. Iterative RAG (e.g., Search-o1) provides a multi-turn retrieval for answer generation, while RF-Mem serves as the retrieval layer that adapts to it.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Iteractive.pdf"
+    },
+    {
+      "id": "source_figure_006_mean-score-s-and-entropy-h-p-of-the-personamem-d",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_006_mean-score-s-and-entropy-h-p-of-the-personamem-d.png",
+      "caption": "Mean score $\\bar{s}$ and entropy $H(p)$ of the PersonaMem dataset.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_Ent_personamem.pdf"
+    },
+    {
+      "id": "source_figure_007_empirical-distributions-of-mean-score-s-of-the-p",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_007_empirical-distributions-of-mean-score-s-of-the-p.png",
+      "caption": "\\revise{Empirical distributions of mean score $\\bar{s}$ of the PersonaMem dataset.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_KDE_personamem.pdf"
+    },
+    {
+      "id": "source_figure_008_mean-score-s-and-entropy-h-p-of-the-personabench",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_008_mean-score-s-and-entropy-h-p-of-the-personabench.png",
+      "caption": "Mean score $\\bar{s}$ and entropy $H(p)$ of the PersonaBench dataset.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_Ent_personabench.pdf"
+    },
+    {
+      "id": "source_figure_009_empirical-distributions-of-mean-score-s-of-the-p",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_009_empirical-distributions-of-mean-score-s-of-the-p.png",
+      "caption": "\\revise{Empirical distributions of mean score $\\bar{s}$ of the Personabench dataset.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_KDE_personabench.pdf"
+    },
+    {
+      "id": "source_figure_010_mean-score-s-and-entropy-h-p-in-the-longmemeval",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_010_mean-score-s-and-entropy-h-p-in-the-longmemeval.png",
+      "caption": "Mean score $\\bar{s}$ and entropy $H(p)$ in the LongMemEval-S dataset.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_Ent_LME-s.pdf"
+    },
+    {
+      "id": "source_figure_011_empirical-distributions-of-mean-score-s-of-the-l",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_011_empirical-distributions-of-mean-score-s-of-the-l.png",
+      "caption": "\\revise{Empirical distributions of mean score $\\bar{s}$ of the LongMemEval-S dataset.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_KDE_LME_S.pdf"
+    },
+    {
+      "id": "source_figure_012_mean-score-s-and-entropy-h-p-in-the-longmemeval",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_012_mean-score-s-and-entropy-h-p-in-the-longmemeval.png",
+      "caption": "Mean score $\\bar{s}$ and entropy $H(p)$ in the LongMemEval-M dataset.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_Ent_LME-m.pdf"
+    },
+    {
+      "id": "source_figure_013_empirical-distributions-of-mean-score-s-of-the-l",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_013_empirical-distributions-of-mean-score-s-of-the-l.png",
+      "caption": "\\revise{Empirical distributions of mean score $\\bar{s}$ of the LongMemEval-M dataset.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/Mean_KDE_LME_M.pdf"
+    },
+    {
+      "id": "source_figure_014_hyperparameter-sensitivity-study-on-personabench",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_014_hyperparameter-sensitivity-study-on-personabench.png",
+      "caption": "Hyperparameter sensitivity study on PersonaBench. Heatmaps report Recall@5 and Recall@10 across different retrievers, varying $\\alpha$ (query–centroid mixing) and $\\tau$ (entropy threshold).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/heatmaps_alpha_tau_PB.pdf"
+    },
+    {
+      "id": "source_figure_015_hyperparameter-b-and-f-sensitivity-of-recollecti",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_015_hyperparameter-b-and-f-sensitivity-of-recollecti.png",
+      "caption": "Hyperparameter $B$ and $F$ sensitivity of Recollection retrieval on LongMemEval-S and LongMemEval-M.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/B_F.pdf"
+    },
+    {
+      "id": "source_figure_016_effect-of-on-short-vs-long-path-retrieval-perfor",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_016_effect-of-on-short-vs-long-path-retrieval-perfor.png",
+      "caption": "Effect of $\\alpha$ on short- vs. long-path retrieval performance (Recall@$K$).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/alpha_LME.pdf"
+    },
+    {
+      "id": "source_figure_017_effect-of-probe-size-k-on-retrieval-performance",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_017_effect-of-probe-size-k-on-retrieval-performance.png",
+      "caption": "Effect of probe size $K$ on retrieval performance across different corpus scales.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/para_k.pdf"
+    },
+    {
+      "id": "source_figure_018_case-study-from-personamem-comparison-between-fa",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_018_case-study-from-personamem-comparison-between-fa.png",
+      "caption": "Case study from PersonaMem: comparison between \\emph{Familiarity} and \\emph{Recollection} retrieval \\revise{where Recollection wins}. Familiarity surfaces salient but fragmented evidence, while Recollection progressively reconstructs temporally distributed details via clustering and query refinement.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/case_study.pdf"
+    },
+    {
+      "id": "source_figure_019_case-study-from-personamem-comparison-between-fa",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_019_case-study-from-personamem-comparison-between-fa.png",
+      "caption": "\\revise{Case study from PersonaMem: comparison between \\emph{Familiarity} and \\emph{Recollection} retrieval where Familiarity wins. Familiarity produces broader and more relevant evidence aligned with prioritizing travel experiences, while Recollection progressively drills into long-term financial management and drifts away from the user’s actual intent.}",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "chapter/figure/bad_case.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-07"
+}

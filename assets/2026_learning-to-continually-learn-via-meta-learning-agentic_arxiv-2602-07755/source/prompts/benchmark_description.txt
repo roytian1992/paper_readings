@@ -1,0 +1,34 @@
+TASK_DESCRIPTION = {
+        'alfworld': """The evaluation of downstream agent system is based on TextWorld: 
+- The agent explores within a given space (rooms) and a predefined list of actions in order to accomplish a specified task goal. 
+- Different data may involve **different rooms/spaces**, **different object placements**, or **entirely different task objectives**.
+- The memory structure should strenthen following abilities of agent:
+    - Spatial and State Reasoning: what are possible actions for each type of object?
+    - Object-Centered Trajectory Learning: what did the agent do for previous same object management tasks or same location tasks?
+""",
+    'minihack':"""The evaluation of downstream agent system is based on MiniHack:
+    - MiniHack is a collection of small game-like tasks where an agent sees a grid map of the environment, text and color representations, its own stats like health and position, and its inventory.  
+    - Different games will have **different goals, maps and observations**. So goals and initial observations can change drastically across episodes, requiring **transferable knowledge**.
+    - The memory structure should strenthen following abilities of agent:
+        - Spatial and State Reasoning: Infer the environment from partial observations, remember explored areas, and navigate the map effectively.
+        - Long-Horizon Goal Planning: Form multi-step strategies and consistently act toward the task objective despite sparse or delayed rewards.
+        - Environmental Interaction and Risk Management: Correctly use actions and make safe, context-aware decisions around monsters, traps, and terrain.
+    """,
+    'textworld':"""The evaluation of downstream agent system is based on TextWorld:
+    - The agent explores within a given space (rooms) and actions in order to accomplish a specified task goal. The agent may need to explore the space and get more progession. 
+    - Done the task not neccessarily means the agent win the game. Whether wining or not depends on final reward(a progression percentage).
+    - Different data may involve **different rooms/spaces**, **different object placements**, or **entirely different task objectives**.
+    """,
+    'babaisai':"""The evaluation of downstream agent system is based on BABAisAI:
+    - In this gridworld game, agent interact with various objects and textual rule blocks to achieve specific goals.
+    - Different data may involve **different rooms/spaces**, **different object placements**.
+    - The agent goal is usually to reach an object defined as "WIN", but this can be changed by changing the rules.
+    - The rules of the game can be manipulated and rearranged by the agent, creating a dynamic environment where agents must identify relevant objects and rules and then manipulate them to change or create new rules to succeed.
+    - The memory structure should strenthen following abilities of agent:
+        - ability to perceive all objects and text blocks in the environment, understand which rules are currently active or blocked, and evaluate how the environment state affects potential winning conditions.
+        - ability to analyze and determine whether it is possible to win by modifying rule text blocks, and identify which rule combinations could achieve the goal.
+        - ability to plan multi-step actions, including moving the character and pushing text blocks, to gradually construct or alter rules that lead to victory.
+        - ability to flexibly adapt its strategy in response to dynamic rule and environment changes, handling potential obstacles or conflicts, and learn when modifying rules is more effective than simple movement.
+        - ability to possess exploration and strategy transfer capabilities, discovering new ways to manipulate rules in unseen levels and applying prior experience to recognize when rule changes are advantageous.
+    """
+    }

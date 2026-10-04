@@ -1,0 +1,18 @@
+\section{Related Work}
+
+\subsection{Long-form Story Generation}
+
+Existing works have attempted to use language models to automatically generate novels \cite{Re3, DOC}. With the widespread use of LLMs, people begin to generate longer stories~\citep{RecurrentGPT}.Recent works for generating long-form stories can be classified into two categories based on whether human participation is engaged.The first category imitates the human writing process through a plan-and-write framework~\cite{planAndWrite}. ~\citet{facebook2018} proposes a hierarchical story generation method, which first generates a story premise and then generates the story based on it. \citet{planAndWrite} introduces a "plan-and-write" framework for open-domain story generation, which divides the writing process into planning and generating. \citet{Re3} further subdivides writing into plan, draft, rewrite, and edit module. \citet{DOC} makes efforts on outline control to generate a more detailed and hierarchical story. Although this technique can lengthen the narrative and enhance plot fluidity, the rigid nature of a predetermined outline can hinder flexibility in the writing phase, resulting in plot inconsistencies, such as repeated or contradictory contexts.
+
+
+
+Other works \cite{RecurrentGPT, brahman2020cue} explore using human interaction to replace pre-generated outlines.~\citet{brahman2020cue} introduce a content-inducing approach, which involves human being using cue-phrases. \citet{RecurrentGPT} propose a language simulacrum of RNNs' recurrence, enabling human-guided story planning. This reduces plot inconsistencies but results in less fluent, readable narratives due to lack of microcontrol.
+
+
+
+\subsection{KG-enhanced LLM Inference}
+
+Knowledge Graphs (KGs) can effectively model the key information in text by triples in the form of $<'subject', 'action', 'object'>$~\citep{KGSurvey}. After the appearance of LLMs, like GPT-3.5~\cite{achiam2023gpt}, Llama 3~\cite{llama3} and Qwen1.5~\cite{bai2023qwen}, the integration of LLMs and KGs has attracted widespread attention due to the potential improvement KGs can make for LLMs~\cite{KGForLLMSurvey}. KG can be used as a knowledge base to provide references when LLM generates content. 
+There are two kinds of works to inject the knowledge in KG into LLM. The first one fuse knowledge in KG and input by directly concatenating them in language level~\cite{KGForQA,wen2023mindmap,sun2021ernie} or in token level~\cite{zhang2019ernie,he2019integrating,su2021cokebert}. These methods can easily fuse the knowledge between them but with little interaction between knowledge and input. The second one applies the addition knowledge fusion module in which the knowledge is updated and simplified \cite{sun2021jointlk,zhang2022greaselm}.
+
+

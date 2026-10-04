@@ -1,0 +1,46 @@
+MEMO_ANALYSIS_OUTPUT_FORMAT = {
+        "learned_from_suggestion_example": {
+        "type": "string",
+        "description": "Findings derived from the provided suggestion_example and improve_score. Bullet list of concrete factors (patterns) that made the suggestion succeed or fail. And principles to adopt when making future suggestions."
+    },
+    "trajectory_score_assessment": {
+        "type": "array",
+        "description": "analysis each retrieved module information based on current trajectories sampled and the benchmark scores.",
+        "items": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "enum": ["Useful", "Potentially Useful", "Irrelevant", "Empty/BadFormat"],
+                    "description": "Categorization of the memory item's relevance based on whether the retrieved content actually helps the agent."
+                },
+                "how_it_can_help": {
+                    "type": "string",
+                    "description": "If Useful/Potentially Useful: short note how it could guide actions (subgoal, trap, object use...). If Irrelevant/Empty: reason (e.g., wrong keying, over-specific, missing summary, formatting)."
+                }
+            },
+            "required": ["label", "how_it_can_help"]
+        }
+    },
+    "content_quality_issues": {
+        "type": "string",
+        "description": "Detected content-level problems (duplicates, empty entries, serialization issues...). Why those harms retrieval or downstream planning.",
+    },
+    "structure_and_coherence": {
+        "type": "string",
+        "description": "Analysis of layer interactions, keying, and task-awareness. Which parts generalize, which are overfitted.",
+    },
+    "suggested_changes": {
+        "type": "array",
+        "description": "Based on all your analysis above, provide concrete change that can be applied on provided current memory structure code.",
+        "items": {
+            "type": "object",
+            "properties": {
+                "priority": {"type": "string", "enum": ["High", "Medium", "Low"], "description": "How urgent/impactful this is."},
+                "what": {"type": "string", "description": "Precise description of what to change (code/pipeline/config)."},
+                "why": {"type": "string", "description": "Link to observations/principles: why this addresses the problem."}
+            },
+            "required": ["priority", "what", "why"]
+        }
+    }
+}

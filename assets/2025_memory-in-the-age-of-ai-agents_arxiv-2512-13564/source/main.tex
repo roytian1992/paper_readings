@@ -1,0 +1,1119 @@
+\PassOptionsToPackage{table,dvipsnames}{xcolor}
+\documentclass[]{selfevolagent}
+% Option "twocolumn" available, but please prioritize single-column
+\usepackage{microtype}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\definecolor{lavender}{RGB}{230,230,250} % 淡紫色
+\definecolor{softlavender}{RGB}{238, 223, 255} % 你原来用的 softlavender
+\definecolor{selfevolagent}{RGB}{220,211,237} % survey的颜色
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{makecell}
+% \newcommand{\appendixtocfont}{\small\rmfamily}
+\usepackage{algpseudocode}
+\usepackage[linesnumbered,lined,boxed,commentsnumbered,ruled,longend]{algorithm2e}
+% \usepackage[capitalize,noabbrev]{cleveref}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage[edges]{forest}
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz}
+% \usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}     % for \resizebox
+\usepackage{booktabs}     % for \toprule, \midrule, \bottomrule
+% \usepackage[table]{xcolor}% for your \color{…} commands
+\usepackage{enumitem}     % to use [nosep,leftmargin=*] with itemize
+\usepackage[most]{tcolorbox} % 画彩色框
+% \usepackage{xcolor}          % 颜色定义（tcolorbox 内部依赖）
+\usepackage{fontawesome5}
+\usepackage{booktabs} 
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usetikzlibrary{
+  positioning,
+  calc,
+  shapes.symbols,
+  shapes.geometric,
+  shapes.misc
+}
+\usepackage[T1]{fontenc}
+\definecolor{selfevolagent_dark}{HTML}{37D2A6} 
+\definecolor{selfevolagent_light}{HTML}{9BE9D3}
+\definecolor{selfevolagent_lighter}{HTML}{CDF4E9}
+
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\usepackage{svg}
+
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{caption}
+
+\usepackage{fontawesome5}
+
+\newcommand{\ghlink}[1]{\faIcon{github}\,\href{#1}{GitHub}}
+\newcommand{\weblink}[1]{\faIcon{globe}\,\href{#1}{Website}}
+
+
+
+\newcommand{\cmark}{\textcolor{green}{\ding{52}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{56}}}
+
+\definecolor{rootcolor}{RGB}{101, 45, 144}   % 紫色
+\definecolor{catcolor}{RGB}{255, 192, 0}     % 金黄色
+\definecolor{subcatcolor}{RGB}{237, 125, 49} % 橙色
+\definecolor{papercolor}{RGB}{68, 114, 196}  % 蓝色
+\newcommand{\ThreeLaws}{{\scshape\color{selfevolagent_dark!120} Three Laws of Self-Evolving AI Agents}}
+
+\title{Memory in the Age of AI Agents: A Survey\\
+\Large Forms, Functions and Dynamics
+}
+\author{Yuyang Hu$^{\dagger}$}
+\author{Shichun Liu$^{\dagger}$}
+\author{Yanwei Yue$^{\dagger}$}
+\author{Guibin Zhang$^{\dagger\text{\faCube}}$}
+\author{Boyang Liu}
+\author{Fangyi Zhu}
+\author{Jiahang Lin} 
+\author{\mbox{Honglin Guo}}
+\author{Shihan Dou}
+\author{Zhiheng Xi}
+\author{Senjie Jin}
+\author{Jiejun Tan}
+\author{Yanbin Yin}
+\author{Jiongnan Liu}
+\author{Zeyu Zhang}
+\author{Zhongxiang Sun}
+\author{Yutao Zhu}
+\author{Hao Sun}
+\author{Boci Peng}
+\author{Zhenrong Cheng}
+\author{Xuanbo Fan}
+\author{Jiaxin Guo}
+\author{Xinlei Yu}
+\author{Zhenhong Zhou}
+\author{Zewen Hu}
+\author{Jiahao Huo}
+\author{Junhao Wang}
+\author{Yuwei Niu}
+\author{Yu Wang}
+
+
+\author{Zhenfei Yin}
+\author{Xiaobin Hu}
+\author{\mbox{Yue Liao}}
+\author{Qiankun Li}
+\author{Kun Wang}
+\author{Wangchunshu Zhou}
+\author{Yixin Liu}
+
+\author{Dawei Cheng}
+\author{Qi Zhang}
+\author{Tao Gui$^\ddagger$}
+
+\author{\mbox{Shirui Pan}}
+\author{Yan Zhang$^\ddagger$}
+
+\author{Philip Torr}
+\author{Zhicheng Dou$^\ddagger$}
+\author{Ji-Rong Wen}
+
+
+\author{Xuanjing Huang$^\ddagger$}
+\author{Yu-Gang Jiang}
+\author{Shuicheng Yan$^\ddagger$}
+
+\affiliation{
+\vspace{0.5em}
+$^\dagger$Core Contributors with Names Listed Alphabetically.\;\;\faCube \;Project Organizer.\;\;$^\ddagger$Core Supervisors.
+
+\vspace{0.5em}
+
+\texttt{\textbf{Affiliations}: National University of Singapore, Renmin University of China, Fudan University, Peking University, Nanyang Technological University, Tongji University, University of California San Diego, Hong Kong University of Science and Technology (Guangzhou), Griffith University, Georgia Institute of Technology, OPPO, Oxford University}}
+
+
+
+\abstract{
+% \vspace{-5pt}
+\begin{abstract}
+
+Memory has emerged, and will continue to remain, a core capability of foundation model-based agents. It underpins long-horizon reasoning, continual adaptation, and effective interaction with complex environments. As research on agent memory rapidly expands and attracts unprecedented attention, the field has also become increasingly fragmented. Existing works that fall under the umbrella of agent memory often differ substantially in their motivations, implementations, assumptions, and evaluation protocols, while the proliferation of loosely defined memory terminologies has further obscured conceptual clarity. Traditional taxonomies such as long/short-term memory have proven insufficient to capture the diversity and dynamics of contemporary agent memory systems.
+This survey aims to provide an up-to-date and comprehensive landscape of current agent memory research. We begin by clearly delineating the scope of agent memory and distinguishing it from related concepts such as LLM memory, retrieval augmented generation (RAG), and context engineering. We then examine agent memory through the unified lenses of \textbf{forms}, \textbf{functions}, and \textbf{dynamics}. From the perspective of forms, we identify three dominant realizations of agent memory, namely \textit{token-level}, \textit{parametric}, and \textit{latent memory}. From the perspective of functions, we move beyond coarse temporal categorizations and propose a finer-grained taxonomy that distinguishes \textit{factual}, \textit{experiential}, and \textit{working memory}. From the perspective of dynamics, we analyze how memory is formed, evolved, and retrieved over time as agents interact with their environments.
+To support empirical research and practical development, we compile a comprehensive summary of representative benchmarks and open source memory frameworks. Beyond consolidation, we articulate a forward-looking perspective on emerging research frontiers, including automation-oriented memory design, the deep integration of reinforcement learning with memory systems, multimodal memory, shared memory for multi-agent systems, and trustworthiness issues. We hope this survey serves not only as a reference for existing work, but also as a conceptual foundation for rethinking memory as a first-class primitive in the design of future agentic intelligence.
+
+\end{abstract}
+
+}
+% \date{\today}
+% You can add additional metadata fields as follows 
+\metadata[\faEnvelope\ Main Contact]{guibinz@u.nus.edu, yuyang.hu@ruc.edu.cn, liusc24@m.fudan.edu.cn, 
+% \{tgui,xjhuang\}@fudan.edu.cn,
+ywyue25@stu.pku.edu.cn}
+\metadata[{\raisebox{-0.2ex}{\includegraphics[height=1em]{img/github-mark.png}}\ Github}]{\url{https://github.com/Shichun-Liu/Agent-Memory-Paper-List}}
+
+\begin{document}
+
+ \maketitle
+
+ \blfootnote{Note: If you identify your own or other papers relevant to this survey that have not been discussed (we apologize for any such omissions due to the rapidly expanding literature), please feel free to contact us via email or raise an issue on \href{https://github.com/Shichun-Liu/Agent-Memory-Paper-List}{GitHub}.}
+\clearpage
+\tableofcontents
+\clearpage
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=1\linewidth]{img/main.png}
+    \caption{
+    Overview of agent memory organized by the unified taxonomy of \emph{forms} (\Cref{sec:what-memory}), \emph{functions} (\Cref{sec:why-memory}), and \emph{dynamics} (\Cref{sec:how-memory}). The diagram positions memory artifacts by their dominant form and primary function. It further maps representative systems into this taxonomy to provide a consolidated landscape.
+    }
+    \label{fig:intro-main}
+\end{figure}
+
+
+\section{Introduction}
+
+
+The past two years have witnessed the overwhelming evolution of increasingly capable large language models (LLMs) into powerful AI agents~\citep{matarazzo2025surveylargelanguagemodels,minaee2025largelanguagemodelssurvey,luo2025largelanguagemodelagent}. These foundation-model-powered agents have demonstrated remarkable progress across diverse domains such as deep research~\citep{xu2025comprehensivesurveydeepresearch,zhang2025deepresearchsurveyautonomous}, software engineering~\citep{wang2024agentssoftwareengineeringsurvey}, and scientific discovery~\citep{wei2025aiscienceagenticscience}, continuously advancing the trajectory toward artificial general interlligence (AGI)~\citep{fang2025comprehensivesurveyselfevolvingai,durante2024agentaisurveyinghorizons}. Although early conceptions of ``agents'' were highly heterogeneous, a growing consensus has since emerged within the community: beyond a pure LLM backbone, an agent is typically equipped with capabilities such as \textit{reasoning}, \textit{planning}, \textit{perception}, \textit{memory}, and \textit{tool-use}. Some of these abilities, such as reasoning and tool-use, have been largely internalized within model parameters through reinforcement learning~\citep{wang2025reinforcementlearningreasoninglarge,toollearningsurvey}, while some still depend heavily on external agentic scaffolds. Together, these components transform LLMs from static conditional generators into learnable policies that can interact with diverse external environments and adaptively evolve over time~\citep{zhang2025landscapeagenticreinforcementlearning,liu2025advances}.
+
+Among these agentic faculties, \textit{memory} stands out as a cornerstone, explicitly enabling the transformation of static LLMs, whose parameters cannot be rapidly updated, into adaptive agents capable of continual adaptation through environmental interaction~\citep{zhang2025ruc_survey,wu2025humanmemoryaimemory}. From an application perspective, numerous domains demand agents with proactive memory management rather than ephemeral, forgetful behaviors: personalized chatbots~\citep{Chhikara2025mem0,li2025helloagainllmpoweredpersonalized}, recommender systems~\citep{liu2025agentcfmemoryenhancedllmbasedagents}, social simulations~\citep{park2023generativeagentsinteractivesimulacra,yang2025oasisopenagentsocial}, and financial investigations~\citep{zhang2024multimodalfoundationagentfinancial} all rely on the agent's ability to process, store, and manage historical information. From a developmental standpoint, one of the defining aspirations of AGI research is to endow agents with the capacity for continual evolution through environment interactions~\citep {hendrycks2025agidefinition}, a capability fundamentally grounded in agent memory. 
+
+\paragraph{Agent Memory Needs A New Taxonomy} 
+Given the growing significance and community attention surrounding agent memory systems, it has become both timely and necessary to provide an updated perspective on contemporary agent memory research. The motivation for a new taxonomy and survey is twofold:  
+\ding{182} \textbf{Limitations of Existing Taxonomies:}  
+While several recent surveys have provided valuable and comprehensive overviews of agent memory~\citep{zhang2025ruc_survey,wu2025humanmemoryaimemory}, their taxonomies were developed prior to a number of rapid methodological advances and therefore do not fully reflect the current breadth and complexity of the research landscape. For example, emerging directions in 2025, such as memory frameworks that distill reusable tools from past experiences~\citep{qiu2025agentdistilltrainingfreeagentdistillation,qiu2025alitageneralistagentenabling,zhao2025pyvisionagenticvisiondynamic}, or memory-augmented test-time scaling methods~\citep{zhang2025latentevolveselfevolvingtesttimescaling,suzgun2025dynamiccheatsheettesttimelearning}, remain underrepresented in earlier classification schemes.
+\ding{183} \textbf{Conceptual Fragmentation:} With the explosive growth of memory-related studies, the concept itself has become increasingly expansive and fragmented. Researchers often find that papers claiming to study ``agent memory'' differ drastically in implementation, objectives, and underlying assumptions. The proliferation of diverse terminologies (declarative, episodic, semantic, parametric memory, etc.) further obscures conceptual clarity, highlighting the urgent need for a coherent taxonomy that can unify these emerging concepts.  
+
+Therefore, this paper seeks to establish a systematic framework that reconciles existing definitions, bridges emerging trends, and elucidates the foundational principles of memory in agentic systems. Specifically, this survey aims to address the following key questions:
+
+\vspace{0.6em}
+\begin{tcolorbox}[
+  colback=selfevolagent_light!20,
+  colframe=selfevolagent_light!80,
+  colbacktitle=selfevolagent_light!80,
+  coltitle=black,
+  title={\bfseries\fontfamily{ppl}\selectfont{Key Questions}},
+  boxrule=2pt,
+  arc=5pt,
+  drop shadow,
+  parbox=false,
+  before skip=5pt,
+  after skip=5pt,
+  left=5pt,   
+  right=5pt,
+  % fontupper=\fontfamily{ppl}\selectfont
+]
+\begin{itemize}[leftmargin=*]
+\item[\ding{182}] How is \textit{agent memory} defined, and how does it relate to related concepts such as LLM memory, retrieval-augmented generation (RAG), and context engineering?  
+\item[\ding{183}] \textbf{Forms:} What architectural or representational forms can agent memory take?  
+\item[\ding{184}] \textbf{Functions:} Why is agent memory needed, and what roles or purposes does it serve?  
+\item[\ding{185}] \textbf{Dynamics:} How does agent memory operate, adapt, and evolve over time?  
+\item[\ding{186}] What are the promising frontiers for advancing agent memory research?
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1em}
+To address question \ding{182}, we first provide formal definitions for LLM-based agents and agent memory systems in \Cref{sec:preliminary}, and present a detailed comparison between agent memory and related concepts such as LLM memory, RAG, and context engineering.  
+Following the ``Forms–Functions–Dynamics'' triangle, we offer a structured overview of agent memory. Question \ding{183} examines the architectural forms of memory, which we discuss in \Cref{sec:what-memory}, highlighting three mainstream implementations: token-level, parametric, and latent memory. Question \ding{184} concerns the functional roles of memory, addressed in \Cref{sec:why-memory}, where we distinguish between \textit{factual memory}, which records knowledge from agents' interactions with users and the environment; \textit{experiential memory}, which incrementally enhances the agent's problem-solving capabilities through task execution; and \textit{working memory}, which manages workspace information during individual task instances. 
+%We further contextualize these categories within the broader landscape of existing memory concepts (e.g., episodic, semantic, procedural, associative, emotional, prospective memory).  
+Question \ding{185} focuses on the lifecycle and operational dynamics of agent memory, which we present sequentially in terms of memory formulation, retrieval, and evolution.
+
+
+After surveying existing research through the lenses of ``Forms–Functions–Dynamics,'' we further provide our perspectives and insights on agent memory research. 
+To facilitate knowledge sharing and future development, we first summarize key benchmarks and framework resources in \Cref{sec:resource}. 
+Building upon this foundation, we then address question \ding{186} by exploring several emerging yet underdeveloped research frontiers in \Cref{sec:frontier}, including automation-oriented memory design, the integration of reinforcement learning (RL), multimodal memory, shared memory for multi-agent systems, and trustworthy issues.
+
+
+
+\vspace{-0.4em}
+\paragraph{Contributions} 
+The contributions of this survey can be summarized as follows:  
+(1) We present an up-to-date and multidimensional taxonomy of agent memory from the perspective of ``forms–functions–dynamics,'' offering a structured lens through which to understand current developments in the field.  
+(2) We provide an in-depth discussion on the suitability and interplay of different memory forms and functional purposes, offering insights into how various memory types can be effectively aligned with distinct agentic objectives.  
+(3) We investigate emerging and promising research directions in agent memory, thereby outlining future opportunities and guiding pathways for advancement.  
+(4) We compile a comprehensive collection of resources, including benchmarks and open-source frameworks, to support both researchers and practitioners in further exploration of agent memory systems.
+
+
+
+\paragraph{Outline of the Survey}
+The remainder of this survey is organized as follows. \Cref{sec:preliminary} formalizes LLM-based agents and agent memory systems, and clarifies their relationships with related concepts. \Cref{sec:what-memory}, \Cref{sec:why-memory}, and \Cref{sec:how-memory} respectively examine the forms, functions, and dynamics of agent memory. \Cref{sec:resource} summarizes representative benchmarks and framework resources. \Cref{sec:frontier} discusses emerging research frontiers and future directions. Finally, we conclude the survey with a summary of key insights in \Cref{sec:conclusion}.
+
+
+
+\section{Preliminaries: Formalizing Agents and Memory}
+\label{sec:preliminary}
+
+LLM agents increasingly serve as the decision-making core of interactive systems that operate over time, manipulate external tools, and coordinate with humans or other agents. To study memory in such settings, we begin by formalizing LLM-based agent systems in a manner that encompasses both single-agent and multi-agent configurations. We then formalize the memory system coupled to the agent's decision process through read/write interactions, enabling a unified treatment of memory phenomena that arise both \emph{within} a task (inside-trial / short-term memory) and \emph{across} tasks (cross-trial / long-term memory).
+
+\subsection{LLM-based Agent Systems}
+
+\paragraph{Agents and Environment}
+Let \( \mathcal{I} = \{1,\dots,N\} \) denote the index set of agents, where \(N=1\) corresponds to the single-agent case (e.g., ReAct), and \(N>1\) represents multi-agent settings such as debate~\citep{DBLP:conf/emnlp/LiDZHGLI24} or planner--executor architectures~\citep{wan2025remalearningmetathinkllms}.  
+The environment is characterized by a state space \( \mathcal{S} \). At each time step \(t\), the environment evolves according to a controlled stochastic transition model
+\[
+s_{t+1} \sim \Psi(s_{t+1} \mid s_t, a_t),
+\]
+where \(a_t\) denotes the action executed at time \(t\). In multi-agent systems, this abstraction allows for either sequential decision-making (where a single agent acts at each step) or implicit coordination through environment-mediated effects. Each agent \(i \in \mathcal{I}\) receives an observation
+\[
+o_t^i = O_i(s_t, h_t^i, \mathcal{Q}),
+\]
+where \(h_t^i\) denotes the portion of the interaction history visible to agent \(i\). This history may include previous messages, intermediate tool outputs, partial reasoning traces, shared workspace states, or other agents' contributions, depending on the system design.  
+\(\mathcal{Q}\) denotes the task specification, such as a user instruction, goal description, or external constraints, which is treated as fixed within a task unless otherwise specified.
+
+\paragraph{Action Space}
+A distinguishing feature of LLM-based agents is the heterogeneity of their action space. Rather than restricting actions to plain text generation, agents may operate over a multimodal and semantically structured action space, including:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Natural-language generation}, such as producing intermediate reasoning, explanations, responses, or instructions~\citep{li2023camel,wu2024autogen,hong2023metagpt,qian2024chatdevcommunicativeagentssoftware}.
+    \item \textbf{Tool invocation actions}, which call external APIs, search engines, calculators, databases, simulators, or code execution environments~\citep{qin2025flashsearcherfasteffectiveweb,DBLP:journals/corr/abs-2501-05366,zhou2023agents,zhou2024agents2}.
+    \item \textbf{Planning actions}, which explicitly output task decompositions, execution plans, or subgoal specifications to guide later behavior~\citep{camel_workforce_docs,liu2025toolplanner,pan2024planningimaginationepisodicsimulation}.
+    \item \textbf{Environment-control actions}, where the agent directly manipulates the external environment (e.g., navigation in embodied settings~\citep{shridhar2021alfworld,wang2022scienceworldagentsmarter5th}, editing a software repository~\citep{jimenez2023swe,aleithan2024swebenchenhancedcodingbenchmark}, or modifying a shared memory buffer).
+    \item \textbf{Communication actions}, enabling collaboration or negotiation with other agents through structured messages~\citep{marro2024scalablecommunicationprotocolnetworks}.
+\end{itemize}
+
+These actions, though diverse in semantics, are unified by the fact that they are produced through an autoregressive LLM backbone conditioned on a contextual input. Formally, each agent \(i\) follows a policy
+\[
+a_t = \pi_i(o_t^i, m_t^i, \mathcal{Q}),
+\]
+where \(m_t^i\) is a memory-derived signal defined in \Cref{sec:formalize-agent-memory}.  
+The policy may internally generate multi-step reasoning chains, latent deliberation, or scratchpad computations prior to emitting an executable action; such internal processes are abstracted away and not explicitly modeled.
+
+\paragraph{Interaction Process and Trajectories}
+A full execution of the system induces a trajectory
+\[
+\tau = (s_0, o_0, a_0, s_1, o_1, a_1, \dots, s_T),
+\]
+where \(T\) is determined by task termination conditions or system-specific stopping criteria. At each step, the trajectory reflects the interleaving of (i) environment observation, (ii) optional memory retrieval, (iii) LLM-based computation, and (iv) action execution that drives the next state transition.
+
+This formulation captures a broad class of agentic systems, ranging from a single agent solving reasoning tasks with tool augmentation to teams of role-specialized agents collaboratively developing software~\citep{qian2024chatdevcommunicativeagentssoftware,wang2025evoagentx} or conducting scientific inquiry~\citep{weng2025deepscientistadvancingfrontierpushingscientific}. We next formalize the memory systems that integrate into this agent loop.
+
+\subsection{Agent Memory Systems}
+\label{sec:formalize-agent-memory}
+
+While an LLM-based agent interacts with an environment, its instantaneous observation \(o_t^i\) is often insufficient for effective decision-making. Agents therefore rely on additional information derived from prior interactions, both within the current task and across previously completed tasks. We formalize this capability through a unified \emph{agent memory system}, represented as an evolving memory state
+\[
+\mathcal{M}_t \in \mathbb{M},
+\]
+where \(\mathbb{M}\) denotes the space of admissible memory configurations. No specific internal structure is imposed on \(\mathcal{M}_t\); it may take the form of a text buffer, key--value store, vector database, graph structure, or any hybrid representation.
+At the beginning of a task, \(\mathcal{M}_t\) may already contain information distilled from prior trajectories (cross-trial memory). During task execution, new information accumulates and functions as short-term, task-specific memory. Both roles are supported within a single memory container, with temporal distinctions emerging from usage patterns rather than architectural separation.
+
+\paragraph{Memory Lifecycle: Formation, Evolution, and Retrieval}
+The dynamics of the memory system are characterized by three conceptual operators.
+
+\textbf{Memory Formation}
+At time step \(t\), the agent produces informational artifacts \(\phi_t\), which may include tool outputs, reasoning traces, partial plans, self-evaluations, or environmental feedback. A formation operator
+\[
+\mathcal{M}_{t+1}^{\mathrm{form}} = F(\mathcal{M}_t, \phi_t)
+\]
+selectively transforms these artifacts into memory candidates, extracting information with potential future utility rather than storing the entire interaction history verbatim.
+
+\textbf{Memory Evolution}
+Formed memory candidates are integrated into the existing memory base through an evolution operator
+\[
+\mathcal{M}_{t+1} = E(\mathcal{M}_{t+1}^{\mathrm{form}}),
+\]
+which may consolidate redundant entries~\citep{DBLP:conf/aaai/Zhao0XLLH24}, resolve conflicts~\citep{Rasmussen2025Zep,li2025memosoperatingmemoryaugmentedgeneration}, discard low-utility information~\citep{wangKARMAAugmentingEmbodied2025}, or restructure memory for efficient retrieval. The resulting memory state persists across subsequent decision steps and tasks.
+
+\textbf{Memory Retrieval}
+When selecting an action, agent \(i\) retrieves a context-dependent memory signal
+\[
+m_t^i = R(\mathcal{M}_t, o_t^i, \mathcal{Q}),
+\]
+where \(R\) denotes a retrieval operator that constructs a task-aware query and returns relevant memory content. The retrieved signal \(m_t^i\) is formatted for direct consumption by the LLM policy, for example as a sequence of textual snippets or a structured summary.
+
+\paragraph{Temporal Roles Within the Agent Loop}
+Although memory is represented as a unified state \( \mathcal{M}_t \), the three lifecycle operators (formation \(F\), evolution \(E\), and retrieval \(R\)) need not be invoked at every time step. Instead, different memory effects arise from distinct temporal invocation patterns.
+For instance, some systems perform retrieval only once at task initialization,
+\[
+m_t^i =
+\begin{cases}
+R(\mathcal{M}_{0}, o_0^i, \mathcal{Q}), & t = 0, \\[4pt]
+\bot, & t > 0,
+\end{cases}
+\]
+where $\bot$ denotes null retrieval strategy. Others may retrieve memory intermittently or continuously based on contextual triggers.  
+Similarly, memory formation may range from minimal accumulation of raw observations,
+\[
+\mathcal{M}_{t+1}^{\mathrm{form}} = \mathcal{M}_t \cup \{o_t^i\},
+\]
+to sophisticated extraction and refinement of reusable patterns or abstractions. Thus, \emph{inside a task}, short-term memory effects may arise from lightweight logging just as in~\cite{yao2023react,chen2023fireactlanguageagentfinetuning} or from more elaborate iterative refinement~\citep{huHiAgentHierarchicalWorking2025}; \emph{across tasks}, long-term memory may be updated episodically at task boundaries or continuously throughout operation. Short-term and long-term memory phenomena therefore emerge not from discrete architectural modules but from the temporal patterns with which formation, evolution, and retrieval are engaged.
+
+
+\paragraph{Memory--Agent Coupling}
+The interaction between memory and the agent’s decision process is similarly flexible. In general, the agent policy is written as
+\[
+a_t = \pi_i(o_t^i, m_t^i, \mathcal{Q}),
+\]
+where the retrieved memory signal \(m_t^i\) may be present or absent depending on the retrieval schedule. When retrieval is disabled at a given step, \(m_t^i\) can be treated as a distinguished null input.
+
+Consequently, the overall agent loop consists of observing the environment, optionally retrieving memory, computing an action, receiving feedback, and optionally updating memory through formation and evolution. Different agent implementations instantiate different subsets of these operations at different temporal frequencies, giving rise to memory systems that range from passive buffers to actively evolving knowledge bases.
+
+
+
+\subsection{Comparing Agent Memory with Other Key Concepts}
+
+Despite the growing interest in agentic systems endowed with memory, the community’s understanding of what constitutes \emph{agent memory} remains fragmented. In practice, researchers and practitioners often conflate agent memory with related constructs such as LLM memory~\citep{wu2025humanmemoryaimemory}, retrieval-augmented generation (RAG)~\citep{gao2024retrievalaugmentedgenerationlargelanguage}, and context engineering~\citep{meiSurveyContextEngineering2025}. Although these concepts are intrinsically connected by their involvement in how information is managed and utilized in LLM-driven systems, they differ in scope, temporal characteristics, and functional roles.
+
+
+These overlapping yet distinct notions have led to ambiguity in the literature and practice. To clarify these distinctions and situate agent memory within this broader landscape, we examine how agent memory \emph{relates to}, and \textit{diverges from}, LLM memory, RAG, and context engineering in the subsequent subsubsections.
+\autoref{fig:concept-comparison} visually illustrates the commonalities and distinctions among these fields through a Venn diagram.
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=1\linewidth]{img/concept.pdf}
+    \caption{
+    Conceptual comparison of \textbf{Agent Memory} with \textbf{LLM Memory}, \textbf{RAG}, and \textbf{Context Engineering}. The diagram illustrates shared technical implementations (e.g., KV reuse, graph retrieval) while highlighting fundamental distinctions: unlike the architectural optimizations of LLM Memory, the static knowledge access of RAG, or the transient resource management of Context Engineering, Agent Memory is uniquely characterized by its focus on maintaining a persistent and self-evolving cognitive state that integrates factual knowledge and experience. The listed categories and examples are illustrative rather than strictly parallel, serving as representative reference points to clarify conceptual relationships rather than to define a rigid taxonomy.
+    }
+    \label{fig:concept-comparison}
+\end{figure}
+
+\subsubsection{Agent Memory vs. LLM Memory}
+
+At a high level, \emph{agent memory} almost fully subsumes what has traditionally been referred to as \emph{LLM memory}. Since 2023, many works describing themselves as ``LLM memory mechanisms''~\citep{zhong2023memorybankenhancinglargelanguage,packerMemGPTLLMsOperating2023,DBLP:conf/nips/Wang0CLYGW23} are more appropriately interpreted, under contemporary terminology, as early instances of agent memory. This reinterpretation arises from the historical ambiguity surrounding the very notion of an ``LLM agent.'' During 2023–2024, the community had no stable or coherent definition: in some cases, prompting an LLM to call a calculator already sufficed to qualify the system as an agent~\citep{wu2024mathchatconversetacklechallenging}; in other cases, agency required substantially richer capabilities such as explicit planning, tool use, memory, and reflective reasoning~\citep{ruan2023tptulargelanguagemodelbased}. Only recently has a more unified and structured definition begun to emerge (e.g., LLM-based agent = LLM + reasoning + planning + memory + tool use + self-improvement + multi-turn interaction + perception, as discussed by~\citet{zhang2025landscapeagenticreinforcementlearning}), though even this formulation is not universally applicable.
+Against this historical backdrop, early systems such as MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage} and MemGPT~\citep{packerMemGPTLLMsOperating2023} framed their contributions as providing \emph{LLM memory}. Yet what they fundamentally addressed were classical agentic challenges, for example enabling an LLM-based conversational agent to track user preferences, maintain dialogue-state information, and accumulate experience across multi-turn interactions. Under a modern and more mature understanding of agency, such systems are naturally categorized as instances of \emph{agent memory}.
+
+
+That said, the subsumption is not absolute. A distinct line of research genuinely concerns \emph{LLM-internal memory}: managing the transformer’s key–value (KV) cache, designing long-context processing mechanisms, or modifying model architectures (e.g., RWKV~\citep{peng2023rwkvreinventingrnnstransformer}, Mamba~\citep{gu2024mambalineartimesequencemodeling,lieber2024jambahybridtransformermambalanguage}, diffusion-based LMs~\citep{nie2025largelanguagediffusionmodels}) to better retain information as sequence length grows. These works focus on intrinsic model dynamics and typically address tasks that do not require agentic behavior, and thus should be considered outside the scope of agent memory. 
+
+\paragraph{Overlap}
+Within our taxonomy, the majority of what has historically been called ``LLM memory'' corresponds to forms of agent memory. Techniques such as \emph{few-shot prompting}~\citep{prabhumoye2022fewshotinstructionpromptspretrained,ma2023fairnessguidedfewshotpromptinglarge} can be viewed as a form of long-term memory, where past exemplars or distilled task summaries serve as reusable knowledge incorporated through retrieval or context injection. \emph{Self-reflection} and iterative refinement methods~\citep{madaan2023self,mousavi2023ncriticsselfrefinementlargelanguage,han2025stitchtimesavesnine} naturally align with short-term, inside-trial memory, as the agent repeatedly leverages intermediate reasoning traces or outcomes from prior attempts within the same task. Even \emph{KV compression} and context-window management~\citep{yoonCompActCompressingRetrieved2024,jiangLLMLinguaCompressingPrompts2023}, when used to preserve salient information across the course of a single task, function as short-term memory mechanisms in an agentic sense. These techniques all support the agent’s ability to accumulate, transform, and reuse information throughout a task’s execution.
+
+\paragraph{Distinctions}
+In contrast, memory mechanisms that intervene directly in the model’s internal state—such as architectural modifications for longer effective context, cache rewriting strategies, recurrent-state persistence, attention-sparsity mechanisms, or externalized KV-store expansions—are more appropriately classified as \emph{LLM memory} rather than agent memory. Their goal is to expand or reorganize the representational capacity of the underlying model, not to furnish a decision-making agent with an evolving external memory base. They do not typically support cross-task persistence, environment-driven adaptation, or deliberate memory operations (e.g., formation, evolution, retrieval), and therefore lie outside the operational scope of agent memory as defined in this survey.
+
+
+\subsubsection{Agent Memory vs. RAG}
+
+At a conceptual level, \emph{agent memory} and \emph{retrieval-augmented generation} (RAG) exhibit substantial overlap: both systems construct, organize, and leverage auxiliary information stores to extend the capabilities of LLM/agents beyond their native parametric knowledge. For instance, structured representations such as knowledge graphs and indexing strategies appear in both communities’ methods, and recent developments in agentic RAG demonstrate how autonomous retrieval mechanisms can interact with dynamic databases in ways reminiscent of agent memory architectures~\citep{singh2025agenticretrievalaugmentedgenerationsurvey}. Indeed, the engineering stacks underlying many RAG and agent memory systems share common building blocks, including vector indices, semantic search, and context expansion modules. 
+
+Despite these technological convergences, the two paradigms have \textit{historically} been distinguished by the contexts in which they are applied. Classical RAG techniques primarily augment an LLM with access to \textbf{static knowledge sources}, whether flat document stores, structured knowledge bases, or large corpora externally indexed to support retrieval on demand~\citep{zhang2025leanragknowledgegraphbasedgenerationsemantic,han2025retrievalaugmentedgenerationgraphsgraphrag}. These systems are designed to ground generation in up-to-date facts, mitigate hallucinations, and improve accuracy in knowledge-intensive tasks, but they generally do not maintain an internal, evolving memory of past interactions. In contrast, agent memory systems are instantiated within an agent’s \textbf{ongoing interaction with an environment}, continuously incorporating new information generated by the agent’s own actions and environmental feedback into a persistent memory base~\citep{wang2024agentworkflowmemory,DBLP:conf/aaai/Zhao0XLLH24,sun2025rearter}.
+
+In early formulations the distinction between RAG and agent memory was relatively clear: RAG retrieved from externally maintained knowledge for a single task invocation, whereas agent memory evolved over multi-turn, multi-task interaction. However, this boundary has become increasingly blurred as retrieval systems themselves become more dynamic. For example, certain retrieval tasks continuously update relevant context during iterative querying (e.g., multi-hop QA settings where related context is progressively added). Interestingly, systems such as HippoRAG/HippoRAG2~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm,gutiérrez2025ragmemorynonparametriccontinual} have been interpreted by both RAG and memory communities as addressing long-term memory challenges for LLMs. Consequently, a more practical (though not perfectly separable) distinction lies in the \textbf{task domain}. RAG is predominantly applied to augment LLMs with large, externally sourced context for individual inference tasks, exemplified by classical multi-hop and knowledge-intensive benchmarks such as HotpotQA~\citep{yang2018hotpotqadatasetdiverseexplainable}, 2WikiMQA~\citep{ho2020constructingmultihopqadataset}, and MuSiQue~\citep{trivedi2022musiquemultihopquestionssinglehop}. By contrast, agent memory systems are typically evaluated in settings requiring sustained multi-turn interaction, temporal dependency, or environment-driven adaptation. Representative benchmarks include long-context dialogue evaluations such as LoCoMo~\citep{maharana2024evaluating} and LongMemEval~\citep{DBLP:conf/iclr/WuWYZCY25}, complex problem-solving and deep-research benchmarks such as GAIA~\citep{mialon2023gaia}, XBench~\citep{chen2025xbenchtrackingagentsproductivity}, and BrowseComp~\citep{wei2025browsecomp}, code-centric agentic tasks such as SWE-bench Verified~\citep{jimenez2023swe}, as well as lifelong learning benchmarks such as StreamBench~\citep{DBLP:conf/nips/WuTLCL24}. We provide a comprehensive summary of memory-related benchmarks in \Cref{sec:benchmarks}.
+
+Nevertheless, even this domain-based distinction contains substantial gray areas. Many works self-described as agent memory systems are evaluated under long-document question-answering tasks such as HotpotQA~\citep{wang2025omem, DBLP:journals/corr/abs-2509-25911}, while numerous papers foregrounded as RAG systems in fact implement forms of agentic self-improvement, continually distilling and refining knowledge or skills over time. As a result, titles, methodologies, and empirical evaluations frequently blur the conceptual boundary between the two paradigms.
+To further clarify these relationships, the following three paragraphs draw upon established taxonomies of RAG from~\citep{meiSurveyContextEngineering2025}: \emph{modular RAG}, \emph{graph RAG}, and \emph{agentic RAG}, and examine how the core techniques associated with each lineage manifest within both RAG and agent memory systems.
+
+
+\paragraph{Modular RAG}
+Modular RAG refers to architectures in which the retrieval pipeline is decomposed into clearly specified components, such as indexing, candidate retrieval, reranking, filtering, and context assembly, that operate in a largely static and pipeline-like fashion~\citep{singh2025agenticretrievalaugmentedgenerationsurvey}. These systems treat retrieval as a well-engineered, modular subsystem external to the LLM, designed primarily for injecting relevant knowledge into the model’s context window during inference. Within the agent memory perspective, the corresponding techniques typically appear in the \emph{retrieval stage}, where memory access is realized through vector search, semantic similarity matching, or rule-based filtering, as seen in popular agent memory frameworks like Memary~\citep{githubGitHubKingjulio8238Memary}, MemOS~\citep{li2025memosoperatingmemoryaugmentedgeneration}, and Mem0~\citep{Chhikara2025mem0}.
+
+\paragraph{Graph RAG}
+Graph RAG systems structure the knowledge base as a graph, ranging from knowledge graphs to concept graphs or document-entity relations, and leverage graph traversal or graph-based ranking algorithms to retrieve context~\citep{peng2024graphretrievalaugmentedgenerationsurvey}. This representation enables multi-hop relational reasoning, which has proven effective for knowledge-intensive tasks~\citep{edge2025localglobalgraphrag,han2025retrievalaugmentedgenerationgraphsgraphrag,dong2025youtugraphragverticallyunifiedagents}. In the context of agent memory, graph-structured memory arises naturally when agents accumulate relational insights over time, such as linking concepts, tracking dependencies among subtasks, or recording causal relations inferred through interaction. Several well-established practices include Mem0$^g$~\citep{Chhikara2025mem0}, A-MEM~\citep{xuAMEMAgenticMemory2025}, Zep~\citep{Rasmussen2025Zep}, and G-memory~\citep{Zhang2025GMemory}. Notably, graph-based agent memory systems may \emph{construct, extend, or reorganize} its internal graph throughout the agent’s operation. Consequently, graph-based retrieval forms the structural backbone for both paradigms, but only agent memory treats the graph as a living, evolving representation of experience. We provide further analysis on graph-based memory forms in \Cref{sec:token-level-2d} and also refer the readers to a relevant survey~\citep{liu2025graphaugmentedlargelanguagemodel}.
+
+\paragraph{Agentic RAG}
+Agentic RAG integrates retrieval into an autonomous decision-making loop, where an LLM agent actively controls when, how, and what to retrieve~\citep{singh2025agenticretrievalaugmentedgenerationsurvey,sun2025rearter}. These systems often employ iterative querying, multi-step planning, or self-directed search procedures, enabling the agent to refine its information needs through deliberate reasoning, as implemented in PlanRAG~\citep{lee2024planragplanthenretrievalaugmentedgeneration} and Self-RAG~\citep{asai2023selfraglearningretrievegenerate}. For a more detailed understanding of agentic RAG, we refer the readers to \cite{singh2025agenticretrievalaugmentedgenerationsurvey}. From the agent memory perspective, agentic RAG occupies the closest conceptual space: both systems involve autonomous interaction with an external information store, both support multi-step refinement, and both may incorporate retrieved insights into subsequent reasoning. The key distinction is that classical agentic RAG typically operates over an \emph{external} and often task-specific database, whereas agent memory maintains an \emph{internal, persistent, and self-evolving} memory base that accumulates knowledge across tasks~\citep{yanGeneralAgenticMemory2025,xuAMEMAgenticMemory2025}.
+
+
+% 总的来说，我们在后续的章节中并不会刻意区分agent memory and RAG，并会选入相当一部分的技术栈启发或者直接作用到agent memory的works
+
+\subsubsection{Agent Memory vs. Context Engineering}
+The relationship between \textit{agent memory} and \textit{context engineering} is best understood as an intersection of distinct operational paradigms rather than a hierarchical subsumption. Context engineering is a systematic design methodology that treats the context window as a constrained computational resource. It rigorously optimizes the information payload, including instructions, knowledge, state, and memory, to mitigate the asymmetry between massive input capacity and the model's generation capability~\citep{meiSurveyContextEngineering2025}. While agent memory focuses on the \textbf{cognitive modeling} of a persistent entity with an evolving identity, context engineering operates under a \textbf{resource management} paradigm. From the perspective of context engineering, agent memory is merely one variable within the context assembly function that requires efficient scheduling to maximize inference efficacy. Conversely, from the perspective of an agent, context engineering serves as the implementation layer that ensures cognitive continuity remains within the physical limits of the underlying model.
+
+
+\paragraph{Overlap} 
+The two fields converge significantly in the technical realization of working memory during long-horizon interactions and often employ functionally identical mechanisms to address the constraints imposed by a finite context window~\citep{huHiAgentHierarchicalWorking2025,DBLP:journals/corr/abs-2510-12635,kangACONOptimizingContext2025,yu2025memagent}. Both paradigms rely on advanced information compression~\citep{zhou2025mem1learningsynergizememory,wuReSumUnlockingLongHorizon2025}, organization~\citep{xuAMEMAgenticMemory2025,Zhang2025GMemory,anokhin2024arigraph}, and selection~\citep{DBLP:journals/corr/abs-2510-12635} techniques to preserve operational continuity over extended interaction sequences. For example, token pruning and importance-based selection methods~\citep{jiangLLMLinguaCompressingPrompts2023,liCompressingContextEnhance2023a} that are central to context engineering frameworks play a fundamental role in agentic memory systems by filtering noise and retaining salient information.
+Similarly, the rolling summary technique serves as a shared foundational primitive, functioning simultaneously as a buffer management strategy and a transient episodic memory mechanism~\citep{yu2025memagent,luScalingLLMMultiturn2025}. In practice, the boundary between engineering the context and maintaining an agent's short-term memory effectively dissolves in these scenarios, as both rely on the same underlying summarization, dynamic information retrieval, and recursive state updates~\citep{tangTurnLimitsTraining2025,yoonCompActCompressingRetrieved2024}.
+
+
+\paragraph{Distinctions}
+The distinction becomes most pronounced when moving beyond short-term text processing to the broader scope of long-lived agents. Context engineering primarily addresses the \emph{structural organization} of the interaction interface between LLMs and their operational environment. This includes optimizing tool-integrated reasoning and selection pipelines~\citep{qin2024toolllm,schick2023toolformer,jiaAutoToolEfficientTool2025} and standardizing communication protocols, such as MCP~\citep{qiu2025alitageneralistagentenabling}. These methods focus on ensuring that instructions, tool calls, and intermediate states are correctly formatted, efficiently scheduled, and executable within the constraints of the context window. As such, context engineering operates at the level of \emph{resource allocation and interface correctness}, emphasizing syntactic validity and execution efficiency.
+
+In contrast, agent memory defines a substantially broader cognitive scope. Beyond transient context assembly, it encompasses the persistent storage of factual knowledge~\citep{zhong2023memorybankenhancinglargelanguage}, the accumulation and evolution of experiential traces~\citep{DBLP:conf/aaai/Zhao0XLLH24,tang2025agentkbleveragingcrossdomain,Zhang2025MemGen}, and, in some cases, the internalization of memory into model parameters~\citep{self-param}. Rather than managing how information is presented to the model at inference time, agent memory governs what the agent \emph{knows}, what it \emph{has experienced}, and how these elements evolve over time. This includes consolidating repeated interactions into knowledge~\citep{DBLP:conf/acl/rmm2025}, abstracting procedural knowledge from past successes and failures~\citep{ouyang2025reasoningbankscalingagentselfevolving}, and maintaining a coherent identity across tasks and episodes~\citep{wang2024aipersona}.
+
+From this perspective, context engineering constructs the external scaffolding that enables perception and action under resource constraints, whereas agent memory constitutes the internal substrate that supports learning, adaptation, and autonomy. The former optimizes the momentary interface between the agent and the model, while the latter sustains a persistent cognitive state that extends beyond any single context window.
+% ======================
+
+\input{sections/sec3}
+\input{sections/sec4}
+\input{sections/sec5}
+
+
+
+
+\begin{table*}[!t]
+\caption{
+Overview of benchmarks relevant to LLM agent memory, long-term, lifelong learning, and self-evolving evaluation.
+The table covers two categories of benchmarks: (i) benchmarks explicitly designed for memory-, lifelong learning-, or self-evolving agent evaluation, and (ii) other agent-oriented benchmarks that implicitly stress long-horizon memory through sequential, multi-step, or multi-task interactions.
+\textbf{Fac.} and \textbf{Exp.} indicate whether a benchmark evaluates factual memory or experiential (interaction-derived) memory, respectively. \textbf{MM.} denotes the presence of multimodal inputs, while \textbf{Env.} indicates whether the benchmark is conducted in a simulated or real environment. \textbf{Feature} summarizes the primary capability under evaluation, and \textbf{Scale} reports the approximate benchmark size in terms of \textit{samples} (s.) or \textit{tasks} (t.). PDDL denotes commonly used PDDL-based planning subsets.
+}
+\centering
+\label{tab:benchmark}
+\small
+\begin{tabular}{l l c c c c l l}
+\hline
+\textbf{Name} & \textbf{Link} & \textbf{Fac.} & \textbf{Exp.} & \textbf{MM.} & \textbf{Env.} & \textbf{Feature} & \textbf{Scale} \\
+\hline
+\multicolumn{8}{c}{\textbf{Memory/Lifelong-learning/Self-evolving-oriented Benchmarks}}\\
+
+MemBench &
+\ghlink{https://github.com/import-myself/Membench} &
+\cmark & \cmark & \xmark & simulated &
+interactive scenarios &
+53{,}000 s.\\%
+
+MemoryAgentBench &
+\ghlink{https://github.com/HUST-AI-HYZ/MemoryAgentBench} &
+\cmark & \cmark & \xmark & simulated &
+multi-turn interactions & 
+4 t. \\%
+
+LoCoMo &
+\weblink{https://snap-research.github.io/locomo/} &
+\cmark & \xmark & \cmark & real &
+conversational memory &
+300 s. \\%
+
+WebChoreArena &
+\ghlink{github.com/web-arena/WebChoreArena} &
+\cmark & \cmark & \cmark & real &
+tedious web browsing &
+4 t./532 s. \\%
+
+MT-Mind2Web &
+\ghlink{https://github.com/magicgh/self-map} &
+\cmark & \cmark & \xmark & real &
+conversational web navigation &
+720 s. \\
+
+PersonaMem &
+\weblink{https://arxiv.org/abs/2504.14225} &
+\cmark & \xmark & \xmark & simulated &
+dynamic user profiling & 
+15 t./180 s. \\%
+
+LongMemEval &
+\ghlink{https://github.com/xiaowu0162/LongMemEval} &
+\cmark & \xmark & \xmark & simulated &
+interactive memory &
+5 t./500 s. \\%
+
+PerLTQA &
+\weblink{https://arxiv.org/abs/2402.16288} &
+\cmark & \xmark & \xmark & simulated &
+social personalized interactions &
+8{,}593 s. \\%
+
+MemoryBank &
+\weblink{https://arxiv.org/abs/2305.10250} &
+\cmark & \xmark & \xmark & simulated &
+user memory updating &
+194 s. \\%
+
+MPR &
+\ghlink{https://github.com/nuster1128/MPR} &
+\cmark & \xmark & \xmark & simulated &
+user personalization &
+108{,}000 s. \\%
+
+PrefEval & 
+\weblink{https://prefeval.github.io} &
+\cmark & \xmark & \xmark & simulated &
+personal preferences & 
+3{,}000 s.\\%
+
+LOCCO &
+\weblink{https://aclanthology.org/2025.findings-acl.1014/} &
+\cmark & \xmark & \xmark & simulated &
+ chronological conversations & 
+ 3{,}080 s. \\%
+
+StoryBench &
+\weblink{https://arxiv.org/abs/2506.13356} &
+\cmark & \cmark & \xmark & mixed &
+interactive fiction games &
+3 t. \\%
+
+
+MemoryBench &
+\weblink{https://arxiv.org/abs/2510.17281} &
+\cmark & \cmark & \xmark & simulated &
+continual learning &
+4 t./$\sim$ 20{,}000 s. \\%
+
+Madial-Bench &
+\ghlink{https://github.com/hejunqing/MADial-Bench} &
+\cmark & \xmark & \xmark & simulated &
+memory recalling &
+331 s. \\%
+
+Evo-Memory &
+\weblink{https://arxiv.org/abs/2511.20857} &
+\cmark & \cmark & \xmark & simulated &
+test-time learning & 10 t./$\sim$ 3{,}700 s.
+ \\%
+
+LifelongAgentBench &
+\weblink{https://arxiv.org/abs/2505.11942} &
+\cmark & \cmark & \xmark & simulated &
+lifelong learning &
+1{,}396 s. \\%
+
+
+StreamBench &
+\weblink{https://stream-bench.github.io} &
+\cmark & \cmark & \xmark & simulated &
+continuous online learning &
+9{,}702 s. \\%
+
+DialSim &
+\weblink{https://arxiv.org/abs/2406.13144} &
+\cmark & \cmark & \xmark & real &
+multi-dialogue understanding &
+$\sim$ 1{,}300 s. \\%
+
+LongBench &
+\weblink{https://arxiv.org/abs/2308.14508} &
+\cmark & \xmark & \xmark & mixed &
+long-context understanding &
+21 t./4{,}750 s. \\%
+
+LongBench v2 &
+\weblink{https://longbench2.github.io/} &
+\cmark & \xmark & \xmark & mixed &
+long-context multitasks &
+20 t./503 s. \\%
+
+
+RULER &
+\ghlink{https://github.com/NVIDIA/RULER} &
+\cmark & \xmark & \xmark & simulated &
+long-context retrieval &
+13 t. \\%
+
+BABILong &
+\ghlink{https://github.com/booydar/babilong} &
+\cmark & \xmark & \xmark & simulated &
+long-context reasoning & 20 t.
+ \\%
+
+MM-Needle &
+\weblink{https://mmneedle.github.io/} &
+\cmark & \xmark & \cmark & simulated &
+multimodal long-context retrieval & $\sim$ 280{,}000 s.
+ \\%
+
+
+HaluMem & 
+\ghlink{https://github.com/MemTensor/HaluMem} &
+\cmark & \xmark & \xmark & simulated &
+memory hallucinations & 
+3{,}467 s. \\%
+
+HotpotQA &  \weblink{https://hotpotqa.github.io/} & \cmark & \xmark & \xmark & simulated & long-context QA & 113k s. \\
+ 
+
+\hline
+\multicolumn{8}{c}{\textbf{Other Related Benchmarks}}\\
+
+ALFWorld & 
+\weblink{https://alfworld.github.io/} & 
+\cmark & \cmark & \xmark & simulated & 
+text-based embodied environment & 
+3{,}353 t. \\%
+
+ScienceWorld & 
+\ghlink{http://github.com/allenai/ScienceWorld} & 
+\cmark & \cmark & \xmark & simulated & 
+interactive embodied environment & 
+10 t./30 t. \\%
+
+AgentGym &
+\weblink{https://agentgym.github.io} &
+\xmark & \cmark & \xmark & mixed &
+multiple environments  &
+89 t./20{,}509 s. \\%
+
+AgentBoard &
+\ghlink{https://github.com/hkust-nlp/AgentBoard} &
+\xmark & \cmark & \xmark & mixed &
+multi-round interaction &
+9 t./1013 s.\\%
+
+PDDL$^*$ & \weblink{https://hkust-nlp.github.io/agentboard/static/leaderboard.html} & \xmark & \cmark & \xmark & simulated & strategy game & -  \\%
+
+BabyAI &
+\weblink{https://arxiv.org/abs/1810.08272} &
+\xmark & \cmark & \xmark & simulated &
+language learning &
+19 t. \\%
+
+WebShop &
+\weblink{https://arxiv.org/pdf/2207.01206} &
+\xmark & \cmark & \cmark & simulated &
+e-commerce web interaction  &
+12{,}087 s. \\%
+
+WebArena &
+\weblink{https://webarena.dev/} &
+\xmark & \cmark & \cmark & real &
+web interaction &
+812 s. \\%
+
+MMInA &
+\weblink{https://mmina.cliangyu.com/} &
+\cmark & \cmark & \cmark & real &
+multihop web interaction  &
+1{,}050 s. \\%
+
+
+SWE-Bench Verified &
+\weblink{https://www.swebench.com/} &
+\xmark & \cmark & \xmark & real &
+code repair &
+500 s. \\%
+
+GAIA &
+\weblink{https://arxiv.org/abs/2311.12983} &
+\xmark & \cmark & \cmark & real &
+human-level deep research &
+466 s. \\%
+
+xBench-DS & \weblink{https://xbench.org/} & \xmark & \cmark & \cmark & real & deep-search evaluation & 100 s. 
+\\%
+
+ToolBench &
+\ghlink{https://github.com/OpenBMB/ToolBench} &
+\xmark & \cmark & \xmark & real &
+API tool use &
+126{,}486 s. \\%
+
+GenAI-Bench &
+\weblink{https://arxiv.org/abs/2406.13743} &
+\xmark & \cmark & \cmark & real &
+visual generation evaluation &
+$\sim$ 40{,}000 s. \\%
+\hline
+\end{tabular}
+\end{table*}
+
+
+\section{Resources and Frameworks}
+\label{sec:resource}
+\subsection{Benchmarks and Datasets}
+\label{sec:benchmarks}
+
+In this section, we survey representative benchmarks and datasets that have been used (or could be used) to evaluate the memory, long-term, continual-learning, or long-context capabilities of LLM-based agents. We classify these benchmarks into two broad categories: (1) those explicitly designed for memory / lifelong learning / self-evolving agents, and (2) those originally developed for other purposes (e.g., tool-use capacity, web search, embodied action) but nevertheless relevant for memory evaluation due to their long-horizon, multi-task, or sequential nature.
+
+
+\subsubsection{Benchmarks for Memory / Lifelong / Self-Evolving Agents}
+Memory-oriented benchmarks focus primarily on how well an agent can construct, maintain, and exploit an explicit memory of past interactions or world facts. These tasks typically probe the retention and retrieval of information across multi-turn dialogues, user-specific sessions, or long synthetic narratives, sometimes including multimodal signals. 
+
+A consolidated overview of these benchmarks, including their memory focus, environment type, modality, and evaluation scale, is provided in \autoref{tab:benchmark}, which serves as a structured reference for comparing their design objectives and evaluation settings.
+Representative examples such as MemBench~\citep{tan2025membench}, LoCoMo~\citep{maharana2024evaluating}, WebChoreArena~\citep{miyai2025webchorearena}, MT-Mind2Web~\citep{deng2024multi}, PersonaMem~\citep{jiang2025know}, PerLTQA~\citep{du2024perltqa}, MPR~\citep{zhang2025explicit}, PrefEval~\citep{DBLP:conf/iclr/Zhao00HL25}, LOCCO~\citep{jia2025evaluating}, StoryBench~\citep{wan2025storybench}, Madial-Bench~\citep{he2025madial}, DialSim~\citep{zheng2025lifelongagentbench}, LongBench~\citep{bai2024longbench}, LongBench v2~\citep{bai2025longbench}, RULER~\citep{hsieh2024ruler}, BALILong~\citep{DBLP:conf/nips/KuratovBARSS024} MM-Needle~\citep{wang2025multimodal}, and HaluMem~\citep{chen2025halumem} stress user modeling, preference tracking, and conversation-level consistency, often under simulated settings where ground-truth memories can be precisely controlled.
+
+
+Lifelong-learning benchmarks extend beyond isolated memory retrieval to examine how agents continually acquire, consolidate, and update knowledge over long horizons and evolving task distributions. Benchmarks such as LongMemEval~\citep{DBLP:conf/iclr/WuWYZCY25}, MemoryBank~\citep{zhong2023memorybankenhancinglargelanguage}, MemoryBench~\citep{ai2025memorybench}, LifelongAgentBench~\citep{zheng2025lifelongagentbench}, and StreamBench~\citep{DBLP:conf/nips/WuTLCL24},  are designed around sequences of tasks or episodes in which new information gradually arrives and earlier information may become obsolete or conflicting. These setups emphasize phenomena like catastrophic forgetting, forward and backward transfer, and test-time adaptation, making them suitable for studying how memory mechanisms  interact with continual-learning objectives. In many cases, performance is tracked not only on the current task but also on previously seen tasks or conversations, thereby quantifying how well the agent preserves useful knowledge while adapting to new users, domains, or interaction patterns.
+
+
+
+Self-evolving-agent benchmarks go a step further by treating the agent as an open-ended system that can iteratively refine its own memory, skills, and strategies through interaction. Here, the focus is not only on storing and recalling information, but also on meta-level behaviors such as self-reflection, memory editing, tool-augmented storage, and policy improvement over multiple episodes or games. Benchmarks like   MemoryAgentBench~\citep{hu2025evaluating}, Evo-Memory~\citep{wei2025evo}, and other multi-episode or mission-style environments can be instantiated in a self-evolving setting by allowing the agent to accumulate trajectories, synthesize higher-level abstractions, and adjust its behavior in future runs based on its own past performance. When viewed through this lens, these benchmarks provide a testbed for evaluating whether an agent can autonomously bootstrap more capable behaviors over time-turning static tasks into arenas for long-term adaptation, strategy refinement, and genuinely self-improving memory use.
+
+
+\subsubsection{Other Related Benchmarks} 
+\label{sec:other_benchmarks}
+
+Beyond benchmarks explicitly designed for memory or lifelong learning, a wide range of agent-oriented and long-horizon evaluation suites are also relevant for studying memory-related capabilities in LLM-based agents. Although these benchmarks were originally introduced to assess other aspects such as tool use, embodied interaction, or knowledge-intensive reasoning, their sequential, multi-step, and multi-task nature implicitly places strong demands on long-term information retention, context management, and state tracking.
+
+Embodied and interactive environments constitute a major class of such benchmarks. Frameworks like ALFWorld~\citep{shridhar2021alfworld} and ScienceWorld~\citep{wang2022scienceworldagentsmarter5th} evaluate agents in simulated text-based or partially grounded environments where success requires remembering past observations, intermediate goals, and environment dynamics across extended action sequences. Similarly, BabyAI~\citep{chevalierboisvert2019babyaiplatformstudysample} focuses on language-conditioned instruction following over temporally extended episodes, implicitly testing an agent’s ability to maintain task-relevant state throughout interaction. While these benchmarks do not explicitly model external memory modules, effective performance often depends on the agent’s capacity to preserve and reuse information over long horizons.
+
+Another prominent category includes web-based and tool-augmented interaction benchmarks. WebShop~\citep{yao2023webshopscalablerealworldweb}, WebArena~\citep{zhou2024webarenarealisticwebenvironment}, and MMInA~\citep{tian2025mminabenchmarkingmultihopmultimodal} assess agents operating in realistic or semi-realistic web environments involving multi-step navigation, information gathering, and decision making. These settings naturally induce long-context trajectories in which earlier actions, retrieved information, or user constraints must be recalled and integrated at later stages. ToolBench~\citep{qin2024toolllm} further extends this paradigm by evaluating an agent’s ability to select and invoke APIs across complex workflows, where memory of prior tool outputs and tool-use experience is critical for coherent execution.
+
+Multi-task and general agent evaluation platforms also provide indirect but valuable signals about memory usage. AgentGym~\citep{xi2024agentgymevolvinglargelanguage} and AgentBoard~\citep{xi2024agentgymevolvinglargelanguage} aggregate diverse environments or tasks into unified evaluation suites, requiring agents to adapt across tasks while retaining task-specific knowledge and strategies. PDDL-based planning environments, commonly used in agent benchmarks, evaluate strategic reasoning over structured action spaces, where agents benefit from accumulating and reusing experience across episodes to improve long-horizon planning performance.
+
+
+Finally, several recent benchmarks target demanding real-world or near-real-world reasoning scenarios that inherently stress long-context and cross-step consistency. SWE-Bench Verified~\citep{jimenez2023swe} evaluates code repair over realistic software repositories, where agents must reason over long files and evolving code states. GAIA~\citep{mialon2023gaia} and xBench~\citep{chen2025xbenchtrackingagentsproductivity} assess deep research and search-intensive tasks that require synthesizing information gathered across multiple steps and sources. GenAI-Bench~\citep{li2024genaibenchevaluatingimprovingcompositional}, while focusing on multimodal generation quality, similarly involves complex workflows in which memory of prior prompts, intermediate outputs, or visual constraints plays a nontrivial role.
+
+Taken together, these benchmarks complement memory-oriented evaluations explicitly by situating LLM-based agents in rich, interactive, and long-horizon settings. Although memory is not always an explicit target of measurement, sustained performance in these environments implicitly depends on an agent’s ability to manage long contexts, preserve relevant information, and integrate past experience into ongoing decision making, making them valuable testbeds for studying memory-related behaviors in practice.
+
+
+
+
+\begin{table}[!t]
+\caption{
+% Open-source Memory Frameworks Summary. Fac. and Exp. denote factual and experimental memory, while MM. and Env. mean multimodal and environment, respectively. 
+Overview of representative open-source memory frameworks for LLM-based agents.
+The table compares widely used frameworks in terms of the types of memory they support (factual vs. experiential), multimodality, internal memory structure, and reported evaluation benchmarks. \textbf{Fac.} and \textbf{Exp.} denote factual and experiential memory, respectively, \textbf{MM.} indicates multimodal memory support, and \textbf{Structure} summarizes the core memory abstraction or organization mechanism adopted by each framework. \textbf{Evaluation} lists publicly reported benchmarks used to assess memory-related capabilities, when available.
+}
+\centering
+\label{tab:open_source_framework}
+\small
+\begin{tabular}{p{2.6cm} p{3.cm} c c c p{4.cm} p{3.cm}}
+\hline
+\textbf{Framework} & \textbf{Links} & \textbf{Fac.} & \textbf{Exp.} & \textbf{MM.} & \textbf{Structure} & \textbf{Evaluation} \\
+\hline
+
+MemGPT &
+\ghlink{https://github.com/cpacker/MemGPT} \weblink{https://docs.letta.com/} &
+\cmark & \cmark & \xmark &
+hierachical (S/LTM) &
+LoCoMo \\%
+
+Mem0 &
+\ghlink{https://github.com/mem0ai/mem0} \weblink{https://mem0.ai/} &
+\cmark & \cmark & \xmark &
+graph + vector &
+LoCoMo \\%
+
+Memobase &
+\ghlink{https://github.com/memodb-io/memobase} \weblink{https://www.memobase.io/} &
+\cmark & \cmark & \xmark &
+structured profiles &
+LoCoMo \\%
+
+MIRIX &
+\ghlink{https://github.com/Mirix-AI/MIRIX} \weblink{https://mirix.io/} &  \cmark & \cmark & \cmark &
+structured memory & 
+LoCoMo, MemoryAgentBench \\%
+
+MemoryOS &
+\ghlink{https://github.com/BAI-LAB/MemoryOS} \weblink{https://baijia.online/memoryos/} &
+\cmark & \cmark & \xmark &
+hierarchical (S/M/LTM) & 
+LoCoMo, MemoryBank \\%
+
+MemOS &
+\ghlink{https://github.com/MemTensor/MemOS} \weblink{https://memos.openmem.net/} &
+\cmark & \cmark & \xmark &
+tree memory + memcube &
+LoCoMo, PreFEval, LongMemEval, PersonaMem \\% 
+
+Zep &
+\ghlink{https://github.com/getzep/zep} \weblink{https://www.getzep.com/} &
+\cmark & \cmark & \xmark &
+temporal knowledge graph &
+LongMemEval \\%
+
+LangMem &
+\ghlink{https://github.com/langchain-ai/langmem} \weblink{https://langchain-ai.github.io/langmem/} &
+\cmark & \cmark & \xmark &
+core API + manager & 
+- \\%
+
+SuperMemory &
+\ghlink{https://github.com/supermemoryai/supermemory} \weblink{https://supermemory.ai/} &
+\cmark & \cmark & \cmark &
+vector + semantic &
+- \\%
+
+Cognee &
+\ghlink{https://github.com/topoteretes/cognee} \weblink{https://www.cognee.ai/} &
+\cmark & \cmark & \cmark &
+knowledge graph & 
+- \\%
+
+Memary &
+\ghlink{https://github.com/kingjulio8238/Memary} \weblink{https://kingjulio8238.github.io/memarydocs/} &
+\cmark & \cmark & \xmark &
+stream + entity store &
+- \\%
+
+Pinecone &
+\ghlink{https://github.com/pinecone-io/assistant-mcp} \weblink{https://docs.pinecone.io/guides/assistant/overview} &
+\cmark & \xmark & \xmark &
+vector database &
+- \\%
+
+
+Chroma &
+\ghlink{https://github.com/chroma-core/chroma} \weblink{https://www.trychroma.com/} &
+\cmark & \xmark & \cmark &
+vector database &
+- \\%
+
+
+Weaviate &
+\ghlink{https://github.com/weaviate/weaviate} \weblink{https://weaviate.io/} &
+\cmark & \xmark & \cmark &
+vector + graph &
+- \\%
+
+Second Me & 
+\ghlink{https://github.com/mindverse/Second-Me} \weblink{https://home.second.me/}& 
+\cmark & \xmark & \xmark &
+agent ego & 
+- \\%
+
+MemU & 
+\ghlink{https://github.com/NevaMind-AI/memU} \weblink{hhttps://memu.pro/} & 
+\cmark & \cmark & \cmark & 
+hierachical layers &
+- \\%
+
+MemEngine & 
+\ghlink{https://github.com/nuster1128/MemEngine} & 
+\cmark & \cmark & \cmark & 
+modular space & 
+- \\%
+
+Memori & 
+\ghlink{https://github.com/MemoriLabs/Memori} \weblink{https://memori.ai/}
+& \cmark & \cmark & \xmark & 
+memory database & 
+- \\%
+ 
+ReMe & 
+\ghlink{https://github.com/agentscope-ai/ReMe} \weblink{https://www.memoryscope.ai/} & 
+\cmark & \cmark & \xmark &
+memory management &
+- \\%
+
+AgentMemory & 
+\ghlink{https://github.com/elizaOS/agentmemory} \weblink{https://www.getzep.com/product/agent-memory/} &
+\cmark & \cmark & \xmark &
+memory management &
+- \\%
+
+MineContext &
+\ghlink{https://github.com/volcengine/MineContext} \weblink{https://app.daily.dev/posts/minecontext-is-your-proactive-context-aware-ai-partner-b0fvvtds3} &
+\cmark & \cmark & \cmark &
+context engineering &
+- \\%
+
+
+Acontext & \ghlink{https://github.com/memodb-io/Acontext} & \cmark & \cmark & \cmark & context engineering + skill learning & - \\
+
+PowerMem & \ghlink{https://github.com/oceanbase/powermem} & \cmark & \xmark & \cmark & oceanbase & -\\
+
+ReMe & \ghlink{https://github.com/agentscope-ai/ReMe} & \cmark & \cmark & \xmark & agentscope & BFCL, AppWorld\\
+
+HindSight & \ghlink{https://github.com/vectorize-io/hindsight} & \cmark & \cmark & \xmark & parallel retrieval + reflection & -\\
+
+
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Open-Source Frameworks}
+
+A rapidly growing ecosystem of open-source memory frameworks aims to provide reusable infrastructure for building memory-augmented LLM agents. 
+A structured comparison of representative open-source memory frameworks, including their supported memory types, architectural abstractions, and evaluation coverage, is summarized in \autoref{tab:open_source_framework}.
+Most of these frameworks support factual memory via vector or structured stores, and an increasing subset also models experiential traces, such as dialogue histories, user actions, and episodic summaries, with multimodal memory emerging more recently. Open-source memory frameworks for LLM agents span a spectrum from agent-centric systems with rich, hierarchical memory abstractions to more general-purpose retrieval or memory-as-a-service backends, e.g., MemGPT~\citep{packer2023memgpt}, Mem0~\citep{Chhikara2025mem0}, Memobase, MemoryOS~\citep{kang2025memoryosaiagent}, MemOS~\citep{li2025memosoperatingmemoryaugmentedgeneration}, Zep~\citep{Rasmussen2025Zep}, LangMem~\citep{githubGitHubLangchainailangmem}, SuperMemory~\citep{supermemorySupermemoryUniversal}, Cognee~\citep{githubGitHubTopoteretescognee}, Memary~\citep{githubGitHubKingjulio8238Memary}, Pinecone, Chroma, Weaviate, Second Me, MemU, MemEngine~\citep{zhang2025memengineunifiedmodularlibrary}, Memori, ReMe~\citep{githubGitHubAgentscopeaiReMe}, AgentMemory, and MineContext~\citep{githubGitHubVolcengineMineContext}. Many of them explicitly separate short- and long-term stores and offer graph-based, profile-based, or modular memory spaces, and some have begun to report results on memory-based benchmarks. The others typically provide scalable vector or graph databases, APIs, and semantic or streaming entity layers that help organize context but often leave agent behavior and evaluation protocols to the application. Overall, these frameworks are rapidly maturing in their representational flexibility and system design.
+
+
+\section{Positions and Frontiers}
+\label{sec:frontier}
+
+This section articulates key positions and emerging frontiers in the design of memory systems for LLM-based agents. Moving beyond descriptive surveys of existing methods, we focus on paradigm-level shifts that redefine how memory is constructed, managed, and optimized in long-horizon agentic settings. Specifically, we examine the transition from retrieval-centric to generative memory, from manually engineered to autonomously managed memory systems, and from heuristic pipelines to reinforcement learning–driven memory control. We further discuss how these shifts intersect with multimodal reasoning, multi-agent collaboration, and trustworthiness, outlining open challenges and research directions that are likely to shape the next generation of agent memory architectures.
+
+
+\subsection{Memory Retrieval vs.\ Memory Generation}
+
+\subsubsection{Look Back: From Memory Retrieval to Memory Generation}
+
+Historically, the dominant paradigm in agent memory research has centered on \textbf{memory retrieval}. Under this paradigm, the primary objective is to identify, filter, and select the most relevant memory entries from an existing memory store given the current context. A large body of prior work focuses on improving retrieval accuracy through better indexing strategies, similarity metrics, reranking models, or structured representations such as knowledge graphs~\citep{DBLP:conf/acl/rmm2025,githubGitHubMemodbiomemobase}. In practice, this includes techniques such as vector similarity search with dense embeddings, hybrid retrieval combining lexical and semantic signals, hierarchical filtering, and graph-based traversal. These methods emphasize precision and recall in accessing stored information, implicitly assuming that the memory base itself is already well formed.
+
+Recently, however, increasing attention has shifted toward \textbf{memory generation}. Rather than treating memory as a static repository to be queried, memory generation emphasizes the agent’s ability to actively synthesize new memory representations on demand. The goal is not merely to retrieve and concatenate existing fragments, but to integrate, compress, and reorganize information in a manner that is tailored to the current context and future utility. This shift reflects a growing recognition that effective memory usage often requires abstraction and recomposition, especially when raw stored information is noisy, redundant, or misaligned with the immediate task.
+
+Existing approaches to memory generation can be broadly grouped into two directions. One line of work adopts a \textbf{retrieve then generate} strategy, where retrieved memory items serve as raw material for reconstruction. In this setting, the agent first accesses a subset of relevant memories and then generates a refined memory representation that is more concise, coherent, and context specific, as implemented in ComoRAG~\citep{DBLP:journals/corr/comorag}, G-Memory~\citep{Zhang2025GMemory} and CoMEM~\citep{Wu2025CoMEM}. This approach preserves grounding in historical information while enabling adaptive summarization and restructuring. A second line of work explores \textbf{direct memory generation}, in which memory is produced without any explicit retrieval step. Instead, the agent generates memory representations directly from the current context, interaction history, or latent internal states. Systems such as MemGen~\citep{Zhang2025MemGen} and VisMem~\citep{yu2025vismemlatentvisionmemory} exemplify this direction by constructing latent memory tokens that are customized to the task at hand, bypassing explicit memory lookup altogether.
+
+\subsubsection{Future Perspective}
+
+Looking ahead, we anticipate that generative approaches will play an increasingly central role in agent memory systems. We highlight three properties that future generative memory mechanisms should ideally exhibit.
+
+First, generative memory should be \textbf{context adaptive}. Rather than storing generic summaries, the memory system should generate representations that are explicitly optimized for the agent’s anticipated future needs. This includes adapting the granularity, abstraction level, and semantic focus of memory to different tasks, stages of problem solving, or interaction regimes.
+
+Second, generative memory should support \textbf{integration across heterogeneous signals}. Agents increasingly operate over diverse modalities and information sources, including text, code, tool outputs, and environmental feedback. Memory generation provides a natural mechanism for fusing these fragmented signals into unified representations that are more useful for downstream reasoning than raw concatenation or retrieval alone. We hypothesize that latent memory (as discussed in \Cref{ssec:latent}) might be a promising technical path for this gaol.
+
+Third, generative memory should be \textbf{learned and self optimizing}. Rather than relying on manually specified generation rules, future systems should learn when and how to generate memory through optimization signals, such as reinforcement learning or long horizon task performance. In this view, memory generation becomes an integral component of the agent’s policy, co evolving with reasoning and decision making.
+
+
+
+\subsection{Automated Memory Management}
+
+\subsubsection{Look-Back: From Hand-crafted to Automatically Constructed Memory Systems.} 
+
+Existing agent memory systems ~\citep{xuAMEMAgenticMemory2025,packerMemGPTLLMsOperating2023} typically rely on manually designed strategies to determine what information to store, when to use it, and how to update or retrieve it. By guiding fixed LLMs with detailed instructions ~\citep{Chhikara2025mem0}, predefined thresholds ~\citep{kang2025memoryosaiagent}, or explicit human-crafted rules drafted by human experts ~\citep{xuAMEMAgenticMemory2025}, system designers can integrate memory modules into current agent frameworks with relatively low computational and engineering cost, enabling rapid prototyping and deployment. Besides, they also offer \textbf{interpretability, reproducibility, and controlled}, allowing the developers to precisely specify the state and behavior of memory. However, similar to expert systems in other areas, such manually curated approaches suffer from significant limitations: they are inherently inflexible and often fail to generalize across diverse, dynamic environments. Consequently, these systems tend to underperform in long-term or open-ended interactions.
+
+Recent developments in agent memory research begin to address these limitations by enabling the agents themselves to autonomously manage the memory evolution and retrieval. For example, CAM ~\citep{liCAMConstructivistView2025} empowers LLM agents to automatically cluster fine-grained memory entries into high-level abstract units. Memory-R1 ~\citep{yan2025memory} introduces an auxiliary agent equipped with a dedicated ``memory mcanager'' tool to handle memory updates. Despite these advances, current solutions remain constrained: many are still driven by manually engineered rules or are optimized for narrow, task-specific learning objectives, making them difficult to generalize to open-ended settings. 
+
+\subsubsection{Future Perspective}
+
+To support truly automated memory management, a promising direction is to \textbf{integrate memory construction, evolution, and retrieval directly into the agent's decision loop via explicit tool calls}, making the agent itself reason about memory operations instead of depending on external modules or hand-crafted workflows. Compared with existing designs that separate an agent's internal reasoning process from its memory management actions, an LLM agent can know precisely what memory actions it performs (e.g., add/update/delete/retrieval) in this tool-based strategy, leading to more coherent, transparent, and contextually grounded memory behavior.
+
+Another key frontier lies in developing \textbf{self-optimizing memory structures} adopting hierarchical and adaptive architectures inspired by cognitive systems. First, hierarchical memory structure has been shown to improve the efficiency and performance ~\citep{kang2025memoryosaiagent}. Beyond hierarchy, self-evolving memory systems that dynamically link, index, and reconstruct memory entries enable the memory storage itself to self-organize over time, supporting richer reasoning and reducing dependence on hand-designed rules. Ultimately, such adaptive, self-organizing memory architectures pave the way toward agents capable of maintaining robust, scalable, and truly autonomous memory management. % 架构
+
+
+\subsection{Reinforcement Learning Meets Agent Memory}
+
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{img/frontier-rl-memory-new.pdf}
+    \caption{
+    The evolution of RL-enabled agent memory systems.
+A conceptual progression from \textbf{RL-free} memory systems based on heuristic or prompt-driven pipelines, to \textbf{partially RL-involved} designs where reinforcement learning governs selected memory operations, and finally to fully \textbf{RL-driven} memory systems in which memory architectures and control policies are learned end-to-end. This evolution reflects a broader paradigm shift from \textit{manually} engineered memory pipelines toward \textit{model-native}, \textit{self-optimizing} memory management in LLM-based agents.
+    }
+    \label{fig:sec6-rl-memory}
+\end{figure}
+
+\subsubsection{Look-Back: RL is Internalizing Memory Management Abilities for Agents.} 
+Reinforcement learning is rapidly reshaping the development paradigm of modern LLM-based agents. Across a wide spectrum of agentic capabilities, including planning, reasoning, tool use, as well as across diverse task domains such as mathematical reasoning, deep research, and software engineering, RL has begun to play a central role in driving agent performance~\citep{zhang2025landscapeagenticreinforcementlearning,zhang2025surveyreinforcementlearninglarge,feng2024naturallanguagereinforcementlearning}. Memory, as one of the foundational components of agentic capability, follows a similar trend from pipeline-based to model-native paradigm~\citep{sang2025pipelinessurveyparadigmshift}. The agent memory research community is collectively transitioning from \textbf{early heuristic and manually engineered designs} to approaches in which \textbf{RL increasingly governs key decisions}. Looking ahead, it is reasonable to expect that \textbf{fully RL-based memory systems} may eventually become the dominant direction. Before discussing this trajectory in detail, we briefly outline the first stage of development.
+This transition, in which memory management is progressively internalized and optimized through reinforcement learning, is schematically illustrated in \autoref{fig:sec6-rl-memory}.
+
+\paragraph{RL-free Memory Systems} 
+A substantial portion of the agent memory literature surveyed earlier can be categorized as RL-free memory systems. These approaches typically rely on heuristic or manually specified mechanisms, such as fixed thresholding rules inspired by curves of forgetting, rigid semantic search pipelines found in frameworks such as MemOS~\citep{li2025memosoperatingmemoryaugmentedgeneration}, Mem0~\citep{Chhikara2025mem0}, and MemoBase~\citep{githubGitHubMemodbiomemobase}, or simple concatenation-based strategies for storing memory chunks. In some systems, an LLM participates in memory management in a way that appears \textit{agentic}, yet the underlying behavior is entirely prompt-driven. The LLM is asked to generate memory entries but has not received any dedicated training for effective memory control, as seen in systems such as Dynamic Cheatsheet~\citep{suzgun2025dynamiccheatsheettesttimelearning}, ExpeL~\citep{DBLP:conf/aaai/Zhao0XLLH24}, EvolveR~\citep{wu2025evolverselfevolvingllmagents}, and G-Memory~\citep{Zhang2025GMemory}. This class of methods has dominated early work in the field and is likely to remain influential for some time due to its simplicity and practical accessibility.
+
+
+\paragraph{RL-assisted Memory Systems}  
+As the field progressed, many works began to incorporate RL-based methods into selected components of the memory pipeline. An early attempt in this direction is RMM~\citep{DBLP:conf/acl/rmm2025}, which employed a lightweight policy gradient learner to rank memory chunks after an initial retrieval stage based on BM25 or other semantic similarity metrics. Later systems explored substantially more ambitious designs. For example, Mem-$\alpha$~\citep{DBLP:journals/corr/abs-2509-25911} delegates the entire process of memory construction to an agent trained with RL, and Memory-R1~\citep{yan2025memory} employs a similar philosophy. A rapidly expanding line of research investigates how an agent can autonomously fold, compress, and manage context in ultra-long multi-turn tasks. This setting corresponds to the management of working memory~\citep{kangACONOptimizingContext2025,ye2025agentfold}. Many of the leading systems in this area are trained with RL, including but not limited to Context Folding~\citep{DBLP:journals/corr/abs-2510-11967}, Memory-as-Action~\citep{DBLP:journals/corr/abs-2510-12635}, MemSearcher~\citep{yuanMemSearcherTrainingLLMs2025}, and IterResearch~\citep{chen2025iterresearchrethinkinglonghorizonagents}. These RL-assisted approaches have already demonstrated strong capabilities and point toward the increasing role of RL in future memory system design.
+
+
+
+\subsubsection{Future Perspective}
+
+Looking forward, we anticipate that \textbf{fully RL-driven memory systems will constitute the next major stage} in the evolution of agent memory. We highlight two properties that such systems should ideally embody. 
+
+
+\begin{itemize}
+\item First, \textit{memory architectures managed by agents should minimize reliance on human-engineered priors}. Many existing frameworks inherit design patterns inspired by human cognition, such as cortical or hippocampal analogies~\citep{gutiérrez2025hipporagneurobiologicallyinspiredlongterm}, or predefined hierarchical taxonomies that partition memory into episodic, semantic, and core categories~\citep{wang2025mirixmultiagentmemoryllmbased}. Although these abstractions have been useful for grounding early work, they may not represent the most effective or natural structures for artificial agents operating in complex environments. A fully RL-driven setting offers the possibility for agents to invent novel and potentially more suitable memory organizations that emerge directly from optimization dynamics rather than human intuition. In this view, the agent is encouraged to design new memory formats, storage schemas, or update rules through RL incentives, enabling memory architectures that are adaptive and creative rather than handcrafted. % 架构
+
+\item Second, \textit{future memory systems should provide agents with complete control over all stages of memory management}. Current RL-assisted approaches typically intervene in only a subset of the memory lifecycle. For instance, Mem-$\alpha$~ automates certain aspects of memory writing yet still relies on manually defined retrieval pipelines, whereas systems such as MemSearcher~\citep{yuanMemSearcherTrainingLLMs2025} focus primarily on short-term working memory without addressing long-term consolidation or evolution. A fully agentic memory system would require the agent to autonomously handle multi-granular memory formation, memory evolution, and memory retrieval in an integrated manner. Achieving this level of control will almost certainly require end-to-end RL training, since heuristic or prompt-based methods are insufficient for coordinating the complex interactions among these components across long-time horizons.
+
+\end{itemize}
+
+Together, these two directions suggest a future in which memory is not merely an auxiliary mechanism bolted onto an LLM agent, but rather a fully learnable and self-organizing subsystem that coevolves with the agent through RL. Such systems hold the potential to enable genuinely continual learning and long-term competence in artificial agents.
+
+
+\subsection{Multimodal Memory}
+
+\subsubsection{Look-Back}
+
+As research on text-based memory becomes increasingly mature and extensively explored, and as multimodal large language models and unified models that jointly support multimodal understanding and generation continue to advance, attention has naturally expanded toward \textbf{multimodal memory}. This shift reflects a broader recognition that many real-world agentic settings are inherently multimodal, and that memory systems limited to text alone are insufficient to support long-horizon reasoning and interaction in complex environments.
+
+Existing efforts on multimodal memory can be broadly grouped into two complementary directions. The first focuses on enabling \textbf{multimodal agents} to store, retrieve, and utilize memories derived from diverse sensory inputs~\citep{long2025seeing,zuo2025videolucydeepmemorybacktracking}. This direction is a natural extension of agent memory, since agents operating in realistic environments inevitably encounter heterogeneous data sources, including images, audio, video, and other non-textual signals~\citep{xie2024largemultimodalagentssurvey}. The degree of progress in multimodal memory closely follows the maturity of corresponding modalities. Visual modalities such as images and videos have received the most attention, leading to a growing body of work on visual and video memory mechanisms that support tasks such as visual grounding, temporal tracking, and long-term scene consistency~\citep{long2025seeing,wangVideoAgentLongFormVideo2024,gurukar2025longvmnetacceleratinglongformvideo,yu2025vismemlatentvisionmemory,bo2025agenticlearnergrowandrefinemultimodal,DBLP:journals/pami/WangCLJHZLHZYML25,li2024optimus1hybridmultimodalmemory}. In contrast, memory systems for audio and other modalities remain relatively underexplored~\citep{li2025omnivideobenchaudiovisualunderstandingevaluation}.
+
+The second direction treats memory as an enabling component for \textbf{unified models}. In this setting, memory is leveraged not primarily to support agent decision making, but to enhance multimodal generation and consistency. For example, in image and video generation systems, memory mechanisms are often used to preserve entity consistency, maintain world state across frames, or ensure coherence across long generation horizons~\citep{DBLP:journals/corr/abs-2506-03141}. Here, memory serves as a stabilizing structure that anchors generation to previously produced content, rather than as a record of agent experience per se.
+
+\subsubsection{Future Perspective}
+
+Looking forward, multimodal memory is likely to become an indispensable component of agentic systems. As agents increasingly move toward embodied and interactive settings, their information sources will be inherently multimodal, spanning perception, action, and environmental feedback. Effective memory systems must therefore support the storage, integration, and retrieval of heterogeneous signals in a unified manner.
+
+Despite recent progress, there is currently no memory system that provides truly \textbf{omnimodal support}. Most existing approaches remain specialized to individual modalities or loosely coupled across modalities. A key future challenge lies in designing memory representations and operations that can flexibly accommodate diverse modalities while preserving semantic alignment and temporal coherence. Moreover, multimodal memory must evolve beyond passive storage to support abstraction, cross-modal reasoning, and long-term adaptation. Addressing these challenges will be essential for enabling agents that can operate robustly and coherently in rich, multimodal environments.
+
+
+
+\subsection{Shared Memory in Multi-Agent Systems}
+
+\subsubsection{Look-Back: From Isolated Memories to Shared Cognitive Substrates}
+
+As LLM-based multi-agent systems (MAS) have gained prominence, \textbf{shared memory} has emerged as a key mechanism for enabling coordination, consistency, and collective intelligence. Early multi-agent frameworks primarily relied on \textbf{isolated local memories} coupled with explicit message passing, where agents exchanged information through dialogue histories or task-specific communication protocols~\citep{qian2024chatdevcommunicativeagentssoftware,wu2024autogen,hu2025automated,zhang2025aflow}. While this design avoided direct interference between agents, it often suffered from redundancy, fragmented context, and high communication overhead, especially as team size and task horizon increased.
+
+Subsequent work introduced \textbf{centralized shared memory structures}, such as global vector stores, blackboard systems, or shared documents~\citep{hong2023metagpt}, accessible to all agents. These designs enabled a form of team-level memory that supported joint attention, reduced duplication, and facilitated long-horizon coordination. Representative systems demonstrated that shared memory could serve as a persistent common ground for planning, role handoff, and consensus building~\citep{rezazadeh2025collaborativememorymultiusermemory,xu2025sedmscalableselfevolvingdistributed}. However, naive global sharing also exposed new challenges, including memory clutter, write contention, and the lack of role- or permission-aware access control.
+
+
+\subsubsection{Future Perspective}
+
+Looking forward, shared memory is likely to evolve from a passive repository into an \textbf{actively managed and adaptive collective representation}. One important direction is the development of \textbf{agent-aware shared memory}, where read and write behaviors are conditioned on agent roles, expertise, and trust, enabling more structured and reliable knowledge aggregation. 
+
+Another promising avenue lies in \textbf{learning-driven shared memory management}. Rather than relying on hand-designed policies for synchronization, summarization, or conflict resolution, future systems may train agents to decide when, what, and how to contribute to shared memory based on long-horizon team performance. Finally, as MAS increasingly operate in open-ended and multimodal environments, shared memory must support abstraction across heterogeneous signals while maintaining temporal and semantic coherence, for which we believe latent memory exhibits a promising path~\citep{Wu2025CoMEM}. Advancing in these directions will be critical for scaling shared memory from a coordination aid into a foundation for robust collective intelligence.
+
+
+\subsection{Memory for World Model}
+\subsubsection{Look-Back}
+The core objective of a World Model is to construct an internal environment capable of high-fidelity simulation of the physical world. These systems serve as the critical infrastructure for next-generation artificial intelligence. The core attribute of world model is to generate content that is both infinitely extensible and interactive in real time. Unlike traditional video generation that creates fixed-length clips, world models operate in an iterative manner by receiving actions at each step and predicting the next state to provide continuous feedback.
+In this iterative framework, the memory mechanism becomes the cornerstone of the system. Memory stores and maintains the spatial and semantic information or hidden states from the previous time step. It ensures that the generation of the next chunk maintains long-term consistency with the preceding context regarding scene layout, object attributes, and motion logic. Essentially, the memory mechanism enables world models to handle long-term temporal dependencies and realize trustworthy simulation interactions.
+
+Previously, memory modeling relied on simplistic buffering approaches. Frame Sampling conditioned generation on a few historical frames~\citep{bruce2024genie}. While intuitive, this led to context fragmentation and perceptual drift as early details were lost. Sliding Window methods adapted LLM techniques like attention sinks and local KV caches~\citep{liu2025rolling}. Although this resolved computational bottlenecks, it restricted memory to a fixed window. Once an object left this view, the model effectively forgot it, preventing complex tasks like loop closure.
+By late 2025, the field shifted from finite context windows to structured state representations. Current architectures follow three main paths:
+
+\begin{itemize}
+    \item State-Space Models (SSMs) architectures like Long-Context SSMs utilize Mamba-style backbones~\citep{po2025long,yu2025videossm}. These compress infinite history into a fixed-size recursive state, enabling theoretically infinite memory capacity with constant inference costs.  
+\item Explicit Memory Banks. Unlike compressed states, these systems maintain an external storage of historical representations to support precise recall. Approaches differ in their structuring logic: UniWM employs a \textit{hierarchical design}, separating short-term perception from long-term history via feature-based similarity gating~\citep{dong2025unified}. Conversely, \textbf{retrieval-based approaches} like WorldMem and Context-as-Memory (CaM) maintain a flat bank of past contexts, utilizing \textit{geometric retrieval} (e.g., FOV overlap) to dynamically select relevant frames for maintaining 3D scene consistency~\citep{xiao2025worldmem, yu2025context}.
+
+\item Sparse Memory and Retrieval To balance long-term adherence with efficiency, Genie Envisioner and Ctrl-World utilize sparse memory mechanisms~\citep{liao2025genie, guo2025ctrl}. These models augment current observations by injecting sparsely sampled historical frames or retrieving pose-conditioned context to anchor predictions and prevent drift during manipulation tasks.  
+
+\end{itemize}
+
+\subsubsection{Future Perspective}
+
+From an architectural perspective, the field is undergoing a fundamental transition from Data Caching which focuses on passive retention to State Simulation which focuses on active maintenance. This evolution is currently crystallizing into two distinct paradigms that aim to solve the conflict between real-time responsiveness and long-term logical consistency.
+\begin{itemize}
+    \item The Dual-System Architecture. Inspired by cognitive science, world models could be bifurcated into fast and slow components. System 1 represents the fast and instinctive layer that handles immediate physics and fluid interaction using efficient backbones like SSMs. System 2 represents the slow and deliberative layer that handles complex reasoning, planning, and world consistency using large-scale VLMs or explicit memory databases. 
+    \item Active Memory Management. Passive mechanisms are being superseded by Active Memory Policies. Instead of treating memory as a fixed buffer that blindly stores recent history, new models are designed as Cognitive Workspaces that actively curate, summarize, and discard information based on task relevance. Recent empirical studies demonstrate that such active memory management significantly outperforms static retrieval methods in handling functional infinite context. This shift marks the move from simply remembering the last N tokens to maintaining a coherent and queryable world state.
+\end{itemize}
+
+
+
+
+\subsection{Trustworthy Memory}
+
+\subsubsection{Look-Back: From Trustworthy RAG to Trustworthy Memory} 
+As shown throughout this survey, memory plays a foundational role in enabling agentic behavior, which supports persistence, personalization, and continual learning. However, as memory systems become more deeply embedded into LLM-based agents, the question of \textit{trustworthiness} has become paramount. 
+
+Earlier concerns around hallucination and factuality in retrieval-augmented generation (RAG) systems~\citep{niu2024ragtruth,sunredeep,lu2025spad} have now evolved into a broader trust discourse for memory-augmented agents. Similar to RAG, one major motivation for using external or long-term memory is to reduce hallucinations by grounding model outputs in retrievable, factual content~\citep{ru2024ragchecker,wang2025astute}. However, unlike RAG, agent memory often stores user-specific, persistent, and potentially sensitive content, ranging from factual knowledge to past interactions, preferences, or behavioral traces. This introduces additional challenges in privacy, interpretability, and safety.
+
+Recent work by~\citet{wang2025unveilingprivacyrisksllm} demonstrates that memory modules can leak private data through indirect prompt-based attacks, highlighting the risk of memorization and over-retention. Concurrently,~\citet{wu2025humanmemoryaimemory}  argues that agent memory systems must support explicit mechanisms for \textit{access control}, \textit{verifiable forgetting}, and \textit{auditable updates} to remain trustworthy. Notably, such threats are magnified in agent scenarios where memory persists across long time horizons.
+
+Explainability also remains a critical bottleneck. While explicit memory, such as text logs or key-value stores, offers some transparency, users and developers still lack tools to trace which memory items were retrieved, how they influenced generation, or whether they were misused. In this regard, diagnostic tools like RAGChecker~\citep{ru2024ragchecker} and conflict-resolution frameworks such as RAMDocs with MADAM-RAG~\citep{wang2025retrieval} provide inspiration for tracing memory usage and reasoning under uncertainty. 
+
+Moreover, beyond individual memory,~\citet{shi2025privacy} and~\citet{rezazadeh2025collaborative} highlight the emerging importance of \textit{collective privacy} in shared or federated memory systems, which may operate across multi-agent deployments or organizations. All these developments collectively signal a need to elevate trust as a first-class principle in memory design.
+
+\subsubsection{Future Perspective}
+Looking ahead, we argue that \textbf{trustworthy memory} must be built around three interlinked pillars: \textit{privacy preservation}, \textit{explainability}, and \textit{hallucination robustness}—each demanding architectural and algorithmic innovations.
+
+For privacy, future systems should support granular permissioned memory, user-governed retention policies, encrypted or on-device storage, and federated access where needed~\citep{wu2025humanmemoryaimemory,shi2025privacy,rezazadeh2025collaborative}. Techniques like differential privacy, memory redaction, and adaptive forgetting (e.g., decay-based models or user-erasure interfaces) can serve as safeguards against both memorization and leakage~\citep{Chhikara2025mem0}.
+
+Explainability requires moving beyond visible content to include \textit{traceable access paths}, \textit{self-rationalizing retrievals}, and possibly counterfactual reasoning (e.g., what would have changed without this memory?)~\citep{openai2024memorycontrol,zhang2025explicit}. Visualizations of memory attention, causal graphs of memory influence, and user-facing debugging tools may become standard components.
+
+Hallucination mitigation will benefit from continued advances in conflict detection, multi-document reasoning, and uncertainty-aware generation. Strategies such as abstention under low-confidence retrieval, fallback to model priors~\citep{wang2025astute}, or multi-agent cross-checking~\citep{hu2024refchecker} are promising. Beyond behavioral safeguards, emerging \textit{mechanistic interpretability} techniques offer a complementary direction by analyzing how internal representations and reasoning circuits contribute to hallucinated outputs. 
+Methods such as representation-level probing and reasoning-path decomposition enable finer-grained diagnosis of where hallucinations originate, and provide principled tools for intervention and control~\citep{sunredeep,sunlargepig}.
+
+In the long term, we envision memory systems governed by OS-like abstractions: segmented~\citep{lscs}, version-controlled, auditable, and jointly managed by agent and user~\citep{packer2023memgpt}. Building such systems will require coordinated efforts across representation learning, system design, and policy control. As LLM agents begin to operate in persistent, open-ended environments, trustworthy memory will not just be a desirable feature—but a foundational requirement for real-world deployment.
+
+\subsection{Human-Cognitive Connections} \label{ssec:human_cognitive_connections}
+\subsubsection{Look Back}
+The architecture of contemporary agent memory systems has converged with foundational models of human cognition established over the last century. The prevailing design, which couples a capacity-limited context window with massive external vector databases, mirrors the Atkinson-Shiffrin multi-store model~\citep{atkinsonHumanMemoryProposed1968}, effectively instantiating an artificial counterpart to the distinction between working memory and long-term memory~\citep{baddeleyWorkingMemoryTheories2012}. 
+Furthermore, the partitioning of agent memory into interaction logs, world knowledge, and code-based skills exhibits a striking structural alignment with \textit{Tulving's} classification of \textit{episodic}, \textit{semantic}, and \textit{procedural} memory~\citep{tulvingEpisodicSemanticMemory1972,squireMemorySystemsBrain2004}.
+Current frameworks~\citep{zhong2023memorybankenhancinglargelanguage,park2023generativeagentsinteractivesimulacra,gutiérrez2025hipporagneurobiologicallyinspiredlongterm,li2025memosoperatingmemoryaugmentedgeneration} operationalize these biological categories into engineering artifacts, where episodic memory provides autobiographical continuity and semantic memory offers generalized world knowledge.
+
+Despite these structural parallels, a fundamental divergence remains in the \textit{dynamics} of retrieval and maintenance. Human memory operates as a \textit{constructive process}, where the brain actively reconstructs past events based on current cognitive states rather than replaying exact recordings~\citep{schacterConstructiveMemoryGhosts2007}. In contrast, the majority of existing agent memory systems rely on verbatim retrieval mechanisms like RAG, treating memory as a repository of \textit{immutable} tokens to be queried via semantic similarity~\citep{packer2023memgpt,Chhikara2025mem0}. Consequently, while agents possess a veridical record of the past, they lack the biological capacity for memory distortion, abstraction, and the dynamic remodeling of history that characterizes human intelligence.
+
+\subsubsection{Future Perspective}
+To bridge the gap between static storage and dynamic cognition, the next generation of agents must evolve beyond exclusive \textbf{online updating} by incorporating \textbf{offline consolidation} mechanisms analogous to biological sleep~\citep{linSleeptimeComputeInference2025}. Drawing from the Complementary Learning Systems (CLS) theory~\citep{kumaranWhatLearningSystems2016,mcclellandWhyThereAre1995}, future architectures will likely introduce dedicated consolidation intervals where agents decouple from environmental interaction to engage in memory reorganization and generative replay~\citep{mattarPrioritizedMemoryAccess2018}. During these offline periods, agents can autonomously distill generalizable schemas from raw episodic traces, perform \textbf{active forgetting} to prune redundant noise~\citep{andersonActiveForgettingAdaptation2021}, and optimize their internal indices without the latency constraints of real-time processing.
+
+Ultimately, this evolution suggests a paradigm shift in memory forms and functions: moving from explicit text retrieval to \textbf{generative reconstruction}. Future systems may utilize generative memory~\citep{Zhang2025MemGen} where the agent synthesizes latent memory tokens on demand, mirroring the brain's reconstructive nature. By integrating sleep-like consolidation cycles, agents will evolve from entities that merely archive data to those that internalize experience, resolving the stability-plasticity dilemma by periodically compacting vast episodic streams into efficient, parametric intuition.
+
+% ====================== 
+
+% Second Me
+% mem0, MIRIX, Zep, memU, Memori, Letta, cognee
+
+
+\section{Conclusion}\label{sec:conclusion}
+
+This survey has examined agent memory as a foundational component of modern LLM-based agentic systems. By framing existing research through the unified lenses of \textit{forms, functions, and dynamics}, we have clarified the conceptual landscape of agent memory and situated it within the broader evolution of agentic intelligence. On the level of \textbf{forms}, we identify three principal realizations: token-level, parametric, and latent memory, each of which has undergone distinct and rapid advances in recent years, reflecting fundamentally different trade-offs in representation, adaptability, and integration with agent policies. On the level of \textbf{functions}, we move beyond the coarse long-term versus short-term dichotomy prevalent in prior surveys, and instead propose a more fine-grained and encompassing taxonomy that distinguishes \textit{factual, experiential, and working memory} according to their roles in knowledge retention, capability accumulation, and task-level reasoning. Together, these perspectives reveal that memory is not merely an auxiliary storage mechanism, but an essential substrate through which agents achieve temporal coherence, continual adaptation, and long-horizon competence.
+
+
+Beyond organizing prior work, we have identified key challenges and emerging directions that point toward the next stage of agent memory research. In particular, the increasing integration of reinforcement learning, the rise of multimodal and multi-agent settings, and the shift from retrieval-centric to generative memory paradigms suggest a future in which memory systems become fully learnable, adaptive, and self-organizing. Such systems hold the potential to transform large language models from powerful but static generators into agents capable of sustained interaction, self-improvement, and principled reasoning over time.
+
+We hope this survey provides a coherent foundation for future research and serves as a reference for both researchers and practitioners. As agentic systems continue to mature, the design of memory will remain a central and open problem, one that is likely to play a decisive role in the development of robust, general, and enduring artificial intelligence.
+
+\bibliographystyle{assets/plainnat}
+\bibliography{citation}
+\clearpage
+\end{document}

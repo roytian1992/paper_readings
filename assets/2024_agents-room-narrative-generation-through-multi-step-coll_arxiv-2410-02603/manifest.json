@@ -1,0 +1,30 @@
+{
+  "paper_id": "2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603",
+  "source_path": "",
+  "source_archive_path": "sources/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_fig-agents-room-a-multi-agent-framework-for-coll",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_001_fig-agents-room-a-multi-agent-framework-for-coll.png",
+      "caption": "\\label{fig:agents_room} \\Agentsroom, a multi-agent framework for collaborative writing. A central orchestrator calls the individual agents and consolidates their contributions into the scratchpad. We color-code each piece of the scratchpad with the contributing agent's color.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "agents_room.pdf"
+    },
+    {
+      "id": "source_figure_003_fig-human-autorater-evals-overall-system-ranking",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_003_fig-human-autorater-evals-overall-system-ranking.png",
+      "caption": "\\label{fig:human_autorater_evals} Overall system ranking across dimensions of plot, creativity, development, and language, according to human ratings~(a) and a LLM-based evaluator~(b).",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "human_autorater_eval.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-18"
+}

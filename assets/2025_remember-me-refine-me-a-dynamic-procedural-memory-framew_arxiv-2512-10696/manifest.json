@@ -1,0 +1,110 @@
+{
+  "paper_id": "2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696",
+  "source_path": "",
+  "source_archive_path": "sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_example-of-how-agents-complete-one-stock-trading",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_001_example-of-how-agents-complete-one-stock-trading.png",
+      "caption": "Example of how agents complete one stock trading task with and without past experience.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/example.pdf"
+    },
+    {
+      "id": "source_figure_002_the-framework-comprises-three-alternating-phases",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_002_the-framework-comprises-three-alternating-phases.png",
+      "caption": "The {\\ours} framework comprises three alternating phases: build an experience pool from the agent's past trajectories, recall and adapt relevant experiences for new tasks, then refine the pool by selectively adding new insights and removing outdated ones after each task execution.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/pipeline.pdf"
+    },
+    {
+      "id": "source_figure_003_performance-improvements-for-multiple-llms-enhan",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_003_performance-improvements-for-multiple-llms-enhan.png",
+      "caption": "Performance improvements (\\%) for multiple LLMs enhanced with {\\ours}.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/bfcl_on_more_models.pdf"
+    },
+    {
+      "id": "source_figure_004_ablation-on-retrieval-keys-the-experiments-are-e",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_004_ablation-on-retrieval-keys-the-experiments-are-e.png",
+      "caption": "Ablation on retrieval keys. The experiments are evaluated on BFCL-V3 in {\\ours} \\texttt{(fixed)} setting.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/retrieval_key_comparison.pdf"
+    },
+    {
+      "id": "source_figure_005_effect-of-retrieved-experience-number-on-agent-p",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_005_effect-of-retrieved-experience-number-on-agent-p.png",
+      "caption": "Effect of retrieved experience number on agent performance (\\%) in {\\ours} \\texttt{(fixed)} setting.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/ablation_on_k.pdf"
+    },
+    {
+      "id": "source_figure_006_statistics-of-failed-tasks-with-and-without-a-le",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_006_statistics-of-failed-tasks-with-and-without-a-le.png",
+      "caption": "Statistics of failed tasks with and without {\\ours}. (a) Left: shows overlapping and unique failure cases; (b) Right: displays the number of task failures across different error categories.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/error_analysis.pdf"
+    },
+    {
+      "id": "source_figure_007_different-indexing-examples-for-the-same-bfcl-v3",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_007_different-indexing-examples-for-the-same-bfcl-v3.png",
+      "caption": "Different indexing examples for the same BFCL-V3 task experience.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/indexing_examples.pdf"
+    },
+    {
+      "id": "source_figure_008_experience-example-on-bfcl-v3",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_008_experience-example-on-bfcl-v3.png",
+      "caption": "Experience example on BFCL-V3.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/experience_example_bfcl.pdf"
+    },
+    {
+      "id": "source_figure_009_experience-example-on-appworld",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_009_experience-example-on-appworld.png",
+      "caption": "Experience example on AppWorld.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/experience_example_appworld.pdf"
+    },
+    {
+      "id": "source_figure_010_comparison-of-trajectory-level-and-keypoint-leve",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_010_comparison-of-trajectory-level-and-keypoint-leve.png",
+      "caption": "Comparison of trajectory-level and keypoint-level experience granularity.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/granularity.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-22"
+}

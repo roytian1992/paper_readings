@@ -1,0 +1,90 @@
+{
+  "paper_id": "2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618",
+  "source_path": "",
+  "source_archive_path": "sources/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618_source.tar.gz",
+  "pages": [],
+  "crops": [
+    {
+      "id": "source_figure_001_the-timeline-of-the-multi-agent-sandbox-simulati",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_001_the-timeline-of-the-multi-agent-sandbox-simulati.png",
+      "caption": "The timeline of the multi-agent sandbox simulation, where agent interactions with each other and their environment trigger emergent events that drive dynamic, hybrid bottom-up story generation.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/timeline.pdf"
+    },
+    {
+      "id": "source_figure_002_overview-of-the-system-framework-for-long-form-s",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_002_overview-of-the-system-framework-for-long-form-s.png",
+      "caption": "Overview of the system framework for long-form story generation, including the Persona Scratch Information for defining character settings, the sandbox where agent interactions generate events, and the Storyteller Agent that uses these events to craft a complete story.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/framework.pdf"
+    },
+    {
+      "id": "source_figure_003_overview-of-the-storyteller-agent-workflow-for-g",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_003_overview-of-the-storyteller-agent-workflow-for-g.png",
+      "caption": "Overview of the Storyteller Agent workflow for generating long-form story using a hybrid bottom-up approach, from sandbox events to iterative story generation.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/storyteller.pdf"
+    },
+    {
+      "id": "source_figure_004_comparative-performance-of-different-methods-acr",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_004_comparative-performance-of-different-methods-acr.png",
+      "caption": "Comparative performance of different methods across multi evaluation dimensions: Plot, Creativity, Character Development, Language Use, Conflict Quality, and Overall. Subfigure (a) presents rankings based on LLM-based evaluation, while subfigure (b) shows rankings from human evaluation. We also include the sandbox-specific metric Character Behavior Consistency, along with the Average Word Count for each method.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/performance.pdf"
+    },
+    {
+      "id": "source_figure_005_effect-of-simulation-duration-on-story-generatio",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_005_effect-of-simulation-duration-on-story-generatio.png",
+      "caption": "Effect of simulation duration on story generation performance.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/simulation_study.pdf"
+    },
+    {
+      "id": "source_figure_006_performance-comparison-of-storybox-without-diffe",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_006_performance-comparison-of-storybox-without-diffe.png",
+      "caption": "Performance comparison of StoryBox without different components.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/ablation_study.pdf"
+    },
+    {
+      "id": "source_figure_007_overview-of-environment-modeling-using-a-tree-li",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_007_overview-of-environment-modeling-using-a-tree-li.png",
+      "caption": "Overview of environment modeling using a tree-like structure with five hierarchical levels, enabling a flexible and expansive environment.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/environment.pdf"
+    },
+    {
+      "id": "source_figure_008_overview-of-the-human-evaluation-system",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_008_overview-of-the-human-evaluation-system.png",
+      "caption": "Overview of the human evaluation system.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/human-evaluation-system.pdf"
+    }
+  ],
+  "tables": [],
+  "updated_at": "2026-06-18"
+}

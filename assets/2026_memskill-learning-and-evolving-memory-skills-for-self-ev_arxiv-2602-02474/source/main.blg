@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: icml2026.bst
+Database file #1: example_paper.bib
+Warning--empty journal in packer2023memgpt
+Warning--can't use both volume and number fields in zhao2024expel
+Warning--can't use both volume and number fields in zhong2024memorybank
+You've used 37 entries,
+            2773 wiz_defined-function locations,
+            757 strings with 13762 characters,
+and the built_in function-call counts, 25461 in all, are:
+= -- 1961
+> -- 2643
+< -- 9
++ -- 888
+- -- 849
+* -- 2370
+:= -- 4165
+add.period$ -- 113
+call.type$ -- 37
+change.case$ -- 381
+chr.to.int$ -- 35
+cite$ -- 77
+duplicate$ -- 833
+empty$ -- 1317
+format.name$ -- 886
+if$ -- 5081
+int.to.chr$ -- 3
+int.to.str$ -- 1
+missing$ -- 36
+newline$ -- 194
+num.names$ -- 148
+pop$ -- 782
+preamble$ -- 1
+purify$ -- 344
+quote$ -- 0
+skip$ -- 829
+stack$ -- 0
+substring$ -- 346
+swap$ -- 124
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 407
+warning$ -- 3
+while$ -- 129
+width$ -- 0
+write$ -- 461
+(There were 3 warnings)

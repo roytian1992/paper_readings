@@ -1,0 +1,60 @@
+% \input{table/locomo}
+\section{Method}
+% \yunzhi{You need to add Memory Extraction/Memory Refinement in the Figure 2.}
+
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=1.0\linewidth]{figure/2026ACL-Demo.pdf}
+    \caption{StructMem's hierarchical memory organization. \textbf{Event-Level Binding} constructs event-level structure by extracting dual perspectives and anchoring them temporally. \textbf{Cross-Event Consolidation} constructs cross-event structure through semantic retrieval, event reconstruction, and consolidation synthesis.}
+    \label{fig:overview}
+\end{figure*}
+
+
+We propose \textbf{StructMem}, a framework that achieves structure-enriched organization through hierarchical design. The framework operates at two levels: event-level structure (\S\ref{sec:event-level}) preserves relational bindings within individual utterances, while cross-event structure (\S\ref{sec:cross-event}) connects information across temporal boundaries.
+
+\subsection{Event-Level Binding}
+\label{sec:event-level}
+Event-level binding preserves the connection between factual content and relational context within individual utterances through dual-perspective extraction and temporal anchoring.
+
+\textbf{Dual-Perspective Extraction.} 
+For each utterance $m_i$ in the dialogue stream, we extract entries from two complementary perspectives using language model $\mathcal{L}$ with prompts $P_{fact}$ and $P_{rel}$:
+\begin{equation}
+\Phi_i \cup \Psi_i = \mathcal{L}( P_{fact} \| m_i ) \cup \mathcal{L}( P_{rel} \| m_i ),
+\end{equation}
+where $\Phi_i = \{c_{i,1}, \ldots, c_{i,j}\}$ contains \textit{factual entries} describing event content, and $\Psi_i = \{r_{i,1}, \ldots, r_{i,k}\}$ contains \textit{relational entries} capturing interpersonal dynamics, causal influences, and temporal dependencies. 
+ 
+By representing both in natural language rather than rigid triplets, we preserve the contextual nuances required for episodic grounding while avoiding entity resolution overhead.
+  
+\textbf{Temporal Anchoring.}
+To preserve the binding between relational and factual information, all entries are anchored to their originating timestamp $\tau_i$, forming an event-level unit:
+\begin{equation}
+\mathcal{M} \leftarrow  \bigcup_{i=1}^{N} \left\{ \langle x, \mathbf{e}_x, \tau_i \rangle \mid x \in \Phi_i \cup \Psi_i \right\},
+\end{equation}
+where $\mathbf{e}_x$ denotes the embedding of entry $x$. This temporal coupling enables reconstruction of complete factual-relational events during retrieval.
+
+\input{table/locomo}
+\subsection{Cross-Event Consolidation}
+\label{sec:cross-event} 
+Cross-event consolidation connects information across temporal by periodically synthesizing semantically related events. We trigger synthesis when accumulated events exceed a time threshold.
+
+\textbf{Semantic Event Connections.} 
+We buffer unconsolidated entries since the last consolidation. The buffered entries are temporally ordered:
+\begin{equation}
+\mathcal{C}_{buf} = \text{Sort}_{\tau} \{ x \in \mathcal{M}_{buffer} \},
+\end{equation}
+where $\mathcal{M}_{buffer}$ denotes the buffered entries. We encode the buffered context into an aggregated query by concatenating all buffered entry texts and encoding them with an embedding model. We then rank all historical entries by cosine similarity to this query and retrieve the top-$K$ most semantically similar entries as seeds, denoted as $\mathcal{S}_k$.
+
+For each seed entry $x^* \in \mathcal{S}_k$, we reconstruct its complete event context by retrieving all entries sharing the same timestamp:
+\begin{equation}
+{E}_{\tau}(x^*) = \{ x' \in \mathcal{M} \mid \tau(x') = \tau(x^*) \}.
+\end{equation}
+These reconstructed events, together with the buffered events, form the cross-event structure grounded in semantic relevance.
+\begin{equation}
+\mathcal{C}_{cross} = \mathcal{C}_{buf} \cup \bigcup_{x^* \in \mathcal{S}_k} {E}_{\tau}(x^*).
+\end{equation}
+\textbf{Memory Consolidation through Synthesis.} 
+Unlike conventional summarization that performs lossy compression on sequential text, our consolidation mechanism operates on semantically-reconstructed event clusters. It explicitly synthesizes cross-event relational hypotheses, forming a complementary abstraction layer that enables multi-hop reasoning while faithfully preserving the fidelity of raw episodic memory.
+\begin{equation}
+\mathcal{M} \leftarrow \mathcal{C}_{cons} = \mathcal{L}( P_{cons} \| \mathcal{C}_{cross} ).
+\end{equation}

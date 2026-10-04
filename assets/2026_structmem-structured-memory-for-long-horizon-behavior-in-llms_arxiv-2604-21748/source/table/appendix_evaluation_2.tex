@@ -1,0 +1,18 @@
+\begin{table}[ht]
+\centering
+\caption{Inter-judge agreement and correlation across different judge model pairs. \texttt{GPT}, \texttt{Qwen}, and \texttt{DS} denote \texttt{gpt-4o-mini}, \texttt{qwen2.5-32b-instruct}, and \texttt{DeepSeek-V3.2}, respectively.}
+\label{tab:inter_judge_stats}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+\textbf{Judge Pair} & \textbf{Cohen's $\kappa$} & \textbf{Pearson $r$} & \textbf{$p$-value} \\
+\midrule
+\texttt{Qwen} vs. \texttt{DS}   & 0.8395 & 0.8438 & $< 10^{-300}$ \\
+\texttt{Qwen} vs. \texttt{GPT} & 0.8326 & 0.8362 & $< 10^{-300}$ \\
+\texttt{DS} vs. \texttt{GPT}   & 0.8184 & 0.8234 & $< 10^{-300}$ \\
+\midrule
+\textbf{Overall (Fleiss' $\kappa$)} & \textbf{0.8341} & — & — \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

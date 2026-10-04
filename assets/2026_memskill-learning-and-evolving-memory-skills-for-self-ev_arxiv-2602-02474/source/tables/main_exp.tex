@@ -1,0 +1,74 @@
+\begin{table*}[t]
+    % \footnotesize
+    \centering
+    \caption{\textbf{Main comparison results on LoCoMo, LongMemEval, and ALFWorld.}}
+    \label{tab:exp_main}
+
+    \begin{tabular}{>{\centering\arraybackslash}m{0.9cm} l cc cc c | cc cc c}
+        \toprule
+        \multirow{3}{*}{\textbf{Model}} &
+        \multirow{3}{*}{\textbf{Methods}} &
+        \multicolumn{5}{c}{\textbf{Conversational Benchmarks}} &
+        \multicolumn{5}{c}{\textbf{Embodied Interactive Tasks}} \\
+        \cmidrule(lr){3-7} \cmidrule(lr){8-12}
+        & &
+        \multicolumn{2}{c}{\textbf{LoCoMo}} &
+        \multicolumn{2}{c}{\textbf{$^\blacktriangle$LongMemEval}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} &
+        \multicolumn{2}{c}{\textbf{ALF-Seen$^\dagger$}} &
+        \multicolumn{2}{c}{\textbf{ALF-Unseen$^\dagger$}} &
+        \multicolumn{1}{c}{\textbf{Avg.}} \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-7}
+        \cmidrule(lr){8-9} \cmidrule(lr){10-11} \cmidrule(lr){12-12}
+        & &
+        \textbf{F1} & \textbf{L-J} &
+        \textbf{F1} & \textbf{L-J} &
+        \textbf{L-J} &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} & \textbf{\#Stps$\downarrow$} &
+        \textbf{SR} \\
+        \midrule
+
+
+
+        % ===================== Base model block 1 =====================
+        \multirow{9}{*}{\rotatebox[origin=c]{90}{\shortstack{\textbf{LLaMA3.3}\\\textbf{70B-Instruct}}}} &
+        No-Memory         & - & - & - & - & - & 62.14 & 26.10 & 73.88 & 21.36 & 68.01 \\
+        & CoN       & 30.86 & 41.72 & 30.78 & 56.44 & 49.08 & 75.00 & 19.15 & 80.60 & 17.38 & 77.80 \\
+        & ReadAgent  & 28.63 & 38.25 & 24.48 & 42.62 & 40.44 & 62.86 & 26.14 & 71.64 & 22.88 & 67.25 \\
+        & MemoryBank & 36.80 & 44.43 & 30.56 & 41.96 & 43.20 & 60.71 & 28.23 & 66.42 & 24.64 & 63.57 \\
+        & A-MEM      & 39.39 & 49.71 & 25.83 & 38.04 & 43.88 & 62.86 & 27.53 & 70.15 & 23.79 & 66.51 \\
+        & Mem0       & 25.48 & 34.58 & 30.25 & 46.81 & 40.70 & 74.29 & 19.77 & 81.34 & 17.15 & 77.82 \\
+        & LangMem    & 30.91 & 35.82 & 18.36 & 24.35 & 30.09 & 72.86 & 21.25 & 79.85 & 18.30 & 76.36 \\
+        & MemoryOS   & 41.39 & 48.64 & 17.59 & 39.83 & 44.24 & 57.86 & 27.94 & 65.67 & 24.46 & 61.77 \\
+        & \cellcolor{hl-llama}\textbf{MemSkill} &
+        \cellcolor{hl-llama}\textbf{44.21} & \cellcolor{hl-llama}\textbf{53.82} & \cellcolor{hl-llama}\textbf{31.12} & \cellcolor{hl-llama}\textbf{60.89} &
+        \cellcolor{hl-llama}\textbf{57.36} &
+        \cellcolor{hl-llama}\textbf{77.14} & \cellcolor{hl-llama}\textbf{18.91} &
+        \cellcolor{hl-llama}\textbf{83.58} & \cellcolor{hl-llama}\textbf{16.63} &
+        \cellcolor{hl-llama}\textbf{80.36} \\
+        \midrule
+
+        % ===================== Base model block 2 =====================
+        \multirow{9}{*}{\rotatebox[origin=c]{90}{\shortstack{$^\blacktriangle$\textbf{Qwen3-Next}\\\textbf{80B-A3B-Instruct}}}} &
+        No-Memory         & - & - & - & - & - & 63.57 & 24.61 & 60.45 & 26.57 & 62.01 \\
+        & CoN       & 38.46 & 50.96 & \textbf{29.19} & 44.06 & 47.51 & 77.14 & 17.59 & 70.90 & 20.74 & 74.02 \\
+        & ReadAgent  & 25.89 & 34.26 & 24.13 & 42.25 & 38.26 & 73.57 & 20.21 & 65.67 & 23.28 & 69.62 \\
+        & MemoryBank & 29.56 & 44.15 & 8.45 & 26.37 & 35.26 & 63.57 & 23.68 & 52.24 & 29.01 & 57.91 \\
+        & A-MEM      & 36.43 & 50.30 & 13.84 & 36.59 & 43.45 & 55.71 & 27.42 & 54.48 & 28.60 & 55.10 \\
+        & Mem0       & 23.29 & 33.68 & 27.36 & 46.20 & 39.94 & 71.43 & 19.89 & 64.93 & 23.32 & 68.18 \\
+        & LangMem    & 28.17 & 32.94 & 18.35 & 23.86 & 28.40 & 73.57 & 19.76 & 64.18 & 23.58 & 68.88 \\
+        & MemoryOS   & 39.86 & 47.37 & 15.97 & 39.25 & 43.31 & 62.14 & 25.64 & 50.75 & 30.35 & 56.45 \\
+        & \cellcolor{hl-qwen}\textbf{MemSkill} &
+        \cellcolor{hl-qwen}\textbf{42.08} & \cellcolor{hl-qwen}\textbf{54.14} & \cellcolor{hl-qwen}25.29 & \cellcolor{hl-qwen}\textbf{60.40} &
+        \cellcolor{hl-qwen}\textbf{57.27} &
+        \cellcolor{hl-qwen}\textbf{85.71} & \cellcolor{hl-qwen}\textbf{13.84} &
+        \cellcolor{hl-qwen}\textbf{76.87} & \cellcolor{hl-qwen}\textbf{18.16} &
+        \cellcolor{hl-qwen}\textbf{81.29} \\
+        \bottomrule
+
+        \multicolumn{12}{l}{\small \textbf{Bold} indicates the best score within each base model block; $^\blacktriangle$ indicates transfer evaluation only.} \\
+        \multicolumn{12}{l}{\small $^\dagger$ indicates evaluation with in-context demonstrations. Appendix~\ref{appendix:more_exp} reports more baselines and datasets.} \\
+        \\
+    \end{tabular}
+\end{table*}

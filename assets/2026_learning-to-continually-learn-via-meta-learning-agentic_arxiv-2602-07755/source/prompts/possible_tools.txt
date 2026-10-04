@@ -1,0 +1,147 @@
+CHROMA_CHEETSHEET = """## Initialize Chroma DB
+
+Use db = Chroma(embedding_function=Embedding()) to create the database. DO NOT use persist_dir.
+
+### Add Memory: Adds new text entries to the database and returns their unique IDs. 
+
+db.add_texts(
+    texts: List[str],
+    metadatas: Optional[Union[str, int, float, bool, None]] = None,
+    ids: Optional[List[str]] = None
+) -> List[str]
+
+- metadatas must be **flat list**: each value must be a single primitive type (str, int, float, bool, or None).
+- You cannot pass lists, nested dicts, or other complex objects.
+- If you need to store structured data, serialize it to a JSON string:
+
+### Retrieve Memory
+
+db.similarity_search(
+    query: str,
+    k: int = 4
+) -> List[Document]
+
+return List[Document]: [
+  Document(
+    page_content="the agent found a key",
+    metadata={"type": "item"}
+  )
+]
+
+### Get by ID
+db.get(
+    ids: Optional[List[str]] = None
+) -> Dict[str, List]
+
+### Delete Memory
+db.delete(
+    ids: Optional[List[str]] = None
+) -> None
+    """
+NXGRAPH_CHEETSHEET = """
+NETWORKX GRAPH CHEATSHEET
+
+Context: 
+    import networkx as nx
+    G = nx.Graph()
+
+1. NODE OPERATIONS
+- G.add_node(node, **attrs): Add a single node with optional attributes.
+- G.add_nodes_from([n1, n2], **common_attrs): Add multiple nodes at once (shared attributes apply to all).
+- G.remove_node(node): Remove a node and all edges connected to it.
+- G.remove_nodes_from([n1, n2]): Remove multiple nodes.
+- node in G: Check if a node exists.
+- G.nodes: Get all nodes (NodeView).
+- G.nodes[node]: Access node attributes as a dict.
+- nx.set_node_attributes(G, {node: {"attr": value}}): Set attributes for nodes.
+
+2. EDGE OPERATIONS
+- G.add_edge(u, v, **attrs): Add an edge between two nodes.
+- G.add_edges_from([(u, v), (x, y)], **attrs): Add multiple edges at once (shared attributes apply to all).
+- G.remove_edge(u, v): Remove a single edge.
+- G.remove_edges_from([(u, v), (x, y)]): Remove multiple edges.
+- G.has_edge(u, v): Check if an edge exists.
+- G.edges: Get all edges (EdgeView).
+- G.edges[(u, v)]: Access edge attributes as a dict.
+- nx.set_edge_attributes(G, {(u, v): {"weight": 1.0}}): Set attributes for edges.
+
+3. TRAVERSAL / NEIGHBORHOOD
+- G.neighbors(node): Get neighbors of a node.
+- G.adj[node]: Get dict of neighbors with edge data.
+- nx.shortest_path(G, source, target): Find one shortest path between nodes.
+- nx.shortest_path_length(G, source, target): Get shortest path length.
+- nx.all_simple_paths(G, source, target, cutoff): Generate all simple paths up to a cutoff length.
+- nx.connected_components(G): Get connected components as node sets.
+- G.subgraph([n1, n2, n3]): Extract a subgraph induced by given nodes.
+
+4. ANALYSIS / CENTRALITY
+- G.degree(node): Get degree (number of edges) for a single node.
+- G.degree(): Get degree for all nodes (DegreeView).
+- nx.degree_centrality(G): Compute degree centrality (dict of node -> score).
+- nx.betweenness_centrality(G): Compute betweenness centrality.
+- nx.pagerank(G): Compute PageRank scores for nodes.
+- nx.clustering(G): Compute local clustering coefficient.
+- nx.is_connected(G): Check if graph is connected.
+- nx.number_connected_components(G): Count connected components.
+
+5. UTILITIES
+- G.copy(): Make a copy of the graph.
+- G.clear(): Remove all nodes and edges.
+- nx.to_dict_of_dicts(G): Convert graph to adjacency dict.
+- nx.to_numpy_array(G): Get adjacency matrix as a NumPy array.
+"""
+TOOL_CHEETSHEET = """
+TOOLS AVAILABLE:
+
+1. Hire Agent
+Class: Agent
+
+- Purpose: Asynchronous wrapper around OpenAI Chat API, allows system/user prompts and optional JSON schema validation. Higher insights: this could be used to summarise information or gain new insights from them.
+- Initialization: 
+    from utils.hire_agent import Agent 
+    agent = Agent(model: str, system_prompt: str, output_schema: Optional[Dict] = None)
+- Key Methods:
+    - agent.get_agent_config() -> Dict: Returns agent configuration and chat history.
+    - await agent.ask(user_input: str, with_history: bool = False) -> Any:
+        Sends a user message asynchronously and returns the model's response.
+        If an output_schema is provided, response will be validated against it and returned as a JSON object.
+- Usage Example:
+    response = await agent.ask("Hello, how are you?")
+
+-IMPORTANT: 
+    - output_schema must be a **json schema**. Format example:
+{
+    "location": {
+        "type": "string",
+        "description": "The location to get the weather for"
+    },
+    "unit": {
+        "type": ["string", "null"],
+        "description": "The unit to return the temperature in",
+        "enum": ["F", "C"]
+    }
+}
+
+    - model could be "gpt-4.1", "gpt-4o-mini", based on whether you need reasoning ability(if reasoning ability is needed, gpt-4o-mini could be a better choice).
+
+2. Embedding
+Class: Embedding 
+
+- Purpose: Async embedding manager for computing single or batch embeddings, with optional similarity calculation. Higher insights: this could be used to find connections between texts.
+- Initialization:
+    from utils.hire_agent import Embedding
+    embedder = Embedding(model: str = "text-embedding-3-small", retries: int  = 3, retry_delay: float = 1.0)
+- Key Methods:
+    - await embedder.get_embedding(text: str) -> List[float]:
+        Computes embedding for a single text string asynchronously.
+    - await embedder.get_batch_embeddings(texts: List[str]) -> List[List[float]]:
+        Computes embeddings for multiple texts asynchronously.
+    - await Embedding.compute_similarity(emb1: List[float], emb2: List[float], metric: str = "cosine") -> float:
+        Computes similarity between two embeddings asynchronously.
+    - await Embedding.compute_one_to_group_similarity(emb: List[float], group_emb: List[List[float]], metric: str = "cosine") -> List[float]:
+        Computes similarity between one embedding and a group of embeddings asynchronously.
+
+- Notes:
+    * All embedding calls automatically update a global token tracker.
+    * Similarity functions support cosine similarity and run in parallel for efficiency.
+"""

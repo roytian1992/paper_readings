@@ -1,0 +1,12 @@
+
+\begin{abstract}
+Procedural memory enables autonomous agents to internalize ``how-to'' knowledge, theoretically reducing redundant trial-and-error. 
+However, existing frameworks predominantly suffer from a ``passive accumulation'' paradigm, treating memory as a static
+append-only archive, storing raw, trajectory-level
+interactions.
+To bridge the gap between static storage and dynamic reasoning, we propose \textbf{\ours} (\textit{Remember Me, Refine Me}), a comprehensive framework for experience-driven agent evolution. 
+\textbf{\ours} innovates across the memory lifecycle via three mechanisms: (1) \textbf{contrastive distillation}, which extracts high-fidelity causal decision points by analyzing the divergence between successful and failed attempts; (2) \textbf{context-adaptive reuse}, which employs reranking, rewriting, and failure-aware reflection to tailor historical insights to new contexts; and (3) \textbf{utility-based refinement}, which autonomously prunes obsolete entries to maintain a compact, high-value memory pool. 
+Extensive experiments on BFCL-V3 and AppWorld benchmarks demonstrate that \textbf{\ours} establishes a new state-of-the-art. 
+Crucially, we observe a significant \textbf{memory-scaling effect}: a Qwen3-8B model equipped with \ours outperforms a parameter-heavier Qwen3-14B baseline, suggesting that self-evolving memory offers a computation-efficient pathway for lifelong learning. 
+We release our code and the \texttt{reme.library} dataset to facilitate further research.
+\end{abstract}

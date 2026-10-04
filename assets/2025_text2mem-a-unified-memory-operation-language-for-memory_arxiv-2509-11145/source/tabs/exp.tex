@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{4.8pt}
+\centering
+\footnotesize
+\caption{Structured expectation templates for the twelve Text2Mem operations. 
+Each operation is defined by its pre-state, post-state, and verification expression, 
+enabling automated evaluation through SQL assertions.}
+\begin{tabular}{l|l|l|l|l}
+\hline
+\textbf{Stage} & \textbf{Op} & \textbf{Pre-state} & \textbf{Post-state} & \textbf{Check expression} \\
+\hline
+Encoding & Encode & ID not in DB & New record with content and metadata & $\Delta$count = +1 \\ 
+\hline
+\multirow{9}{*}{Storage} 
+& Update & Record exists & Fields updated; lineage preserved & val\_aft=exp $\wedge$ lid\_aft=lid\_bef \\
+& Label & Tags/facets exist & Tag set modified, deduped & DISTINCT(tags) $\wedge$ tags\_aft $\neq$ tags\_bef \\
+& Promote & weight=w$_0$ & weight increased or trigger added & weight\_aft $>$ weight\_bef $\vee$ EXISTS(trigger) \\
+& Demote & weight=w$_0$ & weight decreased; record active & weight\_aft $<$ weight\_bef \\
+& Merge & Multi-ID src & Children merged; lineage linked & merged\_into $\neq$ NULL $\wedge$ count(child)=1 \\
+& Delete & Record active & Flagged deleted or removed & $\Delta$count = -n \\
+& Split & Composite record & Child records linked to parent & count(child)$>$1 $\wedge$ pid=src \\
+& Lock & Editable record & Lock set (RO/AO) & lock $\in$ \{RO,AO\} \\
+& Expire & TTL unset & Expiry registered; trigger active & expiry $\neq$ NULL $\wedge$ EXISTS(trigger) \\
+\hline
+\multirow{2}{*}{Retrieval} 
+& Retrieve & Query-matching records & Results ranked and filtered & ids=exp $\wedge$ rank=exp \\
+& Summarize & Context records & Summary stored with refs & sim $\geq$ $\tau$ \\
+\hline
+\end{tabular}
+\label{tab:expectations}
+\end{table*}

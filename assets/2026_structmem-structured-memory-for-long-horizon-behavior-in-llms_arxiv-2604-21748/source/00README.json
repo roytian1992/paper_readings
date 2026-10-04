@@ -1,0 +1,37 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "main.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "acl_natbib.bst"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figure/scalability_runtime.pdf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figure/scalability_tokens.pdf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "main.bbl"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "prompts/entry_retrieve_ablation_study.pdf"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "sample-base.bib"
+      }
+   ],
+   "spec_version" : 1,
+   "texlive_version" : "2025",
+   "process" : {
+      "compiler" : "pdflatex"
+   }
+}

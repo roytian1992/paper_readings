@@ -1,0 +1,48 @@
+\begin{table*}[t]
+\centering
+\caption{Detailed cross-event link quality comparison across conversations. \textbf{S}, \textbf{T}, and \textbf{R} denote the number of \textbf{S}purious links, \textbf{T}otal links, and the error \textbf{R}ate (\%), respectively. \texttt{GPT}, \texttt{Qwen}, and \texttt{DS} represent \texttt{gpt-4o-mini}, \texttt{Qwen2.5-32B-Instruct}, and \texttt{DeepSeek-V3.2}. \textit{Constrained} is the default setting for StructMem.}
+\label{tab:consolidation_fidelity}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ll|ccc|ccc|ccc}
+\toprule
+\multirow{2}{*}{\textbf{Conversation}} & \multirow{2}{*}{\textbf{Config}} & \multicolumn{3}{c|}{\textbf{Judge: GPT}} & \multicolumn{3}{c|}{\textbf{Judge: Qwen}} & \multicolumn{3}{c}{\textbf{Judge: DS}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
+& & \textbf{S} & \textbf{T} & \textbf{R (\%)} & \textbf{S} & \textbf{T} & \textbf{R (\%)} & \textbf{S} & \textbf{T} & \textbf{R (\%)} \\
+\midrule
+\multirow{2}{*}{conv-26} & Constrained & 0 & 83 & 0.00 & 3 & 70 & 4.29 & 1 & 12 & 8.33 \\
+& Unconstrained & 4 & 72 & 5.56 & 23 & 101 & 22.77 & 10 & 58 & 17.24 \\
+\midrule
+\multirow{2}{*}{conv-30} & Constrained & 0 & 73 & 0.00 & 0 & 59 & 0.00 & 1 & 23 & 4.35 \\
+& Unconstrained & 4 & 84 & 4.76 & 6 & 79 & 7.59 & 2 & 44 & 4.55 \\
+\midrule
+\multirow{2}{*}{conv-41} & Constrained & 4 & 108 & 3.70 & 1 & 131 & 0.76 & 1 & 31 & 3.23 \\
+& Unconstrained & 13 & 104 & 12.50 & 20 & 115 & 17.39 & 6 & 74 & 8.11 \\
+\midrule
+\multirow{2}{*}{conv-42} & Constrained & 0 & 95 & 0.00 & 5 & 93 & 5.38 & 1 & 47 & 2.13 \\
+& Unconstrained & 8 & 100 & 8.00 & 20 & 106 & 18.87 & 6 & 65 & 9.23 \\
+\midrule
+\multirow{2}{*}{conv-43} & Constrained & 0 & 104 & 0.00 & 5 & 130 & 3.85 & 6 & 40 & 15.00 \\
+& Unconstrained & 4 & 109 & 3.67 & 11 & 114 & 9.65 & 9 & 74 & 12.16 \\
+\midrule
+\multirow{2}{*}{conv-44} & Constrained & 0 & 110 & 0.00 & 9 & 91 & 9.89 & 2 & 39 & 5.13 \\
+& Unconstrained & 6 & 104 & 5.77 & 30 & 135 & 22.22 & 16 & 88 & 18.18 \\
+\midrule
+\multirow{2}{*}{conv-47} & Constrained & 1 & 107 & 0.93 & 4 & 90 & 4.44 & 0 & 33 & 0.00 \\
+& Unconstrained & 11 & 103 & 10.68 & 32 & 108 & 29.63 & 16 & 69 & 23.19 \\
+\midrule
+\multirow{2}{*}{conv-48} & Constrained & 1 & 102 & 0.98 & 2 & 101 & 1.98 & 0 & 36 & 0.00 \\
+& Unconstrained & 5 & 100 & 5.00 & 27 & 107 & 25.23 & 11 & 62 & 17.74 \\
+\midrule
+\multirow{2}{*}{conv-49} & Constrained & 0 & 94 & 0.00 & 2 & 90 & 2.22 & 0 & 52 & 0.00 \\
+& Unconstrained & 7 & 81 & 8.64 & 14 & 86 & 16.28 & 10 & 61 & 16.39 \\
+\midrule
+\multirow{2}{*}{conv-50} & Constrained & 0 & 106 & 0.00 & 2 & 113 & 1.77 & 1 & 45 & 2.22 \\
+& Unconstrained & 10 & 109 & 9.17 & 30 & 114 & 26.32 & 18 & 92 & 19.57 \\
+\midrule
+\midrule
+\multirow{2}{*}{\textbf{Overall}} & \textbf{Constrained} & \textbf{6} & \textbf{982} & \textbf{0.61\%} & \textbf{33} & \textbf{968} & \textbf{3.41\%} & \textbf{13} & \textbf{358} & \textbf{3.63\%} \\
+& \textbf{Unconstrained} & \textbf{72} & \textbf{966} & \textbf{7.45\%} & \textbf{213} & \textbf{1065} & \textbf{20.00\%} & \textbf{104} & \textbf{687} & \textbf{15.14\%} \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
