@@ -1,0 +1,142 @@
+[
+  {
+    "note": "2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md",
+    "action": "补读 chapter/5rela.tex，补齐空白 Related Works"
+  },
+  {
+    "note": "2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发"
+    ]
+  },
+  {
+    "note": "2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2025_graph-world-model_arxiv-2507-10539.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618.md",
+    "removed_empty_template_headings": [
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md",
+    "removed_empty_template_headings": [
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键图"
+    ]
+  },
+  {
+    "note": "2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键图"
+    ]
+  },
+  {
+    "note": "2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "局限性与可追问点",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  },
+  {
+    "note": "2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md",
+    "removed_empty_template_headings": [
+      "对我当前研究/项目的启发",
+      "实验结论",
+      "关键表格",
+      "关键图",
+      "关键公式 / 图表"
+    ]
+  }
+]

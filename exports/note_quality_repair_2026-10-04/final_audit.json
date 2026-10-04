@@ -1,0 +1,3791 @@
+{
+  "started": "2026-10-04",
+  "completed": "2026-10-05",
+  "notes_checked": 43,
+  "notes_rewritten": 23,
+  "rewritten_inline_images": 91,
+  "all_inline_images": 243,
+  "integrity_errors": [],
+  "notes": [
+    {
+      "id": "2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26",
+      "title": "Narrative Theory for Computational Narrative Understanding",
+      "note": "reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10211,
+      "embedded_images": 2,
+      "unique_images": 2,
+      "images": [
+        {
+          "path": "assets/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26/figure_01_p02.png",
+          "caption": "Figure 1：Genette 的叙事三角，连接 story、discourse 与 narrating",
+          "width": 462,
+          "height": 369,
+          "page": 2,
+          "crop_bbox": [
+            335,
+            70,
+            489,
+            193
+          ],
+          "number": "1",
+          "provenance_path": "assets/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26/figure_provenance.json"
+        },
+        {
+          "path": "assets/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26/figure_02_p03.png",
+          "caption": "Figure 2：经典叙事要素之间的关系，以及后经典叙事学加入的受众交互",
+          "width": 588,
+          "height": 324,
+          "page": 3,
+          "crop_bbox": [
+            82,
+            70,
+            278,
+            178
+          ],
+          "number": "2",
+          "provenance_path": "assets/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26/figure_provenance.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么 NLP 需要叙事理论",
+        "2 The elements of narrativity",
+        "2.1 Towards a working definition of narrativity：从事件变化到讲述情境",
+        "2.2 Agents (E, G)：人物不仅是一个命名实体",
+        "2.3 Events (F)：序列关系与层级结构是两类任务",
+        "2.4 Temporality (I)：先区分“讲了多久”与“故事过了多久”",
+        "2.5 Setting (H)：地点实体之外还有空间关系与行动可能性",
+        "2.6 Perspective (A, B, C)：讲述者、体验者和说话者必须区分",
+        "3 Scaling up narrative understanding",
+        "3.1 Narrative economies：叙事类型怎样在社会中生产与流通",
+        "3.2 Narrative responses：什么样的叙事引起什么反应",
+        "3.3 Narrative beliefs：作为世界观的 deep stories",
+        "4 Conclusion：本文实际完成了什么"
+      ],
+      "note_sha256": "1a60d91fe151ffdb50d63512281b111b6b0e5f9650d9461e242c7c931ae70c33",
+      "status": "read"
+    },
+    {
+      "id": "2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596",
+      "title": "Guiding Neural Story Generation with Reader Models",
+      "note": "reading_notes/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 8779,
+      "embedded_images": 3,
+      "unique_images": 3,
+      "images": [
+        {
+          "path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/fig1_reader_goal.png",
+          "caption": "图1：StoRM 通过读者可能推断的概念连接开头与目标",
+          "width": 513,
+          "height": 738,
+          "page": 1,
+          "crop_bbox": [
+            305,
+            215,
+            510,
+            510
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/fig2_pipeline.png",
+          "caption": "图2：知识图抽取、常识扩展、目标匹配、模板填空及状态更新",
+          "width": 1138,
+          "height": 443,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            65,
+            525,
+            242
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/fig3_inference_link.png",
+          "caption": "图3：从当前故事和目标两侧建立常识推断链",
+          "width": 553,
+          "height": 233,
+          "page": 6,
+          "crop_bbox": [
+            71,
+            76,
+            292,
+            169
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么引入读者视角",
+        "2 Related Work and Background：它与已有规划和常识方法的关系",
+        "3 Story Generation with Reader Models：完整生成闭环",
+        "3.1 Knowledge Graph Acquisition：把故事转换为持久状态",
+        "3.2 Graph Expansion：让图提供“下一步可以写什么”",
+        "3.3 Graph Similarity：目标引导的评分与搜索",
+        "3.4 Continuation Candidate Generation：从候选概念到句子",
+        "4 Experiments：数据、对照和评价究竟测什么",
+        "4.1 Story Coherence Evaluation：连贯性、人类偏好与多样性",
+        "4.2 Controllability Evaluation：达到目标是否还像一个故事",
+        "5 Conclusions：能成立的贡献及不能扩大的结论",
+        "6 Broader Impact 与阅读边界"
+      ],
+      "note_sha256": "d5d6196b2a6d4f96369bb3433269cdb884c23c2d11d18a16d1fa795403e1ac7a",
+      "status": "read"
+    },
+    {
+      "id": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774",
+      "title": "Re3: Generating Longer Stories With Recursive Reprompting and Revision",
+      "note": "reading_notes/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 8170,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/fig1_overview.png",
+          "caption": "图1：Re³ 四阶段写作框架",
+          "width": 498,
+          "height": 501,
+          "page": 1,
+          "crop_bbox": [
+            323,
+            211,
+            522,
+            411
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/fig2_plan.png",
+          "caption": "图2：计划由前提逐级扩展为设定、人物和提纲",
+          "width": 553,
+          "height": 423,
+          "page": 3,
+          "crop_bbox": [
+            70,
+            489,
+            291,
+            658
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/fig3_draft.png",
+          "caption": "图3：动态 Draft 提示词的五个组成部分",
+          "width": 553,
+          "height": 470,
+          "page": 3,
+          "crop_bbox": [
+            305,
+            290,
+            526,
+            478
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/fig4_rewrite.png",
+          "caption": "图4：候选段落由连贯性及提纲相关性共同排序",
+          "width": 553,
+          "height": 320,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            374,
+            291,
+            502
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/fig5_edit.png",
+          "caption": "图5：先抽人物属性，再针对冲突生成编辑指令",
+          "width": 553,
+          "height": 466,
+          "page": 5,
+          "crop_bbox": [
+            70,
+            71,
+            291,
+            257
+          ],
+          "number": "",
+          "provenance_path": "assets/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么长故事需要反复重建上下文",
+        "2 Related Work：从短篇规划到长篇过程控制",
+        "3 Recursive Reprompting and Revision：四个模块的具体实现",
+        "3.1 Plan Module：把简短前提变成可反复使用的计划",
+        "3.2 Draft Module：远处用概括，近处保留细节",
+        "3.3 Rewrite Module：用训练出来的判别器选择续写",
+        "3.4 Edit Module：属性字典如何检测和修正矛盾",
+        "4 Evaluation：2,000–2,500 词故事的正式比较",
+        "5 Analysis：究竟是谁带来收益",
+        "5.1 Ablation Study：Plan 和 Rewrite 重要，Edit 未见主指标收益",
+        "5.2 Further Analysis of Edit Module：单独测检测能力仍然有限",
+        "6 Discussion：正文结论与下一步方向"
+      ],
+      "note_sha256": "60ccfb3a029c624718b43d58c9b85ae9e95a0432e130588d66ccabcbc728ea7c",
+      "status": "read"
+    },
+    {
+      "id": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958",
+      "title": "Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals",
+      "note": "reading_notes/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10048,
+      "embedded_images": 6,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig1_hierarchy.png",
+          "caption": "图1：由 log line 到整部剧本的层次依赖",
+          "width": 628,
+          "height": 355,
+          "page": 2,
+          "crop_bbox": [
+            199,
+            90,
+            450,
+            232
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig2_story_shapes.png",
+          "caption": "图2：论文采用和讨论的两种叙事结构",
+          "width": 813,
+          "height": 296,
+          "page": 3,
+          "crop_bbox": [
+            122,
+            93,
+            447,
+            211
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig3_prompting.png",
+          "caption": "图3：few-shot 前缀、当前输入和标签拼成生成提示",
+          "width": 913,
+          "height": 298,
+          "page": 4,
+          "crop_bbox": [
+            141,
+            98,
+            506,
+            217
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig4_performance.png",
+          "caption": "图4：虚拟演员概念图与真实舞台演出",
+          "width": 978,
+          "height": 255,
+          "page": 14,
+          "crop_bbox": [
+            129,
+            92,
+            520,
+            194
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig5_survey.png",
+          "caption": "图5：问卷分布及不同经验群体的协作感",
+          "width": 860,
+          "height": 255,
+          "page": 15,
+          "crop_bbox": [
+            118,
+            98,
+            462,
+            200
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/fig6_editing.png",
+          "caption": "图6：修改方向、不同组件的修改量及编辑距离",
+          "width": 1013,
+          "height": 303,
+          "page": 16,
+          "crop_bbox": [
+            121,
+            93,
+            526,
+            214
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：从一段流畅文本到可以共写的剧本",
+        "2 Storytelling, the Shape of Stories, and Log Lines",
+        "3 The Use of Large Language Models for Creative Text Generation",
+        "3.1 Language Models：基础模型与采样",
+        "3.2 Hierarchical Language Generation：三个层次如何绕过窗口限制",
+        "3.3 The Importance of Prompt Engineering：五类提示词",
+        "3.4 Interactive Writing with Dramatron：作者可以在哪些位置介入",
+        "3.5 Implementation Details：实际可复现的控制",
+        "4 Evaluating Text Generated by Large Language Models：为什么请专业作者",
+        "5 Participant Interviews：七类主题与后续实践",
+        "5.1 Positive Comments：可见的结构和可控制的介入",
+        "5.2 Potential Uses：灵感、世界构建、学习、材料及编剧室",
+        "5.3 Stereotypes：字面化表达与社会偏见",
+        "5.4 Glitches：失败有时也能成为素材",
+        "5.5 Fundamental Limitations：四个层次的不足",
+        "5.6 Structural Problems：log line 和并行对白的代价",
+        "5.7 Suggested Improvements：作者真正想增加的控制",
+        "5.8 Incremental Tool Improvement：哪些建议实际进入系统",
+        "5.9 Staging and Evaluating Productions：舞台验证包含多少人类贡献",
+        "6 Participant Surveys：数字如何支持或限制访谈结论",
+        "6.1 Qualitative and Quantitative Results",
+        "6.2 Quantitative Observations：作者选什么、改什么",
+        "7 Discussion and Future Work：技术设计与创作实践如何相互约束",
+        "7.1 Toward Coherent Story Generation",
+        "7.2 Film vs Theatre：为什么同一结构对不同作者不一样",
+        "7.3 Ethical Questions and Risks",
+        "7.4 Tool or Co-Creative System?",
+        "8 Conclusions：完整解读后的判断"
+      ],
+      "note_sha256": "73a4d2b77880b4bb19d7a43140753c328a571c8dbbb328543416945218af7f76",
+      "status": "read"
+    },
+    {
+      "id": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051",
+      "title": "How FaR Are Large Language Models From Agents with Theory-of-Mind?",
+      "note": "reading_notes/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 7887,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/fig1_task_shift.png",
+          "caption": "图1：显式信念问答与需要主动选择的帮助行动",
+          "width": 1000,
+          "height": 576,
+          "page": 1,
+          "crop_bbox": [
+            106,
+            213,
+            506,
+            443
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/fig2_conversion.png",
+          "caption": "图2：相同故事由 ToMi 信念问题转为 T4D 帮助选择",
+          "width": 598,
+          "height": 398,
+          "page": 4,
+          "crop_bbox": [
+            265,
+            450,
+            504,
+            609
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/fig3_oracle_hints.png",
+          "caption": "图3：人工推理提示对模型表现的影响",
+          "width": 495,
+          "height": 308,
+          "page": 6,
+          "crop_bbox": [
+            306,
+            423,
+            504,
+            546
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/fig4_far_prompt.png",
+          "caption": "图4：FaR 的结构化提示与 GPT-4 示例回答",
+          "width": 990,
+          "height": 586,
+          "page": 7,
+          "crop_bbox": [
+            108,
+            77,
+            504,
+            311
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/fig5_prompt_comparison.png",
+          "caption": "图5：四个模型在不同零样本提示下的 T4D 表现",
+          "width": 993,
+          "height": 430,
+          "page": 8,
+          "crop_bbox": [
+            108,
+            76,
+            505,
+            248
+          ],
+          "number": "",
+          "provenance_path": "assets/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：把 ToM 能力放进有目标的行动中检查",
+        "2 Background and Related Work：本文测量的 ToM 范围",
+        "3 Thinking for Doing (T4D): Task and Data",
+        "3.1 T4D Task：显式推断变成隐变量",
+        "3.2 Converting ToM Benchmarks to T4D：怎样修改 ToMi",
+        "3.3 Human Agreement on T4D：人类共识如何建立",
+        "4 LLMs Struggle on T4D While Humans Find It Easy",
+        "4.1 Thinking Is “Easy”, T4D Is Challenging for LLMs",
+        "4.2 What Makes T4D Challenging?：三类 oracle 提示",
+        "5 Foresee and Reflect (FaR) Prompting",
+        "5.1 Foresee：逐角色考虑近期行动和障碍",
+        "5.2 Reflect：用现在可采取的帮助筛选未来推断",
+        "6 FaR Boosts LLMs and Generalizes：比较、消融及泛化",
+        "6.1 Baselines：比较的提示到底是什么",
+        "6.2 Zero-Shot Performance：主结果",
+        "6.3 Ablation and Analysis：缺任一步和错误未来会怎样",
+        "6.4 Generalization：结构变化和失言场景",
+        "7 Conclusion：研究真正推进了哪一步"
+      ],
+      "note_sha256": "00fdafed38498c2cbfbde64e6f2f3c44f6ee333c5c64379e0220e0285a0b8eb9",
+      "status": "read"
+    },
+    {
+      "id": "2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560",
+      "title": "MemGPT: Towards LLMs as Operating Systems",
+      "note": "reading_notes/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 15663,
+      "embedded_images": 8,
+      "unique_images": 8,
+      "images": [
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_memory_creation.png",
+          "caption": "Memory creation",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_memory_search.png",
+          "caption": "Memory search",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/intro_figure_system_flow.png",
+          "caption": "System flow",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/method_figure_memory_correction.png",
+          "caption": "Memory correction",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_docqa_example.png",
+          "caption": "Document QA example",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_docqa_results.png",
+          "caption": "Document QA results",
+          "width": 1297,
+          "height": 814
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_nested_kv_example.png",
+          "caption": "Nested KV example",
+          "width": 2200,
+          "height": 1238
+        },
+        {
+          "path": "assets/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560/figures/experiments_figure_nested_kv_results.png",
+          "caption": "Nested KV results",
+          "width": 1271,
+          "height": 797
+        }
+      ],
+      "source_paths": [
+        "sources/2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 MemGPT (MemoryGPT)",
+        "2.1 Main context (prompt tokens)",
+        "2.2 Queue Manager",
+        "2.3 Function executor (handling of completion tokens)",
+        "2.4 Control flow and function chaining",
+        "3 Experiments",
+        "3.1 MemGPT for conversational agents",
+        "3.1.1 Deep memory retrieval task (consistency)",
+        "3.1.2 Conversation opener task (engagement)",
+        "3.2 MemGPT for document analysis",
+        "3.2.1 Multi-document question-answering",
+        "3.2.2 Nested key-value retrieval (KV)",
+        "4 Related Work",
+        "5 Conclusion"
+      ],
+      "note_sha256": "2540b75d731ef8314bdf3529947112faec2d597babfc8723e384da7cb61c77c2",
+      "status": "read"
+    },
+    {
+      "id": "2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603",
+      "title": "Agents' Room: Narrative Generation through Multi-step Collaboration",
+      "note": "reading_notes/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 27993,
+      "embedded_images": 4,
+      "unique_images": 2,
+      "images": [
+        {
+          "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_001_fig-agents-room-a-multi-agent-framework-for-coll.png",
+          "caption": "Figure 1: Agents' Room framework",
+          "width": 2400,
+          "height": 1600
+        },
+        {
+          "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_003_fig-human-autorater-evals-overall-system-ranking.png",
+          "caption": "Figure 3: Human and LLM-based system rankings",
+          "width": 2131,
+          "height": 691
+        },
+        {
+          "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_001_fig-agents-room-a-multi-agent-framework-for-coll.png",
+          "caption": "Figure 1",
+          "width": 2400,
+          "height": 1600
+        },
+        {
+          "path": "assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_003_fig-human-autorater-evals-overall-system-ranking.png",
+          "caption": "Figure 3",
+          "width": 2131,
+          "height": 691
+        }
+      ],
+      "source_paths": [
+        "sources/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603.pdf",
+        "sources/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 Agents' Room",
+        "4 Fiction Writing Task",
+        "4.1 Specialized Agents Inspired by Narrative Theory",
+        "4.2 Synthetic Data Generation for Agent Training",
+        "4.3 Tell Me a Story Dataset",
+        "5 Experimental Setup",
+        "6 Evaluation",
+        "6.1 Human evaluation",
+        "6.2 Automatic evaluation",
+        "7 Results",
+        "8 Conclusion"
+      ],
+      "note_sha256": "b46458105da21001b56194c944b8b26dd47a2e5fa75ca5663408e313ff11e3e5",
+      "status": "read"
+    },
+    {
+      "id": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac",
+      "title": "Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games",
+      "note": "reading_notes/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 9021,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/fig1_game_flow.png",
+          "caption": "图1：剧本杀从选剧本到线索交流和最终投票的流程",
+          "width": 488,
+          "height": 461,
+          "page": 1,
+          "crop_bbox": [
+            310,
+            211,
+            505,
+            395
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/fig2_thinkthrice.png",
+          "caption": "图2：ThinkThrice 的 Memory Retrieval、Self-Refinement、Self-Verification",
+          "width": 1140,
+          "height": 573,
+          "page": 5,
+          "crop_bbox": [
+            70,
+            70,
+            526,
+            299
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/fig3_voting.png",
+          "caption": "图3：最终平民胜率与凶手识别准确率",
+          "width": 450,
+          "height": 288,
+          "page": 7,
+          "crop_bbox": [
+            322,
+            70,
+            502,
+            185
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/fig4_reasoning.png",
+          "caption": "图4：GPT-3.5/GPT-4 在不同信息条件下的答案与依据正确率",
+          "width": 453,
+          "height": 290,
+          "page": 8,
+          "crop_bbox": [
+            86,
+            70,
+            267,
+            186
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么剧本杀是有价值的 agent 任务",
+        "2 Related Work：与已有游戏及 agent 评测的差异",
+        "3 Jubensha Dataset：资源规模与实验子集",
+        "4 The ThinkThrice Framework：先记住，再补足，再核验",
+        "5 Evaluating LLM-Based Agents：事实覆盖与证据推理",
+        "6 Experiment：哪些模块改善了什么",
+        "6.1 Utilization of LLMs in Game Stages",
+        "6.2 Factual Questions：最大的变化发生在别人的信息",
+        "6.3 Similarities Between Chat Histories and Scripts",
+        "6.4 Civilian Win Rate and Murderer Identification",
+        "6.5 Inferential Questions：有证据和用好证据的双重瓶颈",
+        "7 Future Work：论文还没做的部分",
+        "8 Conclusion 与局限"
+      ],
+      "note_sha256": "05a338f575e326a739360516680913b8cfed589a7db30847e0677ae69c376bb6",
+      "status": "read"
+    },
+    {
+      "id": "2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74",
+      "title": "Evaluating Very Long-Term Conversational Memory of LLM Agents",
+      "note": "reading_notes/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10184,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig01_example.png",
+          "caption": "原文 Figure 1：人物画像、事件延续与图像分享",
+          "width": 560,
+          "height": 718,
+          "page": 1,
+          "crop_bbox": [
+            304,
+            219,
+            528,
+            506
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig02_tasks.png",
+          "caption": "原文 Figure 2：QA、事件摘要、多模态续聊",
+          "width": 1083,
+          "height": 558,
+          "page": 2,
+          "crop_bbox": [
+            79,
+            198,
+            512,
+            421
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig03_pipeline.png",
+          "caption": "原文 Figure 3：长期对话生成与人工修订流程",
+          "width": 1071,
+          "height": 275,
+          "page": 5,
+          "crop_bbox": [
+            81,
+            70,
+            509,
+            180
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig04_multimodal_results.png",
+          "caption": "原文 Figure 4：记忆增强的多模态续聊结果",
+          "width": 1073,
+          "height": 355,
+          "page": 9,
+          "crop_bbox": [
+            81,
+            180,
+            510,
+            322
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：长上下文能装下，不等于能理解长期关系",
+        "2 Related Work：检索、事件约束和多模态记忆的交点",
+        "3 Generative Pipeline for LoCoMo：数据怎样产生",
+        "3.1 Persona",
+        "3.2 Temporal Event Graph",
+        "3.3 Virtual Agent Architecture",
+        "3.4 Human Verification & Editing",
+        "4 LoCoMo Evaluation Benchmark",
+        "4.1 Question Answering Task",
+        "4.2 Event Summarization Task",
+        "4.3 Multi-Modal Dialogue Generation Task",
+        "5 Experimental Setup：三个任务分别怎么测",
+        "6 Experimental Results",
+        "6.1 Question Answering Task：长窗口、RAG 与拒答的权衡",
+        "6.2 Event Summarization Task：覆盖经历比写得像摘要更难",
+        "6.3 Multi-Modal Dialog Generation Task",
+        "7 Conclusion",
+        "8 Limitations 与 9 Broader Impacts"
+      ],
+      "note_sha256": "532935e583f4931fd49c38e8dd23ad4bce12828d4d06d9a0200a002a75138ed7",
+      "status": "read"
+    },
+    {
+      "id": "2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575",
+      "title": "Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement",
+      "note": "reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 16386,
+      "embedded_images": 7,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_001_illustration-and-comparison-of-three-strategies.png",
+          "caption": "Figure 1",
+          "width": 1187,
+          "height": 990
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_002_general-diagram-of-proposed-the-story-generation.png",
+          "caption": "Figure 2",
+          "width": 1250,
+          "height": 554
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_030_five-stages-novel-writing-theory-from-joseph-cam.png",
+          "caption": "Figure 3",
+          "width": 1626,
+          "height": 576
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_002_general-diagram-of-proposed-the-story-generation.png",
+          "caption": "Figure 2",
+          "width": 1250,
+          "height": 554
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_003_the-details-of-querying-for-the-relevant-content.png",
+          "caption": "Figure 4",
+          "width": 1673,
+          "height": 366
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_004_the-criterion-of-filtering-on-semantic-relevance.png",
+          "caption": "Figure 5",
+          "width": 2400,
+          "height": 1080
+        },
+        {
+          "path": "assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575/figures/source_figure_005_scalability-results-of-applying-on-different-llm.png",
+          "caption": "Figure 6",
+          "width": 773,
+          "height": 308
+        }
+      ],
+      "source_paths": [
+        "sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf",
+        "sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "2.1 Long-form Story Generation",
+        "2.2 KG-enhanced LLM Inference",
+        "3 Problem definition and motivations",
+        "3.1 Problem Definition",
+        "3.2 Motivaiton",
+        "4 Proposed Method",
+        "4.1 Dynamic Hierarchical Outline Mechanism",
+        "4.2 Memory-Enhancement Module",
+        "4.3 Temporal Conflict Analyzer",
+        "5 Experiment",
+        "5.1 Comparison experiments",
+        "5.2 Ablation studies",
+        "5.3 The Scalability of DOME",
+        "5.4 Computation and storage cost of DOME",
+        "6 Conclusion"
+      ],
+      "note_sha256": "8f866852a76513708acc412f9ebaf7075283fe6ea9048fec0c684fcd3f4017b7",
+      "status": "read"
+    },
+    {
+      "id": "2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250",
+      "title": "MemoryBank: Enhancing Large Language Models with Long-Term Memory",
+      "note": "reading_notes/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 7811,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig01_framework.png",
+          "caption": "原文 Figure 1：MemoryBank 与 SiliconFriend 的组成",
+          "width": 985,
+          "height": 390,
+          "page": 3,
+          "crop_bbox": [
+            108,
+            70,
+            502,
+            226
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig02_empathy.png",
+          "caption": "原文 Figure 2：SiliconFriend 与 ChatGLM 的情绪回应比较",
+          "width": 990,
+          "height": 521,
+          "page": 6,
+          "crop_bbox": [
+            108,
+            69,
+            504,
+            277
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig03_recall.png",
+          "caption": "原文 Figure 3：书名、排序算法及未发生事件的回忆",
+          "width": 988,
+          "height": 296,
+          "page": 7,
+          "crop_bbox": [
+            108,
+            83,
+            503,
+            201
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/source_map_figures.json"
+        },
+        {
+          "path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig04_personality.png",
+          "caption": "原文 Figure 4：不同用户画像下的活动建议",
+          "width": 986,
+          "height": 371,
+          "page": 7,
+          "crop_bbox": [
+            109,
+            231,
+            503,
+            379
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：持续关系需要哪些记忆",
+        "2 MemoryBank: A Novel Memory Mechanism Tailored for LLMs",
+        "2.1 Memory Storage: The Warehouse of MemoryBank",
+        "2.2 Memory Retrieval：相关经历如何进入当前对话",
+        "2.3 Memory Updating Mechanism：遗忘曲线的准确含义",
+        "3 SiliconFriend：微调与外部记忆怎样组合",
+        "4 Experiments：哪些结果来自真实对话，哪些来自模拟数据",
+        "4.1 Qualitative Analysis",
+        "4.2 Quantitative Analysis：构造、指标、结果",
+        "5 Related Works：本文处在什么技术位置",
+        "6 Conclusion：作者结论与阅读判断"
+      ],
+      "note_sha256": "46c4c4d356cd9e76f9d437856973c6555191d20a1b5b1c89720bd8cf5d96c62b",
+      "status": "read"
+    },
+    {
+      "id": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751",
+      "title": "WhodunitBench: Evaluating Large Multimodal Agents via Murder Mystery Games",
+      "note": "reading_notes/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 9343,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/fig1_overview.png",
+          "caption": "图1：游戏四阶段与感知—互动—认知—胜负评价链",
+          "width": 983,
+          "height": 655,
+          "page": 1,
+          "crop_bbox": [
+            108,
+            292,
+            501,
+            554
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/fig2_statistics.png",
+          "caption": "图2：感知题、角色数和推理步数的分布",
+          "width": 863,
+          "height": 260,
+          "page": 5,
+          "crop_bbox": [
+            135,
+            74,
+            480,
+            178
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/fig3_annotation.png",
+          "caption": "图3：推理链、选择题与互动关键陈述的标注过程",
+          "width": 888,
+          "height": 510,
+          "page": 5,
+          "crop_bbox": [
+            126,
+            230,
+            481,
+            434
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/reading_note_figure_sources.json"
+        },
+        {
+          "path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/fig4_qualitative.png",
+          "caption": "图4：GPT-4V 生成的推理链及多模型的角色互动错误",
+          "width": 985,
+          "height": 323,
+          "page": 9,
+          "crop_bbox": [
+            108,
+            74,
+            502,
+            203
+          ],
+          "number": "",
+          "provenance_path": "assets/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751/reading_note_figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么要在同一环境测组合能力",
+        "2 Related Work：与文字剧本杀及网页 agent 基准的关系",
+        "3 WhodunitBench: Construction",
+        "3.1 Constructing Arena：50 个剧本如何筛选",
+        "3.2 Constructing Chain of Evaluation (CoE) Dataset",
+        "3.2.1 Perception：三类信息载体",
+        "3.2.2 Role-play Interaction：标注关键陈述和关键角色",
+        "3.2.3 Cognition：从真相手册建立多步图文推理链",
+        "3.2.4 Data Quality Control：专家补齐缺失环节",
+        "4 WhodunitBench: Arena-style Evaluation",
+        "4.1 Settings：阵营不对称，矩阵不能当作普通双人胜率",
+        "4.2 Results：完整竞技场结果",
+        "5 WhodunitBench: Chain of Evaluation",
+        "5.1 Assessment Details：八个指标各自代表什么",
+        "5.2 Evaluation Results：完整主表与 CoT 的非一致收益",
+        "5.3 Further Analysis：错误链与竞技结果的关系",
+        "6 Limitations and Potential Societal Impact",
+        "7 Conclusion：基准真正提供了什么"
+      ],
+      "note_sha256": "c4143bc461764c057009989d570d8926ebbfad805bc68711055da0aed88491f8",
+      "status": "read"
+    },
+    {
+      "id": "2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954",
+      "title": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+      "note": "reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 15735,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_001_darwin-g-odel-machine-the-dgm-iteratively-builds.png",
+          "caption": "Figure 1",
+          "width": 1658,
+          "height": 460
+        },
+        {
+          "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_002_1_self-improvement-and-open-ended-exploration-enab.png",
+          "caption": "Figure 2",
+          "width": 922,
+          "height": 692
+        },
+        {
+          "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_003_1_the-dgm-automatically-self-improves-to-become-a.png",
+          "caption": "Figure 3",
+          "width": 892,
+          "height": 706
+        },
+        {
+          "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_004_transfer-between-models-benchmarks-and-tasks-the.png",
+          "caption": "Figure 4",
+          "width": 2001,
+          "height": 551
+        },
+        {
+          "path": "assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_008_the-dgm-solving-hallucination-of-tool-use-in-fms.png",
+          "caption": "Figure 5",
+          "width": 1802,
+          "height": 658
+        }
+      ],
+      "source_paths": [
+        "sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 Darwin G\\\"odel Machine",
+        "4 Experiments",
+        "4.1 Experiment Setup",
+        "4.2 Benchmarks",
+        "4.3 Baselines",
+        "4.4 Results",
+        "5 Safety Discussion",
+        "6 Conclusion and Limitations"
+      ],
+      "note_sha256": "87c895dd8dc10747735ed06588dedea527449c51abbdc17e3d9448805662aad1",
+      "status": "read"
+    },
+    {
+      "id": "2025_graph-world-model_arxiv-2507-10539",
+      "title": "Graph World Model",
+      "note": "reading_notes/2025_graph-world-model_arxiv-2507-10539.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 15378,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_002_multi-modal-world-state-transition-can-be-modele.png",
+          "caption": "Figure 1: Multi-modal world state transition",
+          "width": 2400,
+          "height": 572
+        },
+        {
+          "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_003_instantiations-of-gwm-a-multi-modal-generation-a.png",
+          "caption": "Figure 2: Instantiations of GWM",
+          "width": 1786,
+          "height": 832
+        },
+        {
+          "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_004_framework-of-gwm-for-both-token-based-and-embedd.png",
+          "caption": "Figure 3: Framework of GWM",
+          "width": 2400,
+          "height": 844
+        },
+        {
+          "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_005_multi-hop-graphs-enhance-gwm-s-performance-acros.png",
+          "caption": "Figure 4: Performance across hops",
+          "width": 1245,
+          "height": 1163
+        },
+        {
+          "path": "assets/2025_graph-world-model_arxiv-2507-10539/figures/source_figure_001_gwm-boosts-zero-shot-few-shot-performance-on-mul.png",
+          "caption": "Figure 5: Zero-shot and few-shot transfer",
+          "width": 1440,
+          "height": 864
+        }
+      ],
+      "source_paths": [
+        "sources/2025_graph-world-model_arxiv-2507-10539_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Graph World Model",
+        "2.1 World Model Preliminaries",
+        "2.2 Multi-modal World Represented by Graphs",
+        "2.3 Instantiations of GWM",
+        "3 Token-based GFM",
+        "3.1 Multi-modality as token",
+        "3.2 Token-level message passing",
+        "3.3 Instruction tuning",
+        "4 Embedding-based GFM",
+        "4.1 Multi-modality as embedding",
+        "4.2 Embedding-level message passing",
+        "4.3 Projector tuning",
+        "5 Experiments",
+        "5.1 A single GWM matches the performance of domain-specific methods across multiple tasks",
+        "5.2 GWM benefits from multi-hop graphs",
+        "5.3 GWM boosts zero-shot/few-shot performance",
+        "6 Additional Related Work",
+        "7 Conclusion"
+      ],
+      "note_sha256": "720f6b84ec7313639001bf91fe7afd9a9bbb5b5c4656414535c8095f931f993a",
+      "status": "read"
+    },
+    {
+      "id": "2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac",
+      "title": "MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents",
+      "note": "reading_notes/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10246,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/figures/fig01_data_pipeline.png",
+          "caption": "原文 Figure 1：基于用户图生成带时间信息的对话与 QA",
+          "width": 1138,
+          "height": 560,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            70,
+            525,
+            294
+          ],
+          "number": "",
+          "provenance_path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/source_map_figures.json"
+        },
+        {
+          "path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/figures/fig02_user_graph.png",
+          "caption": "原文 Figure 2：用户与相关实体构成的关系图",
+          "width": 530,
+          "height": 408,
+          "page": 4,
+          "crop_bbox": [
+            72,
+            352,
+            284,
+            515
+          ],
+          "number": "",
+          "provenance_path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/source_map_figures.json"
+        },
+        {
+          "path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/figures/fig03_question_types.png",
+          "caption": "原文 Figure 3：事实题和高层偏好题的具体形式",
+          "width": 1126,
+          "height": 648,
+          "page": 5,
+          "crop_bbox": [
+            73,
+            72,
+            523,
+            331
+          ],
+          "number": "",
+          "provenance_path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/source_map_figures.json"
+        },
+        {
+          "path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/figures/fig04_distribution.png",
+          "caption": "原文 Figure 4：题型与证据位置分布",
+          "width": 1123,
+          "height": 318,
+          "page": 5,
+          "crop_bbox": [
+            73,
+            354,
+            522,
+            481
+          ],
+          "number": "",
+          "provenance_path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/source_map_figures.json"
+        },
+        {
+          "path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/figures/fig05_capacity.png",
+          "caption": "原文 Figure 5：历史增长后的准确率变化",
+          "width": 545,
+          "height": 403,
+          "page": 7,
+          "crop_bbox": [
+            306,
+            423,
+            524,
+            584
+          ],
+          "number": "",
+          "provenance_path": "assets/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：事实回忆之外还应测什么",
+        "2 Related Works：本文补充的是评测维度",
+        "3 Dataset Construction：从结构化用户图到有证据的问题",
+        "3.1 Pipeline of Data Generation",
+        "3.2 Multi-scenario Memory",
+        "3.3 Multi-level Memory",
+        "3.4 Multi-metric Evaluation",
+        "3.5 Dataset Statistics",
+        "4 Benchmark",
+        "4.1 Experimental Settings",
+        "4.2 Evaluations on Factual Memory",
+        "4.3 Evaluations on Reflective Memory",
+        "4.4 Evaluations on Memory Capacity",
+        "4.5 Comparison of Different Inference Models",
+        "5 Conclusion 与 Limitations"
+      ],
+      "note_sha256": "238df5ef0a8b5b481a04969efd8a4f885a29fac9964d6937fe02199ef6f25870",
+      "status": "read"
+    },
+    {
+      "id": "2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564",
+      "title": "Memory in the Age of AI Agents",
+      "note": "reading_notes/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 85215,
+      "embedded_images": 10,
+      "unique_images": 10,
+      "images": [
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_001_overview.png",
+          "caption": "Figure 1",
+          "width": 2200,
+          "height": 1396
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_002_concept-comparison.png",
+          "caption": "Figure 2",
+          "width": 6977,
+          "height": 3701
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_003_token-level-taxonomy.png",
+          "caption": "Figure 3",
+          "width": 3921,
+          "height": 2203
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_004_latent-memory.png",
+          "caption": "Figure 4",
+          "width": 3193,
+          "height": 2008
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_005_memory-paradigms.png",
+          "caption": "Figure 5",
+          "width": 2591,
+          "height": 1412
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_006_functional-taxonomy.png",
+          "caption": "Figure 6",
+          "width": 6317,
+          "height": 4932
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_007_experiential-memory.png",
+          "caption": "Figure 7",
+          "width": 4385,
+          "height": 1192
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_008_memory-dynamics.png",
+          "caption": "Figure 8",
+          "width": 3319,
+          "height": 3353
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_009_memory-evolution.png",
+          "caption": "Figure 9",
+          "width": 5723,
+          "height": 5723
+        },
+        {
+          "path": "assets/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564/figures/source_figure_011_rl-memory.png",
+          "caption": "Figure 11",
+          "width": 4526,
+          "height": 1421
+        }
+      ],
+      "source_paths": [
+        "sources/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.pdf",
+        "sources/arXiv-2512.13564v2.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Preliminaries: Formalizing Agents and Memory",
+        "2.1 LLM-based Agent Systems",
+        "2.2 Agent Memory Systems",
+        "2.3 Agent Memory 与相关概念的边界",
+        "2.3.1 Agent Memory vs. LLM Memory",
+        "2.3.2 Agent Memory vs. RAG",
+        "2.3.3 Agent Memory vs. Context Engineering",
+        "3 Form: What Carries Memory?",
+        "3.1 Token-level Memory",
+        "3.1.1 Flat Memory (1D)",
+        "3.1.2 Planar Memory (2D)",
+        "3.1.3 Hierarchical Memory (3D)",
+        "3.2 Parametric Memory",
+        "3.2.1 Internal Parametric Memory",
+        "3.2.2 External Parametric Memory",
+        "3.3 Latent Memory",
+        "3.3.1 Generate",
+        "3.3.2 Reuse",
+        "3.3.3 Transform",
+        "3.4 Adaptation",
+        "4 Functions: Why Agents Need Memory?",
+        "4.1 Factual Memory",
+        "4.1.1 User Factual Memory",
+        "4.1.2 Environment Factual Memory",
+        "4.2 Experiential Memory",
+        "4.2.1 Case-based Memory",
+        "4.2.2 Strategy-based Memory",
+        "4.2.3 Skill-based Memory",
+        "4.2.4 Hybrid Memory",
+        "4.3 Working Memory",
+        "4.3.1 Single-turn Working Memory",
+        "4.3.2 Multi-turn Working Memory",
+        "5 Dynamics: How Memory Operates and Evolves?",
+        "5.1 Memory Formation",
+        "5.1.1 Semantic Summarization",
+        "5.1.2 Knowledge Distillation",
+        "5.1.3 Structured Construction",
+        "5.1.4 Latent Representation",
+        "5.1.5 Parametric Internalization",
+        "5.2 Memory Evolution",
+        "5.2.1 Consolidation",
+        "5.2.2 Updating",
+        "5.2.3 Forgetting",
+        "5.3 Memory Retrieval",
+        "5.3.1 Retrieval Timing and Intent",
+        "5.3.2 Query Construction",
+        "5.3.3 Retrieval Strategies",
+        "5.3.4 Post-Retrieval Processing",
+        "6 Resources and Frameworks",
+        "6.1 Benchmarks and Datasets",
+        "6.1.1 Memory / Lifelong / Self-Evolving Agent Benchmarks",
+        "6.1.2 Other Related Benchmarks",
+        "6.2 Open-Source Frameworks",
+        "7 Positions and Frontiers",
+        "7.1 Memory Retrieval vs. Memory Generation",
+        "7.2 Automated Memory Management",
+        "7.3 Reinforcement Learning Meets Agent Memory",
+        "7.4 Multimodal Memory",
+        "7.5 Shared Memory in Multi-Agent Systems",
+        "7.6 Memory for World Model",
+        "7.7 Trustworthy Memory",
+        "7.8 Human-Cognitive Connections",
+        "8 Conclusion"
+      ],
+      "note_sha256": "7cffd1a522f11c84dcde2ded77ad528fb938cd67b2677a8c4fcf5340108df28a",
+      "status": "read"
+    },
+    {
+      "id": "2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025",
+      "title": "Multi-Agent Based Character Simulation for Story Writing",
+      "note": "reading_notes/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 24058,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_1_overview.png",
+          "caption": "Figure 1",
+          "width": 933,
+          "height": 510
+        },
+        {
+          "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/algorithm_1_scene_role_playing.png",
+          "caption": "Algorithm 1",
+          "width": 933,
+          "height": 525
+        },
+        {
+          "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_2_prompt_clusters.png",
+          "caption": "Figure 2",
+          "width": 464,
+          "height": 361
+        },
+        {
+          "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_3_experiment_overview.png",
+          "caption": "Figure 3",
+          "width": 933,
+          "height": 212
+        },
+        {
+          "path": "assets/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025/figures/figure_4_llm_eval_strength.png",
+          "caption": "Figure 4",
+          "width": 932,
+          "height": 467
+        }
+      ],
+      "source_paths": [
+        "sources/2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025.pdf"
+      ],
+      "numbered_sections": [],
+      "note_sha256": "d72abb7c0a753fb634ac16d47af3b5f5951f6096bd48cda8b561e5ee7130e33e",
+      "status": "read"
+    },
+    {
+      "id": "2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696",
+      "title": "Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution",
+      "note": "reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 16509,
+      "embedded_images": 6,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_001_example-of-how-agents-complete-one-stock-trading.png",
+          "caption": "Figure 1",
+          "width": 1519,
+          "height": 660
+        },
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_002_the-framework-comprises-three-alternating-phases.png",
+          "caption": "Figure 2",
+          "width": 1221,
+          "height": 817
+        },
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_003_performance-improvements-for-multiple-llms-enhan.png",
+          "caption": "Figure 3",
+          "width": 1943,
+          "height": 666
+        },
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_004_ablation-on-retrieval-keys-the-experiments-are-e.png",
+          "caption": "Figure 4",
+          "width": 2400,
+          "height": 989
+        },
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_005_effect-of-retrieved-experience-number-on-agent-p.png",
+          "caption": "Figure 5",
+          "width": 2400,
+          "height": 1674
+        },
+        {
+          "path": "assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696/figures/source_figure_006_statistics-of-failed-tasks-with-and-without-a-le.png",
+          "caption": "Figure 6",
+          "width": 1454,
+          "height": 782
+        }
+      ],
+      "source_paths": [
+        "sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Works",
+        "3 Methodology",
+        "3.1 Overview of ReMe",
+        "3.2 Experience Acquisition",
+        "3.3 Experience Reuse",
+        "3.4 Experience Refinement",
+        "4 Experiments",
+        "4.1 Experimental Settings",
+        "4.2 Main Results",
+        "4.3 Ablation Studies",
+        "4.4 More Analysis",
+        "5 Conclusion"
+      ],
+      "note_sha256": "0b4c7ccfb62cc463fbc03098890ee7835c69847f07e046024412a8036b65d410",
+      "status": "read"
+    },
+    {
+      "id": "2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618",
+      "title": "StoryBox: Collaborative Multi-Agent Simulation for Hybrid Bottom-Up Long-Form Story Generation Using Large Language Models",
+      "note": "reading_notes/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 19383,
+      "embedded_images": 6,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_001_the-timeline-of-the-multi-agent-sandbox-simulati.png",
+          "caption": "Figure 1",
+          "width": 989,
+          "height": 609
+        },
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_002_overview-of-the-system-framework-for-long-form-s.png",
+          "caption": "Figure 2",
+          "width": 2400,
+          "height": 1446
+        },
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_003_overview-of-the-storyteller-agent-workflow-for-g.png",
+          "caption": "Figure 3",
+          "width": 2400,
+          "height": 1101
+        },
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_004_comparative-performance-of-different-methods-acr.png",
+          "caption": "Figure 4",
+          "width": 1728,
+          "height": 720
+        },
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_005_effect-of-simulation-duration-on-story-generatio.png",
+          "caption": "Figure 5",
+          "width": 1152,
+          "height": 720
+        },
+        {
+          "path": "assets/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618/figures/source_figure_006_performance-comparison-of-storybox-without-diffe.png",
+          "caption": "Figure 6",
+          "width": 1152,
+          "height": 720
+        }
+      ],
+      "source_paths": [
+        "sources/2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "2.1 LLM-Based Multi-Agent Simulation",
+        "2.2 Story Generation",
+        "3 Methodology",
+        "3.1 Multi-Agent Simulation",
+        "3.1.1 Core Attributes",
+        "3.1.2 Abnormal Behavior Attribute",
+        "3.1.3 Character Behavior Types",
+        "3.1.4 Event Recording",
+        "3.1.5 Environment Modeling",
+        "3.2 Hybrid Bottom-Up Long-Form Story Generation",
+        "3.2.1 Event Summarization",
+        "3.2.2 Story Information Generation",
+        "3.2.3 Story Generation",
+        "4 Experiments",
+        "4.1 Experimental Settings",
+        "4.1.1 Dataset",
+        "4.1.2 Evaluation Metrics",
+        "4.1.3 Baselines",
+        "4.1.4 Implementation Details",
+        "4.2 Automatic Evaluation",
+        "4.3 Human Evaluation",
+        "4.4 Simulation Duration Study",
+        "4.5 Ablation Study",
+        "5 Conclusion"
+      ],
+      "note_sha256": "0f1947f4c5818654ad3409711ff5b9c6c7a73de6e09a28d86523b34e577b8fd6",
+      "status": "read"
+    },
+    {
+      "id": "2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145",
+      "title": "Text2Mem: A Unified Memory Operation Language for Memory Operating System",
+      "note": "reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 23979,
+      "embedded_images": 3,
+      "unique_images": 3,
+      "images": [
+        {
+          "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_001_ambiguity-and-inconsistency-in-current-systems-v.png",
+          "caption": "Figure 1",
+          "width": 2400,
+          "height": 859
+        },
+        {
+          "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_002_illustration-of-the-text2mem-execution-pathway-n.png",
+          "caption": "Figure 2",
+          "width": 2400,
+          "height": 1258
+        },
+        {
+          "path": "assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145/figures/source_figure_003_overview-of-the-text2mem-benchmark-pipeline-the.png",
+          "caption": "Figure 3",
+          "width": 2400,
+          "height": 1334
+        }
+      ],
+      "source_paths": [
+        "sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Background and Motivation",
+        "2.1 Agent memory and operation frameworks",
+        "2.2 Lessons from text-to-SQL",
+        "3 Text2Mem",
+        "3.1 Operation Set Design",
+        "3.1.1 Design Principles",
+        "3.1.2 Memory Operation Set",
+        "3.1.3 Implications and Comparison",
+        "3.2 Operation Schema",
+        "3.2.1 Design Principles",
+        "3.2.2 Schema Architecture",
+        "3.2.3 Illustrative Workflows",
+        "3.2.4 Discussion and Implications",
+        "3.3 Validator--Parser--Adapter Pipeline",
+        "3.3.1 Pipeline Overview",
+        "3.3.2 Validator",
+        "3.3.3 Parser",
+        "3.3.4 Adapter",
+        "3.3.5 Summary",
+        "4 Text2Mem Bench",
+        "4.1 Evaluation Methodology",
+        "4.2 Dataset Construction",
+        "4.2.1 Scenario Planning.",
+        "4.2.2 Dataset Generation Process.",
+        "5 Conclusion"
+      ],
+      "note_sha256": "0058249fecc6fd3d9f8b0ffe103fa365887d0b652fc349d46f687f1cc337541a",
+      "status": "read"
+    },
+    {
+      "id": "2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p",
+      "title": "P2P: Automated Paper-to-Poster Generation and Fine-Grained Benchmark",
+      "note": "reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11598,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_01_p03.png",
+          "caption": "Figure 1：P2P 的 Figure、Section、Orchestrate 三个 agent 及各自 checker",
+          "width": 1158,
+          "height": 528,
+          "page": 3,
+          "crop_bbox": [
+            112,
+            75,
+            498,
+            251
+          ],
+          "number": "1",
+          "provenance_path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_02_p04.png",
+          "caption": "Figure 2：从多页论文到海报的元素对应关系",
+          "width": 849,
+          "height": 618,
+          "page": 4,
+          "crop_bbox": [
+            162,
+            75,
+            445,
+            281
+          ],
+          "number": "2",
+          "provenance_path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_03_p05.png",
+          "caption": "Figure 3：P2PEVAL 的细粒度与通用评估两条路径",
+          "width": 1179,
+          "height": 438,
+          "page": 5,
+          "crop_bbox": [
+            110,
+            75,
+            503,
+            221
+          ],
+          "number": "3",
+          "provenance_path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_04_p06.png",
+          "caption": "Figure 4：P2PEVAL 的研究类型与学科分布",
+          "width": 1101,
+          "height": 399,
+          "page": 6,
+          "crop_bbox": [
+            125,
+            75,
+            492,
+            208
+          ],
+          "number": "4",
+          "provenance_path": "assets/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p/figure_provenance.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：任务为什么需要单独研究",
+        "2 Methodology",
+        "2.1 P2P：三个 agent 如何协作",
+        "2.2 P2PINSTRUCT：把流程中的中间产物变成监督数据",
+        "3 P2PEVAL：同时评价内容保真与整体质量",
+        "3.1 Benchmark Constructing：checklist 从哪里来",
+        "3.2.1 Fine-Grained Poster Evaluation：按人工重要性汇总内容保留",
+        "3.2.2 Universal Poster Evaluation：由局部评分预测人类整体判断",
+        "4 Experiments and Analysis",
+        "4.1 Experimental Setup",
+        "4.2 Evaluation Metrics",
+        "4.3 Results and Analysis",
+        "5 Limitations and Future Work",
+        "6 Conclusion"
+      ],
+      "note_sha256": "ec837bdb243e63b6dcc2138e673776eaa2304d91d798b7205b198947113f70e5",
+      "status": "read"
+    },
+    {
+      "id": "2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468",
+      "title": "Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents",
+      "note": "reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10793,
+      "embedded_images": 3,
+      "unique_images": 3,
+      "images": [
+        {
+          "path": "assets/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468/figures/source_figure_001_comparison-of-existing-methods-vs-with-semantic.png",
+          "caption": "原文 Figure 1：对话时间、事件时间与持续经历的区别",
+          "width": 1158,
+          "height": 1246
+        },
+        {
+          "path": "assets/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468/figures/source_figure_002_the-overall-framework-of-memory-consolidation-co.png",
+          "caption": "原文 Figure 2：TSM 的构建、利用及维护流程",
+          "width": 2400,
+          "height": 1521
+        },
+        {
+          "path": "assets/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468/figures/source_figure_003_case-study-of.png",
+          "caption": "原文 Figure 3：语义时间检索案例",
+          "width": 2400,
+          "height": 2041
+        }
+      ],
+      "source_paths": [
+        "sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么聊天记录的时间不够",
+        "2 Related Work：与已有记忆系统的差别",
+        "3 Methodology：从原始对话到时间一致的回答",
+        "3.1 Preliminary：三种基本操作",
+        "3.2 Overview：两层表示、两种时间尺度",
+        "3.3 Duration-aware Memory Construction",
+        "3.3.1 Episodic Memory Construction：图谱保存什么",
+        "3.3.2 Durative Memory Construction：从点状事实形成持续状态",
+        "3.4 Semantic-time Guided Memory Utilization：时间约束怎样影响检索",
+        "3.5 Hierarchical Memory Update：哪些操作在线执行",
+        "4 Experiments：实验是否支持时间建模的价值",
+        "4.1 Experimental Setup",
+        "4.2 Main Results：总体收益与分类结果",
+        "4.3 Ablation Study：时间检索与持续摘要各贡献多少",
+        "5 Conclusions 与 Limitations：可以带走什么"
+      ],
+      "note_sha256": "e75c785fd55612a825a72ac960471732a48b593a0eb18802ef46843923f095b6",
+      "status": "read"
+    },
+    {
+      "id": "2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773",
+      "title": "CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors",
+      "note": "reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11648,
+      "embedded_images": 5,
+      "unique_images": 5,
+      "images": [
+        {
+          "path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig01_cipd.png",
+          "caption": "原文 Figure 1：个人接受答案与社区最高票答案不同",
+          "width": 551,
+          "height": 350,
+          "page": 1,
+          "crop_bbox": [
+            305,
+            222,
+            525,
+            362
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig02_distribution.png",
+          "caption": "原文 Figure 2：CIPD 的比例与排名分布",
+          "width": 526,
+          "height": 736,
+          "page": 3,
+          "crop_bbox": [
+            75,
+            71,
+            285,
+            365
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig03_factor_distillation.png",
+          "caption": "原文 Figure 3：数据筛选、理由抽取与因素归纳",
+          "width": 1095,
+          "height": 373,
+          "page": 4,
+          "crop_bbox": [
+            78,
+            70,
+            516,
+            219
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig04_evaluation.png",
+          "caption": "原文 Figure 4：画像构造与因素级评分流程",
+          "width": 548,
+          "height": 165,
+          "page": 5,
+          "crop_bbox": [
+            71,
+            70,
+            290,
+            136
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig05_correlations.png",
+          "caption": "原文 Figure 5：六因素的 Spearman 相关矩阵",
+          "width": 505,
+          "height": 446,
+          "page": 8,
+          "crop_bbox": [
+            314,
+            415,
+            516,
+            593
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么一般回答质量不足以评价个性化",
+        "2 Community–Individual Preference Divergence：这个现象有多普遍",
+        "3 Factor Distillation：从行为样本到六个因素",
+        "4 The CoPA Benchmark：如何建立画像并评分",
+        "4.1 Benchmark Construction",
+        "4.2 Evaluated Approaches",
+        "5 Experiments：依次验证评价因素、迁移、生成质量和人工一致性",
+        "5.1 Experimental Setup",
+        "5.2 Effectiveness of Factors：能否识别用户选中的答案",
+        "5.3 Generalizability of the Factors",
+        "5.4 Factor-level Evaluation of Personalized QA Approaches Using CoPA",
+        "5.5 Human Validation of CoPA Scoring",
+        "5.6 Factor Correlation Analysis",
+        "6 Related Work",
+        "7 Conclusion、Limitations 与 Ethics Statement"
+      ],
+      "note_sha256": "8c1b3d948fb3dea9f68c2a97ddff8398487fb770e5e2645d43e30feb3c8b6a4f",
+      "status": "read"
+    },
+    {
+      "id": "2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473",
+      "title": "Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory",
+      "note": "reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 16716,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_001_1_memory-agent-pipeline-with-three-diagnostic-prob.png",
+          "caption": "Figure 1: Memory-agent pipeline",
+          "width": 2350,
+          "height": 1558
+        },
+        {
+          "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_001_2_memory-agent-pipeline-with-three-diagnostic-prob.png",
+          "caption": "Figure 2: Accuracy across write strategies and retrieval methods",
+          "width": 1396,
+          "height": 1013
+        },
+        {
+          "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_002_1_precision-5-vs-accuracy-r-0-98-each-point-is-one.png",
+          "caption": "Figure 3: Precision@5 vs. accuracy",
+          "width": 1396,
+          "height": 1026
+        },
+        {
+          "path": "assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473/figures/source_figure_002_2_precision-5-vs-accuracy-r-0-98-each-point-is-one.png",
+          "caption": "Figure 4: Retrieval failure rate by retrieval method",
+          "width": 1396,
+          "height": 937
+        }
+      ],
+      "source_paths": [
+        "sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Method",
+        "2.1 Write Strategies",
+        "2.2 Retrieval Methods",
+        "2.3 Probing Framework",
+        "3 Results",
+        "3.1 Write Strategy Has Minimal Impact",
+        "3.2 Retrieval Method Dominates",
+        "3.3 Failure Analysis Confirms Retrieval as the Bottleneck",
+        "4 Discussion and Conclusion"
+      ],
+      "note_sha256": "5d918022f68000f8147b3d27c5e035fd1e85294dc0f9f7ef916a37d74757435a",
+      "status": "read"
+    },
+    {
+      "id": "2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257",
+      "title": "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions",
+      "note": "reading_notes/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11655,
+      "embedded_images": 3,
+      "unique_images": 3,
+      "images": [
+        {
+          "path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig01_competencies.png",
+          "caption": "原文 Figure 1：四种记忆能力的直观例子",
+          "width": 913,
+          "height": 495,
+          "page": 2,
+          "crop_bbox": [
+            123,
+            80,
+            488,
+            278
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig02_chunk_ablation.png",
+          "caption": "原文 Figure 2：分块大小对局部 QA 与全局摘要的影响",
+          "width": 988,
+          "height": 290,
+          "page": 9,
+          "crop_bbox": [
+            109,
+            80,
+            504,
+            196
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig03_topk_ablation.png",
+          "caption": "原文 Figure 3：检索 2、5、10 个块的比较",
+          "width": 988,
+          "height": 288,
+          "page": 9,
+          "crop_bbox": [
+            109,
+            216,
+            504,
+            331
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：长上下文与记忆评测有什么区别",
+        "2 Related Work",
+        "2.1 Benchmarks on Long-Context and Memory",
+        "2.2 Agents with Memory Mechanisms",
+        "3 MemoryAgentBench",
+        "3.1 Dataset Preparation：四种能力分别怎样构造",
+        "3.2 Different Categories of Memory Agents",
+        "3.3 Datasets and Agents Formulation",
+        "4 Experiments",
+        "4.1 Experimental Setup",
+        "4.2 Overall Performance Comparison",
+        "4.3 Analysis and Ablation Study",
+        "4.3.1 Ablation Study on Input Chunk Size",
+        "4.3.2 Ablation Study on Retrieval TopK",
+        "4.3.3 Ablation Study on Backbone Model",
+        "4.3.4 Validation of Dataset FactConsolidation",
+        "5 Conclusion、Ethics 与 Reproducibility"
+      ],
+      "note_sha256": "2164f1f5d42fc0700ed1661762965e571253e09933e15dceff7db751f68b9204",
+      "status": "read"
+    },
+    {
+      "id": "2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250",
+      "title": "Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval",
+      "note": "reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md",
+      "review_level": "existing_body_plus_missing_related_work_completed",
+      "body_characters": 24716,
+      "embedded_images": 19,
+      "unique_images": 19,
+      "images": [
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_001_comparison-between-standard-familiarity-based-re.png",
+          "caption": "Figure 1: Familiarity retrieval vs. recollection retrieval",
+          "width": 946,
+          "height": 485
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_002_the-overall-architecture-of-rf-mem-a-dual-proces.png",
+          "caption": "Figure 2: RF-Mem framework",
+          "width": 1018,
+          "height": 538
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_003_illustration-of-adaptive-study-setup-offline-ind.png",
+          "caption": "Figure 3: Adaptive to index building",
+          "width": 747,
+          "height": 309
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_004_illustration-of-the-adaptive-study-setup-nearlin.png",
+          "caption": "Figure 4: Adaptive to query expansion",
+          "width": 1064,
+          "height": 270
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_005_illustration-of-adaptive-study-setup-iterative-r.png",
+          "caption": "Figure 5: Adaptive to iterative RAG",
+          "width": 1392,
+          "height": 238
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_006_mean-score-s-and-entropy-h-p-of-the-personamem-d.png",
+          "caption": "Figure source_figure_006_mean-score-s-and-entropy-h-p-of-the-personamem-d",
+          "width": 1569,
+          "height": 847
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_007_empirical-distributions-of-mean-score-s-of-the-p.png",
+          "caption": "Figure source_figure_007_empirical-distributions-of-mean-score-s-of-the-p",
+          "width": 2001,
+          "height": 559
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_008_mean-score-s-and-entropy-h-p-of-the-personabench.png",
+          "caption": "Figure source_figure_008_mean-score-s-and-entropy-h-p-of-the-personabench",
+          "width": 1567,
+          "height": 847
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_009_empirical-distributions-of-mean-score-s-of-the-p.png",
+          "caption": "Figure source_figure_009_empirical-distributions-of-mean-score-s-of-the-p",
+          "width": 2001,
+          "height": 559
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_010_mean-score-s-and-entropy-h-p-in-the-longmemeval.png",
+          "caption": "Figure source_figure_010_mean-score-s-and-entropy-h-p-in-the-longmemeval",
+          "width": 1568,
+          "height": 847
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_011_empirical-distributions-of-mean-score-s-of-the-l.png",
+          "caption": "Figure source_figure_011_empirical-distributions-of-mean-score-s-of-the-l",
+          "width": 2001,
+          "height": 559
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_012_mean-score-s-and-entropy-h-p-in-the-longmemeval.png",
+          "caption": "Figure source_figure_012_mean-score-s-and-entropy-h-p-in-the-longmemeval",
+          "width": 1569,
+          "height": 847
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_013_empirical-distributions-of-mean-score-s-of-the-l.png",
+          "caption": "Figure source_figure_013_empirical-distributions-of-mean-score-s-of-the-l",
+          "width": 2001,
+          "height": 559
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_014_hyperparameter-sensitivity-study-on-personabench.png",
+          "caption": "Figure source_figure_014_hyperparameter-sensitivity-study-on-personabench",
+          "width": 1558,
+          "height": 704
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_015_hyperparameter-b-and-f-sensitivity-of-recollecti.png",
+          "caption": "Figure source_figure_015_hyperparameter-b-and-f-sensitivity-of-recollecti",
+          "width": 1764,
+          "height": 841
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_016_effect-of-on-short-vs-long-path-retrieval-perfor.png",
+          "caption": "Figure source_figure_016_effect-of-on-short-vs-long-path-retrieval-perfor",
+          "width": 1426,
+          "height": 464
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_017_effect-of-probe-size-k-on-retrieval-performance.png",
+          "caption": "Figure source_figure_017_effect-of-probe-size-k-on-retrieval-performance",
+          "width": 1140,
+          "height": 851
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_018_case-study-from-personamem-comparison-between-fa.png",
+          "caption": "Figure source_figure_018_case-study-from-personamem-comparison-between-fa",
+          "width": 838,
+          "height": 843
+        },
+        {
+          "path": "assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_019_case-study-from-personamem-comparison-between-fa.png",
+          "caption": "Figure source_figure_019_case-study-from-personamem-comparison-between-fa",
+          "width": 1264,
+          "height": 1400
+        }
+      ],
+      "source_paths": [
+        "sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Method: Recollection–Familiarity Memory Retrieval",
+        "2.1 Familiarity Uncertainty-Driven Retrieval Selection",
+        "2.2 Familiarity Retrieval",
+        "2.3 Recollection Retrieval",
+        "3 Experiments",
+        "3.1 Experimental Setup",
+        "3.2 Overall Performance in Personalized Generation",
+        "3.3 Overall Performance in Personalized Retrieval",
+        "3.4 Adaptive Experiment",
+        "3.4.1 Adaptive to Index Building Method",
+        "3.4.2 Adaptive to Query Expansion Method",
+        "3.4.3 Adaptive to Iterative RAG Method",
+        "4 Related Works",
+        "5 Conclusion"
+      ],
+      "note_sha256": "7e769596cddfbfb916136005e5e02556dac4bd8ff7556e89a187b151447050db",
+      "status": "read"
+    },
+    {
+      "id": "2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941",
+      "title": "EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents",
+      "note": "reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 27497,
+      "embedded_images": 2,
+      "unique_images": 2,
+      "images": [
+        {
+          "path": "assets/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941/figures/source_figure_001_self-evolves-its-retrieval-configuration-on-loco.png",
+          "caption": "Figure 1: EvolveMem self-evolution trajectory",
+          "width": 1504,
+          "height": 620
+        },
+        {
+          "path": "assets/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941/figures/source_figure_002_architecture-three-layers-connected-by-a-self-ev.png",
+          "caption": "Figure 2: EvolveMem architecture",
+          "width": 2400,
+          "height": 1198
+        }
+      ],
+      "source_paths": [
+        "sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 EvolveMem",
+        "3.1 Structured Memory Store",
+        "3.2 Retrieval as an Evolvable Action Space",
+        "3.3 Self-Evolution Engine",
+        "4 Experiments",
+        "4.1 Experimental Setup",
+        "4.2 Main Results",
+        "4.3 Self-Evolution Trajectory and Dimension Discovery",
+        "4.4 Cross-Benchmark Transfer and Generalization",
+        "4.5 Ablation Study",
+        "5 Conclusion"
+      ],
+      "note_sha256": "4601f676c9116746b018bd90cad5e05e6d57a57555530bf9ad9d27188704c2d3",
+      "status": "read"
+    },
+    {
+      "id": "2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421",
+      "title": "EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective",
+      "note": "reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11740,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig01_taxonomy.png",
+          "caption": "原文 Figure 1：四种记忆演化需求",
+          "width": 998,
+          "height": 553,
+          "page": 2,
+          "crop_bbox": [
+            107,
+            70,
+            506,
+            291
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig02_cost_accuracy.png",
+          "caption": "原文 Figure 2：InEp-Know 的准确率与 token 成本",
+          "width": 501,
+          "height": 335,
+          "page": 6,
+          "crop_bbox": [
+            309,
+            496,
+            509,
+            630
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig03_tool_transfer.png",
+          "caption": "原文 Figure 3：工具任务跨环境迁移",
+          "width": 980,
+          "height": 295,
+          "page": 9,
+          "crop_bbox": [
+            108,
+            70,
+            500,
+            188
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/source_map_figures.json"
+        },
+        {
+          "path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig04_embodied_transfer.png",
+          "caption": "原文 Figure 4：ALFWorld 子任务之间的迁移",
+          "width": 983,
+          "height": 296,
+          "page": 9,
+          "crop_bbox": [
+            108,
+            211,
+            501,
+            329
+          ],
+          "number": "",
+          "provenance_path": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/source_map_figures.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：从记住内容到支持持续适应",
+        "2 Related Work：为什么不能用一个 benchmark 代表所有记忆能力",
+        "3 Problem Formulation：怎样定义带记忆的 agent",
+        "3.1 Agents with Memory Mechanisms",
+        "3.2 Scope of Memory Evolution: In-Episode and Cross-Episode",
+        "3.3 Content of Memory Evolution: Knowledge and Execution",
+        "4 Benchmark Construction：六个数据集如何落入四象限",
+        "4.1 In-Episode Knowledge Evolution",
+        "4.2 In-Episode Execution Evolution",
+        "4.3 Cross-Episode Knowledge Evolution",
+        "4.4 Cross-Episode Execution Evolution",
+        "5 Experiments",
+        "5.1 Experiment Setup：公平比较的边界",
+        "5.2 Main Results",
+        "5.2.1 In-Episode Knowledge Evolution：保留比修订容易",
+        "5.2.2 In-Episode Execution Evolution：预算越紧，记忆越可能有用",
+        "5.2.3 Cross-Episode Knowledge Evolution：困难任务更需要经验",
+        "5.2.4 Cross-Episode Execution Evolution：不同环境需要不同记忆形式",
+        "5.2.5 Summary：把八条发现放回同一证据链",
+        "6 Conclusion 与证据边界"
+      ],
+      "note_sha256": "a217aaf7e7d7bd3ec268b116f69dd17c5f83f4be3d2463c55ea2abab749c505c",
+      "status": "read"
+    },
+    {
+      "id": "2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag",
+      "title": "ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment",
+      "note": "reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10402,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/fig1_tasks.png",
+          "caption": "Figure 1：四类科研决策任务的实际例子",
+          "width": 1137,
+          "height": 551,
+          "page": 2,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            297
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/fig2_construction.png",
+          "caption": "Figure 2：ForeSci 的数据与任务构建流程",
+          "width": 1134,
+          "height": 523,
+          "page": 5,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            282
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/fig3_error_analysis.png",
+          "caption": "Figure 3：低分通道与证据到决策的偏移",
+          "width": 1135,
+          "height": 356,
+          "page": 8,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            220
+          ],
+          "number": "Figure 3",
+          "provenance_path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/fig4_prospective.png",
+          "caption": "Figure 4：研究方向预测输出的展示",
+          "width": 531,
+          "height": 403,
+          "page": 8,
+          "crop_bbox": [
+            70,
+            302,
+            292,
+            467
+          ],
+          "number": "Figure 4",
+          "provenance_path": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么需要单独评估科研判断（p.1–2）",
+        "2 Related Work：与现有科研 benchmark 的边界（p.2–3）",
+        "3 The ForeSci Framework：任务如何从历史文献中构造（p.3–5）",
+        "3.1 Problem Formulation",
+        "3.2 Data Collection and Filtering",
+        "3.3 Taxonomy Construction",
+        "3.4 Task Families",
+        "4 Evaluation：四个指标分别检查哪一环（p.5–6）",
+        "4.1 Metrics",
+        "4.2 Models, Systems, and Adaptation",
+        "5 Results：收益来自哪里，失败发生在哪里（p.6–8）",
+        "5.1 Evaluation of LLM Agents",
+        "5.2 Error Mechanisms: When Foresight Fails",
+        "5.3 Prospective Use: Dynamic Forecasting Beyond Retrospective Evaluation",
+        "6 Conclusion：本文最终建立了什么（p.8）"
+      ],
+      "note_sha256": "cc2eeacbfd8fd8eb38de546188196131672ede723365cda323f0f72431e1a7d7",
+      "status": "read"
+    },
+    {
+      "id": "2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685",
+      "title": "Language Models use Lookbacks to Track Beliefs",
+      "note": "reading_notes/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 10080,
+      "embedded_images": 8,
+      "unique_images": 8,
+      "images": [
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_01_p02.png",
+          "caption": "Figure 1：lookback 的 source、address、pointer 与 payload",
+          "width": 760,
+          "height": 892,
+          "page": 2,
+          "crop_bbox": [
+            315,
+            77,
+            505,
+            300
+          ],
+          "number": "1",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_02_p03.png",
+          "caption": "Figure 2：人物、物体、状态 token 的因果信息流",
+          "width": 1584,
+          "height": 548,
+          "page": 3,
+          "crop_bbox": [
+            108,
+            77,
+            504,
+            214
+          ],
+          "number": "2",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_03_p04.png",
+          "caption": "Figure 3：无可见性条件下的 Binding 与 Answer 两次 lookback",
+          "width": 1520,
+          "height": 1068,
+          "page": 4,
+          "crop_bbox": [
+            114,
+            75,
+            494,
+            342
+          ],
+          "number": "3",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_04_p06.png",
+          "caption": "Figure 4：答案 pointer 与 payload 的干预产生不同输出",
+          "width": 1596,
+          "height": 500,
+          "page": 6,
+          "crop_bbox": [
+            105,
+            79,
+            504,
+            204
+          ],
+          "number": "4",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_05_p07.png",
+          "caption": "Figure 5：交换状态处的绑定地址和状态 OI",
+          "width": 1600,
+          "height": 512,
+          "page": 7,
+          "crop_bbox": [
+            105,
+            79,
+            505,
+            207
+          ],
+          "number": "5",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_06_p07.png",
+          "caption": "Figure 6：冻结地址与内容，再交换 source reference",
+          "width": 1600,
+          "height": 520,
+          "page": 7,
+          "crop_bbox": [
+            105,
+            300,
+            505,
+            430
+          ],
+          "number": "6",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_07_p08.png",
+          "caption": "Figure 7：可见性关系引入第三次 lookback",
+          "width": 1568,
+          "height": 820,
+          "page": 8,
+          "crop_bbox": [
+            110,
+            77,
+            502,
+            282
+          ],
+          "number": "7",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        },
+        {
+          "path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_08_p09.png",
+          "caption": "Figure 8：可见性 source、payload、地址与指针的三类干预",
+          "width": 1600,
+          "height": 528,
+          "page": 9,
+          "crop_bbox": [
+            105,
+            79,
+            505,
+            211
+          ],
+          "number": "8",
+          "provenance_path": "assets/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685/figure_provenance.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：从行为分数转向计算机制",
+        "2 The Lookback Mechanism：地址、指针和内容各做什么",
+        "3 Experimental Setup: Dataset, Models, and Methods",
+        "3.1 Dataset：反事实配对比故事复杂度更重要",
+        "3.2 Models：为什么挑这三个模型",
+        "3.3 Causal Mediation Analysis：怎样追踪真正起作用的信息",
+        "4 Hypothesized High-Level Causal Model of Belief Tracking",
+        "5 Verifying the Hypothesized Causal Model of Belief Tracking",
+        "5.1 Step II: Answer Lookback—Retrieving the Correct State",
+        "5.2 Step I: Binding Lookback—Linking Characters, Objects, and States",
+        "6 Impact of Visibility Conditions on Belief Tracking Mechanism",
+        "6.1 Verifying the Hypothesized Visibility Lookback",
+        "7 Related Work：相对已有可解释性研究多了什么",
+        "8 Conclusion：成立的结论及其范围"
+      ],
+      "note_sha256": "a48b8983b80e4a5bd107ad56a26dac26183da5809f54043a0de9683f2ff8a5ad",
+      "status": "read"
+    },
+    {
+      "id": "2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702",
+      "title": "Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory",
+      "note": "reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 27732,
+      "embedded_images": 21,
+      "unique_images": 15,
+      "images": [
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_020_top-with-a-limited-context-window-the-agent-fail.png",
+          "caption": "Intro: memory guideline and agent memory",
+          "width": 840,
+          "height": 978
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_021_overview-of-our-proposed-it-performs-two-stage-o.png",
+          "caption": "Method overview: MemCoE two-stage optimization",
+          "width": 1804,
+          "height": 990
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_016_efficiency-analysis-on-personamem-we-report-the.png",
+          "caption": "Figure 16: Efficiency analysis on PersonaMem",
+          "width": 1386,
+          "height": 981
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_017_retrieval-top-k-on-personamem-32k.png",
+          "caption": "Figure 17: Retrieval Top-K on PersonaMem",
+          "width": 1371,
+          "height": 1099
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_018_effect-of-tokens-per-evolve-round-on-personamem.png",
+          "caption": "Figure 18: Tokens per evolve round",
+          "width": 1101,
+          "height": 814
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_019_impact-of-prompt-quality-on-personamem-averaged.png",
+          "caption": "Figure 19: Guideline quality",
+          "width": 1568,
+          "height": 1136
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_001_preference-retention-during-multi-round-memory-e.png",
+          "caption": "Figure source_figure_001_preference-retention-during-multi-round-memory-e",
+          "width": 1389,
+          "height": 667
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_002_error-analysis-decomposing-failures-into-the-mem.png",
+          "caption": "Figure source_figure_002_error-analysis-decomposing-failures-into-the-mem",
+          "width": 757,
+          "height": 794
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_003_1_scaling-analysis-on-personamem-128k-we-increase.png",
+          "caption": "Figure source_figure_003_1_scaling-analysis-on-personamem-128k-we-increase",
+          "width": 1566,
+          "height": 771
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_003_2_scaling-analysis-on-personamem-128k-we-increase.png",
+          "caption": "Figure source_figure_003_2_scaling-analysis-on-personamem-128k-we-increase",
+          "width": 1566,
+          "height": 771
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_1_personamem-32k.png",
+          "caption": "Figure source_figure_004_1_personamem-32k",
+          "width": 1247,
+          "height": 758
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_2_personamem-32k.png",
+          "caption": "Figure source_figure_004_2_personamem-32k",
+          "width": 1247,
+          "height": 758
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_3_personamem-32k.png",
+          "caption": "Figure source_figure_004_3_personamem-32k",
+          "width": 1247,
+          "height": 758
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_004_4_personamem-32k.png",
+          "caption": "Figure source_figure_004_4_personamem-32k",
+          "width": 1247,
+          "height": 758
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_005_test-set-accuracy-of-rl-based-baselines-across-r.png",
+          "caption": "Figure source_figure_005_test-set-accuracy-of-rl-based-baselines-across-r",
+          "width": 1713,
+          "height": 849
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_016_efficiency-analysis-on-personamem-we-report-the.png",
+          "caption": "Figure source_figure_016_efficiency-analysis-on-personamem-we-report-the",
+          "width": 1386,
+          "height": 981
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_017_retrieval-top-k-on-personamem-32k.png",
+          "caption": "Figure source_figure_017_retrieval-top-k-on-personamem-32k",
+          "width": 1371,
+          "height": 1099
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_018_effect-of-tokens-per-evolve-round-on-personamem.png",
+          "caption": "Figure source_figure_018_effect-of-tokens-per-evolve-round-on-personamem",
+          "width": 1101,
+          "height": 814
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_019_impact-of-prompt-quality-on-personamem-averaged.png",
+          "caption": "Figure source_figure_019_impact-of-prompt-quality-on-personamem-averaged",
+          "width": 1568,
+          "height": 1136
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_020_top-with-a-limited-context-window-the-agent-fail.png",
+          "caption": "Figure source_figure_020_top-with-a-limited-context-window-the-agent-fail",
+          "width": 840,
+          "height": 978
+        },
+        {
+          "path": "assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_021_overview-of-our-proposed-it-performs-two-stage-o.png",
+          "caption": "Figure source_figure_021_overview-of-our-proposed-it-performs-two-stage-o",
+          "width": 1804,
+          "height": 990
+        }
+      ],
+      "source_paths": [
+        "sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 Preliminary",
+        "4 Methodology",
+        "4.1 Memory Guideline Induction",
+        "4.2 Guideline-Aligned Memory Policy Optimization",
+        "5 Experiments",
+        "5.1 Experimental Settings",
+        "5.2 Overall Evaluation",
+        "5.3 Ablation Study",
+        "5.4 Efficiency Analysis",
+        "5.5 Cross-LLM Transferability of Guidelines",
+        "5.6 Comparison on Different Retrieval",
+        "5.7 Impact of Per-Round Token Budget on Memory Evolution",
+        "5.8 Effect of Guideline Quality",
+        "6 Conclusion"
+      ],
+      "note_sha256": "1365d69375ff2b918109c226097d2416fd979937e6e715b362d8aa7ec896f845",
+      "status": "read"
+    },
+    {
+      "id": "2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755",
+      "title": "Learning to Continually Learn via Meta-learning Agentic Memory Designs",
+      "note": "reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 18344,
+      "embedded_images": 6,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_001_open-ended-exploration-process-of-ouralgo-the-me.png",
+          "caption": "",
+          "width": 2400,
+          "height": 1025
+        },
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_002_the-learning-process-of-ouralgo-on-baba-is-ai-us.png",
+          "caption": "",
+          "width": 2400,
+          "height": 847
+        },
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_003_the-visualization-of-the-best-learned-memory-des.png",
+          "caption": "",
+          "width": 2400,
+          "height": 700
+        },
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_004_success-rates-of-different-memory-designs-in-alf.png",
+          "caption": "",
+          "width": 1152,
+          "height": 720
+        },
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_005_success-rates-of-different-memory-designs-in-alf.png",
+          "caption": "",
+          "width": 1138,
+          "height": 708
+        },
+        {
+          "path": "assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/figures/source_figure_006_cost-efficiency-versus-task-performance-across-a.png",
+          "caption": "",
+          "width": 936,
+          "height": 749
+        }
+      ],
+      "source_paths": [
+        "sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf",
+        "sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 Learning of Memory Designs",
+        "3.1 Search Space for Memory Designs",
+        "3.2 Evaluation of Memory Designs",
+        "3.3 Open-Ended Exploration",
+        "4 Experiments",
+        "4.1 Experiment Setup",
+        "4.2 Benchmarks",
+        "4.3 Baselines",
+        "4.4 Results",
+        "5 Conclusion, Safety, and Future Work"
+      ],
+      "note_sha256": "d6efa76d144ea0f7094062d0f12e3ef4c76b216fed0c33c7bd60e2bf82cd2252",
+      "status": "read"
+    },
+    {
+      "id": "2026_learning-to-predict-future-aligned-research-proposals-wi_fas",
+      "title": "Learning to Predict Future-Aligned Research Proposals with Language Models",
+      "note": "reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11615,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/fig1_future_alignment.png",
+          "caption": "Figure 1：由历史输入生成方案，再与隐藏未来论文对齐",
+          "width": 618,
+          "height": 249,
+          "page": 1,
+          "crop_bbox": [
+            310,
+            219,
+            516,
+            303
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/fig2_framework.png",
+          "caption": "Figure 2：历史监督、分阶段推理及多层评估",
+          "width": 1041,
+          "height": 375,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            218
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/fig3_human_evaluation.png",
+          "caption": "Figure 3：专家成对比较的胜、平、负比例",
+          "width": 541,
+          "height": 359,
+          "page": 6,
+          "crop_bbox": [
+            70,
+            68,
+            292,
+            213
+          ],
+          "number": "Figure 3",
+          "provenance_path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/fig4_executable_proposals.png",
+          "caption": "Figure 4：两项被实现的生成 proposal",
+          "width": 1123,
+          "height": 443,
+          "page": 7,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            245
+          ],
+          "number": "Figure 4",
+          "provenance_path": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：把主观质量问题改写为时间预测问题（p.1–2）",
+        "2 Method：数据、训练与评估分别做什么（p.2–4）",
+        "2.1 Future-Aligned Proposal Prediction",
+        "2.2 Verifiable Learning Objective",
+        "2.3 Time-Consistent Supervision from Historical Papers",
+        "2.4 Citation-Grounded Reasoning Traces",
+        "3 Experiments：监督是否改善方案质量（p.4–7）",
+        "3.1 Experimental Setup",
+        "3.2 Baselines",
+        "3.3 Main Results",
+        "3.4 Human Evaluation",
+        "3.5 Executable Proposal Case Studies",
+        "4 Analysis：模型是否用了论文，方案内部是否连贯（p.7–8）",
+        "4.1 Citation Sensitivity by Citation Type",
+        "4.2 Multi-Dimensional LLM-Based Judging",
+        "5 Related Work（p.8）",
+        "6 Conclusion（p.8）"
+      ],
+      "note_sha256": "b0470ec57fe1b0987ce48a9772a773988dfcc52065dd4cbf37980066a9c68d18",
+      "status": "read"
+    },
+    {
+      "id": "2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036",
+      "title": "Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents",
+      "note": "reading_notes/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 26004,
+      "embedded_images": 9,
+      "unique_images": 9,
+      "images": [
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_001_comparison-between-passive-retrieval-and-active.png",
+          "caption": "Figure 1: 被动检索与主动重构、扁平记忆与关联记忆的对比",
+          "width": 1938,
+          "height": 1613
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_002_illustrative-example-comparing-passive-retrieval.png",
+          "caption": "Figure 2: 相似度检索、图检索与主动重构的示例",
+          "width": 2400,
+          "height": 576
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_009_functional-correspondence-between-human-memory-r.png",
+          "caption": "Figure 3: 人类记忆重构与 MRAgent 的功能对应",
+          "width": 2400,
+          "height": 1330
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_003_mragent-an-associative-memory-system-with-llm-dr.png",
+          "caption": "Figure 4: MRAgent 的关联记忆系统与主动重构框架",
+          "width": 2400,
+          "height": 1029
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_007_active-memory-reconstruction.png",
+          "caption": "Figure 5: 多轮主动记忆重构示例",
+          "width": 1774,
+          "height": 2400
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_004_ablation-results-on-locomo-for-multi-hop-queries.png",
+          "caption": "Figure 6: LoCoMo 多跳问题上的结构与推理消融",
+          "width": 2400,
+          "height": 1027
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_005_analysis-of-multi-turn-reasoning-on-locomo-under.png",
+          "caption": "Figure 7: 不同问题类型的累计证据召回与推理轮数",
+          "width": 2400,
+          "height": 1429
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_008_performance-on-multi-hop-queries-in-locomo-as-a.png",
+          "caption": "Figure 8: 推理深度与每轮并行工具预算的敏感性",
+          "width": 2400,
+          "height": 2024
+        },
+        {
+          "path": "assets/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036/figures/source_figure_006_reasoning-trajectory-of-mragent-over-the-memory.png",
+          "caption": "Figure 9: Joanna 剧本投稿与拒稿事件的多会话重构",
+          "width": 2400,
+          "height": 1946
+        }
+      ],
+      "source_paths": [
+        "sources/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Problem Setting: Active Memory Access",
+        "2.1 Memory Retrieval Definition",
+        "2.2 Limits of Passive Retrieval",
+        "2.3 Motivation from Cognitive Memory Systems",
+        "3 Associative Memory System",
+        "3.1 Cue--Tag--Content Associative Memory",
+        "3.2 Multi-Granular Memory Layers",
+        "3.3 Memory Population via LLM Distillation",
+        "4 MRAgent: Reconstructive Memory Agent",
+        "4.1 Reconstructive Memory Framework",
+        "4.2 Memory Reconstruction Process",
+        "4.3 Theoretical Analysis: Active vs. Passive Retrieval",
+        "5 Experiments",
+        "5.1 Experiment Setup",
+        "5.2 Main Results (RQ1)",
+        "5.3 Cost Analysis (RQ2)",
+        "5.4 Ablation Study (RQ3)",
+        "5.5 Multi-turn Reasoning Analysis (RQ4)",
+        "5.6 Case Study (RQ5)",
+        "6 Related Work",
+        "7 Conclusion and Discussion"
+      ],
+      "note_sha256": "872145b6383fee85990f77cae097d076da0934e57dc5a82fcc1f6f765bfda0e3",
+      "status": "read"
+    },
+    {
+      "id": "2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474",
+      "title": "MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents",
+      "note": "reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 21805,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_001_comparison-between-a-prior-turn-level-handcrafte.png",
+          "caption": "Figure 1",
+          "width": 2400,
+          "height": 1147
+        },
+        {
+          "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_003_memskill-architecture-overview-given-an-interact.png",
+          "caption": "Figure 2",
+          "width": 2400,
+          "height": 1074
+        },
+        {
+          "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/source_figure_004_skill-generalization-under-distribution-shift-on.png",
+          "caption": "HotpotQA transfer",
+          "width": 1800,
+          "height": 444
+        },
+        {
+          "path": "assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474/figures/manual/case_study.png",
+          "caption": "Case study",
+          "width": 4125,
+          "height": 1901
+        }
+      ],
+      "source_paths": [
+        "sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf",
+        "sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "2.1 LLM Agent Memory Systems",
+        "2.2 Self-Evolving LLM Agents",
+        "3 Method",
+        "3.1 Overview",
+        "3.2 Skill Bank",
+        "3.3 Learning to Use Memory Skills",
+        "3.3.1 Controller: Skill Selection Policy",
+        "3.3.2 Executor: Skill-Conditioned Memory Extraction",
+        "3.3.3 Controller Optimization",
+        "3.4 Skill Evolution through Designer Feedback",
+        "3.5 Closed-Loop Optimization",
+        "4 Experiments",
+        "4.1 Experiment Setup",
+        "4.2 Comparison Experiments",
+        "4.3 Skill Generalization Under Distribution Shift",
+        "4.4 Ablation Study",
+        "4.5 Discussion",
+        "5 Conclusion"
+      ],
+      "note_sha256": "96f253b7ecb5d437b6fc830bc4042f212c5fe553a8103bdfdb74f8349b42944e",
+      "status": "read"
+    },
+    {
+      "id": "2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper",
+      "title": "Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding",
+      "note": "reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 13555,
+      "embedded_images": 2,
+      "unique_images": 2,
+      "images": [
+        {
+          "path": "assets/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper/fig1_framework.png",
+          "caption": "Figure 1：离线叙事建模与在线来源约束推理",
+          "width": 1140,
+          "height": 749,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            68,
+            526,
+            374
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper/fig2_supplement.png",
+          "caption": "Figure 2：补证带来的题型收益与证据槽位闭合",
+          "width": 1123,
+          "height": 384,
+          "page": 8,
+          "crop_bbox": [
+            70,
+            227,
+            526,
+            394
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：两个具体的不匹配（p.1–2）",
+        "2 Related Work（p.2–3）",
+        "3 The Narrative Knowledge Weaver Framework（p.3–5）",
+        "3.1 Construction-Time Asset Building",
+        "3.1.1 Entity–Relation Backbone",
+        "3.1.2 Narrative Unit Extraction",
+        "3.1.3 Entity Canonicalization",
+        "3.1.4 Entity Attribute and State Enrichment",
+        "3.2 Global Episode and Storyline Construction",
+        "3.3 Narrative-Grounded Retrieval and Reasoning",
+        "3.3.1 Evidence Views",
+        "3.3.2 Snapshot-Guided Query Planning",
+        "3.3.3 Skill-Based Evidence Assembly",
+        "4 Experimental Setup（p.5–6）",
+        "5 Experimental Results and Analysis（p.6–8）",
+        "5.1 Main Results",
+        "5.2 Controlled Comparisons and Ablations",
+        "5.3 Skill and Tool Analysis",
+        "6 Conclusion（p.8）"
+      ],
+      "note_sha256": "543e407dc05a0f1e74f958cd0b2f24da8883de58a70e8dfa2694b7cb52d867d5",
+      "status": "read"
+    },
+    {
+      "id": "2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577",
+      "title": "Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction",
+      "note": "reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 13447,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/fig1_pipeline.png",
+          "caption": "Figure 1：定稿发布、时间状态图与章节安全检索",
+          "width": 931,
+          "height": 537,
+          "page": 2,
+          "crop_bbox": [
+            61,
+            64,
+            598,
+            313
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/fig2_multihop_results.png",
+          "caption": "Figure 2：私有 176 题多跳准确率",
+          "width": 901,
+          "height": 425,
+          "page": 14,
+          "crop_bbox": [
+            107,
+            282,
+            506,
+            496
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/fig3_families.png",
+          "caption": "Figure 3：四类叙事多跳问题上的差异",
+          "width": 902,
+          "height": 486,
+          "page": 15,
+          "crop_bbox": [
+            66,
+            71,
+            535,
+            308
+          ],
+          "number": "Figure 3",
+          "provenance_path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/fig4_hop_classes.png",
+          "caption": "Figure 4：不同证据跳数下的准确率",
+          "width": 890,
+          "height": 566,
+          "page": 15,
+          "crop_bbox": [
+            66,
+            344,
+            535,
+            610
+          ],
+          "number": "Figure 4",
+          "provenance_path": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：写下一章之前，模型需要记得什么（p.1–2）",
+        "2 Related Work（p.3）",
+        "3 Narrative World Model（p.4–5）",
+        "3.1 Causal Publish Flow",
+        "3.2 Schema Updates and Global Registries",
+        "3.3 Temporal Knowledge Graph",
+        "3.4 Recursive Language-Model QA",
+        "3.5 Query-Conditioned Hybrid Retrieval",
+        "3.6 Extraction and Baseline Independence",
+        "4 Evaluation: Narrative Memory QA（p.5–7）",
+        "4.1 Protocol",
+        "5 Results（p.7–8）",
+        "5.1 Private Multi-Hop Comparison",
+        "5.2 Public Comparison",
+        "6 Discussion：真正被证据支持的机制（p.8，辅以附录 F–I）",
+        "7 Toward Generation and Writer-Workflow Evaluation（p.9）",
+        "8 Limitations（p.9）",
+        "9 Conclusion（p.9–10）"
+      ],
+      "note_sha256": "b8f0d9ea162494c6a1e8ea658b15a2974533835907a46391a0405cde9fad3a86",
+      "status": "read"
+    },
+    {
+      "id": "2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact",
+      "title": "SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction",
+      "note": "reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11012,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/fig1_dimension_results.png",
+          "caption": "Figure 1：三个代表模型在七种影响维度上的准确率",
+          "width": 567,
+          "height": 559,
+          "page": 1,
+          "crop_bbox": [
+            297,
+            204,
+            535,
+            442
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/fig2_curation.png",
+          "caption": "Figure 2：候选收集、标签与配对、过滤与质量控制",
+          "width": 1136,
+          "height": 538,
+          "page": 4,
+          "crop_bbox": [
+            70,
+            69,
+            526,
+            294
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/fig3_text_lengths.png",
+          "caption": "Figure 3：不同输入类型的文本长度分布",
+          "width": 540,
+          "height": 305,
+          "page": 5,
+          "crop_bbox": [
+            305,
+            229,
+            526,
+            352
+          ],
+          "number": "Figure 3",
+          "provenance_path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/fig4_year_bins.png",
+          "caption": "Figure 4：四个发表年份区间的引用预测准确率",
+          "width": 558,
+          "height": 312,
+          "page": 8,
+          "crop_bbox": [
+            304,
+            324,
+            527,
+            454
+          ],
+          "number": "Figure 4",
+          "provenance_path": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么仅预测引用不够（p.1–3）",
+        "2 Related Work（p.3）",
+        "2.1 Evolution of Scientific Impact Prediction",
+        "2.2 Datasets for Science Literature Analysis",
+        "3 SciImpact Benchmark：从 artifact 到可比较样本（p.3–6）",
+        "3.1 Stage 1: Candidate Retrieval",
+        "3.2 Stage 2: Impact Labeling and Pair Generation",
+        "3.3 Stage 3: Filtering and Quality Control",
+        "3.4 Dataset Statistics",
+        "4 Experiments：统一文本接口下比较模型（p.6–9）",
+        "4.1 Task Setup and Evaluation Protocol",
+        "4.2 Supervised Fine-tuning Setup",
+        "4.3 Main Results",
+        "5 Conclusion（p.9）"
+      ],
+      "note_sha256": "9930a8ba633db740b665218b185c62ace8c29a274abfaa9ae1a327847974cc7f",
+      "status": "read"
+    },
+    {
+      "id": "2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475",
+      "title": "Shadow-Loom: Causal Reasoning over Graphical World Models of Narratives",
+      "note": "reading_notes/2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 11233,
+      "embedded_images": 1,
+      "unique_images": 1,
+      "images": [
+        {
+          "path": "assets/2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475/figure_01_p03.png",
+          "caption": "Figure 1：Shadow-Loom 的类型化世界图、模拟、评分、生成与审计闭环",
+          "width": 768,
+          "height": 548,
+          "page": 3,
+          "crop_bbox": [
+            83,
+            207,
+            275,
+            344
+          ],
+          "number": "1",
+          "provenance_path": "assets/2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475/figure_provenance.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：为什么把叙事状态放在模型之外",
+        "2 Pipeline overview：从输入故事到可审计的新版本",
+        "3 Theoretical lineage and computational counterparts",
+        "4 What is novel, what is borrowed",
+        "5 Rationale for the design choices",
+        "6 Why this might matter beyond fiction",
+        "7 Limitations and future evaluation：内部检查证明了多少"
+      ],
+      "note_sha256": "a10e71e1c4ce3e81265678d95ff2e4aa816a7591aebee0d1b41d48de3fb64dce",
+      "status": "read"
+    },
+    {
+      "id": "2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748",
+      "title": "StructMem: Structured Memory for Long-Horizon Behavior in LLMs",
+      "note": "reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 11893,
+      "embedded_images": 6,
+      "unique_images": 6,
+      "images": [
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_001_three-paradigms-of-memory-systems.png",
+          "caption": "Figure 1: Three paradigms of Memory systems",
+          "width": 898,
+          "height": 508
+        },
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_002_structmem-s-hierarchical-memory-organization-eve.png",
+          "caption": "Figure 2: StructMem's hierarchical memory organization",
+          "width": 1239,
+          "height": 393
+        },
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_1_analysis-of-efficiency-across-memory-paradigms-a.png",
+          "caption": "Figure 3a: Token consumption over dialogue turns",
+          "width": 1395,
+          "height": 820
+        },
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_2_analysis-of-efficiency-across-memory-paradigms-a.png",
+          "caption": "Figure 3b: Component-wise token consumption",
+          "width": 1426,
+          "height": 848
+        },
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_3_analysis-of-efficiency-across-memory-paradigms-a.png",
+          "caption": "Figure 3c: Effect of the number of retrieved entries",
+          "width": 1426,
+          "height": 851
+        },
+        {
+          "path": "assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748/figures/source_figure_003_4_analysis-of-efficiency-across-memory-paradigms-a.png",
+          "caption": "Figure 3d: Effect of the number of semantic retrieval seeds K",
+          "width": 842,
+          "height": 497
+        }
+      ],
+      "source_paths": [
+        "sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "2 Related Work",
+        "3 Method",
+        "3.1 Event-Level Binding",
+        "3.2 Cross-Event Consolidation",
+        "4 Experiments",
+        "4.1 Experimental Setup",
+        "4.2 Overall Performance",
+        "4.3 Analysis",
+        "5 Conclusion"
+      ],
+      "note_sha256": "6d75c4f38714a9aa15876fd9c4da641bb4a3adeb3f3956247f5daca8d641081d",
+      "status": "read"
+    },
+    {
+      "id": "2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841",
+      "title": "The Challenge and Reward of Fair Play in Narrative: A Computational Approach",
+      "note": "reading_notes/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+      "review_level": "source_grounded_full_body_rewrite",
+      "body_characters": 14354,
+      "embedded_images": 3,
+      "unique_images": 3,
+      "images": [
+        {
+          "path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/fig1_reader_models.png",
+          "caption": "Figure 1：四类读者与理想阅读曲线",
+          "width": 1113,
+          "height": 373,
+          "page": 4,
+          "crop_bbox": [
+            71,
+            68,
+            541,
+            222
+          ],
+          "number": "Figure 1",
+          "provenance_path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/fig2_fairplay_models.png",
+          "caption": "Figure 2：自动与人类fair play，以及模型排序的冲突",
+          "width": 1173,
+          "height": 516,
+          "page": 10,
+          "crop_bbox": [
+            71,
+            69,
+            541,
+            277
+          ],
+          "number": "Figure 2",
+          "provenance_path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/figure_sources.json"
+        },
+        {
+          "path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/fig3_reading_curves.png",
+          "caption": "Figure 3：真实文本的阅读轨迹与生成故事案例",
+          "width": 1176,
+          "height": 785,
+          "page": 11,
+          "crop_bbox": [
+            71,
+            68,
+            541,
+            384
+          ],
+          "number": "Figure 3",
+          "provenance_path": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/figure_sources.json"
+        }
+      ],
+      "source_paths": [
+        "sources/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.pdf"
+      ],
+      "numbered_sections": [
+        "1 Introduction：fair与play分别要求什么（p.1–2）",
+        "2 The Probabilistic Framework（p.2–5）",
+        "2.1 Detective Stories and their Components",
+        "2.2 Reader Models",
+        "2.3 Idealized Types of Reader Models",
+        "2.4 Expected Reader Behavior",
+        "3 The Coherence-Surprise Tradeoffs（p.5–7）",
+        "3.1 Surprise：不知道与被误导不是同一种惊讶",
+        "3.2 Coherence：线索累计提供了多少信息",
+        "3.3 Tradeoffs：定理限制的是同一种读者解释状态",
+        "3.4 The Hindsight Gap",
+        "4 Experimental Setup（p.7–9）",
+        "4.1 Stories",
+        "4.2 Metrics：理论量如何落到可测指标",
+        "5 Results（p.9–12）",
+        "5.1 Generated Stories",
+        "5.2 Real Stories",
+        "5.3 Self-Reported Impressions",
+        "6 Discussion and Conclusion（p.12–13）",
+        "6.1 Limitations",
+        "7 Methods：结论之后不能漏掉的实施细节（p.13–14）",
+        "7.1 Story Generation",
+        "7.2 Reader Estimation",
+        "7.3 Statistical Analysis",
+        "7.4 Human Experiment",
+        "7.5 Use of AI Tools / Data Availability"
+      ],
+      "note_sha256": "6bf526688b449e6beb5abdea78c89a0d1083bf676f893e68b99141ac93325198",
+      "status": "read"
+    },
+    {
+      "id": "2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873",
+      "title": "The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement",
+      "note": "reading_notes/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 80813,
+      "embedded_images": 18,
+      "unique_images": 18,
+      "images": [
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_009_cross-domain-capability-trajectories-and-an-illu.png",
+          "caption": "Cross-domain capability trajectories and illustrative RSI extension",
+          "width": 1880,
+          "height": 1470
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_001_overview-of-the-five-rsi-autonomy-levels-and-rep.png",
+          "caption": "Overview of the five RSI autonomy levels",
+          "width": 2234,
+          "height": 1055
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_002_overview-of-l2-autonomous-strategy-selection-und.png",
+          "caption": "L2 autonomous strategy selection",
+          "width": 1191,
+          "height": 397
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_003_overview-of-l3-learner-conditioned-experience-ac.png",
+          "caption": "L3 learner-conditioned experience acquisition",
+          "width": 1920,
+          "height": 960
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_004_schematic-synthesis-of-automation-in-the-trainin.png",
+          "caption": "Industrial training-data pipeline automation",
+          "width": 1674,
+          "height": 920
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_005_overview-of-l4-autonomy-in-deployment-and-enviro.png",
+          "caption": "L4 deployment and environmental adaptation",
+          "width": 1906,
+          "height": 993
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_006_from-environmental-adaptation-to-recursive-meta.png",
+          "caption": "L4 to L5 recursive meta-improvement",
+          "width": 2400,
+          "height": 1299
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_010_loop-patterns-of-five-levels-gray-dashed-frames.png",
+          "caption": "B0-L5 loop patterns and external control boundaries",
+          "width": 2364,
+          "height": 851
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_007_application-regimes-differ-mainly-in-the-kind-of.png",
+          "caption": "Application feedback regimes",
+          "width": 1627,
+          "height": 828
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_018_theseus-s-proposed-four-stage-co-evolution-loop.png",
+          "caption": "Theseus proposed environment-data-model loop",
+          "width": 2400,
+          "height": 587
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_011_lark-s-data-foundation-loop-for-rsi-where-collab.png",
+          "caption": "Lark data foundation loop",
+          "width": 1248,
+          "height": 284
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_012_xiaohongshu-s-dual-timescale-rsi-loop-for-recomm.png",
+          "caption": "Xiaohongshu dual-timescale recommendation loop",
+          "width": 1758,
+          "height": 474
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_013_humanlaya-delivery-driven-rsi-loop.png",
+          "caption": "Humanlaya delivery-driven quality improvement loops",
+          "width": 1772,
+          "height": 532
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_014_modelbest-forge-engineering-as-a-two-level-rsi-l.png",
+          "caption": "ModelBest two-level Forge Engineering loop",
+          "width": 1378,
+          "height": 426
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_015_experience-driven-self-improvement-in-tencent-hu.png",
+          "caption": "Tencent Hunyuan Hyra experience-driven loop",
+          "width": 1440,
+          "height": 426
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_016_agent-native-research-lab-s-agent-native-rsi-loo.png",
+          "caption": "Agent-Native Research Lab verifiable inheritance loop",
+          "width": 1418,
+          "height": 312
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_017_frontis-horizon-s-me-we-ma-architecture-combines.png",
+          "caption": "Frontis ME-WE-MA architecture",
+          "width": 1762,
+          "height": 590
+        },
+        {
+          "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_008_rsi-landscape-autonomy-levels-and-improvement-ta.png",
+          "caption": "RSI landscape: levels and improvement targets",
+          "width": 1673,
+          "height": 1080
+        }
+      ],
+      "source_paths": [
+        "sources/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873_source.tar.gz"
+      ],
+      "numbered_sections": [
+        "1 Introduction",
+        "1.1 Scaling Burdens in Model Development",
+        "1.2 From Development Burden to RSI",
+        "1.3 Challenges for RSI",
+        "1.4 An Autonomy-Centered Framework",
+        "1.5 Application Domains",
+        "1.6 Industrial Evidence",
+        "1.7 Differences from Existing Surveys",
+        "2 Background and Preliminaries",
+        "2.1 Uneven Capability Progress in Modern Foundation Models",
+        "2.2 Conceptual Foundations of Recursive Self-Improvement",
+        "2.2.1 Anatomy of an Improvement Loop",
+        "2.2.2 Definition of Recursive Self-Improvement",
+        "2.2.3 Relation to Neighboring Paradigms",
+        "2.3 Scope of Evidence",
+        "3 RSI Across Autonomy Levels",
+        "3.1 B0: In-Task AI Improvement",
+        "3.2 L1: Autonomy over Improvement Execution",
+        "3.2.1 Data Level",
+        "3.2.2 Training-Method Level",
+        "3.2.3 Training-Platform Level",
+        "3.2.4 Evaluation-and-Safety Level",
+        "3.2.5 Deployment-Optimization Level",
+        "3.2.6 Application-System Level",
+        "3.2.7 Evaluating L1 Execution Autonomy",
+        "3.3 L2: Autonomy over Improvement Strategies",
+        "3.3.1 Prompt Search",
+        "3.3.2 Agent and Harness Search",
+        "3.3.3 Model and Training Search",
+        "3.3.4 Evaluating L2 Strategy Autonomy",
+        "3.4 L3: Autonomy over Future Learning Experience",
+        "3.4.1 From Industrial Automation to Experience Autonomy",
+        "3.4.2 Adaptive Task Generation and Self-Play",
+        "3.4.3 Autonomous Practice through Environment Interaction",
+        "3.4.4 Evaluating L3 Experience Autonomy",
+        "3.5 L4: Autonomy in Deployment and Environmental Adaptation",
+        "3.5.1 Trajectory distillation",
+        "3.5.2 Iterative revision of the agent system",
+        "3.5.3 Selective retention and deployment of updates",
+        "3.5.4 Evaluating L4 Deployment Autonomy",
+        "3.6 L5: From Environmental Adaptation to Meta-Improvement",
+        "3.6.1 Improving the Search Procedure",
+        "3.6.2 Improving Successor Evaluation",
+        "3.6.3 Revising Research Goals and Policies",
+        "3.6.4 Industrial Practice",
+        "3.6.5 Evaluating L5 Recursive Improvement",
+        "3.7 Cross-Level Synthesis",
+        "4 RSI Across Applications",
+        "4.1 S1: RSI for Science",
+        "4.2 S2: RSI for Embodied Intelligence",
+        "4.3 S3: RSI for Software Engineering",
+        "4.4 S4: RSI for Healthcare",
+        "5 Industry Landscape and Preliminary Practices",
+        "5.1 Theseus: Environment--Data--Model Co-Evolution for RSI Intelligence",
+        "5.2 Lark: Building the Data Foundation for Reliable Enterprise-Level RSI",
+        "5.3 Xiaohongshu: Dual-Timescale RSI for Recommendation",
+        "5.4 Humanlaya: Delivery-Driven RSI for Data Quality Assurance",
+        "5.5 ModelBest: Zero-Human Industrial AI Engineering",
+        "5.6 Tencent Hunyuan: Experience-Driven Self-Improvement",
+        "5.7 Agent-Native Research Lab: Verifiable Research Infrastructure for RSI",
+        "5.8 Frontis.AI: Enterprise Agent Evolution and Cross-Task Meta-Improvement",
+        "6 Challenges and Future Directions",
+        "7 Conclusion"
+      ],
+      "note_sha256": "edce92c15fd500466ea443caae5a09a8edaff79aff3b0753b7df6b46efa3a248",
+      "status": "read"
+    },
+    {
+      "id": "2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7",
+      "title": "The past, present and future of de novo protein design",
+      "note": "reading_notes/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7.md",
+      "review_level": "existing_body_structure_and_asset_check",
+      "body_characters": 6504,
+      "embedded_images": 4,
+      "unique_images": 4,
+      "images": [
+        {
+          "path": "assets/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7/figures/figure_001.png",
+          "caption": "图 1：蛋白设计问题谱系与生成—序列设计—实验验证流水线",
+          "width": 823,
+          "height": 930
+        },
+        {
+          "path": "assets/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7/figures/figure_002.png",
+          "caption": "图 2：蛋白靶点结合物及其应用",
+          "width": 823,
+          "height": 1080
+        },
+        {
+          "path": "assets/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7/figures/figure_003.png",
+          "caption": "图 3：小分子结合物、传感器和酶设计",
+          "width": 823,
+          "height": 1040
+        },
+        {
+          "path": "assets/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7/figures/figure_004.png",
+          "caption": "图 4：动态新功能和可持续发展应用",
+          "width": 823,
+          "height": 1090
+        }
+      ],
+      "source_paths": [
+        "sources/2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7.pdf"
+      ],
+      "numbered_sections": [],
+      "note_sha256": "fe9e7dd0bda75f71edc8126c51c71b737892402b87f4c138f0594b9a6fc25ee0",
+      "status": "read"
+    }
+  ]
+}

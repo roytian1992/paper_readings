@@ -1,0 +1,882 @@
+
+===== PDF PAGE 1 =====
+     Narrative Theory for Computational Narrative Understanding
+
+
+              Andrew Piper                    Richard Jean So
+ Department of Languages, Literatures, and Cultures   Department of English
+               McGill University                   McGill University
+       andrew.piper@mcgill.ca       richard.so@mcgill.ca
+
+
+                               David Bamman
+                               School of Information
+                        UC Berkeley
+                      dbamman@berkeley.edu
+
+
+
+                Abstract                         cultural functions, the NLP community has drawn
+                                            on a wide range of theoretical perspectives on narra-
+    Over the past decade, the ﬁeld of natural lan-                                                            tive (both implicit and explicit), without the beneﬁt
+    guage processing has developed a wide array
+                                                    of situating those perspectives within a broader or-
+    of computational methods for reasoning about
+                                                  ganizing theoretical structure. Such an organizing     narrative, including summarization, common-
+    sense inference, and event detection.  While        structure can encourage terminological consistency
+     this work has brought an important empiri-      and methodological clarity in terms of research
+    cal lens for examining narrative, it is by and        goals, while also illuminating the points of contact
+    large divorced from the large body of theo-      between seemingly unrelated research agendas.
+     retical work on narrative within the humani-                                                  This position paper seeks to provide the begin-
+     ties, social and cognitive sciences. In this posi-
+                                                   nings of such a unifying framework for the compu-
+    tion paper, we introduce the dominant theoreti-
+                                                           tational study of narrative. Drawing on the multiple    cal frameworks to the NLP community, situate
+    current research in NLP within distinct narrato-        expertises of literary and textual studies on the one
+    logical traditions, and argue that linking com-      hand and natural language processing on the other,
+    putational work in NLP to theory opens up a       our aim is to provide an overview of the different
+    range of new empirical questions that would        theoretical components of narrative study and high-
+    both help advance our understanding of narra-        light promising NLP research in those domains.
+     tive and open up new practical applications.                                    By providing the NLP community with a richer
+                                            and more coherent theoretical foundation for im-
+1  Introduction
+                                               plementing computational solutions for narrative
+Research in NLP has seen an increasing attention    understanding, our goal is to bring together other-
+to narrative understanding over the past decade.   wise disconnected lines of inquiry as well as reduce
+Indeed, the NLP community is not alone. From   competing conceptual frameworks that can inhibit
+studies in economics (Shiller, 2020) to climate sci-   progress. In doing so, the ﬁeld will be better po-
+ence (Bushell et al., 2017) to political polarization    sitioned to address the major research challenges
+(Kubin et al., 2021) to mental health (Adler et al.,    that we describe in the closing section.
+2016), there is a growing consensus that narrative      In what follows we organize our paper in the
+is a key concept for understanding human behav-   following way: ﬁrst, we provide a general deﬁni-
+ior and beliefs.  Narrative is a core mechanism    tion of narrativity, integrating existing theoretical
+through which human beings come to understand   frameworks; second, we review the fundamental
+their world, ﬁnd meaning, motivate their actions   components of narrative understanding and the re-
+and those of others, and create communities. As    search opportunities within each domain; third and
+narratologists often highlight, narrative is a univer-    ﬁnally, we identify a few salient higher-level prob-
+sal practice among all human cultures across all   lems of narrative understanding for the NLP com-
+time periods (Barthes and Duisit, 1975).           munity to address as they relate to questions of
+  In developing computational methods to under-    social change, creative industries, and social and
+stand narrative and its various social, personal, and   mental well-being.
+                                        298
+
+        Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing, pages 298–311
+                    November 7–11, 2021. c⃝2021 Association for Computational Linguistics
+
+===== PDF PAGE 2 =====
+2  The elements of narrativity                                        narrating
+
+2.1  Towards a working deﬁnition of
+     narrativity                                               mood                voice
+Interestingly, there is no consensus when it comes
+to a minimal deﬁnition of whether a sequence of
+tokens can be classiﬁed as narrative. Many recent
+theories, however, do tend to converge around no-             story                     discourse
+                                                                          tensetions of time and process (Ricoeur, 2014; Herman,
+2009; Walsh, 2018; Sternberg, 1992). As Herman
+(2009) writes, “Narrative roots itself in the lived,        Figure 1: Genette (1983)’s narrative triangle.
+felt experience of human or human-like agents in-
+teracting in an ongoing way with their surrounding
+environment .. . Narrative, in other words, is a ba-    tivization is at once a textual property and a cog-
+sic human strategy for coming to terms with time,    nitive process” (Liveley, 2019). The key concept
+process, and change” (21).                         introduced here is that of “situatedness,” i.e., nar-
+  Such deﬁnitions are consistent with a large body    rative representation is “situated in—must be in-
+of Aristotelian-inspired narrative theory that em-   terpreted in light of—a speciﬁc discourse context
+phasizes “change of state” as an essential com-   or occasion for telling” (Herman, 2009). Situat-
+ponent of narrative (Liveley, 2019).  Narrative   edness foregrounds the role that audiences and
+is deﬁned by sequences that represent a trans-   context play in shaping narrativity and can refer
+formational experience or an expression of “dis-    to a variety of social contexts, including medium
+equilibrium” (Bruner, 1991). These include Frey-    (oral, visual, textual), platform (Facebook, Twitter,
+tag (1895)’s pyramid, Van Dijk (1976)’s “Problem-   Reddit), community type, and cognitive processes
+Attempt-Outcome” model, and Sternberg (1992)’s   (Herman, 2009). Understanding the situatedness of
+model of “Suspense-Curiosity-Surprise.”              narratives also opens the door to understanding the
+  Common to all of these deﬁnitions is an attention    interactional nature of storytelling introduced by
+to “story-level” phenomena (also called diegesis),   Georgakopoulou (2007)’s theory of “small stories,”
+i.e., the structure of events that unfold in a narrative.   where narratives are not standalone objects but can
+Genette (1983) is the work best known for intro-   occur through time, such as Facebook status up-
+ducing an emphasis on the perspectival nature of    dates (Page, 2010).
+narrative, i.e., that narratives must have narrators.     Thus we could model narrative theory as engag-
+Narratives not only encode time, but also point of    ing with two levels of interactions (Fig. 2), where
+view in the ordering of information. In what has    classical theory focuses on interactions between dif-
+come to be known as the classical model (Fig. 1),    ferent narrative features and postclassical theory on
+Genette introduces three primary relational terms:   audience interactions with feature level interactions.
+story refers to the events recounted, discourse to the     It is this interactional understanding of narrative
+order and economy of their telling, and narrating    that has led post-classical narratologists to speak
+to the narrator’s role in shaping this information.1    of “degrees of narrativity” (Giora and Shen, 1994;
+  Genette then introduced three further terms to   Herman, 2009; Pianzola, 2018). Rather than think
+capture the relationship between these dimensions,   of narrative as a binary class, “narrativity” repre-
+tense, mood, and voice. Genette extrapolates from    sents a scalar construct that captures the dynamic
+the linguistic meanings of these terms to capture    interactions among narrative features and narrative
+speciﬁc narratological features. These include as-    situations (Pianzola, 2018).
+pects of time and the ordering of events (tense); the     Given this framework, it remains necessary to
+relationship between eventfulness and description    explicate the elementary features that these higher
+(mood); and aspects related to perspective, such as    level interactions might consist of and how we can
+point of view, dialogue, and focalization (voice).     observe them. Accordingly, we propose the follow-
+  The post-classical intervention in narratology,   ing minimal model of narrativity, which highlights
+often dated to the 1990s, emphasized that “narra-   the elements that must be present in order for a
+                                              symbolic sequence to aspire to narrativity. While   1Story and discourse are English-language translations of
+the earlier Russian formalist terms fabula and syuzhet.      we do not expect all variables will be explicit in any
+                                        299
+
+===== PDF PAGE 3 =====
+                                                               rientiality . . . reﬂects a cognitive schema of embod-
+          audience                                  iedness that relates to human existence and human
+                                       postclassical                                                   concerns. ... In my model there can be narratives    ⇳      }                  without plot, but there cannot be any narratives
+                                                 without a human (anthropomorphic) experiencer
+                                          classical                                                   of some sort” (9). The nature and distribution of        narrative features }                   agents thus marks an essential element of compu-
+                                                         tational narrative study. Within NLP, agents have
+                                               been centered both in their detection and in predict-
+        Figure 2: Levels of narrative analysis.
+                                                   ing the relations between them.
+
+                                          Agent detection.  While not always framed thisgiven sequence, they are all implicitly necessary
+                                              way, agent detection can thus be seen as a foun-for narrativity to occur. Following the “degrees
+                                                     dational aspect of computational narratology. Inof narrativity” hypothesis, we expect that recipi-
+                                                    order to better understand the role of agents withinents’ response to narrativity would increase as the
+                                                          narratives, we need reliable systems to extract andexplicitation of these variables increases.
+                                                       identify them. Work in agent-focused NLP has  According to our minimal deﬁnition, narrativity
+                                              emphasized expanding our understanding of char-
+can occur when:
+                                                       acters beyond named entities, as in agents such
+        A     Someone                     as “the coachman” or “the frog,” through the con-
+         B           tells                        cept of animacy detection (Vala et al., 2015; Jahan
+         C     someone                        et al., 2018; Coll Ardanuy et al., 2020; Karsdorp
+        D   somewhere that                    et al., 2015), while also differentiating characters
+          E     someone                  from other named referents (Jahan and Finlayson,
+           F   did something(s)                 2019). Other work has utilized annotated data to
+        G     [to someone]                 improve NER performance in the literary domain
+        H    somewhere               (Bamman et al., 2019), making sizable differences
+                  I      at some time                     in the accuracy of detecting such entities.
+               J    for some reason                The ability to recognize agents with increas-
+                                                  ing accuracy opens up a number of research ques-
+  Thus what deﬁnes the presence of narrativity are    tions on their role within narratives that aligns with
+the eight features: A. teller, B. mode of telling, C.   longstanding theoretical frameworks. For exam-
+recipient, D. situation, E. agent, F. one or more    ple, Propp (2010) theorized that character is de-
+sequential actions, G. potential object, H. spatial   ﬁned as a limited set of narrative “functions,” while
+location, I. temporal speciﬁcation, J. rationale.       Forster (1985) introduced the distinction between
+   In what follows, we organize our sections accord-   round/ﬂat characters with respect to their emotional
+ing to these features, drawing attention to their fur-   depth. More recent work has focused on represen-
+ther elaboration through existing theoretical frame-    tations of gender (Cheng, 2020; Kraicer and Piper,
+works and ongoing NLP work in each area. We   2019; Underwood et al., 2018; Piper, 2018a), reli-
+close by exploring how better understanding their   gion (Terman, 2017), psychology (Rashkin et al.,
+interactions can lead to further insights into major   2018; Brahman and Chaturvedi, 2020), desire ful-
+questions related to narrative understanding.         ﬁllment (Chaturvedi et al., 2016a) and power (Sap
+                                                            et al., 2017) with respect to narrative agents.
+2.2  Agents (E, G)                                                  This work is driven both by the ability to rec-
+Where classical narratology invests more heavily   ognize agents within text and ascribe attributes to
+in the perspectival nature of narrative—the act of   them. While the former has seen progress in NLP,
+telling—post-classical models have re-ignited a   character attribute inference is an open research
+focus on the centrality of characters or “agents”   area that requires more attention: how do we best
+(Frow, 2014; Jannidis, 2009; Eder et al., 2010;    theorize attributes like gender, ethnicity, religion,
+Palmer, 2004), ﬁrst explored by Propp (2010). For    emotion, function and power in agents within narra-
+example, Fludernik (2002) argues that a concept of    tive texts, and build models for their estimation that
+“experientiality” is deﬁnitive for narrativity: “Expe-    respect the biases present in the data (and not those
+                                         300
+
+===== PDF PAGE 4 =====
+external to it)? Better attribute inference can facili-   2.3  Events (F)
+tate research to identify what Blodgett et al. (2020)                                      As can be seen from the deﬁnition of narrativity
+call “harms of representation,” i.e., how different                                                       in §2.1, agent-based actions form the core of the
+communities are underrepresented or stereotypi-                                                      diegetic universe of a narrative (i.e., what hap-
+cally portrayed, which has a strong connection to                                                  pened). We can differentiate between two classes
+theories of personal dignity (Honneth, 1996).                                                     of problems this raises: understanding the ordering
+                                                     of events (and any discrepancies between story and
+Relation detection. A second important tradi-   discourse) and classifying events into more general
+tion for understanding narrative agents is related    functional units within a narrative.
+to the ﬁeld of social network theory. Character
+                                               Narrative sequence.  Narrative discourse is com-
+“schemas” have played an important role in narra-
+                                                    prised ﬁrst and foremost of a sequence of events
+tive understanding, including Propp (2010)’s func-
+                                                         that are selected and ordered by a narrator. This
+tions, protagonist/antagonist relations derived from
+                                                    order may correspond more or less closely and with
+classical tragedy (Moretti, 2013), Girard (2020)’s
+                                          more or less selectivity with the underlying events
+theory of mimetic desire, and Woloch (2009)’s dis-
+                                                   of the story. That is to say, given a more or less
+tinction between major and minor characters.
+                                                     inﬁnite set of possible events to report about the
+   This work depends on the accurate extraction not                                                  world, a narrator will choose a selection of events
+simply of a narrative’s agents, but of the relations                                                       to report and order those events more or less se-
+between them. How do we know that two char-                                                      quentially with their occurrence in the storyworld.
+acters are “connected” or “interacting”? Within                                              While much work in NLP has focused on the
+NLP, this structure has been inferred through a va-                                                 core problem of event detection (Nguyen and Gr-
+riety of methods (see Labatut and Bost (2019) for                                               ishman, 2015; Chen et al., 2015; Nguyen et al.,
+an overview), including the use of explicit quota-                                                2016; Feng et al., 2016; Ahn, 2006; Li et al., 2013;
+tions (Elson et al., 2010), though there remains a                                          Yang and Mitchell, 2016)—including event detec-
+great deal of ambiguity in inferring the connections                                                       tion within literature (Sims et al., 2019)—a range
+between characters (in scenarios such as thinking                                                     of work has also considered assembling sequences
+about, looking at, passing by, etc.). More recent                                                   of events into stereotypical frames, modeling the
+work has examined the characterization of such re-                                                          linear order of events (along with their participants)
+lationships, both in supervised models that presume                                                         into narrative event chains (Chambers and Jurafsky,
+a ﬁxed set of relations, such as positive/negative                                               2008, 2009) probabilistic frames (Cheung et al.,
+(Chaturvedi et al., 2016b) and familial/professional                                               2013) and schemas (Chambers, 2013).
+(Makazhanov et al., 2014; Massey et al., 2015), and                                                     In applying the construct of “scripts” (Schank
+in unsupervised models that learn a set of descrip-                                            and Abelson, 1977)—the experiential relatedness
+tors (Iyyer et al., 2016).                                                     of event sequences in discourse—this work allows,
+  While work in NLP has focused on the task of    ﬁrst, for an improved understanding of eventful-
+relation detection, a great deal of work remains to    ness (Hühn, 2014), i.e., the ratio of events rela-
+allow such methods to be usable in practice. One    tive to the amount of description and/or expected
+of the most challenging yet potentially transforma-   events (for which Plato used the terms diegesis
+tive goals is character relationship prediction for    (events) and mimesis (description)), allowing for
+family relations. Identifying which character pairs    better estimates of narrative categories like “pac-
+are siblings or parents/children is very difﬁcult in    ing” and “suspense” (Sternberg, 1992; Doust and
+practice, where such information is often expressed   Piwek, 2017; Wilmot and Keller, 2020). Addition-
+through a single statement or is altogether left to be     ally, knowledge of event sequences can be used to
+inferred. The ability to estimate familial structures    better understand the temporal relations between
+in narrative would enable a host of research ques-   events (which we discuss in the next section), as
+tions related to this fundamental human social unit,   well as the logical relations between events with
+such as: How have family relations changed over    respect to questions of causality (Mostafazadeh
+time, especially with respect to questions of size,    et al., 2016). Causal reasoning has been identi-
+hierarchy, and conﬂict? How has the agency of   ﬁed as one of the primary functions of narrative
+children evolved, either in imaginative depictions   (Todorov, 1981; Graesser et al., 2002), and thus
+or within clinical and/or judicial settings?             better modeling causal relations in stories can help
+                                         301
+
+===== PDF PAGE 5 =====
+researchers understand the representation of human   proximated as “sentiment valence” (Jockers, 2015;
+reasoning within them.                        Reagan et al., 2016; Boyd et al., 2020). Consider-
+                                                   ably more work needs to be done to understand the
+Narrative structure.  The ability to resolve nar-                                                formal and cognitive conditions of such narrative
+rative events into higher-level abstractions repre-                                                         pivots.
+sents another important area of research for narra-                                                Also important to emphasize here is that no sin-
+tive understanding, which we group into passage-                                                    gle approach is universally appropriate to under-
+and document-level problems.                                                  standing narrative structure. Much future work
+   Passage-level challenges in narrative structure                                                 remains in exploring further ways of modeling nar-
+include the identiﬁcation of narrative levels (Re-                                                         rative types and validating existing models more
+iter et al., 2019), where narratives include other                                                    thoroughly. We take up the relevance of this issue
+narratives within them (cf. 1001 Nights as a clas-                                          more fully in §3.1.
+sic example) and have complex interactions with
+point of view (described in §2.6 below). A re-                                                    2.4  Temporality (I)
+lated problem is narrative scene detection, which
+attempts to observe the spatial, temporal, and agen-   Narrative theory organizes the category of time
+tial boundaries between story segments. While    at its most general level according to the binary
+“text worlds” (Mikhalkova et al., 2020) and “nar-   scheme of “narrative time” versus “narrated time,”
+remes” (Delmonte and Marchesini, 2017) have   where the latter refers to the amount of time passing
+been proposed as alternate terms, we recommend    within the story and the former refers to the amount
+the use of scenes to differentiate such horizontally    of time passing within discourse. One can tell a
+structured boundary-detection issues from the ver-   “short-lived” story over hundreds of pages (e.g.,
+tical ones of narrative levels as well as the higher-   James Joyce’s Ulysses) or a “long-lived” story in
+level problem of narrative plotline detection, i.e.,    just a few lines (e.g., Biblical stories of human gen-
+the act of assembling scenes and levels into more    erations). Thus the ﬁrst level of temporal analysis
+general narrative units deﬁned by agents who may    for narrative must aim to understand the relation-
+range over both time and space (Wallace, 2012).   ship between the “time-of-telling” (narrative time)
+Doing so, we arrive at the following hierarchical   and the “time-of-what-is-told” (narrated time).
+scheme: event-scene-level-plotline-plot.            Underwood (2018) provides an empirical ap-
+  At the document level, work in NLP has relied   proach to this concept, annotating the temporal du-
+on a number of different theoretical frameworks for    ration (narrated time) of passages of 250 words (i.e.,
+categorizing narrative segments into higher-level    within a ﬁxed window of discourse). While com-
+types. Ouyang and McKeown (2014), Swanson    putational work on elapsed narrated time predic-
+et al. (2014), Levi et al. (2020) and Saldias and    tion has begun (Yauney et al., 2019), much work
+Roy (2020) all leverage the categorization outlined    remains to be done. This work has the potential not
+by Labov and Waletzky (1967), focusing espe-   only to open up new empirical studies into pacing
+cially on the “most reportable event (MRE)” as   and suspense detection (Doust and Piwek, 2017),
+an indicator of a narrative’s more general meaning.   which theorists assume is an important dimension
+While valuable for the analysis of “small stories”    in audience response to narrative (Sternberg, 1992).
+(Georgakopoulou, 2007), MRE is a limited con-     It can also provide insights into changing historical
+struct for addressing longer, more complex narra-   dispositions to narrative temporality to better un-
+tives. Instead a preferred focus should attempt to    derstand large-scale questions of cultural evolution.
+explore the theoretical literature’s focus on “dis-   A second level of temporal analysis focuses on
+equilibrium” and “change of state” (Bruner, 1991;    questions of “anachrony,” the misalignment of dis-
+Herman, 2009). Papalampidi et al. (2019) opera-   course sequence from story sequence (i.e., analep-
+tionalizes the concept of “turning point” identiﬁ-    sis and prolepsis or ﬂashback and ﬂashforward).
+cation based on how-to guides for screenwriters   Genette (1983) again provides a theoretical scaf-
+(Hauge, 2017), Piper (2015) uses a similar con-   folding for this work, enumerating a range of ﬁne-
+struct for novels based on models of religious con-   grained categories of anachrony, and providing ex-
+version, and a number of studies implement Kurt   amples of scene-level annotations for such works
+Vonnegut’s theory of the plot arc as the narrative    as Homer’s Iliad (for which the classical trope of
+discourse of rising and falling “fortune,” often ap-   beginning in medias res necessitates ﬂashbacks)
+                                         302
+
+===== PDF PAGE 6 =====
+and Proust’s In Search of Lost Time.                    literature was much less focused on New England
+  Within NLP, this line of research  is taken-    in its origins than theorists have claimed and con-
+up most extensively in research related to the    tinues to be much more nationally centered than,
+TempEval task (Verhagen et al., 2009; UzZaman    for example, UK literature, conﬁrming European
+et al., 2013), which orders events in text relative   assumptions about the provincialism of U.S. lit-
+to each other, but typically operates on documents    erature. Erlin et al. (2021) show how minor Eu-
+with relatively short time scales (not novels span-   ropean literatures are subject to different stylistic
+ning decades). Much work on temporal ordering    pressures with respect to national setting than ma-
+for long documents is required, including alter-    jor languages, contradicting earlier theories.
+native problem deﬁnitions (such as work by Kim                                                     Existing work has thus already leveraged mea-
+et al. (2020) on predicting the absolute time of day                                               surements of named locations to make important
+for each sentence in novels, or Kearns (2020) on                                                        theoretical advances (attesting to the value of this
+labeling time disruptions).                                              dimension of narrative), but there remains a range
+  Accurately estimating the relative temporal or-                                                   of work that can only be realized by more com-
+dering for events, sentences and scenes in narra-                                                  plex measurements of the structure of places in
+tives has the potential to shed insight on a range                                                             text. In this view, literary theorists have empha-
+of narrative questions: temporal ordering is a pre-                                                    sized the important distinction between “space”
+condition for representations of plot;  it is a re-                                            and “place” when it comes to setting, where the
+quirement for any kind of causal understanding                                                              latter refers to concrete geo-locations or physical
+(Mostafazadeh et al., 2016); and even holistic mark-                                                       settings and the former to experiential constructs
+ers such as the rate of analepsis (nostalgia) can be                                                (Lefebvre and Nicholson-Smith, 1991; Piatti and
+an indicator of cultural prestige (Piper and Porte-                                                 Hurni, 2009).  Understanding narrative “space”
+lance, 2016) or potentially mental dispositions of                                                        refers to relational constructs (i.e., events are dis-
+patients or political communities.                                                  persed or concentrated around single/many points)
+                                                   as well as questions of navigability and intelligi-
+2.5  Setting (H)                                                            bility (as in Kafka’s labyrinthine bureaucratic or
+                                               governmental spaces (Piatti et al., 2013)). SimilarThe setting of a narrative deﬁnes where the action
+                                                         to the logical relations between narrative sentencestakes place—the physical universe where the plot
+                                                 (temporal or causal), narratives also encode a spa-unfolds, which may be grounded by referents in the
+                                                                    tial logic that can be more or less explicit.real world (e.g., New York City in Truman Capote’s
+Breakfast at Tiffany’s) or entirely ﬁctional (Hog-    We can ground this theoretical perspective in a
+warts Academy in Rowland’s Harry Potter). In the   number of concrete computational tasks. As noted
+same way that we understand an agent through the    above, inferring plotlines (and plot more generally)
+actions they perform, theoretical work also points    requires grounding actions in the places where they
+out a similar co-determinative relationship between    unfold (so that one plotline in Lord of the Rings is
+action and setting (Burke, 1969): the setting (such    the journey by Frodo and Sam from The Shire to
+as a kitchen) inﬂuences the kinds of activities that   Mount Doom). While NER provides the capacity
+are performed there (acts of cooking, eating), and    to identify mentions of places, one open challenge
+we understand that setting through those actions.      is resolving different mentions of the same place
+  Modeling setting naturally requires the identiﬁ-    to the same physical entity. While this is relatively
+cation of place, and much work in NLP has focused   simple for named locations such as Mount Doom,
+on the core tasks of entity recognition and toponym    coreference resolution systems struggle with long-
+resolution in the context of narrative (DeLozier   document coreference of common entities like the
+et al., 2016; Brooke et al., 2016; Bamman et al.,   house and the room (Bamman et al., 2020; Toshni-
+2019), leading to models that are able to recognize   wal et al., 2020), which deﬁne the center of the nar-
+both named locations, facilities and geopolitical    rative universe for many ﬁctional constructs. Like-
+entities (New York, Hogwarts) as well as common    wise, many questions can only be answered by mea-
+ones (the kitchen, the village).                       suring the relationship between places mentioned
+  The existence of such tools has already estab-    in text: how far do Frodo and Sam walk on their
+lished setting as a main area of focus within cul-   journey? Cultural historians have long argued for
+tural analytics. Wilkens (2013) has shown how U.S.   an association between mobility and agency (Sen,
+                                        303
+
+===== PDF PAGE 7 =====
+1993). Systems that allow better inference on ques-   term narratologists use to denote text spans where
+tions of spatial movement within narratives could   a reader cannot reliably distinguish between two
+provide important insights into changing power dy-    distinct perspectives. While some computational
+namics with respect to different social communities    efforts have attempted to identify free indirect dis-
+(e.g. how far are women and children allowed to   course (Brunner et al., 2020; Long and So, 2016),
+go, either in personal life stories, real-world news     it remains an extremely challenging recognition
+accounts, or ﬁctional mythologies?).                  task. One way to frame the task of focalization
+                                                      detection is as a subset of agent attribute detection.
+2.6  Perspective (A, B, C)
+                                                Dialogue.  The ﬁnal elementary aspect of per-We have so far focused on narrative elements that
+                                                         spective, dialogue, represents an explicit attributionfall below our double line in §2.1, i.e., that concern
+                                                   of “point of view” to a particular agent within thethe diegetic universe of a narrative.  In this sec-
+                                                       narrative (including indirect discourse). Dialoguetion, we look more closely at the elements that fall
+                                                        attribution is a well-studied, yet still challengingabove our double line, which aligns with Genette’s
+                                               problem within NLP (He et al., 2013; Muzny et al.,concept of narrating.
+                                                 2017b). While computational work has examined  At its most general level, narrating refers to the
+                                                    the ways in which dialogue differs from narrativeperspective from which a story is told, “the gen-
+                                        (Muzny et al., 2017a) as well as functions as aerating instance of narrative discourse” (Genette,
+                                            main predictor of ﬁctional versus non-ﬁctional sto-1983, 213). It thus captures an intending conscious-
+                                                        rytelling (Piper, 2018b), less attended to are theness (whether real or imagined) as the source of
+                                          ways in which dialogue can provide insights intolanguage variation in a narrative. This gives rise to
+                                                   agent-speciﬁc sub-narratives. Agents are often de-a number of different research directions, including
+                                                      picted as having different voices that can be distin-point of view, focalization and dialogue.
+                                                 guished empirically (Vishnubhotla et al., 2019); in
+Point of view.  The simplest form of narrative    the same way that all narratives represent a particu-
+perspective pertains to the relationship between the     lar point of view, dialogue can reveal intra-narrative
+narrator and the story, i.e., whether the narrator is    perspectives and biases. Reconstructing the degree
+an agent external to or present within the diegetic    of partiality of any given agent’s perspective within
+universe of the narrative. We refer to this using Bal    the larger narrative in which they are embedded
+and Van Boheemen (2009)’s distinction between    represents an important line of future research into
+external narrators (EN) and character-bound nar-    narrative perspective—one which requires not only
+rators (CN), colloquially understood as ﬁrst- and    high-quality models for speaker attribution, but
+third-person narratives. Computational models of    also models for inferring speakers’ attitudes on
+point of view have found strong differentiators in    the narrated world expressed through dialogue.
+simple features like the use of personal pronouns
+(Eisenberg and Finlayson, 2016), and have focused   3  Scaling up narrative understanding
+on identifying extradiegetic moments in personal
+                                           Our aim so far is to align existing work in NLP nar-
+narratives using subjectivity as a guide (Sagae et al.,
+                                                           rative understanding with theoretical frameworks in
+2013). Genette (1983, 248) posits a more complex
+                                                      narratology. In this ﬁnal section, we want to iden-
+set of relations between layers of narrative involve-
+                                                             tify three core challenge areas that tackle larger
+ment by narrating agents that is worth further study.
+                                                   questions regarding the social impact of narrative
+Focalization.  The second level called “focaliza-   and that depend upon the successful integration of
+tion” refers to the organization of narrative lan-   the different strands of NLP research outlined here.
+guage around an experiencing agent’s conscious-   Broadly, each of these areas attempts to understand
+ness within the narrative that is separate from the    narrative as an important basis for human behavior.
+primary narrator. This occurs when we see events
+                                                    3.1  Narrative economiesexplicitly refracted through the eyes, mind, and
+feelings of a particular agent or character. Un-   One of the core beliefs in narratology is that narra-
+derstanding the boundaries between the narrator’s    tives are deeply informed by prior narrative struc-
+“voice” and that of a character’s perspective is a    tures (Genette, 1997) and social context (Herman,
+challenging interpretive task for human readers as    2009). In order to better understand how narratives
+well as machines. “Free indirect discourse” is the   inﬂuence each other or are inﬂuenced by different
+                                         304
+
+===== PDF PAGE 8 =====
+social contexts, we ﬁrst need more robust systems    features—will allow researchers to develop a more
+for classifying different narrative types.             multi-dimensional understanding of narrative re-
+  Fields as diverse as folkloristics and narrative   sponse beyond simple binaries like fact-based ver-
+psychology provide potential models of how to    sus narrative discourse. Doing so will allow re-
+move forward. Two of the best known examples    search to address the kinds of narratives that read-
+of manually constructed classiﬁcation systems for    ers, viewers and listeners respond most strongly to
+ﬁctional narratives are Thompson’s Motif-Index of   and better understand the textual features that drive
+Folk-literature (Thompson, 1989) and the Aarne-   responses. Given the proliferation of user gener-
+Thompson-Uther (ATU) Tale Index. In the ﬁeld of    ated online responses “in the wild” today, a rich
+narrative psychology, Adler et al. (2016) have pro-   research opportunity awaits to move beyond labo-
+vided a taxonomy of life narratives that correlate    ratory environments (Bail, 2014; Salganik, 2019)
+with life satisfaction surveys. While these models    to understand the relationship between different
+have seen only limited computational implementa-    narrative products (movies, books, advertisements)
+tion (Broadwell et al., 2018), both offer examples   and consumer responses captured by social media.
+of models for future narrative classiﬁcation.
+  The inter-disciplinary computational implemen-   3.3  Narrative beliefs
+tation of such large-scale registers of story types                                   Common to the work discussed so far is a reliance
+represents a major research challenge. If successful,
+                                            on two guiding assumptions: that narrativity is both
+it would provide invaluable insights into questions                                                           explicit (encoded within given textual features) and
+of cultural evolution, narrative inﬂuence, mental                                                      discrete (bounded by a single document or series
+health, and transnational cultural transfer. For ex-                                                   of documents). Yet, as research in narrative psy-
+ample, how do real-world events like wars and                                                chology has long argued, narrative can also be con-
+pandemics modulate how humans invent or tell sto-                                                 ceived as a latent organizing principle of human
+ries? When do we see new narrative forms emerg-                                                  reasoning (Bruner, 1991).
+ing due to different historical or personal contexts?
+                                                      Sociologists refer to the notion of “ontologi-
+How do information economies like social media
+                                                      cal narratives” (Somers, 1994) or “deep stories”
+modulate the production of narrative structures cir-
+                                                 (Hochschild, 2018) to refer to the narrative struc-
+culating in the news in real time (as with events
+                                                       turing of information that individuals use to under-
+like Black Lives Matter)? And what can narrative
+                                                    stand their place in the world and facilitate decision-
+understanding do to further combat problematic
+                                              making. Such deep stories are not located exclu-
+conspiracy theories or misinformation campaigns?
+                                                      sively or even explicitly within a single narrative
+These are just a few of the large-scale questions
+                                                      instance; rather, they can be thought of as higher-
+that researchers will be able to address as our under-
+                                                  order organizing principles that situate multiple
+standing of the nature of narrative types and their
+                                                     events of speech into a more general paradigm. One
+interactions improves.
+                                                 powerful example of this is the so-called “Great Re-
+                                                placement” narrative, the worldview held by some
+3.2  Narrative responses
+                                                white Americans or Europeans that non-white im-
+Considerable work exists to study the efﬁcacy of    migrants are arriving to take their jobs and political
+narrative discourse when it comes to persuasion   power (Feola, 2020). While this belief takes many
+(Dal Cin et al., 2004; Braddock and Dillard, 2016)    different forms, it can be distilled into a single and
+and building trust (Kubin et al., 2021). Political    relatively cogent story.
+scientists and media studies scholars in particular   A greater understanding of these deep stories
+have focused on the concept of “framing” to ana-   and how they shape communities or political be-
+lyze how the news media shapes public attention    havior can have signiﬁcant social outcomes. They
+and policy debates by deciding what aspects of an   can help policymakers craft policies that better re-
+issue to emphasize or exclude in reporting events    ﬂect community belief systems and thus produce
+(Boydstun, 2013; Card et al., 2015, 2016; Field    higher levels of adherence and support as well as
+et al., 2018).                                          contribute to efforts at mitigating social crises. For
+ A more sophisticated computational modeling   example, Shiller (2020) argues that the severity
+of narrative types—one that relies on an under-   of economic downturns might in part rest on the
+standing of the interactions of different narrative    vividness of certain stories circulating in society,
+                                        305
+
+===== PDF PAGE 9 =====
+and thus, one effective strategy in containing this    David Bamman, Olivia Lewke, and Anya Mansoor.
+severity might consist in promoting alternative nar-      2020. An annotated dataset of coreference in En-
+                                                                glish literature.  In Proceedings of the 12th Lan-ratives to the public. Researchers are increasingly
+                                                   guage Resources and Evaluation Conference, pages
+aware that changing human behavior depends on      44–54, Marseille, France. European Language Re-
+changing the stories people tell themselves and       sources Association.
+their social circles.
+                                                 David Bamman, Sejal Popat, and Sheng Shen. 2019.
+                                         An annotated dataset of literary entities. In Proceed-
+4  Conclusion                                         ings of the 2019 Conference of the North American
+                                                     Chapter of the Association for Computational Lin-
+Narrative is a pervasive phenomenon that cuts       guistics: Human Language Technologies, Volume 1
+across the human experience. As research in NLP      (Long and Short Papers), pages 2138–2144, Min-
+has increasingly focused on developing computa-       neapolis, Minnesota. Association for Computational
+                                                               Linguistics.
+tional models to reason about stories, we see space
+for existing structures in narrative theory to help    Roland Barthes and Lionel Duisit. 1975. An introduc-
+provide an organizing system around these efforts.       tion to the structural analysis of narrative. New liter-
+By making connections between theoretical frame-      ary history, 6(2):237–272.
+works in narratology and existing research in NLP                                             Su Lin Blodgett, Solon Barocas, Hal Daumé III, and
+more explicit, we hope to provide a mechanism     Hanna Wallach. 2020.  Language (technology) is
+to coordinate diverse research efforts, unify termi-      power: A critical survey of “bias” in NLP. In Pro-
+nology and methods, and suggest major research      ceedings of the 58th Annual Meeting of the Asso-
+                                                              ciation for Computational Linguistics, pages 5454–challenges that will help drive the empirical study
+                                                       5476, Online. Association for Computational Lin-
+of narrative forward.                                           guistics.
+
+5  Acknowledgments                        Ryan L Boyd, Kate G Blackburn, and James W Pen-
+                                                           nebaker. 2020.  The narrative arc: Revealing core
+                                                               narrative structures through text analysis.  ScienceWe thank the anonymous reviewers for their helpful
+                                                        advances, 6(32):eaba2196.
+comments. The research reported in this article
+was supported by funding from the Social Sciences   Amber E. Boydstun. 2013.  Making the News:  Poli-
+and Humanities Research Council of Canada (895-        tics, the Media, and Agenda Setting. University of
+                                                    Chicago Press.2013-1011), the National Science Foundation (IIS-
+1942591), and the National Endowment for the                                                    Kurt Braddock and James Price Dillard. 2016. Meta-
+Humanities (HAA-271654-20).                            analytic evidence for the persuasive effect of narra-
+                                                                   tives on beliefs, attitudes, intentions, and behaviors.
+                                                  Communication Monographs, 83(4):446–467.
+References
+                                                   Faeze Brahman and Snigdha Chaturvedi. 2020. Mod-
+                                                              eling protagonist emotions for emotion-aware story-Jonathan M Adler, Jennifer Lodi-Smith, Frederick L
+                                                                       telling.  In Proceedings of the 2020 Conference on   Philippe, and Iliane Houle. 2016. The incremental
+                                                        Empirical Methods in Natural Language Process-   validity of narrative identity in predicting well-being:
+                                                          ing (EMNLP), pages 5277–5294, Online. Associa-  A review of the ﬁeld and recommendations for the
+                                                                tion for Computational Linguistics.   future.  Personality and Social Psychology Review,
+   20(2):142–175.
+                                                          Peter Broadwell, David Mimno, and Timothy Tangher-
+                                                                              lini. 2018.  The tell-tale hat: Surfacing the uncer-
+David Ahn. 2006. The stages of event extraction. In                                                                 tainty in folklore classiﬁcation. Journal of Cultural
+   Proceedings of the Workshop on Annotating and                                                              Analytics.
+  Reasoning About Time and Events, ARTE ’06, pages
+   1–8, Stroudsburg, PA, USA. Association for Compu-                                                            Julian Brooke, Adam Hammond, and Timothy Bald-
+   tational Linguistics.                                                         win. 2016.  Bootstrapped text-level named entity
+                                                            recognition for literature.   In Proceedings of the
+Christopher A Bail. 2014. The cultural environment:      54th Annual Meeting of the Association for Compu-
+  Measuring culture with big data. Theory and Soci-       tational Linguistics (Volume 2: Short Papers), pages
+   ety, 43(3-4):465–482.                                344–350, Berlin, Germany. Association for Compu-
+                                                                  tational Linguistics.
+Mieke Bal and Christine Van Boheemen. 2009. Narra-
+   tology: Introduction to the theory of narrative. Uni-   Jerome Bruner. 1991. The narrative construction of re-
+   versity of Toronto Press.                                          ality. Critical inquiry, 18(1):1–21.
+                                        306
+
+===== PDF PAGE 10 =====
+Annelen  Brunner, Ngoc Duyen  Tanja  Tu,  Lukas       novels.  In Thirtieth AAAI Conference on Artiﬁcial
+  Weimer, and Fotis Jannidis. 2020.  To BERT or       Intelligence.
+   not to BERT–comparing contextual embeddings in
+                                             Yubo Chen, Liheng Xu, Kang Liu, Daojian Zeng, and  a deep learning architecture for the automatic recog-
+                                                     Jun Zhao. 2015. Event extraction via dynamic multi-   nition of four types of speech, thought and writing
+                                                         pooling convolutional neural networks. In Proceed-   representation. In Proceedings of the 5th Swiss Text
+                                                           ings of the 53rd Annual Meeting of the Association   Analytics Conference (SwissText) & 16th Conference
+                                                                for Computational Linguistics and the 7th Interna-  on Natural Language Processing (KONVENS).
+                                                                tional Joint Conference on Natural Language Pro-
+Kenneth Burke. 1969. A grammar of motives, volume       cessing (Volume 1: Long Papers), pages 167–176.
+  177. Univ of California Press.                           Association for Computational Linguistics.
+
+                                                     Jonathan Y Cheng. 2020. Fleshing out models of gen-Simon Bushell, Géraldine Satre Buisson, Mark Work-
+                                                          der in English-language novels (1850–2000). Jour-  man, and Thomas Colley. 2017. Strategic narratives
+                                                          nal of Cultural Analytics.   in climate change: Towards a unifying narrative to
+   address the action gap on climate change. Energy                                                         Jackie Chi Kit Cheung, Hoifung Poon, and Lucy Van-
+  Research Social Science, 28:39–49.                                                      derwende. 2013.  Probabilistic frame induction. In
+                                                       Proceedings of the 2013 Conference of the North
+Dallas Card, Amber E. Boydstun, Justin H. Gross,                                                   American Chapter of the Association for Computa-
+   Philip Resnik, and Noah A. Smith. 2015. The me-                                                                tional Linguistics: Human Language Technologies,
+   dia frames corpus:  Annotations of frames across                                                      pages 837–846, Atlanta, Georgia. Association for
+   issues.  In Proceedings of the 53rd Annual Meet-                                                      Computational Linguistics.
+   ing of the Association for Computational Linguistics
+  and the 7th International Joint Conference on Natu-   Mariona Coll Ardanuy, Federico Nanni, Kaspar Bee-
+   ral Language Processing (Volume 2: Short Papers),       len, Kasra Hosseini, Ruth Ahnert, Jon Lawrence,
+  pages 438–444. Association for Computational Lin-      Katherine McDonough, Giorgia Tolfo, Daniel CS
+   guistics.                                              Wilson, and Barbara McGillivray. 2020. Living ma-
+                                                             chines: A study of atypical animacy.  In Proceed-
+Dallas Card,  Justin Gross, Amber Boydstun, and       ings of the 28th International Conference on Com-
+  Noah A. Smith. 2016. Analyzing framing through       putational Linguistics, pages 4534–4545, Barcelona,
+   the casts of characters in the news. In Proceedings of      Spain (Online). International Committee on Compu-
+   the 2016 Conference on Empirical Methods in Natu-       tational Linguistics.
+   ral Language Processing, pages 1410–1420, Austin,
+   Texas. Association for Computational Linguistics.     Sonya Dal Cin, Mark P Zanna, and Geoffrey T Fong.
+                                                       2004.  Narrative persuasion and overcoming resis-
+Nathanael Chambers. 2013.  Event schema induction       tance. Resistance and persuasion, 2(175-191):4.
+  with a probabilistic entity-driven model. In Proceed-
+   ings of the 2013 Conference on Empirical Methods    Rodolfo Delmonte and Giulia Marchesini. 2017. A
+   in Natural Language Processing, pages 1797–1807,      semantically-based computational approach to nar-
+   Seattle, Washington, USA. Association for Compu-       rative structure. In IWCS 2017—12th International
+   tational Linguistics.                                  Conference on Computational Semantics—Short pa-
+                                                               pers.
+Nathanael Chambers and Dan Jurafsky. 2008. Unsuper-
+                                                    Grant DeLozier, Ben Wing, Jason Baldridge, and Scott   vised learning of narrative event chains. In Proceed-
+                                                            Nesbit. 2016. Creating a novel geolocation corpus   ings of ACL-08: HLT, pages 789–797, Columbus,
+                                                   from historical texts.  In Proceedings of the 10th  Ohio. Association for Computational Linguistics.
+                                                              Linguistic Annotation Workshop held in conjunction
+                                                         with ACL 2016 (LAW-X 2016), pages 188–198. As-Nathanael Chambers and Dan Jurafsky. 2009. Unsuper-
+                                                              sociation for Computational Linguistics.   vised learning of narrative schemas and their partici-
+   pants. In Proceedings of the Joint Conference of the                                                    Richard Doust and Paul Piwek. 2017. A model of sus-
+  47th Annual Meeting of the ACL and the 4th Interna-                                                      pense for narrative generation. In Proceedings of the
+   tional Joint Conference on Natural Language Pro-                                                       10th International Conference on Natural Language
+   cessing of the AFNLP: Volume 2 - Volume 2, ACL                                                         Generation, pages 178–187.
+   ’09, pages 602–610, Stroudsburg, PA, USA. Associ-
+   ation for Computational Linguistics.                   Jens Eder, Fotis Jannidis, and Ralf Schneider. 2010.
+                                                       Characters in ﬁctional worlds: Understanding imag-
+Snigdha  Chaturvedi,  Dan  Goldwasser,  and  Hal       inary beings in literature, ﬁlm, and other media, vol-
+  Daume  III. 2016a.  Ask, and shall you receive?     ume 3. Walter de Gruyter.
+   understanding desire fulﬁllment in natural language
+   text. In Thirtieth AAAI Conference on Artiﬁcial In-   Joshua Eisenberg and Mark Finlayson. 2016.  Auto-
+   telligence.                                            matic identiﬁcation of narrative diegesis and point of
+                                                         view. In Proceedings of the 2nd Workshop on Com-
+Snigdha  Chaturvedi,  Shashank   Srivastava,  Hal       puting News Storylines (CNS 2016), pages 36–46,
+  Daume  III, and Chris Dyer. 2016b.   Modeling       Austin, Texas. Association for Computational Lin-
+   evolving relationships between characters in literary        guistics.
+                                        307
+
+===== PDF PAGE 11 =====
+David Elson, Nicholas Dames, and Kathleen McKe-   Michael Hauge. 2017.  Storytelling Made Easy: Per-
+  own. 2010.  Extracting social networks from liter-      suade and Transform Your Audiences, Buyers, and
+   ary ﬁction. In Proceedings of the 48th Annual Meet-      Clients–Simply,  Quickly, and Proﬁtably.    Indie
+   ing of the Association for Computational Linguistics,     Books International.
+  pages 138–147, Uppsala, Sweden. Association for
+  Computational Linguistics.                     Hua He, Denilson Barbosa, and Grzegorz Kondrak.
+                                                       2013.  Identiﬁcation of speakers in novels. In Pro-
+Matt Erlin, Andrew Piper, Douglas Knox, Stephen Pen-                                                        ceedings of the 51st Annual Meeting of the Associa-
+   tecost, Michaela Drouillard, Brian Powell, and Ci-                                                                tion for Computational Linguistics (Volume 1: Long
+  enna Townson. 2021.  Cultural capitals: Modeling                                                           Papers), pages 1312–1320, Soﬁa, Bulgaria. Associa-
+  ‘minor’ european literature. Cultural Analytics.                                                                tion for Computational Linguistics.
+
+Xiaocheng Feng, Lifu Huang, Duyu Tang, Heng Ji,
+                                                 David Herman. 2009.  Basic elements of narrative.  Bing Qin,  and Ting  Liu. 2016.  A language-
+                                                    John Wiley & Sons.  independent neural network for event detection. In
+  Proceedings of the 54th Annual Meeting of the As-
+                                                         Arlie Russell Hochschild. 2018. Strangers in their own   sociation for Computational Linguistics (Volume 2:
+                                                           land: Anger and mourning on the American right.  Short Papers), pages 66–71. Association for Com-
+                                                The New Press.   putational Linguistics.
+
+Michael Feola. 2020. “You will not replace us”: The    Axel Honneth. 1996. The struggle for recognition: The
+  melancholic nationalism of whiteness. Political The-      moral grammar of social conﬂicts. MIT Press.
+   ory, page 0090591720972745.
+                                                         Peter Hühn. 2014. Event and eventfulness. de Gruyter.
+Anjalie Field, Doron Kliger, Shuly Wintner, Jennifer
+   Pan, Dan Jurafsky, and Yulia Tsvetkov. 2018. Fram-                                                Mohit Iyyer, Anupam Guha, Snigdha Chaturvedi, Jor-
+   ing and agenda-setting in Russian news:  a com-                                                   dan Boyd-Graber, and Hal Daumé III. 2016. Feud-
+   putational analysis of intricate political strategies.                                                          ing families and former Friends:  Unsupervised
+   In Proceedings of the 2018 Conference on Em-                                                            learning for dynamic ﬁctional relationships. In Pro-
+   pirical Methods in Natural Language Processing,                                                        ceedings of the 2016 Conference of the North Amer-
+  pages 3570–3580, Brussels, Belgium. Association                                                         ican Chapter of the Association for Computational
+   for Computational Linguistics.                                                               Linguistics: Human Language Technologies, pages
+                                                    1534–1544, San Diego, California. Association forMonika Fludernik. 2002. Towards a ‘Natural’ Narra-
+                                                      Computational Linguistics.   tology. Routledge.
+
+Edward Morgan Forster. 1985.  Aspects of the Novel,   Labiba Jahan, Geeticka Chauhan, and Mark Finlayson.
+  volume 19. Houghton Mifﬂin Harcourt.                 2018. A new approach to Animacy detection.  In
+                                                       Proceedings of the 27th International Conference
+Gustav Freytag. 1895. Technique of the drama: An ex-     on Computational Linguistics, pages 1–12, Santa Fe,
+   position of dramatic composition and art. S. Griggs.    New Mexico, USA. Association for Computational
+                                                               Linguistics.
+John Frow. 2014. Character and person. Oxford Uni-
+   versity Press.                                                   Labiba Jahan and Mark Finlayson. 2019.  Character
+                                                             identiﬁcation reﬁned: A proposal.  In ProceedingsGärard Genette. 1997.  Palimpsests: Literature in the
+                                                                of the First Workshop on Narrative Understanding,  second degree, volume 8. U of Nebraska Press.
+                                                      pages 12–18, Minneapolis, Minnesota. Association
+Gérard Genette. 1983. Narrative discourse: An essay       for Computational Linguistics.
+   in method, volume 3. Cornell University Press.
+                                                           Fotis Jannidis. 2009. Character. De Gruyter.
+Alexandra Georgakopoulou. 2007.  Small stories, in-
+   teraction and identities, volume 8. John Benjamins   Matthew  Jockers.  2015.     Revealing  sentiment
+   Publishing.                                        and   plot   arcs   with   the   syuzhet   package.
+                                         http://www.matthewjockers.net/
+Rachel Giora and Yeshayahu Shen. 1994. Degrees of                                          2015/02/02/syuzhet/.
+   narrativity and strategies of semantic reduction. Po-
+   etics, 22(6):447–458.
+                                                          Folgert B Karsdorp, M Meulen, Theo Meder, and APJ
+                                                    van den Bosch. 2015. Animacy detection in stories.René Girard. 2020.  Generative scapegoating.  In Vi-
+   olent origins, pages 73–105. Stanford University
+   Press.                                       Edward Kearns. 2020. Annotating and quantifying nar-
+                                                                  rative time disruptions in modernist and hypertext
+Arthur C Graesser, Brent Olde, and Bianca Klettke.       ﬁction. In Proceedings of the First Joint Workshop
+  2002. How does the mind construct and represent      on Narrative Understanding, Storylines, and Events,
+   stories. Narrative impact: Social and cognitive foun-      pages 72–77, Online. Association for Computational
+   dations, pages 229–262.                                    Linguistics.
+                                        308
+
+===== PDF PAGE 12 =====
+Allen Kim, Charuta Pethe, and Steve Skiena. 2020.   Nasrin Mostafazadeh,  Alyson  Grealish,  Nathanael
+  What time is it?  temporal analysis of novels.  In      Chambers, James Allen, and Lucy Vanderwende.
+  Proceedings of the 2020 Conference on Empirical      2016.   CaTeRS: Causal and temporal  relation
+  Methods in Natural Language Processing (EMNLP),     scheme for semantic annotation of event structures.
+  pages 9076–9086, Online. Association for Computa-      In Proceedings of the Fourth Workshop on Events,
+   tional Linguistics.                                    pages 51–61, San Diego, California. Association for
+                                                      Computational Linguistics.
+Eve Kraicer and Andrew Piper. 2019.  Social char-
+   acters:  the hierarchy of gender in contemporary    Grace Muzny, Mark Algee-Hewitt, and Dan Jurafsky.
+   english-language ﬁction.  Journal of Cultural Ana-      2017a.  Dialogism in the novel: A computational
+   lytics.                                           model of the dialogic nature of narration and quota-
+                                                                    tions. Digital Scholarship in the Humanities, 32.
+Emily Kubin, Curtis Puryear, Chelsea Schein, and
+                                                 Grace Muzny, Michael Fang, Angel Chang, and Dan  Kurt Gray. 2021.   Personal experiences bridge
+                                                              Jurafsky. 2017b. A two-stage sieve approach for  moral and political divides better than facts.  Pro-
+                                                        quote attribution.  In Proceedings of the 15th Con-   ceedings  of  the National Academy  of  Sciences,
+                                                            ference of the European Chapter of the Association  118(6):e2008389118.
+                                                                for Computational Linguistics: Volume 1, Long Pa-
+Vincent Labatut and Xavier Bost. 2019. Extraction and       pers, volume 1, pages 460–470.
+   analysis of ﬁctional character networks: A survey.
+                                                   Thien Huu Nguyen, Kyunghyun Cho, and Ralph Gr-  CoRR, abs/1907.02704.
+                                                       ishman. 2016.  Joint event extraction via recurrent
+                                                           neural networks.  In Proceedings of the 2016 Con-W. Labov and J. Waletzky. 1967.  Narrative analysis:
+                                                            ference of the North American Chapter of the Asso-  Oral versions of personal experience.   In Essays
+                                                              ciation for Computational Linguistics: Human Lan-  on the verbal and visual arts, Seattle. University of
+                                                   guage Technologies, pages 300–309. Association for  Washington Press.
+                                                      Computational Linguistics.
+Henri Lefebvre and Donald Nicholson-Smith. 1991.
+                                                   Thien Huu Nguyen and Ralph Grishman. 2015. Event  The production of space, volume 142. Oxford Black-
+                                                             detection and domain adaptation with convolutional   well.
+                                                           neural networks. In Proceedings of the 53rd Annual
+                                                     Meeting of the Association for Computational Lin-EfﬁLevi, Guy Mor, Shaul Shenhav, and Tamir Sheafer.
+                                                                 guistics and the 7th International Joint Conference  2020. Compres: A dataset for narrative structure in
+                                                 on Natural Language Processing (Volume 2: Short  news.
+                                                           Papers), pages 365–371. Association for Computa-
+Qi Li, Heng Ji, and Liang Huang. 2013.  Joint event       tional Linguistics.
+   extraction via structured prediction with global fea-
+                                                            Jessica Ouyang and Kathy McKeown. 2014.   To-   tures. In Proceedings of the 51st Annual Meeting of
+                                                    wards automatic detection of narrative structure. In   the Association for Computational Linguistics (Vol-
+                                                       Proceedings of the Ninth International Conference  ume 1: Long Papers), pages 73–82. Association for
+                                                 on Language Resources and Evaluation (LREC’14),  Computational Linguistics.
+                                                      pages 4624–4631,  Reykjavik,  Iceland. European
+Genevieve Liveley. 2019.  Narratology.  Oxford Uni-     Language Resources Association (ELRA).
+   versity Press.                                                 Ruth Page. 2010. Re-examining narrativity: Small sto-
+                                                                    ries in status updates. Text & Talk, 30(4):423–444.Hoyt Long and Richard Jean So. 2016. Turbulent ﬂow:
+ A computational model of world literature. Modern                                                 Alan Palmer. 2004.  Fictional minds. U of Nebraska
+  Language Quarterly, 77(3):345–367.                                                               Press.
+
+Aibek Makazhanov, Denilson Barbosa, and Grzegorz    Pinelopi Papalampidi, Frank Keller, and Mirella Lap-
+  Kondrak. 2014.  Extracting family relationship net-       ata. 2019.  Movie plot analysis via turning point
+  works from novels. CoRR, abs/1405.0603.                 identiﬁcation.  In Proceedings of the 2019 Confer-
+                                                      ence on Empirical Methods in Natural Language
+Philip Massey,  Patrick Xia, David Bamman,  and                                                        Processing and the 9th International Joint Confer-
+  Noah A. Smith. 2015. Annotating character relation-                                                      ence on Natural Language Processing (EMNLP-
+   ships in literary texts.                                                   IJCNLP), pages 1707–1717, Hong Kong, China. As-
+                                                              sociation for Computational Linguistics.
+Elena Mikhalkova, Timofei Protasov, Polina Sokolova,
+   Anastasiia Bashmakova, and Anastasiia Drozdova.    Federico Pianzola. 2018.  Looking at narrative as a
+  2020. Modelling narrative elements in a short story:     complex system: The proteus principle. In Narrat-
+ A study on annotation schemes and guidelines.  In       ing complexity, pages 101–122. Springer.
+  Proceedings of The 12th Language Resources and
+  Evaluation Conference, pages 126–132.               Barbara Piatti and Lorenz Hurni. 2009. Mapping the
+                                                             ontologically unreal–counterfactual spaces in liter-
+Franco Moretti. 2013. Operationalizing. New Left Re-       ature and cartography.  The Cartographic Journal,
+   view, (84).                                            46(4):333–342.
+                                        309
+
+===== PDF PAGE 13 =====
+Barbara Piatti, Anne-Kathrin Reuschel, and Lorenz    Maarten Sap, Marcella Cindy Prasettio, Ari Holtzman,
+   Hurni.  2013.    Dreams,  longings,  memories–     Hannah Rashkin, and Yejin Choi. 2017.  Connota-
+   visualising the dimension of projected spaces in ﬁc-       tion frames of power and agency in modern ﬁlms.
+   tion. In Proceedings of the 26th International Car-      In Proceedings of the 2017 Conference on Empiri-
+   tographic Conference, pages 74–92.                      cal Methods in Natural Language Processing, pages
+                                                    2329–2334, Copenhagen, Denmark. Association for
+Andrew Piper. 2015. Novel devotions: Conversional      Computational Linguistics.
+   reading, computational modeling, and the modern
+   novel. New Literary History, 46(1):63–98.           Roger C. Schank and Robert P. Abelson. 1977. Scripts,
+                                                           Plans, Goals and Understanding: an Inquiry into
+Andrew Piper. 2018a. 5. Characterization (constraint).    Human Knowledge Structures.  L. Erlbaum, Hills-
+   In Enumerations,  pages 118–146. University of       dale, NJ.
+  Chicago Press.
+                                               Amartya Sen. 1993.  Capability and well-being. The
+                                                              quality of life, 30:270–293.Andrew Piper. 2018b. Enumerations: data and literary
+   study. University of Chicago Press.                                                    Robert J Shiller. 2020.  Narrative economics: How
+                                                                 stories go viral and drive major economic events.
+Andrew Piper and Eva Portelance. 2016. How cultural                                                          Princeton University Press.
+   capital works: Prizewinning novels, bestsellers, and
+   the time of reading. Post45.                       Matthew Sims, Jong Ho Park, and David Bamman.
+                                                       2019.  Literary event detection.  In Proceedings of
+Vladimir Propp. 2010. Morphology of the Folktale, vol-      the 57th Annual Meeting of the Association for Com-
+  ume 9. University of Texas Press.                         putational Linguistics, pages 3623–3634, Florence,
+                                                                         Italy. Association for Computational Linguistics.
+Hannah Rashkin,  Antoine  Bosselut,  Maarten Sap,
+  Kevin Knight, and Yejin Choi. 2018.  Modeling    Margaret R Somers. 1994. The narrative constitution
+   naive psychology of characters in simple common-      of identity: A relational and network approach. The-
+   sense stories.  In Proceedings of the 56th Annual      ory and society, pages 605–649.
+  Meeting of the Association for Computational Lin-
+                                                 Meir Sternberg. 1992. Telling in time (ii): Chronology,   guistics (Volume 1:  Long Papers), pages 2289–
+                                                               teleology, narrativity. Poetics today, 13(3):463–541.  2299, Melbourne, Australia. Association for Com-
+   putational Linguistics.                                                  Reid Swanson, Elahe Rahimtoroghi, Thomas Corco-
+                                                                 ran, and Marilyn Walker. 2014.  Identifying narra-
+Andrew  J  Reagan,  Lewis  Mitchell,  Dilan  Kiley,                                                                    tive clause types in personal stories.  In Proceed-
+   Christopher M Danforth, and Peter Sheridan Dodds.                                                           ings of the 15th Annual Meeting of the Special Inter-
+  2016. The emotional arcs of stories are dominated                                                                   est Group on Discourse and Dialogue (SIGDIAL),
+  by six basic shapes. EPJ Data Science, 5(1):1–12.                                                      pages 171–180, Philadelphia, PA, U.S.A. Associa-
+                                                                tion for Computational Linguistics.
+Nils Reiter, Marcus Willand, and Evelyn Gius. 2019. A
+   shared task for the digital humanities chapter 1: In-   Rochelle Terman. 2017. Islamophobia and media por-
+   troduction to annotation, narrative levels and shared       trayals of Muslim women: A computational text
+   tasks. Journal of Cultural Analytics.                      analysis of US news coverage.  International Stud-
+                                                                   ies Quarterly, 61(3):489–502.
+Paul Ricoeur. 2014. Time and narrative, Volume 3, vol-
+  ume 3. University of Chicago Press.                     Stith Thompson. 1989. Motif-index of Folk-literature:
+                                                      JK, volume 4. Indiana University Press.
+Kenji Sagae, Andrew S Gordon, Morteza Dehghani,
+                                                    Tzvetan Todorov. 1981.  Introduction to poetics, vol-  Mike Metke,  Jackie S Kim,  Sarah  I  Gimbel,
+                                           ume 1. U of Minnesota Press.   Christine Tipper, Jonas Kaplan, and Mary Helen
+  Immordino-Yang. 2013. A data-driven approach for
+                                            Shubham Toshniwal, Sam Wiseman, Allyson Ettinger,
+   classiﬁcation of subjectivity in personal narratives.
+                                                   Karen Livescu, and Kevin Gimpel. 2020.  Learn-
+   In 2013 Workshop on Computational Models of Nar-
+                                                          ing to Ignore: Long Document Coreference with
+   rative.                                                Bounded Memory Neural Networks.  In Proceed-
+                                                           ings of the 2020 Conference on Empirical Methods
+Belen Saldias and Deb Roy. 2020. Exploring aspects
+                                                                in Natural Language Processing (EMNLP), pages
+   of similarity between spoken personal narratives by
+                                                    8519–8526, Online. Association for Computational
+   disentangling them into narrative clause types.  In
+                                                               Linguistics.
+  Proceedings of the First Joint Workshop on Narra-
+   tive Understanding, Storylines, and Events, pages   Ted Underwood. 2018. Why literary time is measured
+  78–86, Online. Association for Computational Lin-       in minutes. ELH, 85(2).
+   guistics.
+                                                Ted Underwood, David Bamman, and Sabrina Lee.
+Matthew J Salganik. 2019. Bit by bit: Social research      2018.  The transformation of gender in english-
+   in the digital age. Princeton University Press.            language ﬁction. Journal of Cultural Analytics.
+                                        310
+
+===== PDF PAGE 14 =====
+Naushad UzZaman, Hector Llorens, Leon Derczyn-     American Chapter of the Association for Computa-
+   ski, James Allen, Marc Verhagen, and James Puste-       tional Linguistics: Human Language Technologies,
+   jovsky. 2013. SemEval-2013 task 1: TempEval-3:      pages 289–299. Association for Computational Lin-
+   Evaluating time expressions, events, and temporal        guistics.
+   relations.  In Second Joint Conference on Lexical
+  and Computational Semantics (*SEM), Volume 2:   Gregory Yauney, Ted Underwood, and David Mimno.
+  Proceedings of the Seventh International Workshop      2019. Computational prediction of elapsed narrative
+  on Semantic Evaluation (SemEval 2013), pages 1–       time. Workshop on Narrative Understanding.
+   9, Atlanta, Georgia, USA. Association for Computa-
+   tional Linguistics.
+
+Hardik Vala, David Jurgens, Andrew Piper, and Derek
+   Ruths. 2015.  Mr. Bennet, his coachman, and the
+  Archbishop walk into a bar but only one of them gets
+   recognized: On the difﬁculty of detecting characters
+   in literary texts.  In Proceedings of the 2015 Con-
+   ference on Empirical Methods in Natural Language
+   Processing, pages 769–774, Lisbon, Portugal. Asso-
+   ciation for Computational Linguistics.
+
+Teun A Van Dijk. 1976. Philosophy of action and the-
+  ory of narrative. Poetics, 5(4):287–338.
+
+Marc Verhagen, Robert Gaizauskas, Frank Schilder,
+  Mark Hepple, Jessica Moszkowicz, and James Puste-
+   jovsky. 2009. The TempEval challenge: identifying
+  temporal relations in text. Language Resources and
+   Evaluation, 43(2):161–179.
+
+Krishnapriya Vishnubhotla, Adam Hammond,  and
+  Graeme Hirst. 2019.  Are ﬁctional voices distin-
+   guishable?  classifying character voices in modern
+  drama.  In Proceedings of the 3rd Joint SIGHUM
+  Workshop on Computational Linguistics for Cultural
+   Heritage, Social Sciences, Humanities and Litera-
+   ture, pages 29–34, Minneapolis, USA. Association
+   for Computational Linguistics.
+
+Byron C Wallace. 2012. Multiple narrative disentangle-
+  ment: Unraveling Inﬁnite Jest. In Proceedings of the
+  2012 Conference of the North American Chapter of
+   the Association for Computational Linguistics: Hu-
+  man Language Technologies, pages 1–10.
+
+Richard Walsh. 2018.  Narrative theory for complex-
+   ity scientists. In Narrating complexity, pages 11–25.
+   Springer.
+
+Matthew Wilkens. 2013. The geographic imagination
+   of Civil War-era American ﬁction. American Liter-
+  ary History, 25(4):803–840.
+
+David Wilmot and Frank Keller. 2020. Modelling sus-
+  pense in short stories as uncertainty reduction over
+   neural representation. In Proceedings of the 58th An-
+  nual Meeting of the Association for Computational
+   Linguistics, pages 1763–1788, Online. Association
+   for Computational Linguistics.
+
+Alex Woloch. 2009.  The One vs. the Many: Minor
+  Characters and the Space of the Protagonist in the
+  Novel. Princeton University Press.
+
+Bishan Yang and Tom M. Mitchell. 2016. Joint extrac-
+   tion of events and entities within a document context.
+   In Proceedings of the 2016 Conference of the North
+                                        311

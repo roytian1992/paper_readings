@@ -1,0 +1,3123 @@
+
+===== PDF PAGE 1 =====
+Shadow-Loom: Causal Reasoning over Graphical World Models of
+Narratives
+David Wilmot
+david.wilmot@gmail.com
+github.com/davidrwilmot/shadow-loom
+Released under AGPL-3.0-or-later + Non-Commercial Clause
+Abstract
+Stories hold a reader’s attention because
+they have causes, secrets, and consequences.
+Shadow-Loom is an experimental open-source
+framework that turns a narrative into a ver-
+sioned graphical world model and lets two
+engines act on it: a causal physics grounded
+in Pearl’s ladder of causation (Pearl, 2009;
+Bareinboim et al., 2022) and the recently pro-
+posed counterfactual calculus over Ancestral
+Multi-World Networks (Correa and Barein-
+boim, 2025); and a narrative physics that scores
+the same graph against four structural reader-
+states — mystery, dramatic irony, suspense,
+and surprise — in the tradition of Sternberg’s
+curiosity / suspense / surprise triad (Stern-
+berg, 1992), with suspense formalised in the
+structural-affect line of Brewer and Lichten-
+stein (1982), Comisky and Bryant (1982) and
+Cheong and Young (2015). Large language
+models are used only at the boundary: extrac-
+tion, rendering, and audit; identification, in-
+tervention, and counterfactual reasoning are
+carried out in typed code over the graph. The
+system is offered as a research artefact rather
+than as a benchmarked NLP model; code, fix-
+tures, and pipeline are released open source.
+1
+Introduction
+Most current LLM-driven story systems treat a nar-
+rative as a sequence-prediction problem and absorb
+the causal, temporal, and epistemic structure of the
+story into the weights of a single model. Recent
+work shows that such models are competent at read-
+ing causal relations from text (Kıcıman et al., 2024)
+but markedly weaker at acting on the implicit be-
+liefs of characters they have just inferred (Gu et al.,
+2026; Kim et al., 2023), and similarly weak when
+asked to reason hypothetically about other agents’
+strategies without external scaffolding (Cross et al.,
+2024); in unconditioned generation they tend to
+collapse onto a small set of shared plot tropes
+(Xu et al., 2025; Tian et al., 2024). The comple-
+mentary direction explored here keeps an explicit,
+typed graph of the storyworld (Schank and Abel-
+son, 1977; Mani, 2012; Elson, 2012) and performs
+identification, intervention, and counterfactual rea-
+soning over it symbolically (Pearl, 2009; Halpern,
+2016; Correa and Bareinboim, 2025), using the
+LLM only as a constrained renderer (Riedl and
+Young, 2010; Yao et al., 2019; Goldfarb-Tarrant
+et al., 2020; Yang et al., 2023).
+Concretely, a
+query such as “what if Macbeth refuses to mur-
+der Duncan?” becomes a rung-2 (Intervention) do-
+operation on a typed event graph extracted from the
+play (App. B.2) rather than a free-form prompt to
+a language model; “does Poirot know the conspir-
+ators are still lovers?” becomes a finite belief-set
+membership test (App. B.5) rather than a single
+forward pass.
+Motivation 1: counterfactuals are where LLMs
+tend to struggle.
+Pearl’s hierarchy is provably
+non-collapsible. Rung-3 quantities (Counterfactu-
+als) are not, in general, identifiable from rung-2
+(Intervention) data, let alone from rung-1 (Obser-
+vation) data (Bareinboim et al., 2022). Empirically,
+LLMs reproduce surface causal patterns from their
+training corpus (Kıcıman et al., 2024) but tend to
+degrade sharply on multi-hop belief-conditioned
+action prediction (Kim et al., 2023; Gu et al., 2026)
+and on story-internal counterfactual consistency
+(Xu et al., 2025). The questions that ordinarily mat-
+ter to a reader of a story — “what if Macbeth had
+refused?”, “what if Roy had told Mary the truth?”
+— live on the rung where the modern foundations
+(AMWN + ctf-calculus, Correa and Bareinboim,
+2025) are designed to operate, and where end-to-
+end neural generators are not. A typed graph plus
+an explicit do-operator and abduction step turns
+each such question into a finite sequence of well-
+defined operations (Pearl, 2009; Halpern and Pearl,
+2005; Halpern, 2016) rather than a free-form imag-
+ination task.
+arXiv:2605.02475v2  [cs.AI]  6 May 2026
+
+
+===== PDF PAGE 2 =====
+Motivation 2: coding agents do better, arguably,
+because they compile and test.
+A familiar pat-
+tern in agent design is that coding agents tend to
+outperform open-domain agents at fixed model ca-
+pacity (Jimenez et al., 2024). Their outputs can be
+compiled, executed against a test suite, and rejected
+when they fail. The lever, on this reading, is the
+typed substrate underneath the natural-language
+reasoning, not the model itself. Shadow-Loom
+borrows that lever for narrative. A continuation
+is rejected if any of three checks fails: (a) its
+causal propagation (Eq. 2) violates inertia or af-
+fordance gating; (b) its counterfactual branch fails
+an AMWN-style consistency, independence, or ex-
+clusion check (Correa and Bareinboim, 2025); or
+(c) its re-extraction does not match the brief that
+licensed it (the audit pass, in the LLM-as-judge tra-
+dition of Bai et al., 2022; Madaan et al., 2023; Gu
+et al., 2024). The graph plays something like the
+role of the compiler; the auditor plays something
+like the role of the test suite.
+The framework combines four ideas which, so
+far as I can tell, have not previously been wired
+together in a single open-source pipeline:
+1. A
+Pydantic-typed
+world
+graph
+(WorldStateV1) with entities,
+events,
+beliefs, locations, channels, and three kinds
+of edge (causal, social, spatial), every node
+and edge tagged with both a chronological
+fabula time and a narrative syuzhet index
+(Shklovsky, 1965; Genette, 1980).
+2. A causal physics engine — a graphical world
+model of cause and effect — that imple-
+ments Pearl’s three rungs — observation, do-
+intervention, and abductive counterfactual —
+with a propagation rule gated by an explicit
+“Impact > Inertia” threshold and spatial affor-
+dance checks.
+3. A narrative physics layer — a graph-
+ical world model of reader affect over
+the same graph — that scores it against
+closed-form information-state functionals for
+mystery,
+dramatic irony,
+suspense,
+and
+surprise.
+Suspense uses the hope/fear
+(here hope/threat) anticipation pair from the
+structural-affect tradition (Brewer and Licht-
+enstein, 1982; Comisky and Bryant, 1982;
+Ortony et al., 1988; Zillmann, 1996) as op-
+erationalised by Cheong and Young (2015),
+combined as a balance × stakes product over
+the unrevealed ledger; this is a deliber-
+ate departure from the information-theoretic
+uncertainty-reduction formulation of Wilmot
+and Keller (2020), whose reader-vs-future-
+state epistemic-asymmetry shape we instead
+borrow for the dramatic irony scorer in
+§A.5. Surprise is binary KL divergence be-
+tween a leave-one-out corpus-marginal prior,
+evidence-updated by revealed causal edges,
+and the entity’s reconstructed final state.
+4. A constrained-LLM renderer + recursive
+auditor loop (Gu et al., 2024) that converts
+the simulation result into a typed creative
+brief, generates prose under that brief, and
+then re-extracts the prose to verify no “mira-
+cle steps” were introduced.
+The system is named for the dual-graph
+metaphor: a loom of factual edges runs in parallel
+with one or more shadow counterfactual branches,
+in the sense of the AMWN construction of Correa
+and Bareinboim (2025). Section 2 sketches the
+pipeline; Section 4 states what is novel and what
+is borrowed; Section 5 gives the design rationale;
+Section 6 discusses relevance to NLP, reasoning,
+and social science; Section 7 states the limitations
+honestly. Equations and per-stage definitions are in
+App. A; an extended narrative walkthrough of the
+whole loop on a single fixture is in App. C; worked
+examples drawn from the twenty bundled plot fix-
+tures follow in App. B; and a separate appendix on
+the authoring user interface, with screenshots and
+step-by-step example sessions, is in App. D.
+How to read this paper.
+The main text is in-
+tentionally short. It states the design, situates it
+in the literature, and records what is novel as a
+combination. Readers who want to understand the
+symbolic machinery in detail — the schema, the
+ego-graph extraction, the do-operator, the abduc-
+tive counterfactual, the four affective scorers, the
+brief-and-audit loop — should treat App. A as the
+authoritative specification. App. C is a long-form
+description of the same pipeline expressed as a
+story: Macbeth is fed in as raw prose and followed
+step-by-step through ingestion, intervention, prop-
+agation, scoring, rendering, and audit, with every
+intermediate object shown. The eight example sub-
+appendices in App. B then show how each individ-
+ual stage manifests on a different bundled fixture.
+App. D is for readers who want to understand or use
+the authoring workspace; it cross-links every UI
+
+
+===== PDF PAGE 3 =====
+surface to the pipeline stage it exposes and includes
+example sessions on real fixtures.
+2
+Pipeline overview
+The pipeline is a five-phase loop over a versioned
+world model. Every version is ancestor-linked, so
+a counterfactual fork is literally a sibling row in
+a directed acyclic version tree, not a mutation of
+canon. Figure 1 sketches the loop.
+prose
+↓ingestion (5-pass extraction)
+WorldStateV1 (typed graph)
+↓ego-graph slice + AMWN sandbox
+NetworkX MultiDiGraph
+↓causal physics (do, abduction, propagation)
+candidate sandbox states
+↓narrative physics (affective scoring)
+CreativeBrief (typed constraints)
+↓constrained LLM render
+prose
+↓recursive audit + re-extraction
+new VersionRow (factual or shadow)
+Figure 1: The Shadow-Loom loop. The LLM is invoked
+only at the top (ingestion), the bottom (rendering), and
+the audit; everything in between is symbolic computa-
+tion over the graph. See the appendix for definitions of
+each stage.
+The five phases correspond to the five ap-
+pendix subsections (A.2–A.7):
+(1) Ingestion
+runs
+five
+LLM
+agents
+to
+extract
+a
+typed
+GlobalRegister, then three concurrent spe-
+cialist agents (physics, social, consequences) per
+chunk to extract events, relationships, channels,
+and entity-state deltas, with a programmatic vali-
+dation and auto-repair loop. (2) Causal physics
+forks an Ancestral Multi-World Network sandbox,
+applies a do-operator for interventions, runs ab-
+duction for counterfactuals, and propagates effects
+through a topological sort of the causal sub-graph
+subject to inertia and affordance gating. (3) Narra-
+tive physics / affective calculus scores each can-
+didate sandbox against four structural information-
+state functionals and six trait-trajectory emotional
+functionals. (4) Generation packages the highest-
+scoring candidate as a CreativeBrief of typed
+ConstraintBlocks and hands only the brief
+to a creative LLM. (5) Audit and feedback runs
+an LLM-as-judge over the prose, detects “miracle
+steps” (state changes with no licensing edge in the
+brief), and either accepts the version or re-runs gen-
+eration with the auditor’s feedback appended, up
+to a configurable retry budget.
+The entire loop is exposed both through a
+NiceGUI authoring workspace (nine cross-linked
+tabs over a versioned project DAG; App. D) and
+through a Model-Context-Protocol server with
+roughly forty tools, so a downstream agent can
+drive shadow-branch creation, scoring, and promo-
+tion programmatically.
+3
+Theoretical lineage and computational
+counterparts
+The system has been built theory-first: every named
+field in WorldStateV1 corresponds to a specific
+narratological, cognitive, or causal-inference con-
+struct, and every field has a prior computational
+instantiation that the design either generalises or
+borrows from. The pairings the design depends on
+are summarised below; an extended mapping lives
+in the project’s academic-foundations document.
+Fabula vs syuzhet (Shklovsky, 1965; Toma-
+shevsky, 1965; Genette, 1980; Bordwell, 1985;
+Bal, 2009).
+Two integer indices on every
+EventNode: chronological f(e) and presentation
+s(e). The four affective scorers reduce to set oper-
+ations between the two projections (App. A.5).
+Possible-worlds narratology (Ryan, 1991, 2001;
+Doležel, 1998; Pavel, 1986), modal-logical roots
+(Lewis, 1973), and counterfactual graphical
+models (Balke and Pearl, 1994; Shpitser and
+Pearl, 2008; Correa et al., 2021; Correa and
+Bareinboim, 2025).
+Every node and edge car-
+ries world_id ∈{factual, shadow}; counterfac-
+tual queries fork a sibling VersionRow. The
+AMWN tag and three-rule mental model (consis-
+tency, independence, exclusion) come from Correa
+and Bareinboim (2025); I adopt the naming and
+architecture even though the typed narrative graph
+used here is not a rigorous SCM. AMWN super-
+sedes the Twin-Network construction (Balke and
+Pearl, 1994) and the multi-network machinery of
+Shpitser and Pearl (2008), and is the counterfactual-
+completeness counterpart to do-calculus (Pearl,
+1995, 2009; Bareinboim et al., 2022).
+Greimas (Greimas, 1983), Propp (Propp, 1968),
+Bremond (Bremond, 1973), and the symbolic
+story-grammar tradition (Rumelhart, 1975;
+Mandler and Johnson, 1977; Kintsch and van
+Dijk, 1978; Schank and Abelson, 1977; Lehn-
+ert, 1981; Meehan, 1977; y Pérez and Sharples,
+2001; Bringsjord and Ferrucci, 2000; Cham-
+bers and Jurafsky, 2008).
+GlobalTrait
+(WORLD_) realises Greimas’s “Power” actant;
+
+
+===== PDF PAGE 4 =====
+RelationshipEdge.power_dynamic mir-
+rors
+the
+sender
+/
+receiver
+/
+helper
+/
+op-
+ponent topology; EventNode.event_type
+∈
+{choice, outcome, revelation, utterance} is a
+coarse generalisation of Propp’s functions, closer in
+spirit to Bremond’s triad. The plot-unit and script
+traditions prefigure both the typed-event graph
+(Schank and Abelson, 1977; Lehnert, 1981) and
+the goal-directed planner / generator pipeline (Mee-
+han, 1977; y Pérez and Sharples, 2001); the unsu-
+pervised narrative event chains of Chambers and
+Jurafsky (2008) are a direct precursor to the typed
+causal_topology maintained at runtime.
+Cognitive narratology (Herman, 2002; Flud-
+ernik, 1996; Zwaan and Radvansky, 1998; Ger-
+rig, 1993) and constructionist comprehension
+(Trabasso and van den Broek, 1985; Graesser
+et al., 1994; Kintsch and van Dijk, 1978).
+The
+five fields of the situation-model (time, space, pro-
+tagonist, causation, intention) are nearly the field
+set on EventNode; that readers materialise causal
+links explicitly during comprehension is the empir-
+ical justification for materialising them explicitly
+in storage.
+Theory of mind (Premack and Woodruff, 1978;
+Wimmer and Perner, 1983; Baron-Cohen
+et al., 1985; Zunshine, 2006; Baker et al.,
+2009; Chandra et al., 2024), its modern LLM
+benchmarks (Kim et al., 2023; Gu et al., 2026),
+and ToM-scaffolded LLM agents (Cross et al.,
+2024).
+Belief{value, confidence,
+inertia, established_at_fabula,
+acquired_via_event_id,
+acquired_via_channel_id}
+is
+a
+dis-
+crete approximation of recursive ToM with
+provenance.
+The benchmarks above motivate
+the
+auditor’s
+separate
+behaviour-given-belief
+consistency check.
+Sternberg’s curiosity / suspense / surprise triad
+(Sternberg, 1978, 1992; Brewer and Lichten-
+stein, 1982; Baroni, 2007) and its computational
+realisations (Cheong and Young, 2015; Bae and
+Young, 2008; Ely et al., 2015; Wilmot and Keller,
+2020, 2021; Wilmot, 2022).
+The four structural
+scorers (MYS, IRO, SUSP, SUR) extend the triad
+with dramatic irony (Booth, 1974; Gerrig, 1993).
+The suspense scorer follows the hope/fear anticipa-
+tion pair of the structural-affect and appraisal tra-
+ditions (Brewer and Lichtenstein, 1982; Comisky
+and Bryant, 1982; Ortony et al., 1988; Zillmann,
+1996; Gerrig, 1989) as operationalised in narra-
+tive planning by Cheong and Young (2015), com-
+bining the two sides as a balance × stakes prod-
+uct that peaks under genuine outcome uncertainty
+rather than under one-sided dominance. This is
+a deliberate departure from Wilmot and Keller
+(2020), whose suspense is information-theoretic un-
+certainty reduction over neural state representations
+and whose decision-theoretic counterpart is Ely
+et al. (2015); that reader-vs-future-state epistemic-
+asymmetry shape (the reader knows things the focal
+future does not yet contain) is structurally closer to
+dramatic irony (reader knows things the characters
+do not) than to a hope/threat ledger, and motivates
+the irony scorer in App. A.5 rather than the sus-
+pense scorer. Surprise follows Itti and Baldi (2009)
+with a geometric prior update over a leave-one-out
+corpus marginal; emotional arc analytics owe to
+Reagan et al. (2016).
+Information-theoretic and epistemic substrate
+(Shannon,
+1948;
+Fagin
+et
+al.,
+1995;
+Al-
+chourrón
+et
+al.,
+1985).
+Channel
+carries
+intelligibility ∈
+[0, 1] per participant
+(generalising the legacy encryption boolean) and
+an eavesdropped_by relation derived from the
+intelligibility_threshold; belief revi-
+sion uses an AGM-style beliefs_added /
+beliefs_invalidated delta.
+Causal inference (Pearl, 1995, 2009; Pearl
+and Mackenzie, 2018; Spirtes et al., 2000;
+Bareinboim et al., 2022) and actual causality
+(Halpern and Pearl, 2005; Halpern, 2016;
+Woodward, 2003).
+Pearl’s three rungs — rung 1
+Correlation (observation), rung 2 Interven-
+tions (do(·)),
+and rung 3 Counterfactuals
+(abduction + do) — map directly to the query tax-
+onomy
+used
+here
+(ObservationQuery,
+InterventionQuery,
+CounterfactualQuery);
+mechanism
+and causal_force on edges are motivated by
+Halpern’s “actual cause”; ego-graph slicing is a
+heuristic Markov-blanket cut (Verma and Pearl,
+1988). Recent benchmarking of LLMs as causal
+reasoners (Kıcıman et al., 2024) supports the
+hybrid stance taken here: LLMs propose edges
+(extract_graph.py); typed code identifies
+and propagates them (causal_physics.py).
+Plan-and-render era of neural story genera-
+tion (Riedl and Young, 2010; Jhala and Young,
+2010; Martin et al., 2018; Yao et al., 2019;
+
+
+===== PDF PAGE 5 =====
+Goldfarb-Tarrant et al., 2020; Rashkin et al.,
+2020; Yang et al., 2022, 2023) and its bench-
+marks (Mostafazadeh et al., 2016; Fan et al.,
+2018; Akoury et al., 2020; Tian et al., 2024;
+Xu et al., 2025).
+The CreativeBrief (Step
+9) plus channel-aware draft (Step 10) is a typed,
+causal-graph-conditioned variant of the same plan-
+then-render pattern.
+The brief enumerates per-
+effect typed ConstraintBlocks; the auditor
+(Step 11) is the rescore / revise step (Goldfarb-
+Tarrant et al., 2020; Yang et al., 2022) specialised
+to narrative-causal rather than stylistic criteria, in
+the LLM-as-judge tradition (Zheng et al., 2023; Bai
+et al., 2022; Madaan et al., 2023; Gu et al., 2024;
+Qi et al., 2023), with structured prompting and
+self-improvement techniques (Wei et al., 2022; Ze-
+likman et al., 2022) used inside the renderer when
+free-form reasoning is required.
+Reading as simulation (Mar and Oatley, 2008;
+Oatley, 2016, 1995; Hogan, 2003).
+The reason
+a tight causal/affective model matters more than
+surface fluency: fiction is a cognitive simulator, and
+what is being simulated is a typed world.
+Game engines, interactive narrative, and world
+models for AI (Mateas and Stern, 2003; Riedl
+and Bulitko, 2013; Ware and Young, 2014;
+Kreminski et al., 2020; Park et al., 2023; Ha and
+Schmidhuber, 2018; LeCun, 2022; Hao et al.,
+2023; Wang et al., 2024; Smelik et al., 2014; Sum-
+merville et al., 2018).
+Architecturally, Shadow-
+Loom is closer to a game engine than to a sequence
+model: a typed simulation step (causal physics) is
+wrapped by a director / drama-manager (narrative
+physics) and exposed to a stochastic policy (the
+LLM renderer) only through a constrained action
+interface, in the lineage of Mimesis / Façade-style
+interactive drama (Mateas and Stern, 2003; Riedl
+and Bulitko, 2013) and narrative planners such
+as CPOCL/Glaive (Ware and Young, 2014). The
+generative-agent line of work (Park et al., 2023)
+and the “world model” line in deep RL (Ha and
+Schmidhuber, 2018; LeCun, 2022; Hao et al., 2023)
+make a similar wager from the opposite direction:
+that an explicit, manipulable latent world is what
+makes long-horizon coherent behaviour tractable.
+Shadow-Loom’s shadow branches play the role
+those world models play — a sandbox in which
+counterfactual rollouts can be evaluated before be-
+ing committed — but with a typed, inspectable
+schema in place of an opaque latent state. The
+bundled example worlds and authoring tools relate
+Shadow-Loom to the broader procedural-content-
+generation tradition (Smelik et al., 2014; Sum-
+merville et al., 2018; Kreminski et al., 2020).
+4
+What is novel, what is borrowed
+Borrowed.
+Every ingredient in Section 3 is bor-
+rowed: Pearl’s ladder (Pearl, 2009; Bareinboim
+et al., 2022); the AMWN + ctf-calculus framework
+(Correa and Bareinboim, 2025); actual-causality
+semantics (Halpern, 2016); the structural-affect /
+hope-fear anticipation pair underlying the suspense
+scorer (Brewer and Lichtenstein, 1982; Comisky
+and Bryant, 1982; Ortony et al., 1988; Zillmann,
+1996; Cheong and Young, 2015); the uncertainty-
+reduction view of suspense (re-used here as the
+epistemic-asymmetry shape of the irony scorer) of
+Wilmot and Keller (2020); the Bayesian-surprise
+formalism of Itti and Baldi (2009); the LLM-as-
+judge audit pattern (Bai et al., 2022; Madaan et al.,
+2023; Gu et al., 2024); the plan-and-render line in
+neural story generation (Riedl and Young, 2010;
+Yao et al., 2019; Goldfarb-Tarrant et al., 2020;
+Yang et al., 2023, 2022; Rashkin et al., 2020);
+the typed-event / story-grammar tradition (Schank
+and Abelson, 1977; Lehnert, 1981; Mani, 2012;
+Elson, 2012); and the narratological foundations
+(Shklovsky, 1965; Genette, 1980; Sternberg, 1992;
+Ryan, 1991; Herman, 2002; Zwaan and Radvansky,
+1998).
+Novel as a combination.
+I am not aware of an-
+other open-source pipeline that, taken together:
+(a) runs all three Pearl rungs over a typed nar-
+rative graph; (b) tags every node and edge with
+an AMWN world_id (Correa and Bareinboim,
+2025) so that counterfactuals are first-class per-
+sisted objects; (c) couples that machinery to closed-
+form scorers for the four classical reader-states of
+narrative cognition; (d) uses the resulting score as
+a loss function over candidate interventions, with
+the LLM constrained to render the winner; and
+(e) closes the loop by re-extracting the rendered
+prose and comparing it against the brief. Each
+ingredient is borrowed. The composition is the
+modest contribution: a typed two-engine substrate
+underneath a constrained renderer. Architecturally
+the closest analogue is something like a game en-
+gine for narrative: a typed simulation step gated
+by a drama-manager-like scorer (Mateas and Stern,
+2003; Riedl and Bulitko, 2013; Ware and Young,
+2014), driving a constrained stochastic actor in the
+spirit of recent generative-agent and world-model
+
+
+===== PDF PAGE 6 =====
+work (Park et al., 2023; Ha and Schmidhuber, 2018;
+Hao et al., 2023), but with the latent state replaced
+by an explicit causal-graphical schema.
+Specific small constructions.
+The “Impact >
+Inertia” propagation rule (Eq. 2) and the geomet-
+ric prior update inside the surprise scorer (Eq. 16)
+are introduced here as deliberately simple choices
+that keep both physics monotonic in useful ways
+(App. A.5). The two-axis fabula/syuzhet sampling
+of the affective scorers (App. A.5) is, to my knowl-
+edge, also new.
+5
+Rationale for the design choices
+Why a typed graph rather than free text + RAG?
+Recent stress tests show that LLMs can answer
+“what does X believe?” but fail to behave consis-
+tently with that belief in downstream action predic-
+tion (Gu et al., 2026; Kim et al., 2023). Long-
+context reading itself is unreliable in the same
+regime (Liu et al., 2024), which compounds the
+problem when the “world” has to be reconstructed
+from a growing prose buffer. Belief and causal
+structure that are recoverable from prose are not,
+on present evidence, reliably operated on inside
+the prose-only loop. A typed graph makes belief,
+channel intelligibility, and causal mechanism in-
+spectable and intervenable.
+Why both a causal and a narrative physics?
+The causal physics decides what is allowed to hap-
+pen given the graph; the narrative physics decides
+which of the allowed things would be most read-
+able. Decoupling licensing from desirability lets
+the system score and rank candidate interventions
+before any text is generated, and lets the same en-
+gine serve both “what-if” analytical queries (rung-2
+Intervention and rung-3 Counterfactual) and high-
+level affective directives (“maximise dramatic irony
+for character X”).
+Why constrain the LLM rather than fine-tune
+one?
+The renderer’s job is reduced to dialogue,
+description, and pacing within a mathematical en-
+velope. Whatever the model’s training distribution,
+the brief enumerates the causal edges, beliefs to
+preserve, channels to keep hidden, and trait shifts
+to honour. Errors that survive into prose are then
+catchable by the audit pass because they correspond
+to specific, testable claims — the “compile and test”
+analogue from Motivation 2.
+Why
+AMWN
+tagging
+at
+the
+persistence
+layer?
+Treating a counterfactual as a sibling
+VersionRow
+with
+world_id="shadow"
+makes “what-if” branches first-class, diffable, pro-
+motable, and auditable; it is the persistence-layer
+analogue of the AMWN graphical construction
+(Correa and Bareinboim, 2025).
+A user can
+compare a shadow against canon, keep both, or
+promote.
+6
+Why this might matter beyond fiction
+NLP / reasoning.
+Narrative is, for these purposes,
+a reasonably tractable test bed for counterfactual
+and theory-of-mind reasoning, because the ground
+truth (what happens, who knows what) is finite
+and authored. A typed-graph + symbolic physics
++ constrained-renderer architecture is one concrete
+instantiation of the neuro-symbolic stance for con-
+trollable generation; the audit pass produces a fal-
+sifiable record of where the LLM departed from
+the brief.
+Recent ToM benchmarks (Gu et al.,
+2026; Kim et al., 2023) and ToM-scaffolded LLM
+agents (Cross et al., 2024) ask exactly the kind of
+behaviour-given-belief questions that an explicit
+Belief field with provenance is designed to sup-
+port.
+Computational social science and digital human-
+ities.
+Many socio-historical and humanistic ques-
+tions are counterfactual in form (“what if policy
+X had not been adopted?”, “how would this novel
+read if the protagonist had spoken sooner?”). A
+graphical substrate that lets a researcher ingest
+a narrative source, fork a shadow branch under
+an explicit intervention, and inspect the propa-
+gated trait and relationship deltas is a small step
+toward auditable narrative simulation that can sit
+alongside established computational-social-science
+(Lazer et al., 2009) and digital-humanities tooling.
+I make no claim of empirical validity for any spe-
+cific simulation; the contribution is the substrate,
+not its calibration.
+Author tooling.
+The same machinery surfaces
+in a NiceGUI workspace and a Model-Context-
+Protocol server with around forty tools, exposing
+the graph, the affective scorers, and the version
+DAG to either human authors or LLM agents. The
+workspace is described component-by-component
+in App. D.
+An invitation to other research communities.
+The substrate is deliberately domain-agnostic at
+
+
+===== PDF PAGE 7 =====
+the graph level: entities, events, beliefs, channels,
+and counterfactual branches are not specific to fic-
+tion. Computational social scientists (Lazer et al.,
+2009) routinely treat narrative sources — court
+records, parliamentary debates, oral histories, news
+streams — as data, and digital-humanities schol-
+arship has long sought structured, sharable repre-
+sentations of literary works that can support both
+close and distant reading. Shadow-Loom may be
+read as one such representation: an open, typed,
+version-controlled graph with an explicit counter-
+factual sandbox and an audit trail back to the source
+text. Researchers in those communities, as well as
+in narratology and cognitive science, are warmly
+invited to fork the schema, swap in their own inges-
+tion prompts and affective scorers, and report what
+they find. The pipeline ships with twenty worked
+example worlds drawn from canonical literature
+and film, which may serve as a common reference
+set for cross-group experimentation.
+7
+Limitations and future evaluation
+Shadow-Loom is an experimental research artefact
+rather than a benchmarked NLP system, and I want
+to be explicit about what that does and does not
+imply. No headline numbers are reported against
+an external dataset: the scores produced by the
+narrative physics are design choices grounded in
+narratological theory rather than validated reader-
+reaction models, and the causal physics borrows
+the AMWN naming and three-rule mental model of
+Correa and Bareinboim (2025) without implement-
+ing their identification algorithm literally — the
+graph is heavily typed for narrative use rather than
+for rigorous structural causal model identification.
+The ingestion pipeline depends on LLM extraction,
+and although a programmatic validation and auto-
+repair loop catches the more obvious failure modes,
+extraction errors can still propagate. The current
+unit-test suite covers the symbolic layers but does
+not amount to external evaluation.
+Formal evaluation is therefore deferred to fu-
+ture work, along several complementary axes:
+(i) human-judgement studies of the affective scor-
+ers against reader annotations, in the spirit of
+Wilmot and Keller (2020); (ii) targeted ablations on
+bundled fixtures to quantify the contribution of the
+causal physics, the AMWN sandbox, and the audit
+loop to downstream coherence; and (iii) compari-
+son against end-to-end LLM baselines on counter-
+factual and theory-of-mind benchmarks (Kim et al.,
+2023; Gu et al., 2026; Cross et al., 2024; Xu et al.,
+2025). I share the present design as a substrate for
+further research — by myself and by others — not
+as a finished product.
+As an internal sanity check, the four structural-
+affect scorers were audited against the bundled
+twenty-fixture corpus (example_worlds/) at
+seven evenly-spaced syuzhet anchors per fixture,
+giving 162 score evaluations per metric (one
+fixture emits a flat-zero suspense column at
+its terminal anchor and so contributes only six
+points). The per-scorer scale summary is mystery
+0.17/0.53/1.00
+(min/median/max),
+dramatic-
+irony 0.00/0.45/0.90, suspense 0.00/0.16/0.39,
+surprise (per-step local mode) 0.00/0.03/0.24 —
+the four scorers occupy different absolute bands
+by design (mystery is a population fraction near
+1 early in the syuzhet; surprise is a per-step KL
+spike near 0 between revelation points). The audit
+confirms the canonical signatures the underlying
+theory predicts: monotone mystery decline across
+every world; rise-peak-fall irony arcs in 16/20
+worlds (Macduff hearing of his family, Poirot’s de-
+nouement, Nick’s letter to Daisy); terminal-anchor
+suspense discharge in every world (no unrevealed
+threats remain); surprise spikes only at canonical
+revelation points (Reservoir Dogs Mr Orange
+flashback 0.19, Gone Girl mid-novel perspective
+shift 0.20, Wuthering Heights in-medias-res frame
+0.24). All scorer constants are externalised through
+DirectiveAssemblySettings
+(env-var
+prefix DIRECTIVE_ASSEMBLY_*); the audit
+script
+scripts/audit_affective.py
+reproduces the table.
+Code, licence, and reproducibility
+The code is released open source under AGPL-
+3.0-or-later, with a parallel commercial licence;
+the authoritative LICENSE file lives in the project
+repository. The pipeline, schema, MCP surface,
+auditor, and the affective scorers described here
+all sit in the shadow_loom/ package. Worked
+examples on bundled plots (Macbeth, Death on
+the Nile, Reservoir Dogs, and others) ship in
+example_worlds/ and sample_plots/.
+References
+Nader Akoury, Shufan Wang, Josh Whiting, Stephen
+Hood, Nanyun Peng, and Mohit Iyyer. 2020. STO-
+RIUM: A dataset and evaluation platform for
+machine-in-the-loop story generation. In Proceed-
+
+
+===== PDF PAGE 8 =====
+ings of the 2020 Conference on Empirical Methods
+in Natural Language Processing (EMNLP).
+Carlos E. Alchourrón, Peter Gärdenfors, and David
+Makinson. 1985. On the logic of theory change: Par-
+tial meet contraction and revision functions. Journal
+of Symbolic Logic, 50(2):510–530.
+Byung-Chull Bae and R. Michael Young. 2008. A use
+of flashback and foreshadowing for surprise arousal
+in narrative using a plan-based approach. In Pro-
+ceedings of the 1st International Conference on In-
+teractive Digital Storytelling (ICIDS), volume 5334
+of LNCS, pages 156–167.
+Yuntao Bai,
+Saurav Kadavath,
+Sandipan Kundu,
+Amanda Askell, Jackson Kernion, Andy Jones, Anna
+Chen, Anna Goldie, Azalia Mirhoseini, Cameron
+McKinnon, and 1 others. 2022. Constitutional AI:
+Harmlessness from AI feedback. ArXiv:2212.08073.
+Chris L. Baker, Rebecca Saxe, and Joshua B. Tenen-
+baum. 2009. Action understanding as inverse plan-
+ning. Cognition, 113(3):329–349.
+Mieke Bal. 2009. Narratology: Introduction to the The-
+ory of Narrative, 3rd edition. University of Toronto
+Press.
+Alexander Balke and Judea Pearl. 1994. Counterfactual
+probabilities: Computational methods, bounds and
+applications. In Proceedings of the 10th Conference
+on Uncertainty in Artificial Intelligence (UAI), pages
+46–54.
+Elias Bareinboim, Juan D. Correa, Duligur Ibeling, and
+Thomas Icard. 2022. On Pearl’s hierarchy and the
+foundations of causal inference. In Probabilistic and
+Causal Inference: The Works of Judea Pearl, pages
+507–556. ACM Books.
+Simon Baron-Cohen, Alan M. Leslie, and Uta Frith.
+1985. Does the autistic child have a ’theory of mind’?
+Cognition, 21(1):37–46.
+Raphaël Baroni. 2007. La tension narrative: suspense,
+curiosité, surprise. Éditions du Seuil, Paris.
+Annaliese Bissell, Emma Paulin, and Andrew Piper.
+2025. A theoretical framework for evaluating narra-
+tive surprise in large language models. In Proceed-
+ings of the 7th Workshop on Narrative Understanding
+(WNU).
+Wayne C. Booth. 1974. A Rhetoric of Irony. University
+of Chicago Press.
+David Bordwell. 1985. Narration in the Fiction Film.
+University of Wisconsin Press.
+Claude Bremond. 1973. Logique du récit. Seuil.
+William F. Brewer and Edward H. Lichtenstein. 1982.
+Stories are to entertain: A structural-affect theory of
+stories. Journal of Pragmatics, 6(5–6):473–486.
+Selmer Bringsjord and David Ferrucci. 2000. Artifi-
+cial Intelligence and Literary Creativity: Inside the
+Mind of BRUTUS, a Storytelling Machine. Lawrence
+Erlbaum.
+Nathanael Chambers and Dan Jurafsky. 2008. Unsuper-
+vised learning of narrative event chains. In Proceed-
+ings of the 46th Annual Meeting of the Association
+for Computational Linguistics (ACL).
+Kartik Chandra, Tzu-Mao Li, Joshua B. Tenenbaum,
+and Jonathan Ragan-Kelley. 2024. Storytelling as
+inverse inverse planning. Topics in Cognitive Science,
+16:54–76.
+Yun-Gyung Cheong and R. Michael Young. 2015. Sus-
+penser: A story generation system for suspense.
+IEEE Transactions on Computational Intelligence
+and AI in Games, 7(1):39–52.
+Paul Comisky and Jennings Bryant. 1982. Factors in-
+volved in generating suspense. Human Communica-
+tion Research, 9(1):49–58.
+Juan D. Correa and Elias Bareinboim. 2025. Counter-
+factual graphical models: Constraints and inference.
+In Proceedings of the 42nd International Conference
+on Machine Learning (ICML). Spotlight. OpenRe-
+view ID: Z1qZoHa6ql.
+Juan D. Correa, Sanghack Lee, and Elias Bareinboim.
+2021.
+Nested counterfactual identification from
+arbitrary surrogate experiments.
+In Advances in
+Neural Information Processing Systems (NeurIPS).
+ArXiv:2107.03190.
+Logan Cross, Violet Xiang, Agam Bhatia, Daniel L. K.
+Yamins, and Nick Haber. 2024. Hypothetical minds:
+Scaffolding theory of mind for multi-agent tasks with
+large language models. ArXiv:2407.07086.
+Lubomír Doležel. 1998. Heterocosmica: Fiction and
+Possible Worlds. Johns Hopkins University Press.
+David K. Elson. 2012. Modeling Narrative Discourse.
+Ph.D. thesis, Columbia University.
+Jeffrey Ely, Alexander Frankel, and Emir Kamenica.
+2015. Suspense and surprise. Journal of Political
+Economy, 123(1):215–260.
+Ronald Fagin, Joseph Y. Halpern, Yoram Moses, and
+Moshe Y. Vardi. 1995. Reasoning About Knowledge.
+MIT Press.
+Angela Fan, Mike Lewis, and Yann Dauphin. 2018.
+Hierarchical neural story generation. In Proceedings
+of the 56th Annual Meeting of the Association for
+Computational Linguistics (ACL).
+Monika Fludernik. 1996. Towards a ’Natural’ Narra-
+tology. Routledge.
+Gérard Genette. 1980. Narrative Discourse: An Essay
+in Method. Cornell University Press.
+
+
+===== PDF PAGE 9 =====
+Richard J. Gerrig. 1989.
+Suspense in the absence
+of uncertainty. Journal of Memory and Language,
+28(6):633–648.
+Richard J. Gerrig. 1993.
+Experiencing Narrative
+Worlds: On the Psychological Activities of Reading.
+Yale University Press.
+Seraphina Goldfarb-Tarrant, Tuhin Chakrabarty, Ralph
+Weischedel, and Nanyun Peng. 2020. Content plan-
+ning for neural story generation with Aristotelian
+rescoring. In Proceedings of the 2020 Conference on
+Empirical Methods in Natural Language Processing
+(EMNLP), pages 4319–4338.
+Carmen Cristina Cabanas Gonzalez. 2024. Investigating
+the role of spontaneous theory of mind on the pro-
+cessing of dramatic irony in filmed narratives. Ph.D.
+thesis, Birkbeck, University of London.
+Arthur C. Graesser, Murray Singer, and Tom Trabasso.
+1994. Constructing inferences during narrative text
+comprehension. Psychological Review, 101(3):371–
+395.
+Algirdas Julien Greimas. 1983. Structural Semantics:
+An Attempt at a Method. University of Nebraska
+Press. Original work Sémantique structurale pub-
+lished 1966.
+Jiawei Gu, Xuhui Jiang, Zhichao Shi, Hexiang Tan,
+Xuehao Zhai, Chengjin Xu, Wei Li, Yinghan Shen,
+Shengjie Ma, Honghao Liu, Saizhuo Wang, Kun
+Zhang, Yuanzhuo Wang, Wen Gao, Lionel Ni, and
+Jian Guo. 2024.
+A survey on LLM-as-a-judge.
+ArXiv:2411.15594.
+Yuling Gu, Oyvind Tafjord, Hyunwoo Kim, Jared
+Moore, Ronan Le Bras, Peter Clark, and Yejin
+Choi. 2026.
+SimpleToM: Exposing the gap be-
+tween explicit tom inference and implicit tom ap-
+plication in LLMs.
+In Proceedings of the Inter-
+national Conference on Learning Representations
+(ICLR). ArXiv:2410.13648; ICLR 2026.
+David Ha and Jürgen Schmidhuber. 2018. Recurrent
+world models facilitate policy evolution.
+In Ad-
+vances in Neural Information Processing Systems
+31 (NeurIPS).
+Joseph Y. Halpern. 2016. Actual Causality. MIT Press.
+Joseph Y. Halpern and Judea Pearl. 2005. Causes and
+explanations: A structural-model approach. Part I:
+Causes. British Journal for the Philosophy of Sci-
+ence, 56(4):843–887.
+Shibo Hao, Yi Gu, Haodi Ma, Joshua Jiahua Hong, Zhen
+Wang, Daisy Zhe Wang, and Zhiting Hu. 2023. Rea-
+soning with language model is planning with world
+model. In Proceedings of the 2023 Conference on
+Empirical Methods in Natural Language Processing
+(EMNLP).
+David Herman. 2002. Story Logic: Problems and Possi-
+bilities of Narrative. University of Nebraska Press.
+Patrick Colm Hogan. 2003. The Mind and Its Stories:
+Narrative Universals and Human Emotion. Cam-
+bridge University Press.
+Wolfgang Iser. 1976. Der Akt des Lesens: Theorie
+ästhetischer Wirkung. Wilhelm Fink, München. En-
+glish: The Act of Reading, Johns Hopkins UP, 1978.
+Laurent Itti and Pierre Baldi. 2009.
+Bayesian sur-
+prise attracts human attention.
+Vision Research,
+49(10):1295–1306.
+Arnav Jhala and R. Michael Young. 2010. Cinematic
+visual discourse: Representation, generation, and
+evaluation. IEEE Transactions on Computational
+Intelligence and AI in Games, 2(2):69–81.
+Carlos E. Jimenez, John Yang, Alexander Wettig,
+Shunyu Yao, Kexin Pei, Ofir Press, and Karthik
+Narasimhan. 2024. SWE-bench: Can language mod-
+els resolve real-world GitHub issues? In Proceedings
+of the 12th International Conference on Learning
+Representations (ICLR). ArXiv:2310.06770.
+Emre Kıcıman, Robert Ness, Amit Sharma, and Chen-
+hao Tan. 2024.
+Causal reasoning and large lan-
+guage models: Opening a new frontier for causal-
+ity. Transactions on Machine Learning Research.
+ArXiv:2305.00050.
+Evgeny Kim, Sebastian Padó, and Roman Klinger. 2017.
+Investigating the relationship between literary genres
+and emotional plot development. In Proceedings
+of the Joint SIGHUM Workshop on Computational
+Linguistics for Cultural Heritage, Social Sciences,
+Humanities and Literature, pages 17–26.
+Hyunwoo Kim, Melanie Sclar, Xuhui Zhou, Ronan Le
+Bras, Gunhee Kim, Yejin Choi, and Maarten Sap.
+2023. FANToM: A benchmark for stress-testing ma-
+chine theory of mind in interactions. In Proceedings
+of the 2023 Conference on Empirical Methods in Nat-
+ural Language Processing (EMNLP). Association for
+Computational Linguistics. ArXiv:2310.15421.
+Walter Kintsch and Teun A. van Dijk. 1978. Toward a
+model of text comprehension and production. Psy-
+chological Review, 85(5):363–394.
+Max Kreminski, Melanie Dickinson, Michael Mateas,
+and Noah Wardrip-Fruin. 2020. Why are we like
+this?: The ai architecture of a co-creative storytelling
+game. In Proceedings of the 15th International Con-
+ference on the Foundations of Digital Games (FDG).
+Richard S. Lazarus. 1991. Emotion and Adaptation.
+Oxford University Press.
+Core relational themes
+link distinct emotion families to distinct kinds of
+harm/benefit (physical danger, irrevocable loss, moral
+transgression, relational loss, social esteem/shame).
+David Lazer, Alex Pentland, Lada Adamic, Sinan Aral,
+Albert-László Barabási, Devon Brewer, Nicholas
+Christakis, Noshir Contractor, James Fowler, Myron
+Gutmann, Tony Jebara, Gary King, Michael Macy,
+Deb Roy, and Marshall Van Alstyne. 2009. Compu-
+tational social science. Science, 323(5915):721–723.
+
+
+===== PDF PAGE 10 =====
+Yann LeCun. 2022. A path towards autonomous ma-
+chine intelligence. Open Review preprint. Version
+0.9.2.
+Wendy G. Lehnert. 1981. Plot units and narrative sum-
+marization. Cognitive Science, 5(4):293–331.
+David Lewis. 1973. Causation. Journal of Philosophy,
+70(17):556–567.
+Nelson F. Liu, Kevin Lin, John Hewitt, Ashwin Paran-
+jape, Michele Bevilacqua, Fabio Petroni, and Percy
+Liang. 2024. Lost in the middle: How language mod-
+els use long contexts. Transactions of the Association
+for Computational Linguistics, 12:157–173.
+Zhong-Lin Lu and Barbara A. Dosher. 2013. Visual
+Psychophysics: From Laboratory to Theory. MIT
+Press.
+Aman Madaan, Niket Tandon, Prakhar Gupta, Skyler
+Hallinan, Luyu Gao, Sarah Wiegreffe, Uri Alon,
+Nouha Dziri, Shrimai Prabhumoye, Yiming Yang,
+Shashank Gupta, Bodhisattwa Prasad Majumder,
+Katherine Hermann, Sean Welleck, Amir Yazdan-
+bakhsh, and Peter Clark. 2023. Self-refine: Iterative
+refinement with self-feedback. In Advances in Neu-
+ral Information Processing Systems (NeurIPS).
+Jean M. Mandler and Nancy S. Johnson. 1977. Remem-
+brance of things parsed: Story structure and recall.
+Cognitive Psychology, 9(1):111–151.
+Inderjeet Mani. 2012. Computational Modeling of Nar-
+rative. Morgan and Claypool.
+Raymond A. Mar and Keith Oatley. 2008. The function
+of fiction is the abstraction and simulation of social
+experience. Perspectives on Psychological Science,
+3(3):173–192.
+Lara J. Martin, Prithviraj Ammanabrolu, Xinyu Wang,
+William Hancock, Shruti Singh, Brent Harrison, and
+Mark O. Riedl. 2018. Event representations for au-
+tomated story generation with deep neural nets. In
+Proceedings of the 32nd AAAI Conference on Artifi-
+cial Intelligence.
+Michael Mateas and Andrew Stern. 2003. Façade: An
+experiment in building a fully-realized interactive
+drama. In Game Developers Conference, Game De-
+sign Track, San Jose, CA, USA.
+James R. Meehan. 1977. TALE-SPIN, an interactive
+program that writes stories. In Proceedings of the
+5th International Joint Conference on Artificial Intel-
+ligence (IJCAI).
+Nasrin Mostafazadeh, Nathanael Chambers, Xiaodong
+He, Devi Parikh, Dhruv Batra, Lucy Vanderwende,
+Pushmeet Kohli, and James Allen. 2016. A corpus
+and cloze evaluation for deeper understanding of
+commonsense stories. In Proceedings of the 2016
+Conference of the North American Chapter of the
+Association for Computational Linguistics: Human
+Language Technologies (NAACL-HLT).
+Douglas C. Muecke. 1969.
+The Compass of Irony.
+Methuen.
+Keith Oatley. 1995. A taxonomy of the emotions of
+literary response and a theory of identification in
+fictional narrative. Poetics, 23:53–74.
+Keith Oatley. 2016.
+Fiction: Simulation of social
+worlds. Trends in Cognitive Sciences, 20(8):618–
+628.
+Andrew Ortony, Gerald L. Clore, and Allan Collins.
+1988. The Cognitive Structure of Emotions. Cam-
+bridge University Press.
+Joon Sung Park, Joseph C. O’Brien, Carrie J. Cai,
+Meredith Ringel Morris, Percy Liang, and Michael S.
+Bernstein. 2023. Generative agents: Interactive simu-
+lacra of human behavior. In Proceedings of the 36th
+Annual ACM Symposium on User Interface Software
+and Technology (UIST).
+Thomas Pavel. 1986. Fictional Worlds. Harvard Uni-
+versity Press.
+Judea Pearl. 1995. Causal diagrams for empirical re-
+search. Biometrika, 82(4):669–688.
+Judea Pearl. 2009. Causality: Models, Reasoning, and
+Inference, 2nd edition. Cambridge University Press.
+Judea Pearl and Dana Mackenzie. 2018. The Book of
+Why: The New Science of Cause and Effect. Basic
+Books.
+Manfred Pfister. 1988. The Theory and Analysis of
+Drama. Cambridge University Press. German origi-
+nal Das Drama, 1977.
+David Premack and Guy Woodruff. 1978. Does the
+chimpanzee have a theory of mind? Behavioral and
+Brain Sciences, 1(4):515–526.
+Vladimir Propp. 1968. Morphology of the Folktale, 2nd
+english edition. University of Texas Press.
+Jingyuan Qi, Zhiyang Xu, Ying Shen, Minqian Liu,
+Di Jin, Qifan Wang, and Lifu Huang. 2023. The
+art of SOCRATIC questioning: Recursive thinking
+with large language models. In Proceedings of the
+2023 Conference on Empirical Methods in Natural
+Language Processing (EMNLP).
+Hannah Rashkin, Asli Celikyilmaz, Yejin Choi, and
+Jianfeng Gao. 2020.
+PlotMachines:
+Outline-
+conditioned generation with dynamic plot state track-
+ing. In Proceedings of the 2020 Conference on Em-
+pirical Methods in Natural Language Processing
+(EMNLP).
+Andrew J. Reagan, Lewis Mitchell, Dilan Kiley, Christo-
+pher M. Danforth, and Peter Sheridan Dodds. 2016.
+The emotional arcs of stories are dominated by six
+basic shapes. EPJ Data Science, 5:Article 31.
+Mark O. Riedl and Vadim Bulitko. 2013. Interactive
+narrative: An intelligent systems approach. AI Mag-
+azine, 34(1):67–77.
+
+
+===== PDF PAGE 11 =====
+Mark O. Riedl and R. Michael Young. 2010. Narrative
+planning: Balancing plot and character. Journal of
+Artificial Intelligence Research, 39:217–268.
+David E. Rumelhart. 1975. Notes on a schema for sto-
+ries. In Daniel G. Bobrow and Allan M. Collins,
+editors, Representation and Understanding: Stud-
+ies in Cognitive Science, pages 211–236. Academic
+Press.
+Marie-Laure Ryan. 1991. Possible Worlds, Artificial In-
+telligence, and Narrative Theory. Indiana University
+Press.
+Marie-Laure Ryan. 2001. Narrative as Virtual Real-
+ity: Immersion and Interactivity in Literature and
+Electronic Media. Johns Hopkins University Press.
+Roger C. Schank and Robert P. Abelson. 1977. Scripts,
+Plans, Goals and Understanding: An Inquiry into
+Human Knowledge Structures. Lawrence Erlbaum.
+Claude E. Shannon. 1948.
+A mathematical theory
+of communication. Bell System Technical Journal,
+27:379–423, 623–656.
+Viktor Shklovsky. 1965. Art as technique. In Lee T.
+Lemon and Marion J. Reis, editors, Russian Formal-
+ist Criticism: Four Essays, pages 3–24. University
+of Nebraska Press, Lincoln, NE. Original work pub-
+lished 1917.
+Ilya Shpitser and Judea Pearl. 2007. What counter-
+factuals can be tested. In Proceedings of the 23rd
+Conference on Uncertainty in Artificial Intelligence
+(UAI), pages 352–359.
+Ilya Shpitser and Judea Pearl. 2008. Complete identifi-
+cation methods for the causal hierarchy. Journal of
+Machine Learning Research, 9(64):1941–1979.
+Ruben M. Smelik, Tim Tutenel, Rafael Bidarra, and
+Bedrich Benes. 2014. A survey on procedural mod-
+elling for virtual worlds. Computer Graphics Forum,
+33(6):31–50.
+Peter Spirtes, Clark Glymour, and Richard Scheines.
+2000. Causation, Prediction, and Search, 2nd edi-
+tion. MIT Press.
+Meir Sternberg. 1978. Expositional Modes and Tempo-
+ral Ordering in Fiction. Johns Hopkins University
+Press.
+Meir Sternberg. 1992. Telling in time (II): Chronology,
+teleology, narrativity. Poetics Today, 13(3):463–541.
+Jan Storck, Sepp Hochreiter, and Jürgen Schmidhuber.
+1995. Reinforcement driven information acquisition
+in non-deterministic environments. In Proceedings
+of the International Conference on Artificial Neural
+Networks (ICANN’95), volume 2, pages 159–164,
+Paris. EC2 & CIE.
+Adam Summerville, Sam Snodgrass, Matthew Guz-
+dial, Christoffer Holmgård, Amy K. Hoover, Aaron
+Isaksen, Andy Nealen, and Julian Togelius. 2018.
+Procedural content generation via machine learning
+(PCGML). IEEE Transactions on Games, 10(3):257–
+270.
+John Sutherland. 2013. A Little History of Literature.
+Yale University Press.
+Yufei Tian, Tenghao Huang, Miri Liu, Derek Jiang,
+Alexander Spangher, Muhao Chen, Jonathan May,
+and Nanyun Peng. 2024. Are large language models
+capable of generating human-level narratives?
+In
+Proceedings of the 2024 Conference on Empirical
+Methods in Natural Language Processing (EMNLP),
+pages 17659–17681. Association for Computational
+Linguistics. Outstanding Paper Award.
+Vera Tobin. 2018. Elements of Surprise: Our Mental
+Limits and the Satisfactions of Plot. Harvard Univer-
+sity Press.
+Boris Tomashevsky. 1965. Thematics. In Lee T. Lemon
+and Marion J. Reis, editors, Russian Formalist Crit-
+icism: Four Essays, pages 61–95. University of Ne-
+braska Press.
+Tom Trabasso and Linda L. Sperry. 1985. Causal relat-
+edness and importance of story events. Journal of
+Memory and Language, 24(5):595–611.
+Tom Trabasso and Paul van den Broek. 1985. Causal
+thinking and the representation of narrative events.
+Journal of Memory and Language, 24(5):612–630.
+Thomas Verma and Judea Pearl. 1988. Causal networks:
+Semantics and expressiveness. In Proceedings of the
+4th Workshop on Uncertainty in Artificial Intelligence
+(UAI), pages 69–78.
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Man-
+dlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and
+Anima Anandkumar. 2024.
+Voyager: An open-
+ended embodied agent with large language mod-
+els. In Transactions on Machine Learning Research.
+ArXiv:2305.16291.
+Stephen G. Ware and R. Michael Young. 2014. Glaive:
+A state-space narrative planner supporting intention-
+ality and conflict. In Proceedings of the Tenth AAAI
+Conference on Artificial Intelligence and Interactive
+Digital Entertainment (AIIDE), pages 80–86.
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten
+Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le,
+and Denny Zhou. 2022. Chain-of-thought prompt-
+ing elicits reasoning in large language models. In
+Advances in Neural Information Processing Systems
+(NeurIPS).
+David Wilmot. 2022. Great Expectations: Unsuper-
+vised Inference of Suspense, Surprise and Salience in
+Storytelling. Ph.D. thesis, University of Edinburgh.
+ArXiv:2206.09708.
+
+
+===== PDF PAGE 12 =====
+David Wilmot and Frank Keller. 2020. Modelling sus-
+pense in short stories as uncertainty reduction over
+neural representation. In Proceedings of the 58th An-
+nual Meeting of the Association for Computational
+Linguistics (ACL), pages 1763–1788. Association for
+Computational Linguistics.
+David Wilmot and Frank Keller. 2021. Memory and
+knowledge augmented language models for inferring
+salience in long-form stories. In Proceedings of the
+2021 Conference on Empirical Methods in Natural
+Language Processing (EMNLP), pages 851–865.
+Heinz Wimmer and Josef Perner. 1983. Beliefs about
+beliefs: Representation and constraining function of
+wrong beliefs in young children’s understanding of
+deception. Cognition, 13(1):103–128.
+James Woodward. 2003. Making Things Happen: A
+Theory of Causal Explanation. Oxford University
+Press.
+Weijia Xu, Nebojsa Jojic, Sudha Rao, Chris Brock-
+ett, and Bill Dolan. 2025. Echoes in AI: Quanti-
+fying lack of plot diversity in LLM outputs. Pro-
+ceedings of the National Academy of Sciences,
+122(35):e2504966122. ArXiv:2501.00273.
+Rafael Pérez y Pérez and Mike Sharples. 2001. MEX-
+ICA: A computer model of a cognitive account of
+creative writing. Journal of Experimental & Theoret-
+ical Artificial Intelligence, 13(2):119–139.
+Kevin Yang, Dan Klein, Nanyun Peng, and Yuandong
+Tian. 2023. DOC: Improving long story coherence
+with detailed outline control. In Proceedings of the
+61st Annual Meeting of the Association for Computa-
+tional Linguistics (ACL). ArXiv:2212.10077.
+Kevin Yang, Yuandong Tian, Nanyun Peng, and Dan
+Klein. 2022. Re3: Generating longer stories with
+recursive reprompting and revision. In Proceedings
+of the 2022 Conference on Empirical Methods in
+Natural Language Processing (EMNLP).
+Lili Yao, Nanyun Peng, Ralph Weischedel, Kevin
+Knight, Dongyan Zhao, and Rui Yan. 2019. Plan-
+and-write: Towards better automatic storytelling. In
+Proceedings of the 33rd AAAI Conference on Artifi-
+cial Intelligence.
+Eric Zelikman, Yuhuai Wu, Jesse Mu, and Noah D.
+Goodman. 2022. STaR: Bootstrapping reasoning
+with reasoning. In Advances in Neural Information
+Processing Systems (NeurIPS).
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan
+Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin,
+Zhuohan Li, Dacheng Li, Eric P. Xing, Hao Zhang,
+Joseph E. Gonzalez, and Ion Stoica. 2023. Judging
+LLM-as-a-judge with MT-Bench and Chatbot Arena.
+In Advances in Neural Information Processing Sys-
+tems (NeurIPS), Datasets and Benchmarks Track.
+Dolf Zillmann. 1996. The psychology of suspense in
+dramatic exposition. In Peter Vorderer, Hans J. Wulff,
+and Mike Friedrichsen, editors, Suspense: Concep-
+tualizations, Theoretical Analyses, and Empirical
+Explorations, pages 199–231. Lawrence Erlbaum As-
+sociates.
+Lisa Zunshine. 2006. Why We Read Fiction: Theory of
+Mind and the Novel. Ohio State University Press.
+Rolf A. Zwaan and Gabriel A. Radvansky. 1998. Situa-
+tion models in language comprehension and memory.
+Psychological Bulletin, 123(2):162–185.
+
+
+===== PDF PAGE 13 =====
+A
+Definitions and equations
+This appendix gives the formal definitions of the data model and the equations of each pipeline stage.
+Section references in the main paper point here.
+A.1
+World model schema (WorldStateV1)
+A world state is a tuple
+W = (N, E, C, T , τ)
+with nodes N (entities ENT_•, events EVT_•, locations LOC_•, objects OBJ_•, channels CHN_•,
+world traits WORLD_•), edges E (causal, relationship, spatial), channels C with per-participant intelli-
+gibility ι ∈[0, 1], world traits T , and a branch tag τ ∈{factual, shadow} inherited by every node and
+edge.
+Each event e ∈NEVT carries two integer indices: chronological f(e) ∈Z (fabula time) and pre-
+sentation s(e) ∈Z (syuzhet index), with s contiguous and unique. Trait values, beliefs, and ambient
+state are carried by typed vectors (v, ιinertia, σevidence) representing value, inertia, and evidence strength.
+Beliefs carry provenance (event_id, channel_id) and the time they became established. A pure function
+RECONSTRUCT(ei, t) replays sparse state_timeline deltas to give the entity’s effective state at any
+fabula time t.
+Node types and their carrying state.
+Table 1 summarises the six node families and the typed state
+each carries. All six share a common AMWNNode base that carries the branch tag τ (world_id), a
+syuzhet-indexed state_timeline, and evidence_strength.
+Node ID prefix
+Pydantic class
+Distinctive state
+ENT_
+Entity
+traits:
+Dict[str, TraitVector];
+beliefs:
+List[Belief];
+constants:
+List[str];
+location_id;
+status;
+state_timeline
+of
+EntityStateSnapshot deltas.
+EVT_
+EventNode
+event_type
+(action
+/
+utterance
+/
+outcome
+/
+revelation / choice / ...); actor_ids, target_ids;
+fabula_time,
+syuzhet_index;
+for
+utterance:
+speaker_id,
+addressee_ids,
+via_channel_id,
+content, truth_value ∈{true, false, uncertain}.
+LOC_
+Location
+ambient_state:
+Dict[str, AmbientVector]
+(e.g. tension,
+bustle,
+supernatural);
+capacity;
+outgoing
+SpatialEdges.
+OBJ_
+Object
+location_id or owner_id; properties; affordances:
+List[Affordance] (typed action/target gates).
+CHN_
+Channel
+medium,
+directionality,
+participant_ids;
+intelligibility:
+Dict[entity_id, float]
+per-participant;
+established_at_fabula,
+terminated_at_fabula.
+WORLD_
+GlobalTrait
+Standing pressure (e.g. WORLD_REGENCY_RANK in Persua-
+sion, WORLD_SOVIET_PENETRATION in Tinker Tailor):
+a
+single value v, inertia, evidence_strength, plus a
+state_timeline of WorldTraitSnapshots.
+Table 1:
+Node families in WorldStateV1.
+Each ID_ prefix maps to one Pydantic class in
+shadow_loom/models.py and carries its own typed state. The same six prefixes are used as node-ID conven-
+tions throughout the codebase, the bundled fixtures, and the renderer’s brief.
+Edge families and their roles.
+Edges live on three orthogonal layers, each a separate Pydantic class
+with its own validator:
+CausalEdge (event⇄event, event→state, state→event, state→state).
+A single class with five
+causality_type modalities — chain_reaction, mutation, mutation_social,
+affordance_gate, ambient_propagation — and a model validator that enforces
+
+
+===== PDF PAGE 14 =====
+source/target type matches modality. Each edge carries mechanism (e.g. psychological, phys-
+ical, social, epistemic, betrayal), evidence_strength ∈{weak, moderate, strong},
+causal_force ∈[0, 10], a fabula timestamp, an optional propagation_delay, and
+— for mutation / mutation_social — a trait_target and signed trait_delta.
+mutation_social edges additionally carry a rel_counterpart_id so that a single event
+can shock a relationship axis (e.g. Lady Macbeth’s power_dynamic against Macbeth) rather than a
+free-standing trait.
+RelationshipEdge (entity⇄entity).
+One edge per ordered pair, with a per-axis metrics:
+Dict[axis, AxisMetric] where axis ∈{affinity, fear, power_dynamic}. Each axis owns
+its own value, inertia, evidence_strength, and last_updated_fabula. Flat back-
+compat properties expose the canonical affinity value as .value.
+SpatialEdge (location→location). Optional is_locked plus barrier_item_id; unlocked
+edges contribute to the spatial-affordance path-check that gates cross-location causal influence
+(Eq. 2).
+Communication is not an edge — standing capability lives on the Channel node, and discrete
+messages are first-class EventNodes with event_type= "utterance" pointing at a channel via
+via_channel_id. This is what makes the lying-narrator pattern (Amy’s diary in Gone Girl, Pip’s
+misattributed benefactor in Great Expectations, the Witches’ equivocations in Macbeth) a single uniform
+construct: an utterance event with truth_value="false" broadcast through a channel whose
+addressees have non-zero intelligibility.
+Worked illustration — a slice of Macbeth.
+The Inverness night reduces to a small, fully typed sub-
+graph:
+• Entities.
+ENT_MACBETH with traits ambition (v = 0.7, ι = 0.5), courage (0.85,
+0.7), guilt (0.1, 0.25), paranoia (0.2, 0.3); a Belief(target_id="ENT_WITCHES",
+confidence=0.4,
+inertia=0.35).
+• Object.
+OBJ_BLOODY_DAGGERS
+with
+Affordance(action="kill",
+target_type="Entity")
+—
+the
+precondition
+gate
+the
+engine
+checks
+before
+EVT_DUNCAN_MURDER fires.
+• Location.
+LOC_INVERNESS_CASTLE with ambient tension = 0.6.
+LOC_HEATH carries
+ambient_state{supernatural: 0.9, concealment: 0.7}, the source of the heath-
+night ambient-propagation edge that biases Macbeth’s uptake of the prophecy belief.
+• Channel. CHN_HEATH_PROPHECY with participants=[
+ENT_MACBETH, ENT_BANQUO, ENT_WITCHES],
+used
+by
+the
+utterance
+event
+EVT_UTT_PROPHECY_HEATH (truth_value = uncertain).
+• Causal
+sub-graph.
+EVT_LADY_MACBETH_PERSUADES →EVT_DUNCAN_MURDER
+(chain_reaction,
+causal_force
+=
+8.0);
+OBJ_BLOODY_DAGGERS →
+EVT_DUNCAN_MURDER (affordance_gate, 9.0); EVT_LADY_MACBETH_PERSUADES →
+ENT_LADY_MACBETH
+(mutation_social,
+power_dynamic
+against
+ENT_MACBETH,
+∆
+=
++0.4,
+7.0);
+EVT_BANQUO_GHOST →ENT_MACBETH
+(mutation_social,
+fear
+against
+ENT_BANQUO,
+∆
+=
++0.5,
+6.0);
+LOC_HEATH →ENT_MACBETH
+(ambient_propagation, epistemic).
+Every value above is read directly from example_worlds/macbeth.py; the same six-prefix /
+three-edge / typed-state pattern carries through every bundled fixture, from a Regency drawing-room (Per-
+suasion) to a Cold-War mole hunt (Tinker Tailor Soldier Spy). The fixture-level diversity of ambient_state
+tags, mechanism labels, trait dictionaries, and intelligibility maps is intentional: the schema is fixed, the
+populated typology is fixture-specific.
+
+
+===== PDF PAGE 15 =====
+A.2
+Ingestion
+Given prose P, ingestion produces a W via:
+1. Five extraction agents over P build a GlobalRegister of WORLD_, ENT_, LOC_, OBJ_
+nodes plus a fuzzy alias table.
+2. For each chunk, a Socratic Who/What/Where/When/Why/How scaffold dispatches three concur-
+rent specialist agents: physics (events, causal/spatial edges), social (relationship edges, channels),
+consequences (authoritative entity-state deltas).
+3. Output is normalised, fabula times are remapped to a uniform ∆t = 100 spacing, and a programmatic
+validator + LLM correction loop enforces ID closure and type constraints.
+A.3
+Ego-graph slicing and AMWN sandbox
+Given a query with focal entities F and time anchor t, the ego-graph extractor returns
+GF,t =
+ NEIGHBOURSk(F) ∩RECONSTRUCT(·, t)
+
+,
+the k-hop spatial / causal / social neighbourhood of F at fabula time t, with belief and
+trait values reconstructed at t so future information cannot leak into a counterfactual.
+The
+AMWNInstantiator mirrors GF,t as a NetworkX MultiDiGraph for the simulation sand-
+box, with edge types {located_in, owned_by, causal, relationship, connected_to,
+communicating_with, eavesdropped_by}.
+Causal
+diagram
+and
+AMWN
+proper.
+Separately
+from
+the
+simulation
+mirror,
+shadow_loom.amwn.build_causal_diagram strips WorldStateV1.causal_topology
+to a typed structural diagram G and build_amwn constructs the Ancestral Multi-World Network
+GA(G, W ∗) of Correa and Bareinboim (2025) over a query’s intervention/evidence set W ∗= {Vt, . . .}.
+Three implementation details bridge the narrative graph and Definition A.1 of the paper:
+1. Node shadowing. A counterfactual variable Vt is identified by the pair (V, proj(T, An(V )G ¯
+T )),
+where the intervention context T is projected onto V ’s ancestors in the mutilated diagram. Two
+copies of V coming from different worlds are the same node when their projected contexts agree —
+this is the AMWN’s mechanism for avoiding the exponential k-plet blow-up of Shpitser and Pearl
+(2007). d-Separation (Rule 2) is then read off GA via NetworkX is_d_separator.
+2. Synthetic relationship-metric nodes. Relationship metrics (affinity, fear, power_dynamic) live
+on edges in social_topology, not as first-class nodes, so mutation_social causal edges
+would otherwise be invisible to d-separation. We promote each (src, tgt, metric) triple into a synthetic
+node REL::src::tgt::metric with both endpoint entities and the triggering event as parents. Static-
+topology axes that were never observed (m.observed = false) are skipped to avoid injecting
+phantom variables into latent queries.
+3. Channel and utterance routing. Communication channels are first-class diagram nodes. Each
+utterance event is wired speaker →utterance →channel →addressees, with bidirectional standing
+capability edges channel ↔participant. A Rule-3 surgery on a channel therefore cuts both the
+standing capability and every per-utterance content path — exactly the closure property the channel-
+utterance integration relies on.
+Latent-free SCM and the optional U-confounder switch.
+The diagram is built from the en-
+gine’s ground-truth causal_topology, with no bidirected U arcs; reading GA for d-separation
+is therefore sound but incomplete with respect to unobserved confounders — a latent common
+cause that LLM extraction missed is silently treated as absent. To make the limitation explicit, the
+allow_unobserved_confounders setting injects, for every pair of distinct nodes that share at
+least one observed parent, a latent shared parent U_a__b; d-separation on the resulting diagram refuses
+
+
+===== PDF PAGE 16 =====
+to mark such siblings independent because the latent opens an active path. This produces the sound-but-
+incomplete behaviour callers expect from the narrative-extraction setting and is recommended for any
+pipeline where Rule 3 pruning will be promoted from advisory to authoritative.
+A.4
+Causal physics
+The causal physics is a graphical world model of cause and effect: a typed dynamics over the shared
+world graph that implements all three rungs of Pearl’s causal hierarchy (Pearl, 2009; Bareinboim et al.,
+2022): rung 1 is Correlation (observation: P(Y | X) read off the ego-graph without intervention),
+rung 2 is Interventions (do(X = x), severing incoming edges into X), and rung 3 is Counterfactu-
+als (abduction over latent exogenous values, then a do-operation on the abducted world). Each rung
+corresponds to one query type in Section 2: ObservationQuery, InterventionQuery, and
+CounterfactualQuery respectively.
+Given a sandbox G and an intervention specification:
+Observation (rung 1 — Correlation):
+read P(Y | X = x) directly off the ego-graph; no edge surgery.
+Action (rung 2 — Interventions):
+do(X = x) severs every incoming causal edge into X and writes
+VX ←x. Channel surgery (do(CH.status = severed)) and event invalidation (do(e.truth_value =
+false)) additionally trigger a provenance prune: beliefs whose acquired_via_event_id or
+acquired_via_channel_id pointed at the surgically disabled object are dropped from the sandbox
+before propagation, because they are no longer epistemically licensed in the counterfactual world.
+Abduction (rung 3 — Counterfactuals):
+for evidence E, each entity trait T is updated by a precision-
+weighted Bayesian blend of the historical sandbox prior and the present-day observed value: writing ιT
+for the trait’s typed inertia (reinterpreted as the precision of the historical prior) and κE for an evidence
+precision (default 1),
+T post = ιT · T prior + κE · T evidence
+ιT + κE
+,
+(1)
+so high-inertia traits shrink toward the historical baseline and low-inertia traits snap to the evidence. (A
+legacy inertia-damped variant T post = T prior + (1 −ιT ) (T evidence −T prior) is retained for ablation.)
+The same Bayes blend is applied per axis to relationship metrics on outgoing social edges. Belief back-
+propagation is gated by a per-recipient intelligibility threshold so a belief that could not plausibly
+have been acquired through its provenance channel is not reinstated. The do-operation of rung 2 is then
+re-applied on the abducted world.
+Counterfactual (ctf-) calculus pre-flight.
+Before any sandbox surgery, every Rung-2/3 query is
+screened against the three rules of the ctf-calculus of Correa and Bareinboim (2025), specialised to a
+latent-free SCM:
+Rule 1 (Consistency) suppresses vacuous interventions do(X = x) for which the observed factual value
+of X is already x.
+Rule 2 (Independence) builds the AMWN GA(G, W ∗) over the union of evidence and intervention
+targets, with node-shadowing across worlds whose projected contexts on the ancestral set agree, and
+tests (Yr ⊥⊥Xt | W ∗) via d-separation on the AMWN. Evidence flagged as redundant is reported
+but not silently dropped.
+Rule 3 (Exclusion) tests X ∩An(Y ) = ∅in the mutilated diagram G ¯Z and flags interventions that are
+provably vacuous with respect to the query targets. The engine ships in advisory mode by default
+(the flagged interventions are surfaced to the auditor but retained in the simulation), since a missed
+bidirected confounder would otherwise let a substantively meaningful intervention be d-separated
+into a no-op; prune mode is opt-in for confounder-complete topologies.
+The construction matches Definition A.1 of Correa and Bareinboim (2025) in spirit, with the following
+deliberate restrictions: (a) we operate on a latent-free SCM, so soundness for d-separation holds but
+
+
+===== PDF PAGE 17 =====
+completeness across worlds with shared unobserved confounders would require explicit bidirected edges
+that the data model does not yet encode; (b) Rule-2 flags are advisory rather than authoritative; and (c) the
+relationship-edge axes (affinity, fear, power_dynamic) are lifted into synthetic REL::src::tgt::metric
+diagram nodes so that mutation_social edges contribute to d-separation reasoning.
+Propagation.
+A topological sort over the causal sub-graph (with strongly connected components
+condensed and the members of each non-trivial SCM cycle blocked with reason cycle) applies, for
+each downstream entity trait T at node u with active parents {pi} and edge weights {wi} (where each
+wi = σi · ϕi is the product of an evidence-strength weight σi ∈{0.25, 0.5, 0.75} and a causal-force scalar
+ϕi, attenuated by a mechanism / world-domain fallback when the edge mechanism is outside the trait’s
+typed MECHANISM_TRAIT_MAP):
+Ii = (Vpi −Vu) wi,
+¯I =
+P
+i Ii
+max(1, P
+i wi),
+∆u =
+(¯I −sgn(¯I) ιu
+if |¯I| > ιu + ε,
+0
+otherwise.
+(2)
+The max(1, ·) divisor makes the gate scale-invariant only above unit weight: a single weak edge with
+P wi = 0.1 is not artificially inflated to clear an arbitrary inertia, while ten stacking weak edges
+no longer dominate one canonical strong source.
+A spatial affordance check additionally blocks
+cross-location influence unless an unbroken connected_to path exists.
+An optional noisy-OR
+propagation mode replaces the deterministic |¯I| > ιu gate with a Bernoulli aggregation of per-edge fire
+probabilities pi = σ(β (|Ii| −ιu)) followed by an W
+i pi = 1 −Q
+i(1 −pi) aggregator and a threshold
+(or, under execute_distribution, a Monte-Carlo Bernoulli draw); a post-pass baseline drift
+optionally pulls mutated traits back toward type by (1 −ιu) · ρ. Both are off by default so the canonical
+engine is bit-for-bit reproducible. The result is a structured CausalPhysicsResult{mutations,
+blocked, hidden_deltas, intervened_nodes, rule3_pruned_interventions,
+rule2_redundant_evidence, noisy_or_probabilities,
+pruned_beliefs_count, pruned_utterance_event_ids,
+disabled_channel_ids}.
+A.5
+Narrative physics (affective calculus)
+The narrative physics is a graphical world model of reader affect: it operates on the same typed graph as
+the causal physics, but its dynamics scores reader-state functionals (mystery, dramatic irony, suspense,
+surprise) rather than propagating causal force.
+Let A be the anchor pair (tf, ts) for fabula and syuzhet cursors, F the focal entities, and write revealed
+for any event e with s(e) ≤ts. Define Anc(e) as the causal ancestors of e in the graph and B(F, tf) as
+the union of belief sets of F reconstructed at tf.
+Mystery (Sternberg’s curiosity).
+The Sternberg-style curiosity operationalisation (Sternberg, 1978,
+1992; Brewer and Lichtenstein, 1982) aggregates over revealed effects e involving the focal cast (events
+with s(e) ≤ts and at least one focal participant), pooled with the focal entities themselves as permissible
+effect-nodes (an entity is itself a causal target of every revealed action against it). Each ancestor’s
+contribution is scaled by three multiplicative factors: a path-strength geometric decay along the strongest
+reverse-path product of edge weights from a to e, depth-capped at D = 4 (Trabasso and Sperry, 1985) and
+computed by single-source Dijkstra on the negated-log-weight reverse graph; a harm-kind salience σka
+from the same σk table used by suspense; and a per-effect curiosity-proximity decay ρe = exp(−(ts −
+s(e))/τcur) with τcur = 8 syuzhet beats, motivated by Iser’s gap theory of reader response (Iser, 1976).
+Writing Π(a, e) for the path-strength weight, the gauge is
+Mys =
+P
+e∈eff ρe
+P
+a∈Anc(e), s(a)>tsσka · Π(a, e)
+P
+e∈eff ρe
+P
+a∈Anc(e)σka · Π(a, e)
+,
+(3)
+the salience- and proximity-weighted fraction of focal-effect causes still hidden from the reader. The
+unweighted ratio |{a : s(a) > ts}|/|Anc(e)| is the equivalent simple form when all factors collapse to
+
+
+===== PDF PAGE 18 =====
+unity. The legacy single-edge fallback for multi-hop ancestors gave a 5-hop weak chain as much weight
+as a 1-hop strong link — contradicting Trabasso & Sperry’s empirical finding that audience traceability
+decays geometrically with chain depth.
+Dramatic irony (Booth, 1974; Muecke, 1969; Gerrig, 1993; Pfister, 1988).
+Following the classical
+reader/character knowledge-asymmetry framing, for each focal entity c ∈F let Kc be the set of events c
+knows at the anchor: events c participates in (as actor or target) whose fabula time falls at or before the
+syuzhet anchor’s fabula frontier, plus events referenced in revealed utterances spoken by or addressed to
+c, plus events c holds a Belief about whose provenance still resolves. Each gap event’s contribution
+is then scaled by three additional factors: a harm-kind salience σke (tragic irony — a hidden mortal
+threat the focal does not see — outranks comic irony along the same hierarchy used by suspense and
+mystery); a false-belief multiplier ϕ(c)
+e
+∈{1, mfb} when the gap event’s actor set intersects the focal’s
+believed- entity targets (entities about whom c holds a provenance- valid Belief), the canonical Iago
+→Othello / Jacqueline →Linnet pattern (Pfister, 1988; Gonzalez, 2024); and a closure-proximity
+decay ρ(c)
+e
+= max(ρmin, exp(−∆cls/τiro)) where ∆cls is the syuzhet-index distance to the earliest later
+position at which c first witnesses an event with fabula(e′) ≥fabula(e) — the dramatic moment c
+walks into the scene that exposes the truth (Booth’s stable vs. unstable irony (Booth, 1974); defaults
+τiro = 6, ρmin = 0.4). The per-character gap is further scaled by an action weight ac = min(¯a, 1 + α ·
+#{actor-events by c ≤ts}) on focal prominence (Pfister, 1988; Sutherland, 2013): a focal driving the
+plot under false information carries more dramatic charge than a bystander. Writing we for event e’s
+narrative intensity (default 1), R for the set of revealed events, and K = 1 for the saturation constant,
+gc = ac ·
+P
+e∈R, e/∈Kc we · σke · ϕ(c)
+e
+· ρ(c)
+e
+P
+e∈R we + K
+,
+(4)
+Iro = min
+ 1, β · max
+c∈F gc + (1 −β) · gc
+
+,
+β = 0.6.
+(5)
+The aggregator β · max +(1 −β) · g is Sternberg’s single-dominant-gap framing: one character’s tragic
+blindness carries the irony charge, with secondary characters as residual contribution. Normalising by
+the revealed mass (rather than total event mass) makes Eq. 5 a Sternberg-style gap fraction that can
+both rise (with new reveals the character has not caught up to) and fall (when participation, addressed
+utterances, belief acquisition, or closure-proximity discharge close the gap), producing the rise-peak-fall
+arc the structural-affect literature predicts for canonical irony plots (Booth, 1974; Muecke, 1969): Macduff
+hearing of his family, Poirot’s denouement, Nick’s letter to Daisy. Two earlier denominators failed against
+this criterion. The ratio #gaps/#revealed−edges grew its numerator and denominator together and so
+plateaued at a story-specific asymptote by the third reveal — on Reservoir Dogs it even decayed from 0.25
+to 0.06 as the protagonist became actor-of-record on more revealed edges. Replacing the denominator
+with the full event mass instead pinned the score into a monotone rise across 21/21 example-world
+fixtures, since the denominator stopped moving while the numerator kept growing — contradicting the
+rise-peak-fall arc the theory predicts.
+Suspense (Brewer and Lichtenstein, 1982; Comisky and Bryant, 1982; Ortony et al., 1988; Zillmann,
+1996; Lazarus, 1991; Cheong and Young, 2015; Ely et al., 2015).
+The scorer follows the hope/fear
+(here hope/threat) anticipation pair from the structural-affect and OCC-appraisal traditions — not the
+information-theoretic uncertainty-reduction formulation of Wilmot and Keller (2020), which is structurally
+closer to the dramatic-irony scorer above and is borrowed there instead. For each unrevealed event e with
+strongest incoming causal weight pe ∈(0, 1], we compute a per-event contribution that is then classified
+as threat or hope for each focal entity x ∈F via the rules below.
+Disposition-aware classification (Zillmann, 1996). The legacy actor=hope / target=threat rule is
+overridden by the social topology: an event whose actor has aff(actor →x) ≤−0.2 is bucketed as a
+threat on x (an antagonist’s authored misdeed no longer registers as hope just because they are the actor),
+and an event whose actor has aff(actor →x) ≥+0.2 propagates as hope even when x is its target (rescue
+
+
+===== PDF PAGE 19 =====
+propagation: an ally arriving to defuse the threat). Worlds with no populated social_topology
+default the affinity to neutral and fall back to the legacy rule.
+Anticipatory proximity weighting (Comisky and Bryant, 1982). Subjective probability of a threat rises
+with imminence, both temporally and spatially. Each event’s contribution is multiplied by a temporal–
+spatial kernel
+prox(e, x) = exp
+
+−∆tfab
+e
+τt
+
+· exp
+
+−∆dsp
+e,x
+τs
+
+,
+(6)
+where ∆tfab
+e
+= max(0, tfab
+e
+−tfab
+now) is the fabula-time gap from the latest revealed event to the unrevealed
+event, ∆dsp
+e,x is the shortest-path distance in the spatial topology between e’s location and x’s, and τt auto-
+scales to the world’s median inter-event fabula gap so worlds using fabula_time_spacing=1000
+and unit-spaced worlds both decay over ∼6 narrative beats; τs = 4 hops.
+Persistence multiplier (Brewer and Lichtenstein, 1982). The longer a foreshadowed threat lingers
+unresolved, the louder it gets. Each event’s contribution is also multiplied by min(Πmax, 1 + α · ae)
+where ae is the count of revealed causal ancestors of e (proxy for how long the gun has been on the
+mantle), α = 0.10 and Πmax = 1.5.
+Harm-kind salience. Each event is tagged with a salience σe ∈[0, 1] inferred from the canonical
+mechanism strings on its incident causal edges, taking the maximum across incident kinds so a stab-
+in-the-back event wired with both physical and betrayal edges registers at the higher salience
+rather than being averaged. The salience ranking follows the appraisal-theory hierarchy of core relational
+themes (Lazarus, 1991) cross-anchored to OCC’s prospect-based emotions (Ortony et al., 1988): exis-
+tential (1.00) > physical (0.85) > betrayal (0.75) > psychological (0.70) > emotional/relational (0.65)
+> social/reputational (0.55) > epistemic (0.45). The epistemic floor is held low because the cumulative-
+mystery scorer (Eq. 3) already covers that surface; suspense should not double-count it. Events with no
+resolvable mechanism default to physical (the modal kind in the corpus).
+Aggregating per-entity, per-kind contributions weighted by all of the above:
+w(k)
+threat(x)=
+X
+e/∈rev
+kind(e)=k
+bucket(e,x)=threat
+σe pe prox(e, x) πe,
+(7)
+w(k)
+hope(x)=
+X
+e/∈rev
+kind(e)=k
+bucket(e,x)=hope
+σe pe prox(e, x) πe,
+(8)
+where πe = min(Πmax, 1 + αae) is the persistence multiplier and bucket(e, x) resolves the threat/hope
+classification under the disposition rule above.
+EFK expected-variance combiner (default). Ely et al. (2015) reformulate suspense as the expected
+variance of next-period beliefs about a terminal outcome — a property of a Bayesian belief martingale
+rather than a structural-affect heuristic. Adopting this functional form gives suspense the same belief-
+process shape that our surprise scorer (§16) already has, so the two affective scores become moments of
+the same underlying process rather than unrelated heuristics. We instantiate this per (focal x, kind k) cell
+using the revealed threat/hope evidence as a Beta posterior over “next reveal lands threat-side”:
+A(x,k) =
+X
+e∈rev(x,k)
+threat
+we,
+B(x,k) =
+X
+e∈rev(x,k)
+hope
+we,
+µ(x,k)
+t
+=
+1 + A(x,k)
+2 + A(x,k) + B(x,k) .
+(9)
+Each unrevealed event e on the cell, with bucket be ∈{threat, hope}, weight we and proximity ρe =
+prox(e, x), defines the Bayes update that would occur if e were the next reveal:
+µ+
+e =
+1 + A + we
+2 + A + B + we
+,
+µ−
+e =
+1 + A
+2 + A + B + we
+,
+∆µe = µbe
+e −µt,
+(10)
+
+
+===== PDF PAGE 20 =====
+so the realised expected squared belief change, weighted by proximity, is
+σ2
+fk =
+X
+e∈unrev(x,k)
+ρe
+P
+e′ ρe′ (∆µe)2.
+(11)
+We normalise by the maximum-suspense reference at the same prior — the squared shift a single composite
+reveal of total mass W = P
+e we would induce on whichever side moves belief most:
+σ2
+max = max
+
+(µ+
+W −µt)2, (µ−
+W −µt)2
+,
+eσ2
+(x,k) = min
+
+1, σ2
+fk/σ2
+max
+
+∈[0, 1].
+(12)
+The cell gauges are then aggregated by salience-weighted stakes attenuation:
+Suspefk =
+P
+(x,k) σk · stakes(x,k) · eσ2
+(x,k)
+P
+(x,k) σk · stakes(x,k)
+,
+stakes(x,k) =
+T unrev
+(x,k)
+T unrev
+(x,k) + Kk
+,
+(13)
+where T unrev
+(x,k) = P
+e∈unrev(x,k) we is the unrevealed weighted mass on the cell (so stakes decay as the
+narrative exhausts its forward reveal budget) and Kk is the per-kind saturation constant from the harm-kind
+table. A bilateral-mass guard restricts the aggregator to cells whose unrevealed set contains both threat
+and hope candidates: a one-sided forward reveal set is despair (only threats coming) or safety (only hopes
+coming) under Brewer–Lichtenstein structural-affect theory, even though strict EFK would still admit
+positive variance from magnitude uncertainty alone. This matches the OCC prospect-based-emotion
+taxonomy (Ortony et al., 1988): suspense requires outcome ambiguity, not merely magnitude ambiguity.
+Per-kind balance × stakes with weighted-max combine (mode=classic).
+The original
+Brewer–Lichtenstein-anchored aggregator is retained as an opt-in alternative: rather than collapsing
+all kinds into one bucket and computing a single balance term — which dilutes a coherent single-kind
+tension into a multi-kind average — we compute balance and stakes within each kind and combine via a
+salience-weighted max:
+Suspclassic = max
+k
+
+σk · balance(k) · stakes(k)
+,
+(14)
+with balance(k) = 1−|w(k)
+threat −w(k)
+hope|/Tk, stakes(k) = Tk/(Tk +Kk), and Tk = w(k)
+threat +w(k)
+hope. This
+matches Brewer & Lichtenstein’s prediction that one dominant unresolved beat carries the structural-affect
+arc, rather than several diffuse anxieties additively. It is also used as the fallback when no kind has both
+w(k)
+threat > 0 and w(k)
+hope > 0. The per-kind saturation constants Kk rise with kind salience so existential
+threats saturate slowly while social ones saturate fast: Kexistential = 4.0, Kphysical = 3.0, Kbetrayal = 2.5,
+Kpsychological = 2.0, Kemotional = 2.0, Ksocial = 1.5, Kepistemic = 1.5. The dominant kind and per-kind
+sub-totals are surfaced alongside the scalar so downstream directive consumers can target the dominant
+beat (footsteps closing in vs. the lie about to surface vs. the fellowship about to fracture). Suspense
+returns 0 when no kind has both w(k)
+threat > 0 and w(k)
+hope > 0 — the suspense–despair and suspense–safety
+boundaries.
+Surprise.
+Let actualT (x) denote entity x’s trait T value at the world’s terminal fabula time, resolved via
+RECONSTRUCT(x, tmax) so authored state_timeline arcs (e.g. Macbeth’s ambition rising 0.7 →
+0.85) are honoured rather than read off the baseline. For each focal entity x ∈F, the prior q starts at the
+leave-one-out corpus marginal
+q0(T, x) =
+1
+|NENT \ {x}|
+X
+y∈NENT\{x}
+actualT (y),
+(15)
+defaulting to 0.5 when fewer than two other entities carry T. Leave-one-out prevents the focal entity from
+biasing its own prior — with the small casts typical of the example fixtures the inclusive marginal would
+otherwise pull q toward p and systematically depress KL.
+
+
+===== PDF PAGE 21 =====
+For each revealed cause (a →x) with weight w the prior is now updated by a Beta-Bernoulli step:
+α += w · actualT (x),
+β += w · (1 −actualT (x)),
+(16)
+seeded by a Beta(s · m, s · (1 −m)) prior with weak pseudo-count strength s = 2 (strong enough to keep
+q off the ε-clipped extremes when evidence is sparse, weak enough to remain responsive to the first few
+edges). The posterior mean q = α/(α + β) replaces the legacy geometric pull q += w(actual −q),
+which was a Storck/Hochreiter/Schmidhuber RDIA proxy with undefined posterior variance. Edges where
+x is the causal target contribute at full weight; edges where x is the causal source contribute at 0.4× full
+weight (“X did Y to Z” speaks more strongly about Z’s traits than X’s, but X’s act is non-trivial evidence
+about X’s traits — Macbeth’s ambition is reinforced by acting on it).
+Letting p = actualT (x),
+DKL(p ∥q) = p log p
+q + (1 −p) log 1−p
+1−q,
+(17)
+the trait-level KL component is the salience-weighted soft- saturated mean
+SurKL =
+P
+T∈T σT
+ 1 −e−DKL(p ∥q)
+P
+T∈T σT
+,
+(18)
+where σT is the per-trait narrative salience (Reagan et al., 2016; arc-relevance hierarchy with ambition
+/ guilt / vengeance / despair / love / loyalty / courage at σT ∈[0.85, 1.0], peripheral traits like literacy
+/ fitness / wealth at 0.30). The saturation constant τ = 1 in 1 −e−KL matches the binary- distribution-
+discrimination JND from psychophysics (Lu and Dosher, 2013; subjective just-noticeable belief shift in
+the [0.5, 1.0] nat band). The earlier KL/ log(1/ε) form divided by the theoretical binary-KL maximum
+(log(1/ε) ≈4.6 at ε = 0.01), squashing the entire perceptual signal into the bottom 4% of the gauge
+— every example-world plot read as flat ≤0.10 even when canonical surprise traits (Macbeth’s despair,
+Macduff’s grief, Lady Macbeth’s guilt) carried per-trait KLs of 0.27–0.50.
+The trait-KL component is then combined with a plan-based anachrony component (Bae and Young,
+2008; Tobin, 2018; Bissell et al., 2025) that captures the surprise generated by temporal reordering —
+flashbacks that reframe earlier events, openers in medias res:
+Surana =
+1
+|Et|
+X
+e∈Et
+|rankfab(e) −ranksyu(e)|
+N −1
+,
+(19)
+where Et is the set of relevant focal events (cumulative mode: all revealed at ts; local mode: only those
+newly revealed at ts, mirroring the per-step Itti-Baldi spike). The aggregator is a convex split
+Sur = wt · SurKL + wa · Surana,
+wt = 0.7, wa = 0.3,
+(20)
+which preserves the existing test-contract dominance of trait shifts on linear tellings (anachrony →0)
+while letting the non-linear example fixtures (Reservoir Dogs, Gone Girl, Tinker Tailor) accrue the
+additional anachrony-driven contribution that Bissell et al. (2025) flag as the most important missing
+dimension in KL-only narrative-surprise models. With no syuzhet anchor the reader is assumed omniscient
+and Sur = 0.
+Six emotion scorers
+(grief, rage, joy, regret, love, fear) score closeness to a per-
+effect trait target. A shared _EFFECT_TRAITS table maps each effect to a pair (Pe, Ie) of positive and
+inverse trait indicators, calibrated against the actual trait vocabulary of the example-world corpus. Letting
+v(x, T) denote the current value of trait T on entity x (resolved via RECONSTRUCT), the per-entity score
+is
+Emoe(x) =
+P
+T∈Pe∩τ(x) v(x, T) + P
+T∈Ie∩τ(x)
+ 1 −v(x, T)
+
+|(Pe ∪Ie) ∩τ(x)|
+,
+(21)
+where τ(x) are the trait names x carries. Both lists drive scoring symmetrically: an earlier filter applied
+Pe only, leaving Ie as dead code (a brave character routed through fear got no fear-reducing credit
+
+
+===== PDF PAGE 22 =====
+because courage never entered the average). When the intersection is empty — a deliberately traitless
+cast for that effect — the score falls back to the worst-case +1 rather than silently scoring at the midpoint.
+The combined affective score requested by a DirectiveQuery is a weighted sum over the active
+functionals.
+Two-axis sampling and dual-mode surprise.
+The same scorers are evaluated along the syuzhet axis
+(advancing ts only reveals more, so mystery is non-increasing and dramatic irony rises with reveals
+and falls with character knowledge acquisition) and the fabula axis (snapshotting the world at tf, where
+intrinsically surprising story moments can spike). Surprise is exposed in two formally distinct modes
+corresponding to the two quantities Itti and Baldi (2009) distinguish. The cumulative form (Eq. 18, used
+by the directive-assembly optimiser) is the integrated gap DKL(p ∥qs) between the reader’s accumulated
+prior qs and the truth p, and is monotonically non-increasing on the syuzhet axis. The local form (used by
+the time-series view) is the per-step belief-update DKL(qs ∥qs−1) — the canonical Itti-Baldi Bayesian
+Surprise definition (the KL distance between the reader’s prior immediately after and immediately
+before the current syuzhet anchor’s revelations); the iLab Bayesian-Surprise project page acknowledges
+this is formally equivalent to the Storck et al. (1995) reinforcement-driven information acquisition
+formulation (KL divergence between the agent’s belief states p∗
+ijk(t+1) and p∗
+ijk(t) before and after a
+state transition). Quiet stretches contribute ∼0; revelations spike in proportion to how much they shift
+the prior, producing the impulse-and-decay trajectory the theory predicts and consistent with the corpus
+emotional-arc trajectories of Reagan et al. (2016) and Kim et al. (2017). Conflating the two forms is a
+recurring source of misinterpretation: cumulative surprise is a state quantity (“how much catching-up the
+reader still has to do”), while local surprise is its temporal derivative (“which revelation moments most
+shift the reader’s beliefs”).
+A.6
+Generation
+DirectiveAssembler.evaluate_candidate_events() forks the sandbox per candidate in-
+tervention, runs the causal physics, prunes candidates that violate inertia, affordance, or propagation
+constraints, ranks survivors by the affective score, and packages the winner as a CreativeBrief
+of typed ConstraintBlocks (per-effect): hidden-predecessor lists for mystery, “MUST NOT learn”
+guards for irony, threat/hope tables and hidden-channel lists for suspense, per-trait KL magnitudes for
+surprise, and per-trait shift constraints with headroom and inertia evidence for the emotion targets. Only
+the brief is shown to the renderer LLM, which produces dialogue, description, and pacing within the
+envelope.
+A.7
+Audit and feedback loop
+The auditor (an LLM-as-judge in the sense of Gu et al., 2024) runs three passes over the rendered prose:
+(i) causal — reverse-engineers prose into causal claims and flags “miracle steps” (state changes with
+no licensing edge in the brief); (ii) abduction — runs counterfactual probes against the prose to check
+that implicit events hold; (iii) affective — measures the realised epistemic gap in the prose against the
+target. If the structured loss is non-zero, generation is re-run with the auditor’s feedback appended, up to
+max_correction_retries. On success the re-extracted prose is merged into a new VersionRow,
+with world_id set by the branch policy (auto | mainline | shadow); counterfactual queries default
+to a fresh shadow branch, preserving canon.
+B
+Worked examples on real plot fixtures
+The repository ships twenty hand-authored example_worlds/ fixtures paired with prose synopses in
+sample_plots/. A small subset is used below to illustrate each component end-to-end. Field values
+quoted below are verbatim from the fixtures; queries are the same ones run by the example walkthroughs
+in docs/model-examples.md and docs/pipeline-by-example.md.
+
+
+===== PDF PAGE 23 =====
+B.1
+World model — Macbeth
+In
+example_worlds/macbeth.py,
+the
+location
+LOC_HEATH
+carries
+ambient_state{supernatural:
+AmbientVector(value=0.9, volatility=0.2,
+evidence_strength="strong"), concealment:
+0.7}. The entity ENT_MACBETH is
+a bundle of typed TraitVectors: ambition, courage (high inertia 0.7, hard to shake), guilt
+(low inertia 0.25, highly mutable), and so on; an initial Belief(target_id="ENT_WITCHES",
+perceived_state=
+“The witches’ prophecies may yet prove true”, confidence=0.4,
+inertia=0.35)
+sits
+on
+his
+belief
+list.
+OBJ_BLOODY_DAGGERS
+declares
+Affordance(action="kill", target_type="Entity")
+—
+the
+precondition
+gate the engine checks before it lets EVT_DUNCAN_MURDER fire.
+Every EventNode
+carries both indices:
+the murder has a fabula time but the syuzhet index follows the
+staged scene.
+The fixture exercises all five CausalEdge modalities (chain_reaction,
+mutation,
+mutation_social,
+affordance_gate,
+ambient_propagation);
+the
+ambient_propagation edge is what lets LOC_HEATH.supernatural=0.9 bias Macbeth’s
+uptake of the prophecy belief.
+Beyond Macbeth, the same schema captures wildly different
+epistemic regimes:
+CHN_HIDDEN_TELESCREEN_SURVEILLANCE in Nineteen Eighty-Four
+carries intelligibility{ENT_WINSTON: 0.0, ENT_JULIA: 0.0} so every utterance
+riding it is invisible to the protagonists; CHN_PIP_BENEFACTOR_PIPELINE in Great Expec-
+tations sets intelligibility{ENT_PIP: 0.1} to encode the whole misattribution arc;
+CHN_RHYS_FEYRE_BOND in ACOTAR uses 0.4 for partial telepathic bleed. None of these required a
+schema extension — they are just different fillings of the same Channel.intelligibility map.
+B.2
+AMWN sandbox — Macbeth “what if Macbeth refuses?”
+The
+query
+“Macbeth
+refuses
+to
+murder
+Duncan”
+is
+a
+rung-2
+(Intervention)
+query.
+The
+router
+builds
+an
+ego-payload
+focused
+on
+ENT_MACBETH
+at
+the
+In-
+verness
+anchor,
+and
+AMWNInstantiator.create_sandbox(ego_payload,
+query_type="intervention") mirrors it as a MultiDiGraph; a sibling VersionRow
+with world_id="shadow" holds the fork. apply_do_operator({EVT_DUNCAN_MURDER:
+⊘}) severs the murder’s incoming causal edges; the downstream chain_reaction edges into
+EVT_MALCOLM_FLEES, EVT_MACBETH_CROWNED, EVT_BANQUO_MURDERED all lose activation;
+the mutation edges into ENT_MACBETH.guilt and paranoia never fire. The factual mainline is
+untouched — the shadow row is browsable, diffable, and promotable from the UI.
+B.3
+Causal physics — Macbeth propagation under “Impact > Inertia”
+After the do-operator,
+propagate() topologically sorts the causal sub-graph.
+For the
+original
+(factual)
+chain,
+the
+only
+active
+inbound
+edge
+into
+ENT_LADY_MACBETH
+from
+EVT_LADY_MACBETH_PERSUADES (a mutation_social edge with trait_target
+=
+power_dynamic and causal_force = 7.0 against ENT_MACBETH) lifts her relational dominance
+over Macbeth by ∆= +0.4, while the symmetrical edge EVT_BANQUO_GHOST →ENT_MACBETH
+(trait_target = fear, trait_delta = +0.5, causal_force = 6.0 against ENT_BANQUO)
+shocks Macbeth’s fear-of-Banquo channel by ∆= +0.5. With a single active source per channel the nor-
+maliser max(1, P wi) = 1, so ¯I = I, and both are above the trait inertia (Lady Macbeth’s resolve-related
+inertia ∼0.3; Macbeth’s per-relation inertia for an unestablished fear is low). A symmetrical attempt to
+shock Macbeth’s courage (initial inertia 0.7) at w ≈0.5, ∆src = 0.4 would give ¯I = 0.20 < 0.7 and
+is blocked — exactly the play’s psychology, in which his nerve outlasts his conscience. With multiple
+stacking weak sources the divisor switches to P wi and the aggregate behaves as a weighted average,
+preventing ten weak rumours from outweighing one canonical strong cause. Spatial affordance gat-
+ing additionally blocks cross-location shocks unless a connected_to path exists. The truth-value
+guard generalises the same gate to utterance evidence: EVT_UTT_NOELLE_PREGNANCY_CLAIM
+(Gone Girl, truth_value="false") and EVT_UTT_BALTHASAR_REPORTS_JULIETS_DEATH
+
+
+===== PDF PAGE 24 =====
+(Romeo and Juliet, truth_value="false") both fire mutation_social edges, so the addressees
+update their beliefs about what was said and the social aftermath plays out, but the abduction step refuses
+to use the falsehoods as factual support; downstream beliefs whose acquired_via_event_id cites
+those utterances therefore carry the deception in their provenance and are pruned automatically if the
+originating utterance is severed by a counterfactual.
+B.4
+Pearl-rung worked numerics — Macbeth (real engine output)
+The numbers below are the actual CausalPhysicsResult.mutations, hidden_deltas and
+rule3_pruned_interventions returned by CausalPhysicsEngine.execute() on the
+bundled example_worlds/macbeth.py fixture, focal cast {Macbeth, Lady Macbeth, Duncan,
+Banquo, Macduff}. Reproducible via scripts/_dump_pearl_rungs.py.
+Rung 1 — Observation (interventions = ∅).
+Forward propagation of ambient sources
+only:
+three trait shifts pass the noisy-OR gate (ENT_BANQUO.suspicion:
+0.003 →0.015;
+ENT_MALCOLM.leadership:
+0.204
+→
+0.214;
+ENT_LADY_MACBETH.ruthlessness:
+0.993
+→
+0.999),
+and
+27
+weaker
+impulses
+are
+absorbed
+(result.blocked,
+reason="noisy_or_absorbed").
+Rung
+2
+—
+Intervention
+(do(ENT_MACBETH.ambition=0),
+target
+set
+{ENT_DUNCAN, ENT_LADY_MACBETH}).
+intervened_nodes
+=
+{ENT_MACBETH},
+rule3_pruned_interventions = ∅. The do-surgery severs the inbound edges into ambition
+and pins the trait at 0; sibling traits remain free. Seven trait mutations fire on top of the pin:
+Node
+Trait
+old
+new
+impact
+ENT_LADY_MACBETH
+resolve
++0.966
++0.980
++0.040
+ENT_LADY_MACBETH
+ruthlessness
++0.698
++0.704
++0.019
+ENT_LADY_MACBETH
+guilt
++0.922
++0.917
+−0.006
+ENT_LENNOX
+caution
++0.862
++0.868
++0.023
+ENT_LENNOX
+suspicion
++0.242
++0.253
++0.023
+ENT_BANQUO
+suspicion
++0.001
++0.013
++0.022
+ENT_MALCOLM
+courage
++0.713
++0.722
++0.026
+A vacuous variant do(ENT_DUNCAN.kindness=0) targeted at ENT_BANQUO still produces
+five propagation mutations in advisory mode (e.g. ENT_LADY_MACBETH.guilt: 0.015 →0.063,
+ENT_LENNOX.loyalty: 0.830 →0.855); under rule3_pruning_mode="prune" the engine
+would short-circuit because no directed path survives the mutilation.
+Rung 3 — Counterfactual.
+Same do, with evidence_node_ids = {Macbeth, Lady Macbeth}.
+Abduction populates result.hidden_deltas with the per-trait latent shifts the Bayesian blend
+(Eq. 1) requires:
+Node
+Trait
+∆
+ENT_MACBETH
+ambition
++0.598
+ENT_MACBETH
+courage
+−0.061
+ENT_MACBETH
+loyalty
++0.102
+ENT_MACBETH
+guilt
++0.444
+ENT_MACBETH
+paranoia
++0.173
+ENT_MACBETH
+ruthlessness
+−0.289
+ENT_MACBETH
+despair
++0.670
+ENT_LADY_MACBETH
+ambition
+−0.076
+ENT_LADY_MACBETH
+ruthlessness
++0.188
+ENT_LADY_MACBETH
+resolve
+−0.800
+ENT_LADY_MACBETH
+guilt
++0.950
+The +0.598 ambition shift on Macbeth and the −0.800 resolve shift on Lady Macbeth are precisely
+the latent perturbations the observed Act-V evidence requires given the per-trait inertia and the gap
+between the sandbox prior and the factual state_timeline. Forward propagation then fires five
+
+
+===== PDF PAGE 25 =====
+additional mutations on top of those staged sources (ENT_LADY_MACBETH.guilt: 0.792 →0.841;
+ENT_LADY_MACBETH.resolve: 0.484 →0.495; ENT_DUNCAN.trust: 0.870 →0.875, etc.).
+rule3_pruned_interventions flags the do as vacuous on the world-cropped diagram (the over-
+strict closed-world behaviour discussed in §3.2), but advisory mode keeps it in the simulation so the
+abduction-driven downstream still mutates.
+Romeo and Juliet — do(ENT_FRIAR_LAURENCE.diligence=1).
+The same engine on
+the bundled fixture produces 17 trait mutations across the supporting cast — including
+ENT_BALTHASAR.loyalty: 0.851 →0.946 (impact +0.233) and ENT_MERCUTIO.loyalty:
+0.988→1.000 (impact +0.175) — demonstrating that a counterfactually diligent friar shifts the supporting
+cast’s allegiance vectors well beyond Romeo and Juliet themselves.
+Gone
+Girl
+—
+abduction
+with
+no
+surviving
+propagation.
+The
+Rung-3
+query
+do(ENT_AMY.deceit=0)
+conditioned
+on
+{ENT_NICK, ENT_AMY}
+produces
+substantial
+hidden_deltas
+(e.g.
+ENT_NICK.adaptability:
++0.839;
+ENT_NICK.resentment:
++0.640; ENT_AMY.narcissism: −0.196; ENT_AMY.manipulation: −0.100) and zero forward
+mutations: the abduction fully explains the observed Nick/Amy state without any post-hoc forward
+propagation needing to fire. This is the engine reporting that the do-surgery plus evidence is consistent
+with the observed downstream — the strongest Rung-3 outcome shape.
+B.5
+Narrative physics — Death on the Nile, Reservoir Dogs, Romeo and Juliet, Macbeth
+The four structural scorers each have a canonical fixture.
+Mystery (Macbeth Act II).
+Eq. 3 on the revealed effect EVT_DUNCAN_DISCOVERED_MURDERED:
+of its causal ancestors, EVT_LADY_MACBETH_PERSUADES and EVT_SERVANTS_FRAMED are
+still hidden at the audience’s syuzhet_anchor early in the act; the score is 2/3
+≈
+0.67,
+falling to 0 once Act V resolves the provenance.
+The full scorer trajectory across the bun-
+dled example_worlds/macbeth.py fixture (12 evenly-spaced syuzhet anchors, focal cast Mac-
+beth, Lady Macbeth, Macduff, Duncan, Malcolm, Witches) traces the canonical Sternberg collapse:
+0.99, 0.93, 0.87, 0.73, 0.66, 0.61, 0.59, 0.55, 0.41, 0.37, 0.28, 0.28 — starting near 1 (every ancestor of
+every revealed effect is still hidden), collapsing through Acts II–III as Banquo’s death, the banquet ghost,
+and the witches’ second prophecy reveal earlier hidden causes, and ending at 0.28 once Macduff’s family
+slaughter and the moving forest have closed most of the structural gaps. The same scorer on Death on the
+Nile traces 1.00→0.29, on Wuthering Heights 0.99→0.18, on Tinker Tailor 0.98→0.20.
+Dramatic irony (Death on the Nile).
+The reader knows Jacqueline and Simon are conspirators
+(EVT_PLAN_HATCHED revealed at low syuzhet); Poirot and the suspect pool do not. With F =
+{ENT_PENNINGTON, ENT_VAN_SCHUYLER, ENT_TIM}, the conspiracy and its downstream re-
+vealed effects sit in the P
+e∈rev,e/∈Kc we numerator of Eq. 5 for every c ∈F. The gauge climbs
+through the cruise scenes as Poirot’s reveals accumulate without reaching the suspect pool, and falls
+only at the denouement when Poirot briefs the cast and the events enter every Kc. Run on the bundled
+fixture with the top-6 focal entities (Simon, Jacqueline, Linnet, Poirot, Race, Richetti), the curve is
+0.14, 0.30, 0.26, 0.40, 0.48, 0.58, 0.47, 0.42, 0.37, 0.50, 0.28, peaking at anchor 16 (Poirot’s confronta-
+tion in the lounge). The same scorer on Macbeth peaks 0.63 at anchor 25 (Macduff’s discovery of his
+murdered family); on Romeo and Juliet at 0.72 around anchor 25 (the crypt-misreading sequence); on
+Tinker Tailor Soldier Spy at 0.73 at anchor 41 (the cusp of the mole reveal). 16 of 21 bundled fixtures
+produce a clean rise-peak-fall.
+Suspense (Romeo and Juliet, tomb scene).
+At the tomb F = {ENT_ROMEO}, unrevealed events
+with Romeo as non-acting target (Friar’s letter intercepted, Juliet’s draught about to wear off) sum to
+wthreat; events Romeo himself authors and that have not yet fired (drink poison, kill Paris) sum to whope.
+Threat dominates. As Romeo drinks, whope →0 and the score returns 0 — the suspense–despair boundary
+built into the balance × stakes combiner (Eq. 5 ff.) is hit cleanly. The full curve across the bundled
+fixture is [0.14, 0.15, 0.10, 0.09, 0.14, 0.24, 0.12, 0.17, 0.17, 0.00] at 10 anchors, peaking at anchor 21
+
+
+===== PDF PAGE 26 =====
+(the moment between Juliet’s potion and Balthasar’s report). The same gauge on Gone Girl peaks 0.31 at
+anchor 19 (Amy’s mid-novel re-emergence); on Tinker Tailor at 0.39 on the cusp of the mole reveal; on
+Death on the Nile at 0.28 on Poirot’s late-night confrontation. Every world’s terminal anchor falls to 0.00
+— Wilmot’s safety condition, no unrevealed threats remain post-resolution.
+Surprise (Reservoir Dogs reveal).
+EVT_ORANGE_REVEALED sits at high fabula time (f ≈9000)
+but earlier syuzhet (s = 11 relative to the heist’s chronological ordering, but late in the audience’s presen-
+tation), with the underlying ground truth (ENT_ORANGE.constants = ["undercover_cop",
+...]) present at fabula time zero. Eq. 16 initialises a Beta-Bernoulli prior over Orange’s loyalty trait at
+Beta(s·m, s·(1−m)) with pseudo-count strength s = 2 and corpus-marginal mean m ≈0.5; the few
+revealed edges into Orange before the reveal (EVT_ORANGE_KILLS_BLONDE at full target weight, the
+earlier paternal-tenderness edges from ENT_WHITE at the source-side weight 0.4) keep the posterior
+mean q ≈0.6 “criminal”. After the reveal the actual value p ≈0.95 “cop”, producing a per-trait DKL of
+≈0.6 nat which the soft-saturation 1 −e−KL in Eq. 18 maps to a trait-KL component of ≈0.45. The
+fixture’s in-medias-res structure (the heist appears as a flashback after the warehouse aftermath) drives
+the anachrony component to ≈0.30, and the convex aggregator 0.7·SurKL + 0.3·Surana yields the
+corpus-audit peak surprise of ≈0.19 at the reveal anchor (see Tab. 2). The reveal is large but licensed —
+the engine had the cause present at low fabula time, only locked behind syuzhet, so re-extraction will not
+flag a miracle step.
+Emotion targets (Gone Girl, Brief Encounter).
+The six emotion scorers (grief, rage, joy,
+regret, love, fear) resolve their effect through the shared _EFFECT_TRAITS table (Eq. 21).
+On Gone Girl, the directive “maximise grief in Nick” is scored against grief’s positive indica-
+tors (despair, shame, longing, grief, anguish, mourning) and inverse indicators
+(hope, joy, contentment, satisfaction) intersected with Nick’s actual trait set, with the
+available headroom against those targets determining whether the directive is even feasible at the chosen
+anchor. On Brief Encounter the same machinery realises regret as the gap between Laura’s current
+self_actualisation and the regret-positive trait values guilt, remorse, despair under a
+constant-supervision channel that never permits the choice to be made.
+B.6
+Directive assembly — Romeo and Juliet
+The directive “raise dramatic irony to 0.85 in the tomb scene without giving Romeo correct infor-
+mation” triggers DirectiveAssembler.evaluate_candidate_events(). From unblocked
+affordances and reachable spatial paths it enumerates candidates — Friar’s letter intercepted, Balthasar
+arrives faster, Juliet wakes one minute earlier — and forks an AMWN sandbox per candidate. The
+plausibility gate drops Balthasar arrives faster (the plague quarantine SpatialEdge.is_locked
+blocks the path); the remaining sandboxes are propagated, and the survivors are scored. Friar’s letter
+intercepted wins because it raises Eq. 3’s sister gap-count for irony without adding any utterance event into
+B(ENT_ROMEO, tf). The winner is wrapped in typed ConstraintBlocks: a must_events list,
+a must_not_events list (Romeo learning the truth), trait envelopes (Romeo’s despair envelope),
+and a syuzhet-window constraint. That bundle is the only thing handed to the renderer.
+B.7
+Generation — the brief as safety envelope
+The renderer LLM is given the Romeo-and-Juliet brief as system prompt plus a small style context. It may
+write any prose about the tomb, the messenger, the dagger; it may not invent a causal edge, shift a trait
+outside its envelope, open a channel that does not exist, or place an utterance the brief does not licence.
+The output is a scene of dialogue, description, and pacing inside the mathematical envelope chosen by
+directive assembly — a typed, causal-graph-conditioned instance of the plan-and-render pattern (Riedl
+and Young, 2010; Yao et al., 2019; Goldfarb-Tarrant et al., 2020; Yang et al., 2023).
+B.8
+Corpus-scale audit of the four structural scorers
+The four structural-affect scorers — mystery (Eq. 3), dramatic irony (Eq. 5), suspense (Eq. 13),
+and surprise (Eq. 16–18) — were audited end-to-end against the bundled twenty-fixture corpus in
+
+
+===== PDF PAGE 27 =====
+example_worlds/. Each fixture was sampled at seven evenly-spaced syuzhet anchors, giving 162
+score evaluations per metric (a single-anchor terminal-flat fixture contributes only six points). The audit
+script scripts/audit_affective.py reproduces the table.
+Scorer
+min
+median
+mean
+max
+mystery
+0.17
+0.53
+0.57
+1.00
+dramatic_irony
+0.00
+0.45
+0.45
+0.90
+suspense
+0.00
+0.16
+0.14
+0.39
+surprise (local)
+0.00
+0.03
+0.05
+0.24
+grief
+0.00
+0.12
+0.18
+0.80
+rage
+0.00
+0.48
+0.42
+0.90
+joy
+0.00
+0.76
+0.60
+1.00
+regret
+0.00
+0.10
+0.16
+0.78
+love
+0.00
+0.50
+0.43
+0.95
+fear
+0.00
+0.34
+0.28
+0.63
+Table 2: Per-scorer scale summary across 20 fixtures × 7 syuzhet anchors. The four structural scorers occupy
+different absolute bands by design: mystery is a population fraction near 1 early in the syuzhet; surprise is a per-step
+KL spike near 0 between revelation points. The six emotion scorers measure per-entity closeness to a per-effect trait
+target and so are flat across syuzhet but vary across worlds and entities.
+The audit confirms the canonical signatures the underlying theory predicts. Mystery falls monotonically
+across every world (Trabasso & Sperry causal-resolution: as causes are revealed, the hidden-ancestor
+fraction collapses); on Macbeth the curve is 0.99 →0.28, on Death on the Nile 1.00 →0.29, on
+Wuthering Heights 0.99 →0.18. Dramatic irony produces the rise-peak-fall arc Sternberg’s gap-fraction
+analysis predicts in 16/20 worlds: Macbeth peaks at anchor 5 (0.62) on Macduff’s discovery of his
+murdered family; Death on the Nile peaks at anchor 4 (0.65) on Poirot’s withheld knowledge; Romeo and
+Juliet peaks at anchor 5 (0.75) on the crypt-misreading sequence. Suspense discharges to 0 at the terminal
+anchor of every world (no unrevealed threats remain post-resolution); the highest mid-story peak is Tinker
+Tailor (0.39) on the cusp of the mole reveal. Surprise spikes sparsely at canonical revelation points:
+Reservoir Dogs Mr Orange flashback (0.19, dominated by anachrony), Gone Girl mid-novel perspective
+shift (0.20, dominated by Beta-Bernoulli posterior collapse on Amy’s loyalty trait), Wuthering Heights
+in-medias-res frame opening (0.24, anachrony spike from Lockwood’s retrospective frame).
+B.9
+Tunables (DirectiveAssemblySettings)
+All scorer constants are externalised through a single DirectiveAssemblySettings object (Py-
+dantic BaseSettings, env-var prefix DIRECTIVE_ASSEMBLY_*), enumerated below with their
+calibrated defaults. The defaults reproduce the rise-peak-fall arcs in Tab. 2; override individual con-
+stants only when targeting non-canonical genres (e.g. raise IRONY_AGGREGATOR_BETA toward 1
+for ensemble-cast tragedies where a single dominant blindness should overwhelm the average; lower
+SUSPENSE_PROXIMITY_TAU_FABULA_GAPS for thriller pacing where threat sharpens with proxim-
+ity faster than the corpus default).
+B.10
+Audit and feedback loop — Gone Girl
+Gone Girl is the system’s lying-narrator fixture:
+Amy’s diary is a sequence of EventNodes
+with
+truth_value="false"
+broadcast
+through
+CHN_DIARY_PUBLIC.
+After
+generation,
+auditor.run_feedback_loop runs three passes in parallel. The causal audit reverse-engineers
+the prose into (source, target, modality) claims and matches each against the brief; an LLM-emitted “Nick
+suddenly realises Amy is alive” with no licensing causal edge is flagged as a miracle step. The abduction
+audit runs counterfactual probes (“if the diary were truthful, would the prose still hold?”); a “yes” here
+means the prose has collapsed Amy’s two faces into one, and is rejected. The affective audit measures
+the realised dramatic-irony gap against the target. A style-fidelity audit compares the prose against the
+NarrativeStyle profile recovered at ingestion — word-count budget, prose density, register, POV,
+tense, and form class (news_article, historical_account, thought_experiment, etc.) —
+
+
+===== PDF PAGE 28 =====
+Setting
+Default
+Mystery (Trabasso & Sperry; Iser)
+MYSTERY_PATH_DECAY_DEPTH
+4
+MYSTERY_PROXIMITY_TAU_SYUZHET
+8.0
+Dramatic irony (Booth; Pfister; Cabanas)
+IRONY_SURFACE_K
+1.0
+IRONY_FALSE_BELIEF_MULT
+1.5
+IRONY_ACTION_ALPHA
+0.15
+IRONY_ACTION_WEIGHT_CAP
+3.0
+IRONY_AGGREGATOR_BETA
+0.6
+IRONY_PROXIMITY_TAU_SYUZHET
+6.0
+IRONY_PROXIMITY_FLOOR
+0.4
+Suspense (Lazarus; OCC; Brewer)
+SUSPENSE_STAKES_K
+2.0
+SUSPENSE_PROXIMITY_TAU_FABULA_GAPS
+6.0
+SUSPENSE_PROXIMITY_TAU_SPATIAL
+4.0
+SUSPENSE_PERSISTENCE_ALPHA
+0.10
+SUSPENSE_PERSISTENCE_CAP
+1.5
+SUSPENSE_HOSTILE_AFFINITY
+−0.2
+SUSPENSE_ALLY_AFFINITY
+0.2
+Surprise (Bae & Young; Reagan; Bissell-Paulin-Piper)
+SURPRISE_TRAIT_KL_WEIGHT
+0.7
+SURPRISE_ANACHRONY_WEIGHT
+0.3
+SURPRISE_DEFAULT_TRAIT_SALIENCE
+0.55
+SURPRISE_SOURCE_EDGE_WEIGHT
+0.4
+SURPRISE_PRIOR_PSEUDOCOUNT
+2.0
+Table 3: Externalised affective-scorer tunables (env-var prefix DIRECTIVE_ASSEMBLY_*; full table including the
+HARM_KIND_SALIENCE and TRAIT_NARRATIVE_SALIENCE dictionaries in docs/settings.md §8).
+raising style_mismatch on drift. A meta-narration audit runs on counterfactual and abduction-driven
+scenes: it flags prose that comments on its own branch structure (timeline, divergence, the alterna-
+tive holds, conditional/subjunctive framings used to describe rather than narrate the counterfactual)
+instead of rendering the alternate world as a lived past-tense scene, raising meta_narration. The
+aggregated FeedbackLoopResult exposes both an engine_thresholds_passed gate (deter-
+ministic: number of miracle steps, max trait drift) and an llm_pass gate (literary critique); either
+failing re-runs generation with the audit feedback appended, up to max_correction_retries.
+On convergence the scene is re-extracted into a new VersionRow; counterfactual branches land on
+world_id="shadow" and only become canon via explicit promote_branch (Correa and Barein-
+boim, 2025).
+C
+End-to-end walkthrough on Macbeth
+This appendix describes a single complete pass of the pipeline in plain prose. The goal is to make
+every intermediate object inspectable to a reader who has read the main text but has not read the
+source. The fixture used throughout is example_worlds/macbeth.py, paired with the synopsis in
+sample_plots/macbeth.txt; the query is the canonical counterfactual “what if Macbeth refuses
+to murder Duncan?”. The same loop runs identically on the other nineteen bundled fixtures.
+C.1
+Step 0: the source text and the user’s query
+The user opens the workspace, drops the synopsis into the STORY tab, and clicks Save & Re-ingest.
+The synopsis is a five-act prose summary in the public-domain register: the witches on the heath,
+Duncan’s offer of the Cawdor title, Lady Macbeth’s persuasion, the murder in Inverness, the banquet,
+the apparitions, the slaughter at Macduff’s castle, the sleepwalking scene, Birnam Wood, and the final
+duel. After ingestion the user types a query into the REASONING tab: “Counterfactual: Macbeth
+refuses to murder Duncan at Inverness. Show what changes for Macduff, Banquo, Malcolm, and the
+witches, and re-render the banquet scene.” The query is parsed by query_parsing.parse_query
+
+
+===== PDF PAGE 29 =====
+into a typed CounterfactualQuery with focal entities F = {ENT_MACBETH}, target X =
+EVT_DUNCAN_MURDER, intervention value x = ⊘(do-not-occur), and a re-render directive scoped
+to the banquet’s syuzhet window.
+C.2
+Step 1: ingestion in detail
+Ingestion is the only stage where the LLM is allowed to author graph structure rather than prose. It is a
+fan-out / fan-in pattern over the chunked source.
+Ontology pre-pass.
+Five extraction agents run over the full text in parallel: ontology_locations
+produces LOC_HEATH, LOC_INVERNESS_CASTLE, LOC_FORRES_COURT, and so on, each with
+an initial ambient_state dictionary; ontology_objects extracts OBJ_BLOODY_DAGGERS,
+OBJ_LETTER, and OBJ_CROWN with explicit Affordance lists; ontology_entities pro-
+duces ENT_MACBETH, ENT_LADY_MACBETH, ENT_DUNCAN, and the rest, each as an Entity
+with a sparse initial TraitVector bundle, beliefs, and a first-appearance location_id;
+ontology_world_traits introduces the world-level named latents (WORLD_AMBITION,
+WORLD_FATE, WORLD_GUILT) that act as common causes; and ontology_aliases builds a fuzzy
+alias table (“Lord of Glamis” 7→ENT_MACBETH). The result is a populated GlobalRegister.
+Per-chunk specialist fan-out.
+The text is chunked into ∼800-token windows aligned on paragraph
+boundaries. Each chunk dispatches three concurrent specialist agents that share the GlobalRegister
+as system context: physics_extraction produces EventNodes with event_type drawn from
+{choice, outcome, revelation, utterance}, causal edges with causality_type,
+and
+spatial
+edges
+(e.g.
+a
+connected_to
+edge
+from
+LOC_INVERNESS_CASTLE
+to
+LOC_FORRES_COURT); social_extraction produces RelationshipEdges with per-axis
+RelationshipMetrics for affinity, fear, and power dynamic, and the Channels (the witches’
+prophecy channel, the dinner-table channel at the banquet, the diary-style private channel of Lady Mac-
+beth’s letter); and consequences_extraction writes the authoritative state_timeline entries
+on each entity, including the inertia bumps that record how shocking events make traits harder to dislodge
+afterwards (Macbeth’s guilt inertia rises from 0.25 to 0.4 after the murder). The three prompts share a
+symmetric per-axis coverage rule: whenever social_extraction emits a RelationshipMetric
+on any of the three axes, physics_extraction must emit at least one mutation_social edge
+with the matching trait_target; the validation pass enforces the parity. The rule prevents static dyads
+— relationships whose value is non-zero but never causally moved — from producing flat horizontals on
+the downstream conflict, danger, and power gauges. The bundled corpus (§B) honours this invariant on
+every observed axis on every dyad.
+Validation and auto-repair.
+The merged graph passes through _programmatic_validation,
+which checks ID closure (every source_id resolves), type constraints (every causality_type is
+one of the five enums), basic acyclicity within causal edges of the same fabula slice, and “alive-actor”
+constraints (no event sourced from a dead character). Failures are passed back to a small repair LLM with
+the offending field and a structured error; the repair loop runs up to three iterations before raising. Fabula
+times are then remapped to a uniform ∆t = 100 spacing so that downstream windows are stable across
+re-ingestion. The output is a single WorldStateV1, persisted as the root VersionRow.
+C.3
+Step 2: query routing and ego-graph slicing
+The CounterfactualQuery is dispatched to the rung-3 (Counterfactual) handler. The handler
+first consults the NarrativePhysics router, which selects an ego-graph around the focal entities
+at the query’s fabula anchor: Macbeth’s k-hop neighbourhood at t ≈6000 (the Inverness night).
+The slice contains ENT_MACBETH, ENT_LADY_MACBETH, ENT_DUNCAN, the chamber attendants,
+OBJ_BLOODY_DAGGERS, LOC_INVERNESS_CASTLE, the relevant beliefs, and the immediate causal
+context (EVT_LADY_PERSUADES, the prophecy events, the upcoming EVT_DUNCAN_MURDER). Trait
+values are reconstructed at t by replaying state_timeline deltas, which prevents post-murder trait
+shocks from leaking into the counterfactual past.
+
+
+===== PDF PAGE 30 =====
+C.4
+Step 3: AMWN sandbox and the do-operator
+AMWNInstantiator.create_sandbox(ego_payload, query_type="counterfactual")
+mirrors
+the
+ego-graph
+as
+a
+NetworkX
+MultiDiGraph,
+in
+the
+spirit
+of
+the
+Ances-
+tral
+Multi-World
+Network
+construction
+of
+Correa
+and
+Bareinboim
+(2025).
+A
+sibling
+VersionRow with world_id="shadow" is opened to hold the fork.
+The do-operator
+apply_do_operator({EVT_DUNCAN_MURDER: ⊘})
+severs
+the
+murder’s
+incoming
+causal edges (specifically the chain_reaction edge from EVT_LADY_PERSUADES, the
+affordance_gate edge from OBJ_BLOODY_DAGGERS, and the ambient_propagation edge
+from LOC_INVERNESS_CASTLE.tension) and overrides its realisation to “not-occurred”. Crucially
+the factual mainline is untouched. A user looking at the version sidebar sees a green factual row with
+a violet shadow child, both browsable.
+C.5
+Step 4: causal physics propagation
+The propagator topologically sorts the causal sub-graph from the intervened node downward and applies
+Eq. 2 at every edge. Concretely:
+• EVT_DUNCAN_MURDER →EVT_MALCOLM_FLEES (chain_reaction, w = 0.85): the
+source’s outcome is “⊘”, so the impact is zero, and EVT_MALCOLM_FLEES is marked
+blocked_by_intervention.
+• EVT_DUNCAN_MURDER →ENT_MACBETH.guilt (mutation, w = 0.7): blocked. The
+downstream state_timeline delta that would have raised guilt from 0.1 to 0.7 is suppressed;
+the entity’s reconstructed trait at the banquet remains close to its battlefield baseline.
+• EVT_DUNCAN_MURDER →EVT_BANQUO_SUSPECTS (chain_reaction_via_belief,
+w
+=
+0.6):
+blocked.
+ENT_BANQUO’s
+suspicion
+belief
+never
+fires;
+the
+Belief(target=ENT_MACBETH, perceived_state= "Macbeth might be the
+king’s killer") is absent from his reconstructed belief set in the shadow branch.
+• EVT_LADY_MACBETH_PERSUADES →ENT_LADY_MACBETH (mutation_social, axis
+power_dynamic against ENT_MACBETH, ∆= +0.4): not blocked, because the persuasion event
+itself is upstream of the intervention. Lady Macbeth’s relational dominance over Macbeth still spikes;
+her subsequent collapse arc is then re-evaluated against the now-absent causal trigger of his guilt.
+• Spatial affordance check at every step: a putative shock from LOC_DUNSINANE_CASTLE to
+ENT_MACDUFF requires a connected spatial path; if Macduff is in LOC_ENGLAND with no open
+channel, the shock is blocked.
+The result is a structured CausalPhysicsResult{mutations:
+[...], blocked:
+[...], hidden_deltas:
+[...], intervened_nodes:
+[EVT_DUNCAN_MURDER]}.
+The blocked list is what makes the engine inspectable: every causal edge that would have fired in the
+factual mainline is recorded with the reason it did not.
+C.6
+Step 5: narrative-physics scoring
+The four structural scorers and the six emotion scorers are now re-evaluated on the shadow branch.
+The user’s directive (“show what changes for Macduff, Banquo, Malcolm, and the witches”) biases the
+dramatic-irony scorer toward those four entities. The counterfactual collapses several gaps that defined
+the factual mainline: the audience no longer sees Banquo’s suspicion gap, no longer sees Macduff’s
+grief-driven vengeance, and the apparition scene is now etiologically dangling (the witches still prophesy,
+but Macbeth has no kingship to defend). The mystery score on EVT_DUNCAN_FOUND_DEAD drops to
+zero because the event no longer fires; the suspense at the banquet resets, since Banquo’s ghost depended
+on the murder. The directive assembler records this delta as a CandidateScoreReport per candidate
+continuation it considers for the banquet rewrite.
+
+
+===== PDF PAGE 31 =====
+C.7
+Step 6: directive assembly and the brief
+DirectiveAssembler.evaluate_candidate_events() now has to choose what to put in
+the banquet scene of the shadow branch. Candidate events are enumerated by walking unblocked
+affordances reachable from the shadow-branch state: Macbeth confesses the prophecy to Banquo, Lady
+Macbeth persists and stages the murder herself, Duncan publicly names Macbeth as the new Prince
+of Cumberland, Macbeth retreats to Glamis to think. Each is forked into its own micro-sandbox and
+propagated. Plausibility gates drop Lady Macbeth stages the murder herself because the daggers’
+Affordance(action="kill") is gated on a wielder with sufficient ruthlessness and the
+trait-evidence support is low for Lady Macbeth in isolation. The remaining survivors are scored against
+the directive. The winner is wrapped as a CreativeBrief: a list of must_events, a list of
+must_not_events (“Macbeth kills Duncan”, “Banquo dies”), per-trait envelopes (Macbeth’s guilt
+envelope is now [0.1, 0.3] rather than [0.6, 0.8]), and a syuzhet window. The brief is the only object
+handed to the renderer.
+C.8
+Step 7: constrained rendering
+The renderer LLM is invoked with the brief as system prompt plus a small style context (the synopsis’s
+voice settings: synoptic-narration, third-person past tense, sparse density). It writes the banquet as a tense
+scene of overheard whispers, of Banquo unsuspecting and gracious, of Macbeth conspicuously unable to
+enjoy his elevation; the daggers stay sheathed; no ghost appears, because Banquo is alive. The renderer is
+free to choose dialogue, description, and pacing, but cannot invent a causal edge, shift a trait outside its
+envelope, or open a channel that does not exist. The output is a prose passage, not a graph.
+C.9
+Step 8: audit, re-extraction, and merge
+The auditor runs three passes in parallel.
+The causal audit reverse-engineers the prose into
+(source, target, modality) triples and matches each against the brief; an LLM-emitted “Banquo’s ghost
+rises behind Macbeth” would be flagged as a miracle step (no licensing edge), but in this run nothing of
+the kind appears. The abduction audit runs counterfactual probes against the prose — “if Banquo had
+suspected the prophecy, would the prose still hold?” — and checks the answers against the brief’s belief
+envelope. The affective audit re-runs the four scorers on the prose and compares them to the brief’s targets.
+If any pass fails the engine_thresholds gate or the llm_pass gate, the renderer is re-invoked with
+the structured feedback appended, up to max_correction_retries (default 3). On convergence,
+ingestion is run again on the prose alone, and the resulting graph is diffed against the brief; the
+diff becomes a new VersionRow with world_id="shadow" and ancestor_id pointing at the
+original counterfactual root. The user sees the new version appear in the sidebar in violet, can diff it
+against the factual mainline, and can promote_branch it to canon if desired.
+C.10
+What this walkthrough demonstrates
+Three
+properties
+matter.
+Inspectability:
+every
+intermediate
+object
+—
+the
+ego-
+graph,
+the
+CausalPhysicsResult,
+the
+CreativeBrief,
+and
+the
+per-iteration
+AuditCycleSnapshot.audit_result
+(an
+AuditResult)
+inside
+the
+final
+FeedbackLoopResult — is a typed Pydantic value, persisted and visible in the UI. Local-
+ity of LLM authority: the LLM authors the initial ontology (Step 1), the candidate prose (Step 7), and
+the audit critique (Step 8); everything else is symbolic computation over typed code. Branch safety: the
+counterfactual is a sibling row, not a mutation; canon is preserved, the shadow is diffable and promotable,
+and the version DAG records the lineage.
+D
+The authoring user interface
+The authoring workspace is a NiceGUI single-page application (shadow_loom_ui/app.py) reach-
+able on http://localhost:7860. It is organised as a left-hand version sidebar, a top-level chat /
+command bar, a dedicated Answer panel for read-only Q&A results, and nine cross-linked tabs that share
+a central AppState pub/sub event bus (shadow_loom_ui/state.py). The same active-version
+
+
+===== PDF PAGE 32 =====
+pointer is mirrored to the database so an MCP client and the UI always see the same tip. Every panel
+header carries a clickable info-icon help popover (components/help_popover.py) opening a
+structured Markdown reference for the surface — what the panel does, how to read its diagrams, what the
+controls mean, and what does not appear there — so the workspace doubles as its own documentation.
+This appendix walks through every surface in turn, with a concrete example session drawn from the
+bundled plot fixtures.
+D.1
+Version sidebar
+The sidebar (shadow_loom_ui/components/version_sidebar.py) renders the project’s full
+VersionRow DAG as a tree rooted at the original ingestion. Factual rows are green, shadow rows
+(counterfactual forks under branch_policy=auto) are violet. Toolbar actions: Delete re-parents
+children through db.delete_version; Reparent changes a row’s ancestor_id (rejected if it
+would multi-root the tree); Promote to canon (shadow rows only) calls db.promote_branch to copy
+a shadow onto a fresh factual row; Diff against factual (shadow rows only) opens a structured diff against
+the current factual head. Clicking any row swaps the active version and resets every tab.
+Example.
+After running the Macbeth refuses the murder counterfactual of App. C, the sidebar shows
+a green chain ingestion →manual_edit →pipeline_run for the factual mainline, with
+a single violet child branching off the pipeline_run row. Right-clicking the violet row offers Diff
+against factual (showing the absent EVT_DUNCAN_MURDER and the suppressed downstream deltas) and
+Promote to canon (which would replace the mainline).
+D.2
+Story tab
+The STORY tab (components/story_tab.py) is the entry point: a plain-prose textarea plus a Save
+& Re-ingest button. Saving runs the full pipeline.run_pipeline and persists the result as a new
+version with source="ingestion". This tab is intentionally not autosaved: the textarea is prose, not
+graph, and clicking re-ingest is a deliberate action.
+Example.
+Pasting the public-domain sample_plots/death_on_the_nile.txt synopsis and
+clicking Save & Re-ingest produces, after the ingestion fan-out described in App. C.2, a WorldStateV1
+containing ENT_POIROT, ENT_LINNET, ENT_JACQUELINE, ENT_SIMON, the LOC_KARNAK
+steamer, and the conspiracy event EVT_PLAN_HATCHED with syuzhet_index placed late but
+fabula_time placed early — the very gap that the dramatic-irony scorer reads off in App. B.5.
+D.3
+Explorer tab
+The EXPLORER tab (components/explorer_tab.py) is a read-only tree view of every node in the
+active world model, grouped by category, with an inspector panel for the selected node. It is the canonical
+way to confirm that ingestion has produced the right schema before running queries.
+Example.
+Loading the Macbeth fixture and clicking ENT_MACBETH opens an inspector showing each
+TraitVector (ambition:
+0.7, inertia 0.55, evidence strong; guilt:
+0.1,
+inertia 0.25, evidence weak), each Belief with provenance, the state_timeline en-
+tries (one per major shock event), and the entity’s outgoing causal and relationship edges. The inspector is
+the principal debugging tool when an extraction agent has produced an unexpected trait or belief.
+D.4
+World tab
+The WORLD tab (components/world_tab.py) is a Cytoscape graph visualisation of entities, loca-
+tions, objects, and edges, with a fabula-time slider beneath. Sliding the cursor through fabula time updates
+node colours and sizes via state.set_fabula_cursor (debounced 120 ms) so that the viewer can
+watch the social topology evolve.
+Example.
+On Reservoir Dogs, scrubbing the slider from fabula t = 0 (the diner conversation) through
+to t ≈8000 (the warehouse stand-off) animates the ENT_ORANGE node turning from neutral grey to red
+as the wound state advances; the spatial graph contracts as characters converge on the warehouse; and the
+
+
+===== PDF PAGE 33 =====
+trust edges from ENT_WHITE to ENT_ORANGE thicken. The same scrub on Romeo and Juliet shows
+Romeo’s despair edge widening sharply over the final scene.
+D.5
+Causality tab
+The CAUSALITY tab (components/causality_tab.py) has three sub-tabs. Topology renders a
+Sankey diagram of causal flow up to the fabula cursor: thicker ribbons for higher-weight edges, colour
+banded by causality_type. Evolution plots trait trajectories per entity over fabula time, with a verti-
+cal needle synced to the cursor. Affective Dashboard shows gauges and time series for the four structural
+scorers and the six emotion scorers, computed by viz_helpers.compute_affective_scores
+(which routes through DirectiveAssembler.compute_*_score). The top twenty entities by
+event degree are shown by default to keep the plots readable.
+Example: Macbeth Evolution sub-tab.
+Selecting ENT_MACBETH, ENT_LADY_MACBETH, and
+ENT_MACDUFF and scrubbing through fabula time shows Macbeth’s guilt curve climbing in
+two steps (after EVT_DUNCAN_MURDER and again after EVT_BANQUO_GHOST); Lady Macbeth’s
+ruthlessness curve peaks early and then collapses into the sleepwalking scene; and Macduff’s
+grief curve has a single step at the slaughter event. Switching to the Affective Dashboard, the suspense
+gauge sits high through Acts II–IV and zeroes out cleanly when the duel begins (the suspense–despair
+boundary built into the balance × stakes combiner: when whope = 0 nothing is left to author against the
+threat, and the score returns 0).
+Example: Death on the Nile Affective Dashboard.
+The dramatic-irony gauge sits at ∼0.7 from
+the moment the conspiracy is revealed to the audience and drops to zero only when Poirot delivers the
+denouement; the mystery gauge follows the inverse trajectory, peaking on the morning of the murder.
+D.6
+Reasoning tab
+The REASONING tab (components/reasoning_tab.py) is where queries are typed and where
+intervention / counterfactual traces are inspected. The chat box accepts natural-language queries that are
+parsed into one of the eight typed query objects (ObservationQuery, InterventionQuery,
+CounterfactualQuery,
+DirectiveQuery,
+InterrogationQuery,
+GeneralQuery,
+ManualEditQuery, EvaluationQuery). Write-mode queries route their result into this tab, where
+reasoning_helpers.py formats the CausalPhysicsResult: each mutation is shown with its
+(I, ι, ∆) triple, each blocked propagation with the reason (inertia, affordance, spatial), each abduction
+back-fill with the evidence weight, and any hidden deltas with the syuzhet window in which they will
+be revealed. Read-mode queries (InterrogationQuery, GeneralQuery) skip this tab entirely:
+they are dispatched through shadow_loom/answer.py and surface in the dedicated Answer panel
+above the chat bar (components/answer_panel.py) as a card with the model’s claim, a confidence
+badge, an evidence-id list back to the graph nodes consulted, and any caveats. The Answer panel clears
+on VERSION_CHANGED and PROJECT_LOADED so a stale answer never lingers across versions; no
+VersionRow is written for a read-mode query.
+Example.
+On Macbeth, typing “If Macbeth had told Banquo about the prophecy on the heath, would
+Banquo have trusted him at the banquet?” parses to a CounterfactualQuery with focal entities
+{ENT_MACBETH, ENT_BANQUO}. The trace panel shows the abduction step (Banquo’s trust prior
+is inferred from the battlefield events), the do-step (a new utterance event is inserted on the heath
+channel), and the propagation step (Banquo’s suspicion trait is suppressed at the banquet, but his
+prudence trait raises a new caution gate, which the engine reports as a non-trivial counterfactual
+outcome — not all secrets shared are secrets defused).
+D.7
+Audit tab
+The AUDIT tab (components/audit_tab.py) displays the structured AuditResult for the most
+recently rendered scene. The three sections (causal, abductive, affective) each show their loss values and
+any offending prose spans, highlighted inline. A green badge indicates a passed pass; an amber badge
+
+
+===== PDF PAGE 34 =====
+indicates a warning (the prose is acceptable but drifted); a red badge indicates a hard failure that triggered
+a re-render.
+Example.
+On Gone Girl, after generating a continuation of Amy’s diary entry, the causal audit flags a
+hallucinated “Nick suddenly suspects Amy is alive” span with no licensing causal edge in the brief. The
+auditor’s structured feedback is displayed alongside the offending span, and the user can either accept the
+auto-rerun or open the brief in the REASONING tab to widen the envelope.
+D.8
+Research tab
+The RESEARCH tab (components/research_tab.py) is the optional open-web companion: the
+user manages a list of research topics, launches background lookup tasks (currently against Tavily;
+see §A.2), and browses the resulting facts, each carrying a source URL and a confidence score. The
+crucial design point is segregation: research is a separate store. Facts are not written into the world
+model automatically; they are reference material available to the author and to the renderer’s prompt
+scaffolding (as a BACKGROUND CONTEXT -- NOT AUTHORITATIVE block) only. Promoting a
+research finding into canon is a deliberate, manual edit in the EDITOR tab. A status strip at the top of the
+panel shows in-flight lookups, the stored fact counts per topic, and the last refresh time.
+Example.
+Authoring an alternate-history fork on the Tinker, Tailor, Soldier, Spy fixture, the user adds
+the topic “Cambridge Five chronology, declassified MI6 sources”, runs lookup, and reviews the returned
+facts before citing one as inspiration for a new EventNode in the EDITOR tab. The world model itself is
+unchanged until the user explicitly authors the new event; the research entry remains visible as provenance
+for the editorial decision.
+D.9
+Editor tab
+The EDITOR tab (components/editor_tab.py) is the manual world-model editor. It has three
+integrated surfaces backed by a single JSON textarea (the source of truth): a Validate button that runs
+the same _programmatic_validation as ingestion; a Structural editor with one collapsible panel
+per collection (locations, entities, objects, events, world traits, causal edges, relationship edges, spatial
+edges, channels); and the raw JSON textarea itself for fields the structural editor does not expose (sparse
+trait values, beliefs, ambient state, evidence strengths). The save flow runs Pydantic validation, then
+_programmatic_validation; errors block the save with a dialog listing every issue, warnings
+present a Save Anyway confirmation, and on confirm the world is persisted as a new VersionRow with
+source="manual_edit" parented to the current row.
+Example.
+Authoring the example_worlds/macbeth.py fixture from scratch, the user adds
+LOC_HEATH via the structural editor (typing “the heath” into the ID field auto-prefixes to
+LOC_THE_HEATH, edited to LOC_HEATH), then ENT_MACBETH, then the witches as a single multi-
+actor entity, then the prophecy event with event_type= revelation and via_channel_id
+pointing
+at
+a
+freshly
+added
+Channel(participants=[ENT_MACBETH, ENT_BANQUO,
+ENT_WITCHES], medium="speech", intelligibility={...:
+1.0}). After each ad-
+dition the validator panel updates: the green panel shows the running counts, an amber panel warns about
+the missing mutation coverage on ENT_MACBETH.ambition (no state_timeline yet), and a red
+panel reports the broken addressee_ids reference until the witches entity is added.
+D.10
+Export tab
+The EXPORT tab (components/export_tab.py) is the egress surface: download the active world
+as a single world_state.json, download the version tree as a structured JSONL file, or copy the
+active version row ID for use with the MCP server or scripts.
+Example.
+A researcher running cross-fixture comparisons exports each of the twenty bundled fixtures’
+world_state.json files, computes the entity-degree distribution and the per-fixture suspense time-
+series in a notebook, and persists the results without ever loading the UI’s visualisation code.
+
+
+===== PDF PAGE 35 =====
+D.11
+Performance discipline
+Three small disciplines keep the workspace responsive during long scrubs and rapid edits. (i) Cursor
+writes are debounced through state.set_fabula_cursor, which schedules an emit on a 120
+ms tail. (ii) Heavy panels are gated by is_path_visible(path) so that off-tab rebuilds are
+skipped. (iii) state.spawn_panel_task(panel_id, coro) cancels any prior task with the
+same panel_id, collapsing rapid scrubs to the most recent render; ECharts panels build the chart once
+and patch options in place.
+D.12
+Cross-tab event bus
+Six events flow through AppState: PROJECT_LOADED (emitted by the project picker and the
+MCP open_project tool, listened to by every tab); WORLD_STATE_CHANGED (emitted by
+load_db_version, manual save, and pipeline runs, triggering cache invalidation in viz_helpers);
+VERSION_CHANGED (sidebar highlight + raw-text reload); FABULA_CURSOR_CHANGED and
+SYUZHET_CURSOR_CHANGED (cursor sliders); and ACTIVE_PATH_CHANGED (top tab change, gat-
+ing heavy panels). Adding a new tab is therefore a matter of subscribing to the relevant subset of these
+events and rendering against the current AppState.
+D.13
+Why a UI matters for a research artefact
+The UI is not an optional consumer surface; it is the principal debugging tool for the symbolic layers. The
+version sidebar makes branch lineage visible; the Causality tab makes the affective scorers’ trajectories
+visible; the Reasoning tab makes the causal-physics trace visible; and the Audit tab makes the brief-vs-
+prose mismatch visible. A reviewer or collaborator can load any of the twenty bundled fixtures, run the
+counterfactuals discussed in App. B, and inspect every intermediate object without writing a line of code.
+That inspectability is what the typed-substrate design was meant to buy; the UI is where it is realised.

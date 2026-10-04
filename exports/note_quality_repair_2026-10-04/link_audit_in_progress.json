@@ -1,0 +1,220 @@
+{
+  "stats": [
+    {
+      "note": "2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md",
+      "characters": 10894,
+      "images": 2
+    },
+    {
+      "note": "2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.md",
+      "characters": 9056,
+      "images": 3
+    },
+    {
+      "note": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.md",
+      "characters": 8855,
+      "images": 5
+    },
+    {
+      "note": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.md",
+      "characters": 2407,
+      "images": 0
+    },
+    {
+      "note": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.md",
+      "characters": 1716,
+      "images": 0
+    },
+    {
+      "note": "2023_memgpt-towards-llms-as-operating-systems_arxiv-2310-08560.md",
+      "characters": 16428,
+      "images": 8
+    },
+    {
+      "note": "2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603.md",
+      "characters": 28943,
+      "images": 4
+    },
+    {
+      "note": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.md",
+      "characters": 2827,
+      "images": 0
+    },
+    {
+      "note": "2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.md",
+      "characters": 2213,
+      "images": 0
+    },
+    {
+      "note": "2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md",
+      "characters": 17391,
+      "images": 7
+    },
+    {
+      "note": "2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.md",
+      "characters": 8518,
+      "images": 4
+    },
+    {
+      "note": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.md",
+      "characters": 2746,
+      "images": 0
+    },
+    {
+      "note": "2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md",
+      "characters": 17039,
+      "images": 5
+    },
+    {
+      "note": "2025_graph-world-model_arxiv-2507-10539.md",
+      "characters": 16064,
+      "images": 5
+    },
+    {
+      "note": "2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.md",
+      "characters": 2137,
+      "images": 0
+    },
+    {
+      "note": "2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.md",
+      "characters": 86540,
+      "images": 10
+    },
+    {
+      "note": "2025_multi-agent-based-character-simulation-for-story-writing_in2writing-2025.md",
+      "characters": 24817,
+      "images": 5
+    },
+    {
+      "note": "2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md",
+      "characters": 17410,
+      "images": 6
+    },
+    {
+      "note": "2025_storybox-collaborative-multi-agent-simulation-for-hybrid_arxiv-2510-11618.md",
+      "characters": 20222,
+      "images": 6
+    },
+    {
+      "note": "2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md",
+      "characters": 24830,
+      "images": 3
+    },
+    {
+      "note": "2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md",
+      "characters": 12407,
+      "images": 4
+    },
+    {
+      "note": "2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md",
+      "characters": 11443,
+      "images": 3
+    },
+    {
+      "note": "2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md",
+      "characters": 12562,
+      "images": 5
+    },
+    {
+      "note": "2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md",
+      "characters": 17480,
+      "images": 4
+    },
+    {
+      "note": "2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.md",
+      "characters": 2200,
+      "images": 0
+    },
+    {
+      "note": "2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md",
+      "characters": 24749,
+      "images": 19
+    },
+    {
+      "note": "2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md",
+      "characters": 28306,
+      "images": 2
+    },
+    {
+      "note": "2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md",
+      "characters": 12324,
+      "images": 4
+    },
+    {
+      "note": "2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "characters": 11077,
+      "images": 4
+    },
+    {
+      "note": "2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.md",
+      "characters": 1852,
+      "images": 0
+    },
+    {
+      "note": "2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md",
+      "characters": 28660,
+      "images": 21
+    },
+    {
+      "note": "2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md",
+      "characters": 19244,
+      "images": 6
+    },
+    {
+      "note": "2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "characters": 12226,
+      "images": 4
+    },
+    {
+      "note": "2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036.md",
+      "characters": 26807,
+      "images": 9
+    },
+    {
+      "note": "2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md",
+      "characters": 22743,
+      "images": 4
+    },
+    {
+      "note": "2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md",
+      "characters": 5278,
+      "images": 0
+    },
+    {
+      "note": "2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "characters": 4895,
+      "images": 0
+    },
+    {
+      "note": "2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "characters": 3492,
+      "images": 0
+    },
+    {
+      "note": "2026_shadow-loom-causal-reasoning-over-graphical-world-models_arxiv-2605-02475.md",
+      "characters": 2740,
+      "images": 0
+    },
+    {
+      "note": "2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md",
+      "characters": 12808,
+      "images": 6
+    },
+    {
+      "note": "2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+      "characters": 2883,
+      "images": 0
+    },
+    {
+      "note": "2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873.md",
+      "characters": 56878,
+      "images": 18
+    },
+    {
+      "note": "2026_the-past-present-and-future-of-de-novo-protein-design_doi-10-1038-s41586-026-10328-7.md",
+      "characters": 7719,
+      "images": 4
+    }
+  ],
+  "broken_images": []
+}

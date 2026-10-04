@@ -1,0 +1,144 @@
+{
+  "notes": [
+    {
+      "paper": "StoRM",
+      "note": "reading_notes/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.md",
+      "source": "sources/2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.pdf",
+      "coverage": "§1–§5 Conclusions，§6 Broader Impact；补读 Appendix C/G",
+      "main_pdf_pages": [
+        1,
+        9
+      ],
+      "body_characters": 8782,
+      "embedded_original_figures": 3,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "3 原图；表2.A/2.B数据及附录表11",
+        "纠正 OpenIE 误写；alpha 正文/附录方向冲突明确标记"
+      ]
+    },
+    {
+      "paper": "Re³",
+      "note": "reading_notes/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.md",
+      "source": "sources/2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+      "coverage": "§1–§6 Discussion，Limitations",
+      "main_pdf_pages": [
+        1,
+        10
+      ],
+      "body_characters": 8173,
+      "embedded_original_figures": 5,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "5 原图；主表1，消融表4，检测表5",
+        "人评满足比例不当胜率；Edit无整体收益；7500词仅示例"
+      ]
+    },
+    {
+      "paper": "T4D/FaR",
+      "note": "reading_notes/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.md",
+      "source": "sources/2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+      "coverage": "§1–§7 Conclusion",
+      "main_pdf_pages": [
+        1,
+        10
+      ],
+      "body_characters": 7890,
+      "embedded_original_figures": 5,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "5 原图；表1/3/4/5关键结果",
+        "D1 GPT-4 CoT优于FaR例外；oracle不是部署成绩"
+      ]
+    },
+    {
+      "paper": "Dramatron",
+      "note": "reading_notes/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.md",
+      "source": "sources/2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+      "coverage": "§1–§8 Conclusions",
+      "main_pdf_pages": [
+        1,
+        18
+      ],
+      "body_characters": 10051,
+      "embedded_original_figures": 6,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "6 原图；问卷数值、编辑统计、全部访谈主题",
+        "15参与/13问卷；演出包括人类编辑与即兴；不是因果性能试验"
+      ]
+    },
+    {
+      "paper": "ThinkThrice",
+      "note": "reading_notes/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.md",
+      "source": "sources/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf",
+      "coverage": "§1–§8 Conclusion，Limitations；补读 Appendix A/B/G",
+      "main_pdf_pages": [
+        1,
+        10
+      ],
+      "body_characters": 9024,
+      "embedded_original_figures": 4,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "4 原图；表6/7、图3/4完整数值",
+        "1115收集仅4实验；GPT4仅后续推理；完整SV未处处最好"
+      ]
+    },
+    {
+      "paper": "WhodunitBench",
+      "note": "reading_notes/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.md",
+      "source": "sources/2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf",
+      "coverage": "§1–§7 Conclusion",
+      "main_pdf_pages": [
+        1,
+        10
+      ],
+      "body_characters": 9346,
+      "embedded_original_figures": 4,
+      "checks": {
+        "image_targets_exist": true,
+        "display_math_delimiters_balanced": true,
+        "numbered_subsections_present": true,
+        "original_figure_crop_contact_sheet_reviewed": true,
+        "source_page_and_section_anchors_present": true
+      },
+      "evidence_notes": [
+        "4 原图；竞技场表2、CoE表3完整",
+        "RP十分制与SPC区分；原图概览不一致；Avg混量纲；阵营矩阵不对称"
+      ]
+    }
+  ],
+  "total_original_figures": 27,
+  "scope": "Chinese reading notes; complete source main body through concluding section; selected appendix details only; no metadata edits"
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "note": "2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+    "characters": 11077,
+    "images": 4,
+    "math_blocks": 4,
+    "figure_manifest": "assets/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  },
+  {
+    "note": "2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+    "characters": 12226,
+    "images": 4,
+    "math_blocks": 6,
+    "figure_manifest": "assets/2026_learning-to-predict-future-aligned-research-proposals-wi_fas/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  },
+  {
+    "note": "2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+    "characters": 11651,
+    "images": 4,
+    "math_blocks": 0,
+    "figure_manifest": "assets/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  },
+  {
+    "note": "2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md",
+    "characters": 14247,
+    "images": 2,
+    "math_blocks": 3,
+    "figure_manifest": "assets/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  },
+  {
+    "note": "2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+    "characters": 14086,
+    "images": 4,
+    "math_blocks": 2,
+    "figure_manifest": "assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  },
+  {
+    "note": "2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+    "characters": 15092,
+    "images": 3,
+    "math_blocks": 12,
+    "figure_manifest": "assets/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841/figure_sources.json",
+    "scope": "all main sections through conclusion; post-conclusion Methods included for Fair Play; limitations and source-grounded interpretation included"
+  }
+]

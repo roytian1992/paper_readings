@@ -1,0 +1,3695 @@
+
+===== PDF PAGE 1 =====
+THE CHALLENGE AND REWARD OF FAIR PLAY IN NARRATIVE:
+A COMPUTATIONAL APPROACH
+A PREPRINT
+Eitan Wagner*
+Department of Computer Science
+Hebrew University of Jerusalem
+Renana Keydar
+Department of Law and Digital Humanities
+Hebrew University of Jerusalem
+Omri Abend
+Department of Computer Science
+Hebrew University of Jerusalem
+May 13, 2026
+ABSTRACT
+Good storytelling involves surprise—unpredictability in how the story unfolds—and sense-making,
+the requirement that the story forms a coherent sequence. However, to date, these two qualities
+have largely been addressed in isolation. We formalize these qualities and their relationship in an
+information-theoretic framework, using detective fiction as a paradigm case of narratives in which
+a hidden truth is discovered through reasoning. Our central theoretical result shows that surprise
+and coherence must trade off for any single reader model, but can coexist when two reader modes
+are distinguished: a pre-revelation mode that forms expectations while the ending is unknown, and
+a post-resolution hindsight mode that re-evaluates the story after the culprit is revealed. The bal-
+ance of these two dimensions is realized in the common requirement of fair play, giving the reader
+a chance to solve the mystery while maintaining a challenge. We operationalize the framework
+using large language models as simulated readers, and define reference-less evaluation metrics for
+surprise, coherence, and fair play. Experiments on LLM-generated stories validate our theoretical
+predictions: while models generally succeed in creating surprise or coherence, achieving fair play
+poses a challenge even for strong models. Moreover, surprise and coherence do not positively corre-
+late across stories, resisting reduction to a single latent quality. A human study validates the metrics,
+confirming they capture aspects of narrative quality that matter to readers. Our metrics also repro-
+duce established literary intuitions, finding Christie’s stories more surprising and more fair-playing
+than Conan Doyle’s.
+Keywords detective fiction · narrative understanding · fair play · information theory · large language models
+1
+Introduction
+Surprise is a key driver of narrative engagement, with unpredictable events shown to be highly appreciated by readers,
+and to enhance their processing of story content [Hoeken and Van Vliet, 2000]. However, unpredictability was found
+to be only one component in the subjective experience of surprise, with a sense-making process—through contrast and
+consolidation with existing knowledge—also playing a crucial role [Teigen and Keren, 2003, Maguire et al., 2011].
+Local and global coherence—in addition to unexpectedness—are necessary for a narrative to evoke interest [Silvia,
+2005, 2008], and to be considered successful [Van Peer, 1984] or creative [Simonton, 2012].
+Detective stories are a representative example of narratives that exploit this duality. The genre centers on a hidden
+truth—commonly the identity of the culprit (“whodunit”)—gradually revealed through sense-making: clues scattered
+∗Corresponding author. E-mail: eitan.wagner@mail.huji.ac.il
+arXiv:2507.13841v2  [cs.CL]  12 May 2026
+
+
+===== PDF PAGE 2 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+across the narrative form a coherent explanatory structure that the reader must reconstruct. This quality has made
+the genre a paradigm case for reasoning under uncertainty across disciplines, from historical inquiry [Collingwood,
+1993] and abductive inference spanning science, medicine, and psychoanalysis [Ginzburg and Davin, 1980] to NLP
+benchmarks for multi-step reasoning [Frermann et al., 2018, Del and Fishel, 2023, Sprague et al., 2024]: in all cases,
+an observer (the detective) reasons from observable clues to a nontrivial hidden truth. Yet the genre adds a second
+challenge beyond sense-making: a narrative machinery of misdirection, red herrings, and delayed revelation, explicitly
+designed so that the reader does not see the ending coming [Brewer and Lichtenstein, 1980, Schraw et al., 2001].
+This dual requirement is captured in the literary concept of fair play [Knox and Harrington, 1929, Hühn, 1987]: “fair”
+meaning the story is retrospectively solvable—the clues must coherently support the revelation and give the reader a
+genuine chance—and “play” meaning there is a genuine challenge—the ending must not be trivially predictable. A
+notable failure mode of the “fair” dimension is a Deus ex Machina, where the resolution emerges without connection
+to the prior investigation [Sallas, 2024, Effron, 2017]. Achieving fair play is notoriously difficult: it requires precise
+authorial control over what readers infer and when—keeping the revelation both surprising and coherent in retrospect
+[Sayers, 1936b, Tobin, 2009].
+In this paper, we formalize and study this challenge through detective fiction. We use Agatha Christie’s The Murder of
+Roger Ackroyd [Christie, 1926] as a running example (Box 1). We show that high surprise and high retrospective coher-
+ence can coexist, but only by engineering a shift in the reader’s interpretive state: what surprises the reader mid-story
+must become coherent—even inevitable—in hindsight. We formalize these ideas in an information-theoretic frame-
+work. As we show in The Coherence-surprise tradeoffs, surprise and retrospective coherence necessarily trade off for
+any single reader model. A reader who updates beliefs coherently from the clues cannot simultaneously be surprised
+by the revelation. Yet, both qualities can be jointly achieved when two distinct reader modes are distinguished—
+one registering surprise before the revelation, one finding the resolution retrospectively coherent. The tradeoff thus
+reframes fair play not as a compromise on a single quality axis, but as a two-dimensional target.
+This framing has a direct consequence for measurement. Prior computational work separately proposed metrics for
+narrative surprise [Ely et al., 2015, Wilmot and Keller, 2020], and for narrative coherence [Maimon and Tsarfaty,
+2023, Mostafazadeh et al., 2016]. Of particular note, Ely et al. [Ely et al., 2015] propose a probabilistic framework
+for suspense and surprise in entertainment, including mystery novels; however, their framework does not address
+the tension between surprise and coherence that is at the heart of fair play. Measuring only one dimension yields
+an incomplete picture that fails to capture the distinct elements of the detective genre: a surprising story may lack
+retrospective coherence, and a coherent story may lack genuine surprise.
+We operationalize the framework using large language models (LLMs), which give us control over the generation
+process to simulate multiple reader types—from one reading naïvely, to one with vast experience, to one with full
+knowledge of the writing process. We validate our approach through human reader experiments. Our results show that:
+(i) many models achieve adequate surprise or retrospective coherence individually, but fail to combine them into fair
+play, validating the importance of evaluating both dimensions jointly; (ii) automated metrics on real stories reproduce
+established literary intuitions—Christie’s Poirot stories are substantially more surprising than Conan Doyle’s Sherlock
+Holmes stories, consistent with Christie’s reputation for narrative twists; and (iii) human subjective ratings for fairness,
+coherence, and enjoyability are substantially higher for real than generated stories, and significantly correlate with the
+automated metrics, validating the framework.
+Box 1. The Murder of Roger Ackroyd (1926) — Synopsis.
+The story is narrated by Dr. James Sheppard, Ackroyd’s physician and neighbor, who assists Poirot in the investigation.
+Suspicion builds around Ralph Paton—Ackroyd’s stepson, who disappears after the murder and is revealed to have had both
+motive (financial need, a secret marriage) and opportunity. Poirot ultimately uncovers that Sheppard himself is the killer,
+having used a dictaphone to fabricate an alibi. The story is a canonical example of fair play: the clues pointing to Sheppard
+are all present in his own narration, but his trusted-narrator status misleads a gullible reader who does not rigorously analyze
+the evidence.
+2
+The Probabilistic Framework
+We now formalize stories, readers, and detectives as probabilistic objects. Our framework applies to any narrative with
+a gradually revealed hidden truth. However, for simplicity, we use detective story terminology throughout. A more
+detailed literary discussion is in the SI Appendix.
+2
+
+
+===== PDF PAGE 3 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+2.1
+Detective Stories and their Components
+The conventional structure of a whodunit story includes three phases [Hühn, 1987, Knight, 2003]: a crime is committed
+and suspects are presented in the introduction phase; clues unfold across the suspicion phase; and a hidden truth (the
+culprit’s identity) is disclosed in the revelation phase [Dove, 1997].
+We formalize this as follows. Let a story be a string of text X, divided into L paragraphs X = x1, x2, . . . , xL.
+We denote the set of all possible stories with X, and refer to the first i paragraphs of a story as a story prefix,
+denoted X1...i. We define the revelation point as the paragraph in which the culprit’s identity is first revealed. The
+suspicion phase unfolds through clues embedded in the story’s paragraphs—undisputed facts visible to the reader that
+collectively build toward the resolution.
+The framework centers on a hidden variable Y , representing an aspect of the underlying story that must be uncov-
+ered. We denote the set of possible values of Y with Y. In whodunit detective stories, the underlying story is the crime
+committed, and we identify Y with the identity of the culprit. The set Y thus consists of the potential culprits, which
+specifically include the true culprit y∗∈Y, who actually committed the crime, and at least one distractor ¯y ∈Y—a
+character who is not the true culprit, but is cast as a likely suspect during (part of) the investigation. We assume that
+all potential culprits are introduced in the introduction phase, and are therefore known at the outset of the suspicion
+phase.
+2.2
+Reader Models
+Literary theory recognizes the reader as an active participant in the investigation, similar to a detective [Hühn, 1987,
+Dove, 1997]. The reader is presented with a written story or part of it and infers the identity of the culprit. Unlike
+detectives who work from clues alone, readers have access to the full written text, including narrative framing and
+stylistic cues. For example, a reader might notice and make use of an author’s typical twists or their tendencies
+regarding traits and genders of characters.
+Formally, a reader model is a function M : X × N →∆|Y|−1, which represents a mapping from a story and a point
+within it to a probability distribution over some property of the underlying story Y ∈Y. ∆|Y|−1 is the |Y|-dimensional
+simplex. In our case, we assume Y represents the culprit who commits the crime. The probabilities are over culprit
+identities y ∈Y, and reflect the reader’s belief after being exposed to the first i paragraphs. We use M(i) instead of
+M(X, i) when the identity of the story is clear. We use M(0) for the probabilities with the empty prefix. When reading
+a new story, a reader determines the output based on prefixes (up to a current paragraph i), that is, M(X, i) := p(· |
+X1...i). Each reader model M induces a corresponding culprit predictor ˆyM(i) = argmaxy∈Y M(i)y, which outputs
+the most likely culprit according to the reader at step i.
+2.3
+Idealized Types of Reader Models
+We define four idealized readers used for quality measurement. Two are internal: they simulate a detective observing
+only the story’s clues. Two are external: they may draw on information beyond the story text. Within each pair,
+the two readers differ in inference capability. Figure 1a presents a schematic mapping on the internal/external and
+intelligence axes.
+Internal readers
+Internal readers evaluate only the story’s clues, differing in inference quality. The gullible reader
+M0 naïvely follows surface-level clues and is susceptible to misdirection: in the extreme case it forms its prediction
+based on a single prominent clue, ignoring the rest. This reader simulates an incompetent detective (typically a
+sidekick, like Watson or Hastings), as common in detective fiction. The brilliant reader M1 makes the best possible
+use of the internal clues, arriving at the true posterior over culprits given the evidence. This reader simulates the
+brilliant detective (like Holmes or Poirot). The gullible reader represents the lower bound of inference capability: it
+selects suspects based only on surface information, falling for misdirections, and a good story should consistently fool
+it.
+External readers
+External readers are not limited to internal clues; they may draw on information beyond the
+story text itself. This includes familiarity with the genre or generating model, as well as meta-information such as
+their position in the narrative—for example, knowing that the revelation is near because relatively few pages remain,
+something an internal detective has no access to.
+An actual reader exploits such external information to predict the culprit. Actual readers form a spectrum: at the
+lower end, a reader with minimal prior exposure relies primarily on the current story’s clues; at the upper end, a highly
+experienced reader leverages patterns from many previous stories, even when internal clues are insufficient. We define
+3
+
+
+===== PDF PAGE 4 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+brilliant
+detective
+reader
+gullible
+reader
+know-it-all 
+reader
+actual readers
+Intelligence
+External
+Internal
+Available information
+Gullible Reader
+Brilliant Reader
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Prediction Success
+Introduction
+predict-
+ability
+reader
+gap
+solv-
+ability
+Revelation
+Investigation
+"I omitted
+nothing"
+Dictaphone
+Moved
+Chair
+Phone
+call
+something 
+was hidden...
+case closed
+Secret
+marriage
+revealed
+Figure 1: (A) Schematic map of the reader models by inference ability and accessible information. (B) Desired
+qualities of readers. We expect low predictability for the gullible reader (orange with squares) and high solvability for
+the brilliant reader (blue with circles). Combining these qualities leads to a gap between readers, which is challenging
+to create. The plot illustrates the effects of clues in The Murder of Roger Ackroyd: the phone call and the dictaphone
+construct a false alibi for the narrator that the gullible reader accepts; the moved chair points to where the recording
+device was hidden—a detail the brilliant reader connects to the deception; the revelation of a secret marriage misdirects
+the gullible reader toward an innocent suspect while the brilliant reader uses it to exculpate him, and the narrator’s
+assurance “I omitted nothing” is taken at face value by the gullible reader but identified as evasion—not denial of
+guilt—by the brilliant reader.
+the average actual reader ¯M as a mixture over this spectrum, weighted by the prevalence of each reader type in the
+population.
+We define the know-it-all reader M∗as an external reader with full knowledge of the true story generation
+distribution—capturing all that can be known about how stories are written. The know-it-all reader is still constrained
+by the randomness of the distribution itself.2
+2.4
+Expected Reader Behavior
+The reader models presented above are designed with an expected behavior in mind. We turn to describe how we expect
+them to behave across the three phases of a detective story: introduction, suspicion, and revelation (see Figure 1b).
+In the introduction, all suspects have just been presented, and no meaningful clues have been revealed. All reader
+models thus assign roughly uniform probabilities over the set of suspects, i.e., M(i)y ≈
+1
+|Y| for all y ∈Y.
+In the suspicion phase, the reader models diverge:
+• The gullible reader M0 is gradually misled by the red herrings and surface-level clues. The probability for
+the true culprit decreases, while the probability assigned to distractors increases.
+• The brilliant reader M1 optimally interprets the clues and gradually increases the probability assigned to the
+true culprit.
+• The know-it-all reader M∗, which has access to the story generation process, similarly increases the proba-
+bility of the true culprit, potentially with higher confidence than the brilliant detective.
+• The actual readers fall between the gullible and know-it-all readers, with more experienced readers leverag-
+ing external knowledge, such as patterns from previous stories of the same model or genre.
+In the revelation, the true culprit is revealed, and so M(i)y∗≈1 for all readers.
+The quality of a detective story can be understood in terms of these expectations. A strong surprise occurs when
+a reader is strongly misled during the suspicion phase—which happens to the gullible reader. Coherence reflects the
+2The Mystery of Edwin Drood [Dickens, 1870] serves as an illustration: Dickens died before completing the novel, prompting
+many subsequent writers to provide their own endings [Dickens and Walters, 1913]. The various endings demonstrate the distinction
+between an actual writer—who may have planned a specific ending—and a story model, which represents a distribution over
+continuations of a given prefix. The know-it-all reader knows this distribution but cannot determine which specific ending would
+have been chosen.
+4
+
+
+===== PDF PAGE 5 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+reader’s ability to gradually identify the true culprit before the revelation—as with the brilliant and know-it-all readers.
+A story achieves fair play when both conditions hold simultaneously: the clues support the correct conclusion for a
+careful reader, while misleading a less attentive one.
+Optimality
+Stories are generated by a probabilistic story generation model SM, defining a distribution over story
+texts, which also induces a distribution over sequences of clues. Two reader types have natural optimality character-
+izations: the know-it-all reader M∗is the Bayes-optimal classifier given the story generation distribution SM, and
+the brilliant reader M1 is the Bayes-optimal classifier given only the internal clue distribution. These optimality
+conditions formalize the intuition that a coherent story leaves enough information for an ideal reasoner to solve it. See
+SI Appendix for the formal treatment and proofs.
+3
+The Coherence-Surprise Tradeoffs
+We formalize two notions of surprise and derive two tradeoffs with coherence: a weak tradeoff showing that intelligent
+readers face a tension between high coherence and weak surprise, and a strong tradeoff showing that the reader’s in-
+telligence limits the simultaneous achievement of high coherence and strong surprise. We then introduce the hindsight
+gap as the mechanism that allows for the coexistence of high coherence and strong surprise.
+3.1
+Surprise
+The know-it-all reader knows all that can be known about how the story might evolve. We therefore define a reader’s
+degree of uninformedness based on how it diverges from the know-it-all reader. Formally, given a reader M, we
+define its uninformedness as its cross entropy relative to M∗:
+H(M∗(i); M(i)) = −
+X
+y∈Y
+pM∗(y | X1...i) log pM(y | X1...i)
+(1)
+This divergence is minimal where M = M∗and equals the entropy H(M∗(i)). We assume that any reader M starts
+with an uninformed (i.e., uniform) prior over culprits. Therefore:
+H(M∗(0); M(0)) = H(M∗(0)) = log |Y|
+(2)
+In reading comprehension, surprise is commonly measured as the negative log-probability assigned to a word [Hale,
+2001, Smith and Levy, 2008, Demey, 2015] (See SI Appendix, Related Work, for a discussion of other surprisal
+measures in narratives). The expectation of the negative log-probability, over the story generation model, is exactly
+the uninformedness of the reader.
+A weak notion of surprise is when a reader is uninformed about the outcome until it is revealed. We say that M is
+weakly surprised in step i if:
+H(M∗(i); M(i)) ≥log |Y| −ϵsurprise
+(3)
+for some small ϵsurprise > 0.
+A stronger notion of surprise is when the reader is misled into expecting an outcome other than the actual one. We say
+that M is strongly surprised with respect to step i if it is less informed than a uniform prediction:
+H(M∗(i); M(i)) ≥log |Y| + δsurprise
+(4)
+for some threshold δsurprise > 0.
+Put differently, weak surprise means that the reader is close to having no knowledge. Strong surprise means that a
+reader is misled into a belief that is further from the truth than a state of no knowledge.
+3.2
+Coherence
+In narrative terms, coherence means that all parts of a story contribute to a unified whole; in detective fiction, this
+specifically means that the clues collectively and meaningfully support the resolution. We formalize this through the
+cumulative effectiveness of the clues as interpreted by the brilliant reader.
+5
+
+
+===== PDF PAGE 6 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+A step is effective when it provides information to the reader, allowing better prediction of the culprit identity. For-
+mally, we define the step effectiveness (S-EFF) for a reader M at step i + 1 as the expected reduction in their unin-
+formedness when moving from step i to step i + 1:
+S-EFFM(i + 1) = EX1...i∼SMH(M∗(X1...i); M(X1...i))
+−EX1...i+1∼SM[H(M∗(X1...i+1); M(X1...i+1))]
+(5)
+For brevity, we will simply use E(H(M(i))) instead of EX1...i∼SM(H(M(X1...i))). Positive step effectiveness indi-
+cates that the reader becomes, in expectation, more similar to M∗.
+Clue effectiveness is the cumulative step effectiveness of the brilliant reader M1, indicating the total contribution of
+the clues to identifying the culprit, after i steps:
+∆coh(i) :=
+i
+X
+j=1
+S-EFFM1(j)
+(6)
+High clue effectiveness means that the clues collectively contribute to identifying the culprit, according to the brilliant
+reader’s judgment, which, assuming clue sufficiency (as defined below), is close to the truth. Low clue effectiveness
+means that the clues have a low contribution, generally indicating poor quality.
+The clue sufficiency property of a story generation model SM requires that the step effectiveness of the brilliant
+reader M1 is close to that of the know-it-all reader M∗:
+S-EFFM1(i) −S-EFFM∗(i)
+ ≤ϵex,
+∀i ∈1 . . . L
+(7)
+for a small ϵex > 0.
+This property captures the notion that it is enough to brilliantly interpret the internal clues to (gradually) solve the
+mystery: the clues are not merely effective, they are sufficient.
+A simple generation model that violates clue sufficiency is one that has very low diversity in its generated stories (e.g.,
+it always generates the same story). In this case, a reader with access to previous stories can predict the culprit more
+confidently than the brilliant reader who relies only on internal clues.
+Given clue sufficiency, the ability of any reader to make inferences based on clues is bounded by that of the brilliant
+reader. We define the intelligence gap, at step i, between a specific reader M and the brilliant reader as the difference
+in cumulative step effectiveness:
+∆intel(i, M) :=
+i
+X
+j=1
+[S-EFFM1(j) −S-EFFM(j)]
+(8)
+We say that the reader M is intelligent if the intelligence gap is small:
+∆intel(i, M) ≤ϵintel,
+∀i ∈1 . . . L
+(9)
+for a small ϵintel > 0.
+Intelligence means that the reader’s interpretation of the clues is similar to that of the optimal detective model. Conse-
+quently, the intelligence gap with the gullible reader ∆intel(i, M0) serves as a practical upper bound for the intelligence
+gap with actual readers.
+Notably, a reader with expectations similar to the brilliant reader’s qualifies as intelligent. Similar culprit probability
+estimates imply intelligence, though the converse does not necessarily hold (see SI Appendix).
+3.3
+Tradeoffs
+We now present the main theoretical result:
+Theorem (Coherence-surprise tradeoffs).
+1. (Weak tradeoff) An intelligent reader M satisfies a tradeoff between clue effectiveness ∆coh(i) and weak
+surprise −ϵsurprise.
+2. (Strong tradeoff) For any reader M, strong surprise δsurprise and clue effectiveness ∆coh(i) trade off according
+to the intelligence gap ∆intel(i,), satisfying δsurprise + ∆coh(i) ≤∆intel(i, M). In particular, assuming clue
+sufficiency, an intelligent reader M cannot be strongly surprised.
+6
+
+
+===== PDF PAGE 7 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Corollary (Length difficulty). As stories become longer (L grows), maintaining fair play becomes increasingly dif-
+ficult: either the clues carry very little information—with a plot that seems to make no progress—or the need for
+misdirection becomes stronger.
+Formal statement and proof are in the SI Appendix.
+3.4
+The Hindsight Gap
+The tradeoffs above show that surprise and coherence are fundamentally in tension for a single reader. How can
+a single actual reader experience both? The answer lies in hindsight: a shift in interpretation that occurs after the
+revelation.
+A single actual reader operates in two modes: a forward-reading mode, forming expectations as the story unfolds, and
+a hindsight mode, re-evaluating the clues after the culprit is revealed. The hindsight gap is the increase in cumulative
+clue effectiveness when the reader shifts from forward-reading to hindsight—the “aha” moment where earlier clues
+become meaningful in retrospect. Analogously to the intelligence gap—which measures a reader’s clue-interpretation
+shortfall relative to the brilliant reader—the hindsight gap measures a reader’s gain relative to its own earlier, forward-
+reading self. A story satisfies hindsight coherence when the revelation provides a complete explanation of the clues—
+which in turn leads the hindsight mode to re-evaluate the story as well as the brilliant reader would (formal statement
+in SI Appendix).
+Corollary (Hindsight tradeoff). Assuming hindsight coherence, if a reader M is strongly surprised then clue effec-
+tiveness and the hindsight gap trade off (proof in the SI Appendix).
+Implications for detective story writing
+Three notable story archetypes occupy different regions of the tradeoff
+space:
+1. Deus ex machina: Low step effectiveness throughout the story yields surprise without coherence. The reader
+has no fair chance to solve the mystery, as the final outcome is only weakly constrained by the clues.
+2. Non-mystery: High step effectiveness can make the culprit predictable throughout, yielding coherence with-
+out surprise. These stories allow the reader to solve the mystery but provide weak narrative tension.
+3. Fair play: A hindsight gap enables both strong surprise and coherence simultaneously. The reader is misled
+during the story yet can recognize the logical structure in retrospect. Creating such a gap is a central challenge
+of detective story writing.
+Figure 1b illustrates these archetypes using The Murder of Roger Ackroyd: the gullible reader’s suspicion consolidates
+around the distractor (Ralph Paton), while the brilliant reader’s confidence in the true culprit (Dr. Sheppard) rises
+steadily.
+We note that without clue sufficiency, clue effectiveness may be negative—meaning the gullible reader outperforms
+the brilliant reader—which can allow for strong surprise even for an intelligent reader. While such stories exist, they
+violate genre conventions.
+A successful detective story must maintain diverging predictions by two reader models: a less-than-brilliant reader,
+such as the gullible reader, who can be surprised by misdirection, and an intelligent reader closer to the brilliant
+reader, who can recognize the coherent logical structure of the clues. A larger gap between the readers allows for
+simultaneously stronger surprise and coherence. For these two reader models to be combined in a single actual reader,
+a shift must occur during reading—precisely the hindsight gap.3
+Constructing stories with a hindsight gap is challenging. The reader must be manipulated to be initially surprised
+while accepting the true story in retrospect. The challenge is amplified when writing many stories, as the writer must
+constantly introduce original challenging puzzles [Sayers, 1936b].
+4
+Experimental Setup
+Having developed the theoretical framework, we now operationalize it in practice. We define empirical metrics
+grounded in the reader models introduced above, and apply them to both LLM-generated and real detective stories.
+3We note that hindsight coherence may not always hold: a reader may feel the ending was solvable in retrospect due to hindsight
+bias, even when the clues did not genuinely support it. A reader may judge an outcome as predictable in hindsight, even if it cannot
+be predicted in practice, thus not being truly fair. This “faux fair play” is distinct from genuine fair play, which our framework and
+metrics are designed to capture.
+7
+
+
+===== PDF PAGE 8 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Our goal is twofold: to test whether the coherence-surprise tradeoff manifests empirically—as a genuine challenge
+reflected in model performance—and to validate whether surprise and coherence behave as competing qualities that
+require joint evaluation.
+4.1
+Stories
+For generated stories, we use a range of LLMs spanning different model families and scales—from small open-source
+models to large frontier models—including Gemini, Llama, and GPT variants. For real detective stories, we compare
+works by Arthur Conan Doyle (Sherlock Holmes) and Agatha Christie (Hercule Poirot). These stories are regarded as
+milestones in the evolution of detective fiction [Moretti, 2000], with Conan Doyle’s stories as “howdunits”—due to
+their focus on the deductive process [Eco, 1983]—and Christie’s as “whodunits” [Scaggs, 2005]. See Methods and SI
+Appendix for additional details on all story sets.
+4.2
+Metrics
+The theoretical framework defines surprise, coherence, and fair play in terms of reader models. Here we translate
+these into empirical metrics computable from story text, grounding the abstract quantities in measurable terms. Some
+metrics require access to the generation model’s probabilities and can therefore only be applied when the generating
+distribution is known. For real stories, these metrics can be approximated using a sufficiently strong predictor as
+a proxy, although this provides no theoretical guarantees on the quality of the approximation. Importantly, since
+we have no guarantees regarding the calibration of model outputs and human predictions—especially when the goal
+is maximizing accuracy [see Wagner and Abend, 2025]—we opt for metrics based on the classifier ˆyM(i) induced
+by each reader model rather than raw probability estimates. For related work, including previously used metrics of
+surprise and coherence, see SI Appendix, Related Work.
+Stories that do not clearly establish both a culprit and a distractor—judged by a held-out model—are excluded from
+analysis and treated as generation failures; full details are reported in the SI Appendix.
+Surprise and coherence
+Since cross-entropy is frequently unstable in practice—log-probabilities can take infinite
+values—we use classification accuracy as our base measure. For any reader model M, we define its prediction
+accuracy as:
+A(M) = 1
+L
+L
+X
+i=1
+1[argmax M(i)=y∗]
+(10)
+This is the complement of the 0-1 loss [Devroye et al., 2013], averaged over story position. We define the surprise
+score for reader M as S(M) = 1 −A(M), and the coherence score for reader M as C(M) = A(M).
+We also define a uniform predictor ˆPunif as a reference baseline that assigns uniform probability 1/|Y| to each
+suspect at every pre-revelation step; like all readers, it correctly identifies the culprit at and after the revelation. It
+serves as a floor: a gullible reader performing no worse than ˆPunif (at pre-revelation steps) is not genuinely misled (no
+misdirection), and an intelligent reader performing no better than ˆPunif means the story contains no usable clues (not
+solvable).
+A story is surprising when S(M0) is high; we write S ≡S(M0) for the surprise score, where a score close to 1
+indicates successful misdirection.
+A story is coherent when C(M) is high for an intelligent reader: the clues should provide information allowing better
+identification of the culprit (see Clue Effectiveness). Taking M = M∗—whose argmax prediction is Bayes-optimal—
+defines the coherence upper bound (CUB) score CUB ≡C(M∗), an upper bound (in expectation)on C(M) for any
+reader; we also define the average coherence score C ≡C( ¯M). We note that a generation model with very low
+diversity can yield a misleadingly high CUB without genuine clue content, violating clue sufficiency.
+Fair play
+Surprise and coherence each measure a single reader. Fair play captures whether clues systematically
+advantage a more capable reader over a less capable one—a property neither metric alone captures. We define the fair
+play score between a more capable reader M and a less capable reader M ′ as:
+FP(M, M ′) = A(M) −A(M ′)
+(11)
+Specifically, we define the fair play upper bound FPUB ≡FP(M∗, M0) = CUB −(1 −S), using the know-it-all and
+gullible readers, and the actual fair play score FPAR ≡FP( ¯M, M0) = C −(1 −S), using the actual reader and the
+8
+
+
+===== PDF PAGE 9 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+gullible reader. We also define the solvability score FPS ≡FP(M∗, ˆPunif) = CUB −A( ˆPunif) using the know-it-all
+reader and the uniform predictor.
+These scores define requirements for a fully fair-playing story:
+1. Intelligence gap: FPUB, FPAR ≥1
+L — the know-it-all and actual readers outperform the gullible reader; the
+clues provide a genuine advantage for a capable reader over the gullible one.
+2. Solvability: FPS ≥1
+L — the know-it-all outperforms the uniform predictor; the story contains genuine clues
+beyond chance. Failure is a sign of Deus ex Machina (DeM): no clue signal beyond random guessing.
+3. Misdirection: FP( ˆPunif, M0) ≥
+1
+L — the gullible reader performs worse than the uniform predictor; it is
+actively misled.
+For an alternative fair play metric measuring clue content (ERC)—with results broadly consistent with the main
+metrics—see SI Appendix. Experienced reader fair play analysis is also provided in the SI Appendix.
+Together, these metrics allow us to test empirically whether fair play is a genuinely difficult balancing act—requiring
+simultaneous success on surprise, coherence, and their interaction—and whether failure on one dimension is invisible
+when evaluating the others in isolation.
+5
+Results
+We report empirical results on both LLM-generated and real detective stories, evaluating the relationship between
+surprise and coherence and the challenge of fair play.
+5.1
+Generated Stories
+A common assumption in NLP benchmarking is that model quality follows a limited set of latent factors [Maimon
+et al., 2025]—predicting that larger, newer, and more reasoning-capable models will outperform weaker ones on most
+tasks. If surprise and coherence were two independent tasks, this would entail a positive correlation between them
+across stories. However, fair play requires balancing inherently competing demands, not optimizing them indepen-
+dently. The coherence-surprise tradeoff shows that improving one dimension tends to hurt the other when failing to
+create a sufficient intelligence gap. Moreover, the tradeoff challenges the “leaderboard approach” to model quality:
+LLMs may not follow the expected ranking when fair play depends on balancing, rather than excelling independently.
+We test these predictions and present our results in Figure 2: the model ordering diagram (panel B) assesses the rank-
+ing. Story validity broadly scales with model capability: most models achieve ≥80% valid stories, and many frontier
+models achieve perfect validity (10/10). A minor exception—Llama-3.1-8B (9/10) slightly exceeding Llama-3.1-70B
+(10/12 ≈0.83). Full results reported in the SI Appendix. These results suggest that story-generation capabilities scale
+with general model capabilities, as is generally the case with instruction following in LLMs.
+Nevertheless, the Spearman correlation between surprise and coherence across generated stories is near zero (r =
+−0.095, p > 0.05, n = 100) for LLM-based coherence, and significantly negative (r = −0.383, p < 0.05, n = 36)
+for human-based coherence. Indeed, Figure 2b shows that LLMs do not follow the expected quality ordering: model
+rankings differ substantially across metrics, with no clear advantage to larger, newer, or more capable models across
+all dimensions simultaneously.
+Generated stories serve as a diagnostic for the difficulty of the task itself: by probing models of varying capability,
+we can assess whether creating fair play poses a genuine challenge—even for contemporary LLMs—and whether
+surprise and coherence behave as competing demands. The results confirm that fair play is challenging—many sto-
+ries lack a sufficient intelligence gap (FPUB <
+1
+L; criterion 1 in Metrics) (e.g., 6/10 for Llama-3.3-70B, 4/10 for
+GPT-4o), showing that even frontier models often fail to produce stories where the clues meaningfully advantage an
+intelligent reader; individual failure cases are visible in Figure 2a as stories falling in the negative fair-play region, and
+representative reading curves for a fair-play and a Deus ex Machina story are shown in Figure 3C–D. Surprise scores
+range from 0.352 (Gemini-1.5-flash) to 0.798 (Gemini-2.5-pro), and coherence upper bounds vary from 0.4 to 0.8,
+with no consistent relationship to model size or capability. Enabling extended reasoning modestly improves fair play
+for Gemini-2.5-flash. These results illustrate that fair play does not scale monotonically with model capability: the
+model ordering by fair play scores does not match the expected ordering of model capabilities (Figure 2b).
+Human validation
+Figure 2a shows the relationship between LLM-based and human-based fair play across stories
+with human annotations. The FPUB scores correlate positively with human-based fair play scores FPAR across stories,
+9
+
+
+===== PDF PAGE 10 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Human - LLM > 5
+(a) LLM vs. human fair play
+Quality level
+1.5 Flash
+2.5 Flash
+TB0
+2.5 Flash
+TB-1
+3 Flash
+1.5 Pro
+2.5 Pro
+3.1 Pro
+3.1 70B
+3.3 70B
+3.1 8B
+3.2 3B
+3.2 1B
+4o
+4o Mini
+1
+2
+3
+5
+1
+2
+3
+5
+1
+2
+3
+5
+1
+2
+3
+4
+5
+1
+2
+3
+4
+5
+Gemini
+Llama
+GPT
+1
+2
+3
+5
+1
+2
+3
+5
+1
+2
+3
+5
+1
+2
+3
+4
+5
+1
+2
+3
+5
+1
+2
+3
+4
+5
+1
+2
+3
+5
+1
+2
+3
+4
+5
+Line style = metric
+1. Surprise
+2. Coherence
+3. LLM FP >= 1
+4. Human FP >= 1
+5. Unif - Gullible >= 1
+Gen Success
+ (head at right) = supports
+ (head at left) = contradicts
+ (grey, no head) = tied
+(b) Model ordering vs. expected quality ranking
+Figure 2: (A) Scatter plot of LLM-based fair play (FPUB) vs. human-based fair play (FPAR) per story for annotated
+stories (n = 54). The marked region represents stories for which FPAR −FPUB >
+5
+L, and the sparse population
+there validates FPUB as an upper bound. (B) Hasse diagram of model performance ordering. Newer version, more
+parameters, more-thinking models are ranked higher in the expected quality level (the x-axis); arrows show whether
+this expected ranking is confirmed by actual scores, with one arrow for each measured score.
+validating the upper bound as a meaningful proxy for human-perceived fair play. Furthermore, the region where FPAR
+substantially exceeds FPUB is sparsely populated (Figure 2a), consistent with the theoretical upper-bound relationship.
+On the human-annotated subset (n = 54), the mean FPUB = 0.242 exceeds the mean FPAR = 0.127, consistent with
+the design of FPUB as an upper bound. We note that, for some individual models, however, the human fair play score
+can exceed FPUB due to the variance in the estimation or sampling.
+Experienced reader results, which further probe clue sufficiency and story diversity, are reported in the SI Appendix.
+The experienced reader generally approaches the know-it-all upper bound as prior-story context increases; notably,
+much of this advantage already appears with zero prior stories, suggesting that familiarity with the model’s generation
+process—rather than accumulation of story-specific knowledge—drives culprit prediction.
+5.2
+Real Stories
+Our framework can be applied to any story: the gullible reader can be simulated by a language model, and the know-
+it-all reader can be approximated by a sufficiently strong prediction model. For real stories, we do not have access to
+the true data-generating distribution, so we evaluate only the metrics that are reliable in this setting: gullible-reader
+surprise and human-based coherence and fair play. Applying our framework to Sherlock Holmes and Hercule Poirot
+stories, we test three predictions grounded in established literary criticism [Knight, 2003]: (1) Poirot stories should
+achieve higher surprise scores, reflecting Christie’s reputation for skillful misdirection in whodunits; (2) Poirot stories
+should achieve higher fair play scores, since coherence and surprise are more equally balanced in whodunits; and (3)
+Poirot’s fair play should exceed that of generated stories on average, providing a human-authored benchmark.
+Surprise
+Figure 3A shows the average gullible-reader correct-prediction rate across stories, as a function of story
+position. The mean gullible-reader surprise score for Hercule Poirot stories is 0.642 and for Sherlock Holmes stories
+it is 0.342.4 Shaded margins represent 68% Clopper-Pearson confidence intervals [Clopper and Pearson, 1934]—
+corresponding to approximately one standard deviation—computed by pooling predictions across all stories of each
+type at each relative time point. Poirot stories are consistently harder for the gullible reader to predict, reflecting
+Christie’s reputation for skillful misdirection [Knight, 2003]. This aligns with the established literary contrast between
+Christie’s whodunits and Conan Doyle’s howdunits: in howdunit stories, the identity of the perpetrator may be known
+from the outset, and the mystery centers on the exact method or procedure of the crime—how was it committed?—
+rather than who did it. This genre difference predicts that Poirot stories (whodunits with identity misdirection) should
+4Sample sizes: n = 10 Poirot stories and n = 9 Sherlock Holmes stories for gullible-reader analysis; see SI Appendix for
+human annotation sample sizes.
+10
+
+
+===== PDF PAGE 11 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Relative Time in Story
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Average Probability of True Culprit
+Poirot vs Sherlock Stories 
+ Gullible Reader
+Poirot (n=10)
+Sherlock (n=9)
+(a) SPoirot > SSherlock
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Relative Time in Story
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Average Probability of True Culprit
+Poirot vs Sherlock Stories 
+ Actual Reader
+Poirot (n=5)
+Sherlock (n=6)
+(b) (with (a)) FPPoirot > FPSherlock
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=12.69  S=5.45  C=18.14
+gemini-2.5-pro - Story 4 - 5 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+(c) Fair play example
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=6.12  S=4.77  C=10.88
+gemini-2.5-flash-tb0 - Story 3 - 6 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+(d) Deus ex Machina example
+Figure 3: (A–B) Reading curves for real detective stories. (A) Average rate of correct gullible-reader predictions for
+Sherlock Holmes (blue dashed) and Hercule Poirot stories (red solid). Poirot stories consistently yield lower accuracy,
+reflecting stronger misdirection. (B) Same for actual human readers, revealing the dissociation: Sherlock stories are
+more predictable to humans yet less surprising to the gullible reader. (C–D) Reading curves for individual generated
+stories. (C) A fair-play example (Gemini-2.5-pro, story 4): the know-it-all reader maintains a consistent advantage
+over the gullible reader, indicating usable clues embedded in the narrative. (D) A Deus ex Machina example (Gemini-
+2.5-flash, story 3): the know-it-all reader gains no advantage prior to the revelation, indicating an absence of usable
+clues. See SI Appendix for additional reading curve examples.
+yield systematically lower gullible-reader accuracy than Sherlock stories (howdunits where the perpetrator’s identity
+is less central to the mystery), supporting the validity of the surprise metric.
+Human-Based Coherence, Fair Play, and Dissociation
+Figure 3B presents the average correct-prediction rate of
+actual human readers across the stories. The two series reveal a dissociation: Sherlock stories achieve higher human-
+estimated coherence (C = 0.751) than Poirot stories (C = 0.661), yet the simulated gullible reader achieves higher
+accuracy on Sherlock stories (S = 0.342 vs. S = 0.642). Evaluating coherence alone would favor Sherlock, but
+this misses that Sherlock’s clues are less effective at misdirecting a naïve reader. The human fair play scores capture
+this dissociation: 0.325 for Hercule Poirot vs. 0.067 for Sherlock Holmes—Poirot stories are substantially more fair-
+playing despite Sherlock’s higher coherence.5 Using the human-based DeM criterion (FPAR < 1/L): 3/6 Sherlock
+stories qualify as DeM, while none of the 5 Poirot stories with human annotations do (0/5), demonstrating that skilled
+human authors often more reliably achieve the coherence-surprise balance.
+5A notable exception is Sherlock story 5 (“The Man with the Twisted Lip”), where the gullible reader outperforms human
+participants. A possible reason is that human readers expect a twist and discount the obvious suspect, while the gullible reader
+takes the clues at face value—illustrating how prior genre experience can work against accuracy when a story does not follow
+genre conventions.
+11
+
+
+===== PDF PAGE 12 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+5.3
+Self-Reported Impressions
+Subjects were asked to rate various qualities of the story on a 1–5 scale (see SI Appendix for question details and
+correlation tables). Real stories were rated substantially higher than generated stories in fairness, coherence, and
+enjoyability, while surprise does not clearly distinguish the two groups—possibly because subjective surprise does
+not differentiate between stories that are surprising due to genuine misdirection and those that are simply incoherent
+or poorly structured. Subjective surprise is negatively correlated with subjective fairness (r = −0.13, p < 0.05),
+reflecting the tension between being surprised and perceiving the story as fair; in contrast, coherence and fairness are
+strongly correlated (r = 0.65, p < 0.001). Both patterns are consistent with the theoretical tradeoff.
+In terms of the correlation of our metrics with subjective ratings, we find that coherence correlates with the measured
+coherence scores (human readers: r = 0.16, p < 0.01; LLM readers: r = 0.11, p < 0.05). Subjective fairness
+ratings correlate significantly with the human subjective fair play score (r = 0.25, p < 0.001) and with the LLM
+coherence score (r = 0.11, p < 0.05). The surprise score correlates significantly with subjective surprise ratings
+(r = 0.15, p < 0.01), validating that the gullible reader captures the narrative quality of misdirection as perceived
+by readers. Most absolute values of the correlations are expected: the S and C metrics capture specific, information-
+theoretic aspects of these qualities, while subjective ratings also reflect narrative dimensions such as writing quality
+and character depth.
+6
+Discussion and Conclusion
+The central finding of this work is that fair play cannot be achieved by any single reader model, and requires creating a
+Hindsight Gap. Creating this gap is a two-objective challenge that, like constrained min-max optimization [Daskalakis
+et al., 2020], is substantially more complex than optimizing either objective alone. This result clarifies why the task is
+inherently hard, and the empirical results bear this out. For generated stories, variation across models highlights that
+fair play does not scale monotonically with model size; models differ in how they balance the competing demands of
+surprise and coherence, which are themselves empirically dissociated.
+Human evaluations also paint a consistent picture: while surprise ratings are similar for real and generated stories,
+subjective ratings of fairness, coherence, and enjoyability are substantially higher for real than generated stories.
+We do note that even human-written stories are not always of uniformly high quality; yet consistently producing
+challenging but fair stories—for diverse audiences—is a central quality of detective story writing, achieved by many
+works [Sayers, 1936b].
+Our experiments with human participants validate the proposed metrics, showing that the automatic measures align
+with human behavior and judgments.
+Since our metrics are reference-less—using LLMs to simulate different
+readers—they can serve as automatic tools for evaluating and potentially improving fair play in story generation (as a
+training or inference signal). While story generation is a central area in AI [Fang et al., 2023], its evaluation remains
+challenging [Wang and Kreminski, 2025]; our framework offers a step toward formal evaluation using information-
+theoretic measures.
+Our theoretical analysis sheds light on the nature of detective fiction itself. The coherence-surprise tradeoff formalizes
+the challenge every mystery writer faces and shows that fair play necessarily requires distractors—characters or clues
+that mislead the reader before the revelation. The clue sufficiency property highlights the role of genre conventions
+in constraining what counts as a valid mystery, and the hindsight gap captures the cognitive shift that a well-crafted
+revelation demands from the reader. Our framework also demonstrates how such genre conventions can be cast in
+quantifiable terms, enabling large-scale literary analysis [Hatzel et al., 2023].
+At its core, the challenge of fair play is the challenge of simultaneously satisfying two readers with fundamentally
+different interpretive stances—a structure that recurs across many domains. In psycholinguistics, surprisal is defined
+as the negative log-probability assigned to each word [Hale, 2001, Levy, 2008]. This quantity has been shown to
+correlate with behavioral and neural phenomena, such as reading time [Smith and Levy, 2008] and event-related
+potentials [Frank et al., 2015]. However, this single-pass measure may be insufficient when a later revelation reshapes
+the interpretation of earlier text—as in garden-path sentences, where readers must revise their syntactic commitments
+upon encountering an unexpected continuation, with surprisal systematically underestimating the resulting processing
+difficulty [Arehalli et al., 2022]. This limitation of surprisal in the context of narrative-level reinterpretation falls out of
+the proposed framework. In this sense, our 2-dimensional coherence-surprise framework can be seen as an extension
+of surprisal theory.
+More broadly, generating stories that cater to multiple reader perspectives simultaneously is a Theory-of-Mind chal-
+lenge [Huang et al., 2024, Kosinski, 2024]: the author must model how different readers will interpret the same text,
+12
+
+
+===== PDF PAGE 13 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+and engineer a specific shift in that interpretation at the revelation. Our framework provides a concrete testbed for
+these multi-perspective reasoning capabilities.
+6.1
+Limitations
+Our study has several limitations. The human experiment involved a somewhat small participant pool (n = 20), and
+fair play estimates for real stories rely on human predictions rather than true authorial distributions; both limit the
+reliability of absolute score comparisons, so results are best interpreted as relative rather than absolute measures. Our
+main fair play metric is only an upper bound, and the gap to actual reader performance can reflect factors beyond fair
+play, such as story diversity and LLM calibration.
+The generated stories use a relatively short fixed length of 25 paragraphs, and fair play dynamics may differ in longer
+stories. This relates to our theoretical result that longer stories make surprise harder to sustain, suggesting the metrics
+may behave differently for longer stories.
+Our framework assumes a single prominent distractor per story, and restricts the culprit to a known set of suspects intro-
+duced before the suspicion phase. Real detective fiction typically features multiple distractors with shifting suspicion,
+and the true culprit may be a character never initially considered a suspect, or the story may involve multiple culprits
+simultaneously. While these edge cases fall outside our current formalization, the single-culprit whodunit structure we
+model covers the canonical cases of the genre. More broadly, the simplified generation setting—a mandatory single
+distractor in a short, structured story—may make the culprit easier to guess for a reader who knows the generation
+instructions, even without reading carefully. This appears to be reflected in our experienced reader experiments, where
+knowledge of the setting is sufficient for nearly perfect performance. Mode collapse—when a model places much of
+its probability mass on a single story structure or culprit—can also artificially inflate coherence scores; we generally
+do not find this in our generated stories (see SI Appendix), but it remains a potential confound.
+Finally, the framework is evaluated exclusively on whodunit stories.
+While a paradigmatic example of the sur-
+prise/coherence tension [see Knox and Harrington, 1929, Hühn, 1987], results for whodunit stories may not generalize
+to other mystery sub-genres such as thrillers, or procedural mysteries.
+7
+Methods
+7.1
+Story Generation
+Stories were generated paragraph-by-paragraph—with L = 25 paragraphs—using long-context LLMs prompted to
+write whodunit detective stories with a distractor, and with instructions to make the story logical after the revelation.
+Generation proceeded step-by-step to allow controlled re-sampling from any intermediate checkpoint. For thinking
+models, the internal reasoning trace was not carried over between generation steps—each paragraph was generated
+independently, without access to the previous step’s chain of thought. All generations used temperature = 1. Ten
+stories were generated per model. Story validity was assessed by judge models (o1-mini and o3-mini), requiring a
+decisive (p > 0.5) identification of both the true culprit and the distractor. See SI Appendix for the full prompts.
+Generating models: Gemini-1.5-flash, Gemini-1.5-pro, Gemini-2.5-flash with no thinking budget (TB = 0) and with
+dynamic thinking (TB = −1); Gemini-2.5-pro, Gemini-3-flash, and Gemini-3.1-pro (with dynamic thinking); Llama-
+3.1-8B-Instruct, Llama-3.1-70B-Instruct, Llama-3.2-1B-Instruct, Llama-3.2-3B-Instruct, and Llama-3.3-70B-Instruct;
+GPT-4o and GPT-4o-mini. Model documentation: Gemini (https://deepmind.google/models/gemini/), Llama
+(https://www.llama.com/models/llama-3/), OpenAI (https://platform.openai.com/docs/models).
+7.2
+Reader Estimation
+The gullible reader M0 was estimated by prompting o3-mini to predict the culprit at each paragraph as if the events
+in the story were real, explicitly ignoring the possibility of misdirections. The know-it-all reader M∗was estimated
+by sampling 5–20 continuations from the generating model at predetermined checkpoints (between paragraphs) and
+using relative culprit frequencies as probability estimates.
+7.3
+Statistical Analysis
+Correlations between subjective ratings and objective measures were computed using Spearman’s rank correlation.
+Confidence intervals for prediction curves were computed using the Clopper-Pearson method [Clopper and Pearson,
+1934], pooling predictions across stories at each relative time point.
+13
+
+
+===== PDF PAGE 14 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+7.4
+Human Experiment
+This study was approved by the Institutional Review Board (IRB) of the Hebrew University of Jerusalem, Faculty
+of Medicine (protocol no. 10112025). All participants provided informed consent prior to participation. Twenty
+participants read stories paragraph by paragraph, guessing the culprit from a list of four possible suspects after each
+paragraph. Participants also provided subjective ratings of fairness, coherence, surprise, and enjoyability on a 1–5 scale
+after completing each story. Reading order was randomized and the generating model’s identity was not revealed, to
+control for learning effects; no significant learning effect was found. In total, n = 54 generated stories and n = 11
+real stories (n = 6 Sherlock Holmes and n = 5 Hercule Poirot) received human annotations.
+7.5
+Use of AI Tools
+Large language models (including Gemini 3 Flash, Claude Sonnet 4.5, and Claude Opus 4.6) were used to assist in
+brainstorming, writing, editing, and code development for this manuscript, all under the authors’ explicit direction.
+All final decisions were made by the authors alone.
+Data Availability
+Code and story data will be made available at acceptance. Generated story data, human annota-
+tions, and evaluation scripts are available from the authors upon reasonable request.
+Acknowledgments
+The authors would like to thank Dan Rockmore, Jeremy Manning, Gabriel Stanovsky, Nitay Alon, Matanel Oren, and
+Nicole Gruber for their valuable feedback. The authors also benefited from helpful feedback from the ILCC seminar
+at the University of Edinburgh (including Mirella Lapata and Alex Lascarides) and the C.Psyd seminar at Cornell
+(including Marten van Schijndel). This research was supported by the Israeli Ministry of Science and Technology
+(Grant No. 3-17938), the Council for Higher Education, and the Israel Science Foundation (Grant No. 2912/25).
+Computational resources were provided in part through a Google Academic Research Credits award.
+References
+Alessandro Acciai, Lucia Guerrisi, Pietro Perconti, Alessio Plebe, Rossella Suriano, and Andrea Velardi. Narrative
+coherence in neural language models. Frontiers in Psychology, 16:1572076, 2025.
+Kabir Ahuja, Melanie Sclar, and Yulia Tsvetkov. Finding flawed fictions: Evaluating complex reasoning in language
+models via plot hole detection, 2025. URL https://arxiv.org/abs/2504.11900.
+Suhas Arehalli, Brian Dillon, and Tal Linzen.
+Syntactic Surprisal From Neural Models Predicts, But Underesti-
+mates, Human Processing Difficulty From Syntactic Ambiguities. In Antske Fokkens and Vivek Srikumar, edi-
+tors, Proceedings of the 26th Conference on Computational Natural Language Learning (CoNLL), pages 301–313,
+Abu Dhabi, United Arab Emirates (Hybrid), December 2022. Association for Computational Linguistics. doi:
+10.18653/v1/2022.conll-1.20. URL https://aclanthology.org/2022.conll-1.20/.
+Dana Royce Baerger and Dan P McAdams. Life story coherence and its relation to psychological well-being. Narrative
+inquiry, 9(1):69–96, 1999.
+Lalit R Bahl, Frederick Jelinek, and Robert L Mercer. A maximum likelihood approach to continuous speech recog-
+nition. IEEE transactions on pattern analysis and machine intelligence, (2):179–190, 1983.
+Ernst Bloch, Roswitha Mueller, and Stephen Thaman. A philosophical view of the detective novel. Discourse, 2:
+32–52, 1980.
+Wayne C Booth. The rhetoric of fiction. University of Chicago Press, 1983.
+William F Brewer and Edward H Lichtenstein. Event schemas, story schemas, and story grammars. Center for the
+Study of Reading Technical Report; no. 197, 1980.
+Jazmín Cevasco and Karen Acosta Buralli. Construction of coherence in the comprehension of narratives: Studies on
+the importance of the establishment of causal connections, gaps in current research and future directions. Papeles
+del Psicólogo, 44(1):45–54, 2023.
+Patrick Chieppe, Penny Sweetser, and Eryn Newman. Bayesian modelling of the well-made surprise. In ICCC, pages
+126–135, 2022.
+Agatha Christie. The Murder of Roger Ackroyd. Grosset & Dunlap, New York, 1926.
+14
+
+
+===== PDF PAGE 15 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Charles J Clopper and Egon S Pearson. The use of confidence or fiducial limits illustrated in the case of the binomial.
+Biometrika, 26(4):404–413, 1934.
+Robin George Collingwood. The idea of history. Oxford University Press, 1993.
+Constantinos Daskalakis, Stratis Skoulakis, and Manolis Zampetakis. The complexity of constrained min-max opti-
+mization, 2020. URL https://arxiv.org/abs/2009.09623.
+Edirlei Soares de Lima, Marco A. Casanova, Bruno Feijó, and Antonio L. Furtado. Characterizing the investigative
+methods of fictional detectives with large language models, 2025. URL https://arxiv.org/abs/2505.07601.
+Maksym Del and Mark Fishel. True detective: A deep abductive reasoning benchmark undoable for GPT-3 and chal-
+lenging for GPT-4. In Alexis Palmer and Jose Camacho-collados, editors, Proceedings of the 12th Joint Conference
+on Lexical and Computational Semantics (*SEM 2023), pages 314–322, Toronto, Canada, July 2023. Association
+for Computational Linguistics. doi: 10.18653/v1/2023.starsem-1.28. URL https://aclanthology.org/2023.
+starsem-1.28.
+Lorenz Demey. The dynamics of surprise. Logique et Analyse, 58(230):251–277, 2015.
+Luc Devroye, László Györfi, and Gábor Lugosi. A probabilistic theory of pattern recognition, volume 31. Springer
+Science & Business Media, 2013.
+C. Dickens. The Mystery of Edwin Drood. Number v. 1 in Collection of British Authors. Chapman and Hall, 1870.
+ISBN 9781427004901. URL https://books.google.co.il/books?id=h9x_jxCde6cC.
+C. Dickens and J.C. Walters. Complete Mystery of Edwin Drood: History, Continuations and Solutions. Estes, 1913.
+URL https://books.google.co.il/books?id=sr9EAAAAYAAJ.
+Anil R. Doshi and Oliver P. Hauser. Generative ai enhances individual creativity but reduces the collective diversity
+of novel content. Science Advances, 10(28):eadn5290, 2024. doi: 10.1126/sciadv.adn5290. URL https://www.
+science.org/doi/abs/10.1126/sciadv.adn5290.
+George N Dove. The reader and the detective story. Popular Press, 1997.
+Umberto Eco. Horns, hooves, insteps: Some hypotheses on three types of abduction. The sign of three: Dupin,
+Holmes, Peirce, pages 198–220, 1983.
+Malcah Effron. American Golden Age Crime Fiction, page 167–178. Cambridge University Press, 2017.
+Jeffrey Ely, Alexander Frankel, and Emir Kamenica. Suspense and surprise. Journal of Political Economy, 123(1):
+215–260, 2015.
+Catherine Emmott and Marc Alexander. Reliability, unreliability, reader manipulation and plot reversals: Strategies
+for constructing and challenging the credibility of characters in agatha christie’s detective fiction. In Rethinking
+Language, Text and Context, pages 177–190. Routledge, 2018.
+Xiaoxuan Fang, Davy Tsz Kit Ng, Jac Ka Lok Leung, and Samuel Kai Wah Chu. A systematic review of artificial
+intelligence technologies used for story writing. Education and Information Technologies, 28(11):14361–14397,
+2023.
+Stefan L Frank, Leun J Otten, Giulia Galli, and Gabriella Vigliocco. The erp response to the amount of information
+conveyed by words in sentences. Brain and language, 140:1–11, 2015.
+Lea Frermann, Shay B. Cohen, and Mirella Lapata. Whodunnit? crime drama as a case for natural language under-
+standing. Transactions of the Association for Computational Linguistics, 6:1–15, 01 2018. ISSN 2307-387X. doi:
+10.1162/tacl_a_00001. URL https://doi.org/10.1162/tacl_a_00001.
+Carlo Ginzburg and Anna Davin. Morelli, freud and sherlock holmes: Clues and scientific method. History Workshop,
+(9):5–36, 1980. ISSN 03092984. URL http://www.jstor.org/stable/4288283.
+Alan H. Goldman. The appeal of the mystery. The Journal of Aesthetics and Art Criticism, 69(3):261–272, 08 2011.
+ISSN 0021-8529. doi: 10.1111/j.1540-6245.2011.01470.x. URL https://doi.org/10.1111/j.1540-6245.
+2011.01470.x.
+John Hale. A probabilistic Earley parser as a psycholinguistic model. In Second Meeting of the North American
+Chapter of the Association for Computational Linguistics, 2001. URL https://aclanthology.org/N01-1021/.
+Sil Hamilton. Detecting mode collapse in language models via narration. In Antonio Valerio Miceli-Barone, Fazl
+Barez, Shay Cohen, Elena Voita, Ulrich Germann, and Michal Lukasik, editors, Proceedings of the First edi-
+tion of the Workshop on the Scaling Behavior of Large Language Models (SCALE-LLM 2024), pages 65–72, St.
+Julian’s, Malta, March 2024. Association for Computational Linguistics. URL https://aclanthology.org/
+2024.scalellm-1.5/.
+15
+
+
+===== PDF PAGE 16 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Hans Ole Hatzel, Haimo Stiemer, Chris Biemann, and Evelyn Gius.
+Machine learning in computational literary
+studies. it-Information Technology, 65(4-5):200–217, 2023.
+Hans Hoeken and Mario Van Vliet. Suspense, curiosity, and surprise: How discourse structure influences the affective
+and cognitive processing of a story. Poetics, 27(4):277–286, 2000.
+Xu Huang, Weiwen Liu, Xiaolong Chen, Xingmei Wang, Hao Wang, Defu Lian, Yasheng Wang, Ruiming Tang, and
+Enhong Chen. Understanding the planning of llm agents: A survey, 2024. URL https://arxiv.org/abs/2402.
+02716.
+Peter Hühn. The detective as reader: Narrativity and reading concepts in detective fiction. MFS Modern Fiction
+Studies, 33(3):451–466, 1987.
+T Florian Jaeger. Redundancy and reduction: Speakers manage syntactic information density. Cognitive psychology,
+61(1):23–62, 2010.
+Liwei Jiang, Yuanjun Chai, Margaret Li, Mickel Liu, Raymond Fok, Nouha Dziri, Yulia Tsvetkov, Maarten Sap, and
+Yejin Choi. Artificial hivemind: The open-ended homogeneity of language models (and beyond). In The Thirty-
+ninth Annual Conference on Neural Information Processing Systems Datasets and Benchmarks Track, 2025. URL
+https://openreview.net/forum?id=saDOrrnNTz.
+Joseph Keller and Kathleen Gregory Klein. Detective fiction and the function of tacit knowledge. Mosaic: A Journal
+for the Interdisciplinary Study of Literature, 23(2):45–60, 1990.
+Marko Ketovi´c. Detective Archetypes in Anglophone Fiction. PhD thesis, Josip Juraj Strossmayer University of Osijek.
+Faculty of Humanities and ..., 2019.
+Stephen Knight. The golden age, page 77–94. Cambridge Companions to Literature. Cambridge University Press,
+2003.
+R.A. Knox and H. Harrington.
+The Best English Detective Stories of 1928.
+H. Liveright, 1929.
+URL https:
+//books.google.co.il/books?id=HipbtQEACAAJ.
+Tomáš Koˇciský, Jonathan Schwarz, Phil Blunsom, Chris Dyer, Karl Moritz Hermann, Gábor Melis, and Edward
+Grefenstette.
+The NarrativeQA reading comprehension challenge.
+Transactions of the Association for Com-
+putational Linguistics, 6:317–328, 2018.
+doi: 10.1162/tacl_a_00023.
+URL https://aclanthology.org/
+Q18-1023/.
+Michal Kosinski. Evaluating large language models in theory of mind tasks. Proceedings of the National Academy of
+Sciences, 121(45):e2405460121, 2024.
+Roger Levy. Expectation-based syntactic comprehension. Cognition, 106(3):1126–1177, 2008.
+Margaret Li, Weijia Shi, Artidoro Pagnoni, Peter West, and Ari Holtzman. Predicting vs. acting: A trade-off between
+world modeling & agent modeling, 2024. URL https://arxiv.org/abs/2407.02446.
+Sarah J Link. Defining detective fiction. In A Narratological Approach to Lists in Detective Fiction, pages 17–38.
+Springer, 2023a.
+Sarah J Link. Dossier novels: The reader as detective. In A Narratological Approach to Lists in Detective Fiction,
+pages 39–84. Springer, 2023b.
+Rebecca Maguire, Phil Maguire, and Mark T Keane. Making sense of surprise: an investigation of the factors influ-
+encing surprise judgments. Journal of Experimental Psychology: Learning, Memory, and Cognition, 37(1):176,
+2011.
+Aviya Maimon and Reut Tsarfaty.
+COHESENTIA: A novel benchmark of incremental versus holistic assess-
+ment of coherence in generated texts.
+In Houda Bouamor, Juan Pino, and Kalika Bali, editors, Proceedings
+of the 2023 Conference on Empirical Methods in Natural Language Processing, pages 5328–5343, Singapore,
+December 2023. Association for Computational Linguistics.
+doi: 10.18653/v1/2023.emnlp-main.324.
+URL
+https://aclanthology.org/2023.emnlp-main.324/.
+Aviya Maimon, Amir DN Cohen, Gal Vishne, Shauli Ravfogel, and Reut Tsarfaty. Iq test for llms: An evaluation
+framework for uncovering core skills in llms, 2025. URL https://arxiv.org/abs/2507.20208.
+Franco Moretti. The slaughterhouse of literature. MLQ: Modern Language Quarterly, 61(1):207–227, 2000.
+Nasrin Mostafazadeh, Nathanael Chambers, Xiaodong He, Devi Parikh, Dhruv Batra, Lucy Vanderwende, Pushmeet
+Kohli, and James Allen. A corpus and cloze evaluation for deeper understanding of commonsense stories. In Kevin
+Knight, Ani Nenkova, and Owen Rambow, editors, Proceedings of the 2016 Conference of the North American
+Chapter of the Association for Computational Linguistics: Human Language Technologies, pages 839–849, San
+Diego, California, June 2016. Association for Computational Linguistics.
+doi: 10.18653/v1/N16-1098.
+URL
+https://aclanthology.org/N16-1098/.
+16
+
+
+===== PDF PAGE 17 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Kotaro Nishigori and Hideaki Takeda. Evaluating narrative coherence in collaborative storytelling with generative
+ai. In Proceedings of the 2025 Conference on Creativity and Cognition, C&C ’25, page 443–447, New York, NY,
+USA, 2025. Association for Computing Machinery. ISBN 9798400712890. doi: 10.1145/3698061.3734393. URL
+https://doi.org/10.1145/3698061.3734393.
+Andrew Piper. Computational narrative understanding: A big picture analysis. In Yanai Elazar, Allyson Ettinger,
+Nora Kassner, Sebastian Ruder, and Noah A. Smith, editors, Proceedings of the Big Picture Workshop, pages 28–
+39, Singapore, December 2023. Association for Computational Linguistics. doi: 10.18653/v1/2023.bigpicture-1.3.
+URL https://aclanthology.org/2023.bigpicture-1.3/.
+Andrew Piper, Richard Jean So, and David Bamman.
+Narrative theory for computational narrative understand-
+ing. In Marie-Francine Moens, Xuanjing Huang, Lucia Specia, and Scott Wen-tau Yih, editors, Proceedings of
+the 2021 Conference on Empirical Methods in Natural Language Processing, pages 298–311, Online and Punta
+Cana, Dominican Republic, November 2021. Association for Computational Linguistics. doi: 10.18653/v1/2021.
+emnlp-main.26. URL https://aclanthology.org/2021.emnlp-main.26/.
+Andrew Piper, Hao Xu, and Eric D Kolaczyk. Modeling narrative revelation. In CHR, pages 500–511, 2023.
+Elaine Reese, Catherine A Haden, Lynne Baker-Ward, Patricia Bauer, Robyn Fivush, and Peter A Ornstein. Coherence
+of personal narratives across the lifespan: A multidimensional model and coding method. Journal of cognition and
+development, 12(4):424–462, 2011.
+Brian Richardson. Singular text, multiple implied readers. Style, 41(3):259–274, 2007.
+Marty Roth. Foul & fair play: Reading genre in classic detective fiction. University of Georgia Press, 1995.
+Alexander J Sallas. The Logic of Possibility: On the Concept of Deus Ex Machina. PhD thesis, The University of
+Western Ontario, 2024.
+Judith P Saunders. Why we read detective fiction: Theory of mind in action. In Evolution and Popular Narrative,
+pages 156–181. Brill, 2019.
+Dorothy L Sayers. Aristotle on detective fiction. English, 1(1):23–35, 1936a.
+Dorothy L. Sayers. Introduction. In Great Short Stories Of Detection Mystery and Horror, pages 11–18. Victor
+Gollancz, London, 1936b.
+John Scaggs. Crime fiction. Routledge, 2005.
+Wolf Schmid. Implied reader. Handbook of narratology, 1:301–309, 2014.
+Gregory Schraw, Terri Flowerday, and Stephen Lehman. Increasing situational interest in the classroom. Educational
+Psychology Review, 13(3):211–224, 2001. ISSN 1040726X, 1573336X. URL http://www.jstor.org/stable/
+23363477.
+Lion Schulz, Miguel Patrício, and Daan Odijk. Narrative information theory, 2024. URL https://arxiv.org/abs/
+2411.12907.
+Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–
+423, 1948.
+Paul J Silvia. What is interesting? exploring the appraisal structure of interest. Emotion, 5(1):89, 2005.
+Paul J Silvia. Interest—the curious emotion. Current directions in psychological science, 17(1):57–60, 2008.
+Dean Keith Simonton. Taking the us patent office criteria seriously: A quantitative three-criterion creativity definition
+and its implications. Creativity research journal, 24(2-3):97–106, 2012.
+Eliot A. Singer. The whodunit as riddle: Block elements in agatha christie. Western Folklore, 43(3):157–171, 1984.
+ISSN 0043373X. URL http://www.jstor.org/stable/1499897.
+Nathaniel J Smith and Roger Levy. Optimal processing times in reading: A formal model and empirical investigation.
+In Proceedings of the Annual Meeting of the Cognitive Science Society, volume 30, 2008.
+Zayne Sprague, Xi Ye, Kaj Bostrom, Swarat Chaudhuri, and Greg Durrett. Musr: Testing the limits of chain-of-thought
+with multistep soft reasoning, 2024. URL https://arxiv.org/abs/2310.16049.
+Timothy Steele. The structure of the detective story: Classical or modern? Modern Fiction Studies, 27(4):555–570,
+1981. ISSN 00267724, 1080658X. URL http://www.jstor.org/stable/26281062.
+Karl Halvor Teigen and Gideon Keren. Surprises: Low probabilities or high contrasts? Cognition, 87(2):55–71, 2003.
+Vera Tobin. Cognitive bias and the poetics of surprise. Language and Literature, 18(2):155–172, 2009.
+Vera Tobin. Elements of surprise: Our mental limits and the satisfactions of plot. Harvard University Press, 2018.
+17
+
+
+===== PDF PAGE 18 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Tzvetan Todorov. The typology of detective fiction. In David Lodge, editor, Modern Criticism and Theory: a Reader,
+pages 157–165. Longman, 1988.
+W. Van Peer. Between Stylistics and Pragmatics: The Theory of Foregrounding. Tilburg Univ., Department of Lan-
+guage and Linguistics, 1984. URL https://books.google.co.il/books?id=GjE7HAAACAAJ.
+Vera Nelleke Veldhuizen. The curious case of children’s detective fiction: Analysing the adaptation of the classic
+detective formula for a child audience. Crime Fiction Studies, 4(2):162–178, 2023. doi: 10.3366/cfs.2023.0096.
+URL https://doi.org/10.3366/cfs.2023.0096.
+Eitan Wagner and Omri Abend. What do language model probabilities represent? from distribution estimation to
+response prediction. arXiv preprint arXiv:2505.02072, 2025.
+Yi Wang and Max Kreminski. Can llms generate good stories? insights and challenges from a narrative planning
+perspective, 2025. URL https://arxiv.org/abs/2506.10161.
+H.G. Wells. The War of the Worlds. Joshua James Press, 1898. ISBN 9781598759655. URL https://books.
+google.co.il/books?id=1HoBYmku9uQC.
+David Wilmot and Frank Keller. Modelling suspense in short stories as uncertainty reduction over neural represen-
+tation. In Dan Jurafsky, Joyce Chai, Natalie Schluter, and Joel Tetreault, editors, Proceedings of the 58th Annual
+Meeting of the Association for Computational Linguistics, pages 1763–1788, Online, July 2020. Association for
+Computational Linguistics. doi: 10.18653/v1/2020.acl-main.161. URL https://aclanthology.org/2020.
+acl-main.161.
+Kaige Xie and Mark Riedl. Creating suspenseful stories: Iterative planning with large language models. In Yvette
+Graham and Matthew Purver, editors, Proceedings of the 18th Conference of the European Chapter of the Associ-
+ation for Computational Linguistics (Volume 1: Long Papers), pages 2391–2407, St. Julian’s, Malta, March 2024.
+Association for Computational Linguistics. URL https://aclanthology.org/2024.eacl-long.147/.
+Anbang Ye, Christopher Cui, Taiwei Shi, and Mark O. Riedl. Neural story planning, 2022. URL https://arxiv.
+org/abs/2212.08718.
+A
+Appendix Organization
+• Background:
+– Related Work — surveys prior work on surprise, coherence, and story evaluation.
+– Literary Framework — discusses the literary conventions of detective fiction that motivate our frame-
+work.
+• Formal Framework:
+– Story Generation Model and Optimality of Readers — provides the formal probabilistic framework,
+defines detective models and internal readers, and establishes the optimality characterizations of the
+know-it-all reader and brilliant detective. Includes formal definitions of the hindsight gap and hindsight
+coherence property (Hindsight Gap Definitions).
+– Proofs — contains all proofs of the theoretical results in the main text.
+• Experimental Methods:
+– The Real Story Dataset — lists the stories used in experiments.
+– Generation Prompts — gives the prompts used to generate stories and estimate reader models.
+– Alternative Gullible Reader Estimation Methods — describes and evaluates alternative approaches for
+estimating the gullible reader.
+– Sampling Procedure for the Know-It-All Reader — details how the know-it-all reader is estimated via
+sampling.
+– ERC Metric — defines the Expected Retrospective Coherence metric and reports results.
+– Human Experiment Details — describes the human study design, participants, and results.
+– Learning Effect Analysis — analyzes whether participants learned across stories in the human experi-
+ment.
+• Results:
+– Reading Curves — defines reading curves and shows examples.
+– Experienced Reader: Full Results — reports full results for the experienced reader.
+18
+
+
+===== PDF PAGE 19 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+– Full Results Tables — provides complete numerical results for all models.
+• Variability and Discussion:
+– Variability Statistics — reports statistics on culprit diversity and story structure.
+– Additional Discussion — discusses mode collapse and related considerations on story diversity.
+B
+Related Work
+B.1
+Surprise and suspense in narratives
+Ely et al. [Ely et al., 2015] propose a formal framework for suspense and surprise in entertainment, including mystery
+novels. Their model defines suspense as the variance of outcomes under the reader’s belief distribution, and surprise
+as the distance between the prior belief and the realized outcome. A key assumption is a Martingale property: read-
+ers form beliefs that are, on average, correct. Our framework relaxes this assumption and specifically shows it is
+incompatible with fair play: a reader that satisfies the Martingale property is essentially the know-it-all reader, and
+cannot simultaneously be misled by a well-crafted mystery. More precisely, perfect probability estimation is a prop-
+erty of the know-it-all reader or the brilliant-detective reader (when clue sufficiency is fulfilled), and corresponds to
+coherence—which is incompatible with surprise by the coherence-surprise theorem.
+Wilmot and Keller [Wilmot and Keller, 2020] operationalize narrative suspense using language model perplexity
+over story continuations, approximating the reader’s uncertainty. This captures the single-dimension view of surprise
+(as unpredictability) but does not address retrospective coherence or the tension between the two qualities that our
+framework formalizes.
+B.2
+Coherence in narratives
+Maimon and Tsarfaty [Maimon and Tsarfaty, 2023] introduce CoheSentia, a dataset and evaluation framework for
+narrative coherence, focusing on the internal consistency and causal connectedness of story events. Mostafazadeh
+et al. [Mostafazadeh et al., 2016] present the ROCStories corpus and a commonsense story cloze task, measuring
+whether story endings are coherent with the preceding context. These metrics capture important aspects of coherence
+but are not designed to evaluate the specific coherence-of-revelation aspect central to detective fiction: whether the
+clues scattered across the story retrospectively support the culprit identity.
+B.3
+Story generation and evaluation
+A substantial body of work addresses story generation [Fang et al., 2023], using neural language models and more
+recently large language models with planning [Ye et al., 2022, Xie and Riedl, 2024]. Evaluation of generated stories
+remains an open problem [Wang and Kreminski, 2025]: automatic metrics such as BLEU and ROUGE correlate poorly
+with human judgments, and reference-based evaluation is limited by the diversity of valid stories. Our framework
+contributes reference-less metrics grounded in information-theoretic principles.
+B.4
+Computational narrative analysis
+Computational approaches to narrative have grown substantially with the rise of large language models. Piper et al.
+[Piper et al., 2021] survey narratological theory and its relationship to NLP methods, arguing that connecting com-
+putational work to humanistic theory opens new empirical questions. Piper et al. [Piper, 2023] outline a research
+agenda for computational narrative understanding, emphasizing multi-modality, temporal structure, and socio-cultural
+schemas. Hatzel et al. [Hatzel et al., 2023] provide an overview of machine learning methods applied to computational
+literary studies. Story generation is a central application area: Fang et al. [Fang et al., 2023] and Wang and Kreminski
+[Wang and Kreminski, 2025] systematically evaluate LLMs for this task, highlighting the difficulty of producing nar-
+ratively coherent and engaging text. Schulz et al. [Schulz et al., 2024] propose an information-theoretic framework for
+characterizing general narrative properties. Acciai et al. [Acciai et al., 2025] apply the cognitive-psychology Narrative
+Coherence Coding Scheme [NaCCS; Reese et al., 2011] to evaluate coherence of personal narratives generated by
+LLMs, and Nishigori and Takeda [Nishigori and Takeda, 2025] evaluate coherence of stories generated in collaboration
+with LLMs.
+19
+
+
+===== PDF PAGE 20 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+B.5
+Detective fiction as an NLP benchmark
+Detective fiction has served as a natural testbed for NLP systems that require multi-step reasoning over long docu-
+ments. Frermann et al. [Frermann et al., 2018] treat crime drama as an incremental natural language understanding
+challenge, modeling perpetrator identification as sequence labeling over multimodal evidence. Koˇciský et al. [Koˇciský
+et al., 2018] include books from the mystery genre in NarrativeQA, a reading-comprehension challenge requiring in-
+tegrative reasoning across full narratives. Del and Fishel [Del and Fishel, 2023] introduce a deep abductive reasoning
+benchmark based on mystery narratives, showing that GPT-4 solves fewer than 40% of puzzles—substantially below
+human performance. Sprague et al. [Sprague et al., 2024] include murder mystery scenarios in MuSR, a multistep
+soft-reasoning benchmark that tests the limits of chain-of-thought prompting. Ahuja et al. [Ahuja et al., 2025] evalu-
+ate LLMs on plot hole detection in fictional narratives, framing it as a complex reasoning task. Unlike these works,
+which use detective stories primarily as evaluation instruments for reasoning, our framework focuses on the narrative
+quality of generated detective stories as a generative AI challenge.
+de Lima et al. [de Lima et al., 2025] study detective styles in fictional texts using LLMs, characterizing the reasoning
+patterns of different fictional detectives. Our detective model taxonomy (gullible vs. brilliant) draws on the same
+intuitions but formalizes them within a probabilistic framework.
+B.6
+Surprise metrics
+Surprisal theory [Hale, 2001, Levy, 2008] models reading difficulty as the negative log-probability of a word given its
+preceding context: −log p(wt | w1:t−1). Higher surprisal corresponds to greater processing difficulty, a prediction
+supported by eye-tracking and self-paced reading experiments [Smith and Levy, 2008].
+Many narrative-level surprise metrics have been proposed. Ely et al. [Ely et al., 2015] formulate surprise as a change
+in belief. Wilmot and Keller [Wilmot and Keller, 2020] suggest an implementation using a full language modeling
+distribution, and Piper et al. [Piper et al., 2023] implement it (described as “revelation”) with word-frequency language
+modeling. Schulz et al. [Schulz et al., 2024] define a similar metric (“pivot”) for a general property of the story. In our
+work, we assess surprisal regarding the identity of the culprit.
+A challenge with belief-change formulations is that they capture changes regardless of direction: a story with a dis-
+tractor will score high both when belief shifts to the true culprit and when it moves further away from the truth.
+Our framework uses a related but distinct quantity from word-level surprisal. We measure belief-level surprisal: the
+cross-entropy of a reader’s culprit distribution relative to the know-it-all reader. This operates at the discourse level
+(over paragraphs) rather than the word level, and captures the reader’s predictive state about the underlying story rather
+than the surface text.
+Formally, define the marginal surprisal of culprit y at step i for reader M as −log M(i)y. The expectation of this sur-
+prisal under the true story distribution is the cross-entropy H(M∗(i); M(i)), which is our measure of uninformedness.
+When M = M∗, this reduces to the entropy of the true distribution, which equals the minimum achievable surprisal.
+The Uniform Information Density (UID) hypothesis [Jaeger, 2010] predicts that communicators regulate information
+density to remain within comprehension limits. In the context of detective fiction, UID would predict that clues should
+be spread evenly across the story, with each paragraph contributing roughly equal information about the culprit. Our
+step effectiveness measure (S-EFF) quantifies exactly this per-paragraph information contribution, and our framework
+shows that the requirement to simultaneously mislead a gullible reader and inform a brilliant one creates systematic
+deviations from UID.
+B.7
+Coherence metrics
+Wilmot and Keller [Wilmot and Keller, 2020] define surprisal as entropy reduction. Although proposed as a surprisal
+metric, entropy reduction is problematic when a distractor is involved, since a false belief also has low entropy.
+However, from the keen reader’s view, entropy reduction can be seen as a coherence metric. For example, one can
+measure the Spearman correlation between the location in the story and the entropy (so monotonic reduction will
+give −1). In practice, like other information metrics, this method is challenging to compute, especially when using
+sampling, since a small number of samples will limit the possible values and thus limit the possible decreasing steps.
+A numerical metric that fully captures coherence in general is hard to design. In some synthetic cases, strict logical
+consistency can be tested [Chieppe et al., 2022].
+20
+
+
+===== PDF PAGE 21 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+C
+Literary Framework
+This section provides a detailed literary background for the framework introduced in the main text, with extended
+references to the narratological and literary scholarship underlying our definitions.
+Literary scholars have offered useful analyses of the conventions of detective stories [Todorov, 1988], with many
+attempting to identify and model what makes detective stories “good” or successful [e.g., Bloch et al., 1980].
+C.1
+Structure of detective stories
+Classical detective novels follow a remarkably consistent pattern in their narrative structure [Hühn, 1987, Knight,
+2003], as evinced by various lists of commandments and golden rules for detective fiction [e.g., Knox and Harrington,
+1929]. Consider the typical closed-room mystery: a crime occurs, often murder, and the central puzzle concerns
+identifying who committed it. This type of narrative, known as a “whodunit” story, revolves around discovering the
+identity of the culprit [Knight, 2003].
+The author typically introduces complications through carefully selected characters designed to build the tension,
+while possibly misleading the reader. These distractors serve as red herrings, drawing suspicion away from the
+true perpetrator until the final revelation. The narrative unfolds in three distinct phases that correspond to how a
+typical reader experiences the mystery. During the introduction, both the crime and potential suspects are presented,
+but readers are not yet expected to reach conclusions. The suspicion phase follows, where the author deliberately
+guides readers toward believing a distractor is the culprit.6 Finally, the revelation phase unveils the true culprit to the
+unsuspecting characters and reader [Hühn, 1987].
+C.2
+Clues and detectives
+Central to the functioning of crime mysteries are the clues that appear throughout the investigation [Hühn, 1987,
+Moretti, 2000]. These details, scattered across the narrative, should remain incompletely interpreted until the story’s
+resolution. The revelation typically provides a full interpretation of the clues, revealing for each clue its causal relation
+to the underlying crime.
+A recurring motif in crime fiction is the contrast between the brilliant detective and the gullible detective—whether
+this latter figure manifests itself as a sidekick or represents an entire police department [Ketovi´c, 2019]. Gullible
+detectives tend to naïvely form conclusions based on a set of simply interpreted clues, whereas the brilliant detective
+possesses the capacity to solve the mystery through an explanation that accounts for all available evidence. This
+contrast emphasizes the brilliance of the detective [Roth, 1995].
+Examples of brilliant detectives are Conan-Doyle’s Sherlock Holmes and Christie’s Hercule Poirot. In these cases,
+both the sidekicks (i.e., Watson and Hastings) and the police act as gullible detectives.
+C.3
+Dual narratives: crime and investigation
+Literary studies view detective fiction as operating on two interconnected levels. The crime level represents the true
+sequence of events that the narrative seeks to uncover—this is the actual story of what happened, the reason for the
+mystery, and includes the identity of the real culprit [Bloch et al., 1980]. Running parallel to this hidden truth is the
+investigation level, which constitutes the told story wherein an investigative process attempts to solve the mystery
+[Todorov, 1988, Hühn, 1987, Bloch et al., 1980].
+These two levels are conveyed via two forms of discourse—the crime level unfolds through the detective’s investiga-
+tion, and the investigation level is told to the reader by the narrator [Hühn, 1987]. The first form is internal, revealing
+the crime to the characters, and the second form is external, aimed at the reader outside the story.
+For example, in Sherlock Holmes stories, the story of the crime unfolds by Holmes’ deductions and discoveries, and
+becomes apparent to the characters in the story. The story of the investigation is told by Watson, who is the narrator,
+and is directed to the reader.
+6A story may contain many distractors. We focus on a common case where there is a prominent distractor that suspicion is cast
+on, and whose innocence is proven only together with the final revelation.
+21
+
+
+===== PDF PAGE 22 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+C.4
+Reader’s role
+The reader’s role is central in narratological theory, recognizing the implied reader as the image of the recipient that
+the author envisioned while crafting the work [Booth, 1983, Schmid, 2014]. In detective stories, the reader’s role
+takes on special significance because readers are often assumed to “participate” actively in the investigation process
+[Hühn, 1987, Dove, 1997, Saunders, 2019, Link, 2023b]. Moreover, in many stories, the detective’s sidekick clearly
+states that he is writing the story, so the story itself addresses the reader [Todorov, 1988]. This instigates an “internal”
+form of participation, where the reader is invited to participate in the challenge, which the gullible detectives fail at.
+Some stories involve multiple implied readers, as commonly seen in children’s literature designed to be understood
+differently by young readers and adults [Richardson, 2007]. Specifically, children’s detective stories (e.g., Nancy
+Drew, Encyclopedia Brown) provide clearly solvable puzzles (e.g., by grown-ups) that are challenging for the intended
+age-group [Veldhuizen, 2023]. Similarly, detective stories can be read through the eyes of multiple investigators with
+different competence levels, with the brilliant detective as the grown-up who solves the mystery for the child. In The
+Murder of Roger Ackroyd, this distinction is especially sharp: the gullible reader trusts the narrator and progressively
+builds confidence in the wrong suspect, while the brilliant reader notices subtle evasions in the narrator’s account that
+point toward his guilt.
+C.5
+Coherence and surprise
+Successful detective fiction maintains both coherence and surprise in the eye of the reader. Narrative coherence, in
+general, describes the quality of a narrative as a unified structure [Baerger and McAdams, 1999, Cevasco and Buralli,
+2023]. In detective fiction, this type of coherence has special importance whereby the sequence of clues in the story,
+together with the conclusion, “make sense” when viewed in retrospect [Goldman, 2011]. “Whodunit” stories are also
+arranged to evoke a surprise. Memorable detective stories achieve both qualities simultaneously—the ending shocks
+the reader while also making perfect sense upon reflection [Singer, 1984, Knight, 2003].
+C.6
+Fair play
+Many writers attempted to define the implicit rules of detective fiction [Knox and Harrington, 1929]. A core component
+in these rules is the concept of fair play [Steele, 1981, Knight, 2003, Effron, 2017, Link, 2023a]. A story achieves fair
+play when a reader possesses the theoretical ability to solve the mystery without requiring an explicit solution. Fair
+play also implicitly assumes that a challenge is posed and the solution is nontrivial, thus worthy of playing.
+In contrast stands a Deus ex Machina (DeM) story, where clues contribute nothing meaningful to the eventual reso-
+lution [Sallas, 2024]. In detective stories, this manifests when the investigation process throughout the narrative has
+minimal impact on uncovering the mystery’s solution. Such stories generally receive criticism as being of poor quality,
+as they violate an implicit convention of the genre [Effron, 2017]. Rules such as fair play are “external” to the story as
+they form an implicit contract between the actual writer and reader, regardless of the detective’s reasoning process.
+Simple examples of fair play are in children’s detective stories, such as Nancy Drew and Encyclopedia Brown. DeM
+detective stories can be cases where conclusive evidence, like fingerprints or CCTV footage, is suddenly discovered,
+with no connection to previous clues. A famous example, not from detective fiction, is in The War of the Worlds
+[Wells, 1898].
+C.7
+The challenge of fair play
+Achieving fair play is arguably the most prominent challenge in creating a good detective story. While fair play
+requires the appropriate clues to be present, it does not require them to be obvious [Dove, 1997]. On the contrary, a
+fair play story must mislead the reader through manipulation and misdirection [Sayers, 1936a, Emmott and Alexander,
+2018], and the revelation forces the reader to retrospectively question assumptions they made [Tobin, 2009].
+Moreover, the precise nature of fair play remains debated. Roth [Roth, 1995] argues that since the writer has pre-
+determined the outcome, fair play is ultimately an illusion rather than a true intellectual challenge. Others point to
+hindsight bias, which can make any resolution seem retrospectively inevitable [Tobin, 2018], or to the role of tacit,
+non-deductive reasoning that resists formalization [Keller and Klein, 1990]. These critiques highlight a fundamental
+ambiguity: the boundary between genuine solvability and its mere appearance is difficult to draw in informal terms.
+The probabilistic framework of the main paper addresses this challenge and formalizes these notions.
+22
+
+
+===== PDF PAGE 23 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+D
+Story Generation Model and Optimality of Readers
+We define the story generation model and use it to formally characterize the optimality of certain reader and detective
+models.
+D.1
+Story and Clue Notation
+The investigation level is modeled as a sequence of propositions, or clues, C, that are gradually revealed across the
+story. For example, if a bloodstain was found on the kitchen wall, the clue is a statement to this effect—an undisputed
+fact not explicitly included in the underlying crime story. We denote the set of all possible clue sequences with C.
+The clues are described in the paragraphs of the story X. We use C1...i to denote all the clues revealed in the story
+prefix X1...i. Without loss of generality, we assume that each paragraph contains at most one clue. We assume that
+clues appear in the story in the order in which they are revealed to the detective. Information available to the detective
+but not explicitly described in the text is not considered a clue: for example, if Poirot goes out and finds some evidence
+that is not shared by the narrator at the time, it will not be included in the set of clues.
+D.2
+Two Interacting Generative Levels
+We model two generative levels in a story, corresponding to the dual narratives of crime and investigation (see the
+Literary Framework). Since the story text contains the clues, the external level (=the investigation story) induces the
+internal level (=the crime story).
+For RVs A, B, we use the notation A ⊢B to mean that B is inferrable from A—i.e., B = f(A) for some deterministic
+function f—where A and B may be properties of either the external or internal level.
+At the external level, similar to traditional language modeling, we view a story as a sample from some underlying
+distribution over finite strings [Shannon, 1948, Bahl et al., 1983]. The story X is generated auto-regressively by a
+story generation model SM; the culprit identity Y is deterministically inferred from the completed story:
+pSM(X, y) =
+L
+Y
+i=1
+pSM(xi | X1...i−1) · 1X⊢Y =y
+(12)
+A specific story generation model incorporates assumptions as to what writing style is favored or disfavored, but can
+also include preferences that may affect the generation at any step.7
+At the internal level, the story induces a distribution over clue sequences. We denote this distribution pCLUES; the
+culprit is deterministically inferred from the complete clue sequence:
+pCLUES(C, y) =
+L
+Y
+i=1
+pCLUES(ci | C1...i−1) · 1C⊢Y =y
+(13)
+The two levels are connected: the full story X contains the full clue sequence C, so X ⊢C, and together with the
+fully-contained assumption (C ⊢Y , i.e., the clues include sufficient evidence to identify the culprit—for example, an
+explicit confession or an unassailable indictment) we have X ⊢Y for a complete story.
+D.3
+Detective Models and Internal Readers
+Detectives observe clues rather than the full story text. Formally, a detective model is a function D : C×N →∆|Y|−1,
+mapping a clue sequence and a step to a probability distribution over suspects.
+The gullible detective D0 forms predictions based on a naïve interpretation of the clues, in the extreme case basing its
+prediction on a single prominent clue and ignoring the rest. The brilliant detective D1 is the Bayes-optimal detective
+(defined in the next subsection).
+These detective models induce corresponding reader models: M0(X1...i) := D0(C1...i) and M1(X1...i) := D1(C1...i).
+7We emphasize that a story generation model is not necessarily a simulation of a single human writer but rather any process that
+generates written stories, possibly through a mixture or even by fixed rules. In practice the model may be conditioned on additional
+information (e.g., the intended culprit identity), which can be captured as additional context in pSM(xi | X1...i−1).
+23
+
+
+===== PDF PAGE 24 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+D.4
+Optimality of Readers and Detectives
+Every reader and detective model estimates the conditional distribution of the culprit given their observations: external
+readers condition on the story prefix X1...i, while detectives condition on the clue sequence C1...i. In both cases,
+the optimal estimate is the true conditional, obtained by marginalizing the joint distribution over the unobserved
+continuation.
+For an external reader with access to the true story generation distribution pSM, the optimal estimate marginalizes over
+all possible story continuations:
+M∗(i)y = pSM(Y = y | X1...i) =
+X
+Xi+1...L
+pSM(Xi+1...L | X1...i) · 1X⊢Y =y
+(14)
+This is the know-it-all reader; its classifier ˆyM∗(i) is the Bayes-optimal classifier for the story generation distribution.
+Any other external reader uses an estimated conditional ˆp(Y | X1...i) in place of the true one.
+Symmetrically, for a detective with access to the true clue generation distribution pCLUES, the optimal estimate
+marginalizes over unobserved future clues: D1(i)y = pCLUES(Y = y | C1...i). This is the brilliant detective. We
+adopt the brilliance assumption: the clue distribution pCLUES induced by the story closely matches the distribution
+a real investigator would encounter (i.e., the detective’s inference from the clue sequence is approximately correct).
+Under this assumption, the brilliant detective’s inference is also approximately optimal for the story.
+E
+Proofs
+E.1
+Similar Culprit Probabilities Imply Intelligence
+Recall that a reader M is called intelligent if its intelligence gap ∆intel(i, M) is small—i.e., its clue effectiveness
+approaches that of the brilliant-detective reader (see main text, Eq. 9). We show that if a reader assigns culprit log-
+probabilities close to those of the brilliant-detective reader at every step, then it is intelligent.
+Lemma. Let M be an internal reader (i.e., induced by some detective model D). If for all steps j ≤i + 1 and all
+culprits y:
+ log pM(y | C1...j) −log pM1(y | C1...j)
+ ≤ϵlog
+(15)
+then the difference in step effectiveness is bounded by:
+S-EFFM(i + 1) −S-EFFM1(i + 1)
+ ≤2ϵlog
+(16)
+and consequently ∆intel(i, M) ≤2i · ϵlog.
+Proof. Expanding step effectiveness into cross-entropies:
+S-EFFM(i + 1) = H(M∗(i); M(i)) −E[H(M∗(i + 1); M(i + 1))]
+=
+X
+y
+pM∗(y | X1...i) log pM(y | X1...i) −E
+"X
+y
+pM∗(y | X1...i+1) log pM(y | X1...i+1)
+#
+(17)
+Since M is induced by D, we can write pM(y | X1...j) = pD(y | C1...j). Each cross-entropy term is a weighted
+average of log-probabilities, where the weights (the know-it-all reader’s probabilities) sum to one. Since each log-
+probability is within ϵlog of the corresponding brilliant-detective value, the weighted average inherits the same bound:
+
+X
+y
+pM∗(y | X1...i) log pD(y | C1...i) −
+X
+y
+pM∗(y | X1...i) log pM1(y | C1...i)
+
+≤
+X
+y
+pM∗(y | X1...i)
+ log pD(y | C1...i) −log pM1(y | C1...i)
+ ≤ϵlog
+(18)
+The same bound holds at step i + 1 and under the expectation over the next paragraph. Since step effectiveness is a
+difference of two such cross-entropy terms, the triangle inequality gives:
+S-EFFM(i + 1) −S-EFFM1(i + 1)
+ ≤ϵlog + ϵlog = 2ϵlog
+(19)
+The intelligence gap bound follows by summing over i steps.
+The converse does not necessarily hold: a reader may deviate from M1 at individual steps yet still accumulate similar
+total effectiveness, resulting in a small intelligence gap without pointwise closeness.
+24
+
+
+===== PDF PAGE 25 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+E.2
+Clue sufficiency via conditional clue generation
+We show a second sufficient condition for clue sufficiency: if a detective’s generative model for the clue sequence
+is close to the clue distribution induced by the story model, then clue sufficiency holds. Recall that the story model
+SM induces a distribution over clue sequences pCLUES (Eq. 13). We write pSM(cj | C1...j−1) as shorthand for the
+conditional clue distribution induced by SM, and similarly we extend the detective model D—originally defined as a
+predictor of culprit probabilities—to also have a generative model over clue sequences.
+Proposition. Assume a detective D has a generative model for clues that is close to the one induced by the story
+model. That is, for all steps j and all clue values:
+ log pD(cj | C1...j−1) −log pSM(cj | C1...j−1)
+ ≤ϵgen
+(20)
+and assume that the true culprit is determined by the complete clue sequence (i.e., C ⊢Y ).
+Then clue sufficiency holds for the internal reader M induced by D:
+|S-EFFM(i) −S-EFFM∗(i)| ≤2(L −i)ϵgen
+(21)
+Proof. The detective D predicts culprit probabilities by marginalizing over future clue sequences under its generative
+model:
+pD(y | C1...j) =
+X
+Cj+1...L: C⊢Y =y
+pD(Cj+1...L | C1...j)
+(22)
+The know-it-all reader computes the same quantity using the true clue distribution pSM instead of pD.
+By the chain rule, the joint probability of a clue continuation Cj+1...L is a product of L −j conditional terms, each of
+which is within ϵgen in log-space. Summing the per-step bounds:
+ log pD(Cj+1...L | C1...j) −log pSM(Cj+1...L | C1...j)
+ ≤(L −j) · ϵgen
+(23)
+To pass from this bound on continuation probabilities to a bound on posterior culprit probabilities, note that each
+continuation’s probability under D is within a multiplicative factor of e±(L−j)ϵgen of its probability under SM. Since
+the posterior pD(y | C1...j) is a sum of such terms (over all y-supporting continuations), and the same multiplicative
+factor applies to every term, the ratio of the two posteriors inherits the same bound:
+ log pD(y | C1...j) −log pM∗(y | C1...j)
+ ≤(L −j) · ϵgen
+(24)
+Since the induced reader satisfies M(j) = D(j) by definition, the cross-entropy term at step i satisfies the same
+weighted-average argument as in the previous lemma, with the log-probability bound (L−i)·ϵgen at that step. Similarly,
+the cross-entropy term at step i + 1 is bounded using (L −i −1) · ϵgen. Since step effectiveness is a difference of two
+such cross-entropy terms, the triangle inequality gives:
+S-EFFM(i + 1) −S-EFFM∗(i + 1)
+ ≤(L −i)ϵgen + (L −i −1)ϵgen = (2L −2i −1)ϵgen ≤2(L −i)ϵgen
+(25)
+E.3
+Proof of Coherence-Surprise Theorem and Corollary
+Theorem (Coherence-surprise tradeoffs).
+1. (Weak tradeoff) An intelligent reader M satisfies a tradeoff between clue effectiveness ∆coh(i) and weak
+surprise −ϵsurprise: larger clue effectiveness requires weaker (larger ϵ) surprise.
+2. (Strong tradeoff) For any reader M, strong surprise δsurprise and clue effectiveness ∆coh(i) trade off: their
+sum satisfies δsurprise + ∆coh(i) ≤∆intel(i, M). In particular, assuming clue sufficiency, an intelligent M
+cannot be strongly surprised.
+Proof. Both claims build on a common bound. By the definition of clue effectiveness, for every 1 ≤i ≤L, we have:
+E[H(M∗(i); M1(i))] = E[H(M∗(0); M1(0))] −∆coh(i) = log |Y| −∆coh(i)
+(26)
+where we use the assumption that for an empty story, the reader outputs a uniform probability. Combined with the
+intelligence gap, we get a bound for any reader M:
+E[H(M∗(i); M(i))] ≤log |Y| −∆coh(i) + ∆intel(i, M)
+(27)
+25
+
+
+===== PDF PAGE 26 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Proof of (1) — Weak tradeoff
+This part does not require clue sufficiency. If M is intelligent and weakly surprised,
+combining Eq. 27 with the definition of weak surprise gives:
+log |Y| −ϵsurprise ≤E[H(M∗(i); M(i))] ≤log |Y| −∆coh(i) + ϵintel
+(28)
+which simplifies to:
+∆coh(i) −ϵsurprise ≤ϵintel
+(29)
+Assuming small ϵintel, the stronger the clue effectiveness (larger ∆coh(i)), the weaker the surprise must be (larger
+ϵsurprise).
+Proof of (2) — Strong tradeoff.
+If M is strongly surprised, combining the definition of strong surprise with Eq. 27,
+we get:
+δsurprise + ∆coh(i) ≤∆intel(i, M)
+(30)
+That is, strong surprise and clue effectiveness are bounded by the intelligence gap. In particular, if M is intelligent
+(∆intel(i, M) ≤ϵintel), and assuming clue sufficiency, the step effectiveness of the know-it-all reader is non-negative (it
+forms a super-martingale), so clue sufficiency gives ∆coh(i) ≥−i · ϵex, and therefore:
+δsurprise ≤ϵintel + i · ϵex
+(31)
+For small ϵintel and ϵex (such that L · ϵex is also small), δsurprise must be small, meaning an intelligent reader cannot be
+strongly surprised.
+Corollary. If step effectiveness is non-negative for all steps (S-EFFM1(j) ≥0 for all j), then ∆coh(i) is non-decreasing
+in i. Consequently, by Eq. 30, the maximum achievable strong surprise δsurprise ≤∆intel(i, M) −∆coh(i) decreases
+as i increases, unless the intelligence gap grows correspondingly. By Eq. 29, for an intelligent reader (small ϵintel),
+the condition ∆coh(i) ≤ϵintel + ϵsurprise requires ϵsurprise to grow with ∆coh(i), so even weak surprise weakens as more
+clues are revealed.
+E.4
+Formal Definitions: Hindsight Gap and Hindsight Coherence
+A hindsight reader model for reader M, denoted Mh, re-evaluates the clues at step i having already read the full
+story, including the revelation. That is, Mh(X, i) may depend on the whole story X, not just the prefix X1...i; it still
+outputs a probability distribution indexed by position i.
+The hindsight gap at step i for reader M is:
+δh(i, M) := ∆coh(i)Mh −∆coh(i)M
+(32)
+where ∆coh(i)Mh is the cumulative clue effectiveness of Mh up to step i.
+The hindsight coherence property of a story generation model SM requires that the step effectiveness of any hindsight
+reader Mh is close to that of the brilliant reader M1:
+S-EFFMh(i) −S-EFFM1(i)
+ ≤ϵh,
+∀i ∈1 . . . L
+(33)
+for some ϵh > 0. This property ensures that the revelation provides a complete explanation of the clues—which leads
+a reader who has seen the resolution to re-evaluate them as well as the brilliant reader would.
+E.5
+Proof of Hindsight Tradeoff
+Corollary (Hindsight tradeoff). Assuming hindsight coherence, if the reader M is strongly surprised then clue effec-
+tiveness and the hindsight gap trade off.
+Proof. Starting from Eq. 30, we apply the hindsight coherence property, which gives:
+∆intel(i, M) −δh(i, M) ≤i · ϵh ⇒∆intel(i, M) ≤i · ϵh + δh(i, M)
+(34)
+Substituting into Eq. 30:
+δsurprise + ∆coh(i) ≤∆intel(i, M) ≤i · ϵh + δh(i, M)
+⇒
+δsurprise + ∆coh(i) −i · ϵh ≤δh(i, M)
+(35)
+This shows that to maintain a large surprise, the hindsight gap must be large, and it must grow as clue effectiveness
+increases.
+26
+
+
+===== PDF PAGE 27 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+F
+The Real Story Dataset
+F.1
+Sherlock Holmes stories
+Stories were collected from Project Gutenberg.8 Stories 3–7, 9 include human annotation data (6 stories total with
+human data).
+F.2
+Hercule Poirot stories
+Stories 5–9 include human annotation data.
+Each story was segmented into approximately 25 paragraphs, corresponding to the paragraph-level structure used
+for generated stories. The segmentation preserves natural discourse boundaries (scene changes, speaker turns). For
+consistency with the generated story setup, we define the revelation point as the paragraph in which the detective
+explicitly names the true culprit.
+Tables 1 and 2 list the real stories used in the experiments, together with the true culprit and the other suspects, which
+were presented to the model or human. The story index corresponds to the identifier used throughout the paper (e.g.,
+Sherlock 0, Poirot 3). All Sherlock Holmes stories are drawn from The Adventures of Sherlock Holmes; all Hercule
+Poirot stories are drawn from Poirot Investigates.
+G
+Generation Prompts
+Stories are generated paragraph by paragraph. At each step i, the model receives the story so far and is prompted to
+generate the next paragraph. The system prompt and initial user prompt are as follows.
+G.1
+System prompt
+You are a skilled author of detective fiction. Your task is to write a whodunit mystery story, paragraph by paragraph. The
+story must have: (1) a clear culprit who committed the crime; (2) a prominent distractor—a character who is made to look
+guilty through misdirection but is ultimately innocent; (3) clues scattered throughout the story that, in retrospect, point to the
+true culprit; (4) a revelation at the end that names the true culprit. The story should be fair play: all the information needed
+to solve the mystery should be present in the story, but arranged so that a careful reader can solve it while a naive reader is
+misled. Make the story logical and coherent, so it makes full sense after the revelation.
+G.2
+Per-step user prompt
+Continue the story. Write the next paragraph (paragraph {i} of {L}). The suspects are: {suspect list}. The true culprit is:
+{culprit} (do not reveal this yet). The distractor is: {distractor} (do not reveal their innocence yet). Keep the story consistent
+with what has been written. This is paragraph {i} of a {L}-paragraph story.
+[Previous paragraphs: {story so far}]
+The final paragraph (paragraph L) uses a modified prompt instructing the model to reveal the culprit and provide an
+explanation of the clues. The number of paragraphs is fixed at L = 25 across all experiments.
+G.3
+Gullible Reader Prompt
+The gullible reader is estimated by prompting a model to predict the culprit at each step of the story, acting as a naive
+investigator who takes the story at face value.
+I want you to give me likelihood estimates for the true and distracting culprit identities in the following story.
+I want lists of four prediction probabilities, a value for each of four suspects (representing the likelihood that the suspect is
+the true or distracting culprit). Even if a suspect is completely ruled out, he should still be included (and assigned a low
+probability).
+Give me a JSON dictionary with the probabilities. Make sure to follow the exact format in the example. Give me only the
+JSON. Do not put comments in the JSON.
+8https://www.gutenberg.org/
+27
+
+
+===== PDF PAGE 28 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 1: Sherlock Holmes stories from The Adventures of Sherlock Holmes. Stories marked with † were not used in
+the human experiments.
+#
+Title
+Answer
+Distractors
+0†
+A Scandal in Bohemia
+Irene Adler
+Sherlock Holmes, Dr. Watson,
+Godfrey Norton
+1†
+The Red-Headed League
+Vincent Spaulding
+Mr. Jabez Wilson, Mr. Duncan
+Ross, Mr. Merryweather
+2†
+A Case of Identity
+Mr. Windibank
+Mr.
+Hosmer
+Angel,
+Mrs.
+Sutherland, Mr. Hardy
+3
+The Boscombe Valley Mystery
+John Turner
+Charles McCarthy, James Mc-
+Carthy, William Crowder
+4
+The Five Orange Pips
+James Calhoun
+John Openshaw, Joseph Open-
+shaw, Elias Openshaw
+5
+The Man with the Twisted Lip
+Hugh Boone
+Isa Whitney,
+Kate Whitney,
+Neville St. Clair
+6
+The Adventure of the Blue Carbuncle
+James Ryder
+Henry
+Baker,
+John
+Horner,
+Catherine Cusack
+7
+The Adventure of the Speckled Band
+Dr. Grimesby Roylott
+Helen Stoner, Percy Armitage,
+Miss Honoria Westphail
+8†
+The Adventure of the Beryl Coronet
+Sir George Burnwell
+Alexander
+Holder,
+Arthur
+Holder, Lucy Parr
+9
+The Adventure of the Copper Beeches
+Jephro Rucastle
+Mrs. Rucastle,
+Toller,
+Mrs.
+Toller
+Table 2: Hercule Poirot stories from Poirot Investigates. Stories marked with † were not used in the human experi-
+ments.
+#
+Title
+Answer
+Distractors
+0†
+The Adventure of “The Western Star”
+Gregory Rolf
+Mary Marvell, Lady Yardly,
+Lord Yardly
+1†
+The Tragedy at Marsdon Manor
+Mrs. Maltravers
+Dr. Ralph Bernard,
+Captain
+Black, Alfred Wright
+2†
+The Adventure of the Cheap Flat
+Elsa Hardt
+Gerald Parker, Mrs. Robinson,
+Elsie Ferguson
+3†
+The Mystery of Hunter’s Lodge
+Zoe Havering
+Roger Havering, Mrs. Middle-
+ton, Harrington Pace
+4†
+The Million Dollar Bond Robbery
+Mr. Shaw
+Philip Ridgeway, Mr. Vavasour,
+Miss Esmée Farquhar
+5
+The Adventure of the Egyptian Tomb
+Dr. Ames
+Dr. Tosswill, Mr. Harper, Has-
+san
+6
+Jewel Robbery at the Grand Metropolitan
+The chambermaid
+Célestine, Mrs. Opalsen, Mr.
+Opalsen
+7
+The Kidnapped Prime Minister
+Captain Daniels
+O’Murphy, Mrs. Everard, Frau
+Bertha Ebenthal
+8
+The Disappearance of Mr. Davenheim
+Mr. Davenheim
+Lowen, Billy Kellett, Mrs. Dav-
+enheim
+9
+The Adventure of the Italian Nobleman
+Mr. Graves
+Dr. Hawker, Miss Rider, Signor
+Ascanio
+28
+
+
+===== PDF PAGE 29 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+The suspects are: {suspect list}. Please do not change the identity and order of suspects.
+For example, if it’s clear that A is the distracting culprit and B is the most likely true culprit, then return something like:
+”’json
+{
+"suspects": ["A", "B", "C", "D"],
+"probabilities": [0.0, 0.9, 0.05, 0.05],
+"distractor_probabilities": [1.0, 0.0, 0.0, 0.0]
+}
+”’
+I want you to give probability estimations as if the events in the story are real, ignoring the interest of the writer. You should
+estimate the most likely truth, even if is boring.
+The story is:
+## BEGINNING OF STORY ##
+{story}
+## END OF STORY ##
+Generation failure rates (stories without a clear culprit and distractor) are reported in Table 9.
+This prompt is designed to elicit naïve, face-value reasoning by explicitly instructing the model to ignore misdirection.
+We use o3-mini as the primary gullible reader model, with o1-mini used in a small number of cases where o3-mini
+was unavailable.
+G.4
+Experienced Reader Prompt
+The experienced reader M+ is estimated by prompting Gemini-3-flash with the current story prefix and, optionally, a
+set of previous stories from the same generating model. The model is asked to predict the culprit, taking into account
+patterns it may have observed across stories.
+I want you to give me likelihood estimates for the true and distracting culprit identities in the following story.
+I want lists of four prediction probabilities, a value for each of four suspects (representing the likelihood that the suspect is
+the true or distracting culprit). Even if a suspect is completely ruled out, he should still be included (and assigned a low
+probability).
+Give me a JSON dictionary with the probabilities. Make sure to follow the exact format in the example. Give me only the
+JSON. Do not put comments in the JSON.
+The suspects are: {suspect list}. Please do not change the identity and order of suspects.
+For example, if it’s clear that A is the distracting culprit and B is the most likely true culprit, then return something like:
+”’json
+{
+"suspects": ["A", "B", "C", "D"],
+"probabilities": [0.0, 0.9, 0.05, 0.05],
+"distractor_probabilities": [1.0, 0.0, 0.0, 0.0]
+}
+”’
+I want you to give probability estimations for what will be revealed (or was already revealed) at the end of story. That is, the
+probability for each culprit is the probability that the story will be continued in way that ends up with this character being the
+culprit.
+I Note that the story is generated paragraph by paragraph by a language model, for a total of num_paragraphs paragraphs.
+The generating model is instructed to introduce at least four characters, one of which is the true culprit and one is a distractor.
+The clues are instructed to be misleading and point to the distracting character until the end of the story when the truth is
+discovered.
+Try your best to deduce the culprit’s identity. Use any knowledge at your disposal, including previous stories you’ve seen.
+I’m also giving you some previous full stories written by this model. Use them to deduce the culprit’s identity if relevant.
+#######################
+29
+
+
+===== PDF PAGE 30 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+## PREVIOUS STORIES ##
+## BEGINNING OF PREVIOUS STORY 1##
+{previous story #1}
+## END OF PREVIOUS STORY 1##
+...
+## END OF PREVIOUS STORIES ##
+#############################
+——————————————————————————–
+Now I’ll give you the (possibly partial) story for which you must predict the culprit.
+The story is:
+## BEGINNING OF (PARTIAL) STORY FOR PREDICTION ##
+{story}
+## END OF (PARTIAL) STORY FOR PREDICTION ##
+G.5
+Paragraph Filling Prompt
+For paragraph filling (used in the ERC Metric estimation), the following prompt is used:
+I will give you a story with a missing paragraph (marked by “[MISSING]”) and six options for filling it.
+Give me a list of probabilities for the paragraph that can fill in the missing spot. I stress that the goal is not to predict what
+was in the spot but rather to answer about what makes sense given the actual ending.
+Notice that some paragraphs might be hidden (marked by [HIDDEN]). I will NOT ask you about filling those paragraphs,
+only the [MISSING] one.
+For example, if the second option is the best, the first is also possible and the others make very little sense, then your answer
+should look like:
+{
+"options": ["a", "b", "c", "d", "e", "f"],
+"probabilities": [0.25, 0.55, 0.05, 0.05, 0.05, 0.05]
+}
+Your response should be the JSON dictionary only, with no additional text.
+The story is:
+## BEGINNING OF STORY ##
+{story text}
+## END OF STORY ##
+The optional paragraphs are:
+{list of the optional paragraphs, in the form a. first paragraph, b. second paragraph}
+H
+Alternative Gullible Reader Estimation Methods
+We evaluated several alternative prompting strategies for the gullible reader and verified that they yield broadly similar
+trends to the main results.
+H.1
+The Super-Naive Reader
+One alternative is the super-naive reader, which additionally receives an LLM-generated report of where the revelation
+occurs in the story. This reader is then modeled by placing zero mass on the correct prediction throughout the suspicion
+phase (only predicting correctly after the revelation). As a result, the super-naïve reader yields a larger upper bound
+30
+
+
+===== PDF PAGE 31 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+on fair play estimates and a surprise score that essentially reflects when the story reveals its culprit, rather than how
+well the story misleads the reader.
+We evaluated both modes and found an important difference in their relationship to subjective surprise ratings. The
+default gullible reader’s surprise score correlates significantly with human-reported surprise (r = 0.152, p < 0.01;
+Spearman, n = 359), while the super-naive surprise score does not (r = −0.005, p = 0.93), indicating that reve-
+lations do not generally occur early in the story. This shows that the default mode captures the narrative quality of
+misdirection—how effectively the story fools the reader—whereas the super-naive mode captures a structural property
+(timing of the revelation). We therefore use the default gullible reader for the main results.
+I
+Sampling Procedure for the Know-It-All Reader
+The know-it-all reader M∗(i) is defined by marginalization over the story model. Since this is generally intractable, we
+estimate it with Monte Carlo, sampling multiple story continuations from the generating model starting from paragraph
+i, and using the relative frequency of each culprit outcome as a probability estimate.
+Concretely, at each checkpoint i ∈{1, 5, 10, 15, 20, 25}, we generate K = 15 independent continuations (paragraphs
+i + 1 through L) using temperature = 1, the same setting used for the original generation. Each continuation is
+evaluated by the judge model (o3-mini) to determine the culprit identity of the completed story. The know-it-all
+probability for culprit y at step i is then:
+ˆM∗(i)y = 1
+K
+K
+X
+k=1
+1[culprit in continuation k = y]
+(36)
+For the real stories (Sherlock Holmes and Poirot), we cannot sample from the true authorial distribution. We instead
+use Gemini-1.5-flash as a proxy story model, conditioned on the story prefix, to sample plausible continuations. This
+provides an approximation of the know-it-all reader, albeit without theoretical guarantees. The resulting upper bounds
+for real stories should therefore be interpreted with caution.
+The argmax predictor ˆyM∗(i) = argmaxy ˆM∞(i)y is used for the coherence and fair play scores.
+I.1
+Computational Cost
+Each run of the pipeline for a single model (generating and evaluating 10 valid stories) involves two language-model
+clients: a generator (client 1, the model under evaluation) and an evaluator (client 2, used for culprit identification
+and probability estimation).
+Story generation is paragraph-by-paragraph with a growing context, giving quadratically growing input tokens per
+story. Assuming ≈200 output tokens per paragraph and 25 paragraphs per story, generation requires ≈70K input
+tokens per story attempt. The number of attempts varies by model (fewer for higher-acceptance models); the estimates
+below assume ≈15 attempts. The generation phase totals roughly 1.05M input + 75K output tokens for client 1, and
+81K input + 2.3K output tokens for client 2.
+The dominant cost is know-it-all reader estimation (sampling): for each story, K = 20 continuations are sampled at
+each of 19 checkpoints (due to budget and availability considerations, K = 5 continuations were sampled for GPT-
+4o, Gemini-1.5-flash, and Gemini-1.5-pro; see Table 9). Because each sample regenerates up to 22 paragraphs with
+growing context, the per-story sampling cost is ≈13.3M input + 672K output tokens for client 1 and ≈2.3M input for
+client 2. See Table 3 for a summary of token usage.
+The sampling cost scales quadratically with paragraph count and linearly with the number of samples K and check-
+points. With K = 5 instead of K = 20, sampling cost drops to ≈25%.
+J
+ERC Metric
+The Expected Retrospective Coherence (ERC) metric measures the degree to which the explicit clues in the story
+are causally connected to the final revelation. Unlike the CUB score (which measures prediction accuracy), ERC
+measures the informational content of the clues as parsed propositions.
+31
+
+
+===== PDF PAGE 32 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Formally, for a story with clue sequence C = c1, . . . , cL and revelation y∗, we define:
+ERC = 1
+L
+L
+X
+i=1
+1[ci is causally connected to y∗]
+(37)
+where causal connection is assessed by a judge LLM given the full story (including the revelation). We also define the
+threshold variant ERC≥t = 1[ERC ≥t] as a binary quality indicator.
+The ERC metric requires explicit clue extraction and causal judgment, making it more expensive to compute than the
+CUB score. Results with ERC show broadly consistent trends with the main metrics: models with high FPUB also tend
+to have high ERC, and vice versa. However, ERC tends to be more noisy due to the difficulty of consistently parsing
+clues from long texts.
+J.1
+Estimation
+Directly estimating the ERC requires an expectation over all possible clues, which is difficult to measure due to the
+unbounded space. We therefore use multiple relaxations. First, since text segments include the clues, we perform
+prediction over paragraphs instead of clues. Second, we estimate the probability of a paragraph as a multiple-choice
+question with other paragraphs sampled from the same model.
+For each narrative position i, we use the generated alternative paragraphs (from the same prefix, across different story
+samples) as the multiple-choice candidates; one of these is the original paragraph xi. Masking xi, we ask a judge
+model (o3-mini; see Paragraph Filling Prompt) to identify the original paragraph from among the candidates and
+measure accuracy. To avoid including superfluous errors from paragraphs similar in content, we only count errors
+where the selected paragraph leads to a story with a different culprit than the true culprit.
+We evaluate three conditions: (1) None – only the prefix up to the masked paragraph, which serves as a baseline (the
+best prediction achievable from the prefix alone); (2) AR – prefix plus paragraphs after the revelation, testing whether
+the paragraph is retrospectively coherent given the resolution; and (3) BR – prefix plus paragraphs before the revelation
+(up to the revelation point), testing whether the preceding clues make the paragraph predictable. Comparing AR and
+BR against None isolates the contribution of post-revelation context and pre-revelation foreshadowing, respectively.
+Unlike the reader-based metrics, ERC is not an upper bound on clue effectiveness—it directly measures paragraph-
+level predictability rather than bounding it. However, its estimation is more brittle, as it depends on a judge model
+consistently parsing and evaluating clues from long texts.
+J.2
+Results
+We see a consistent pattern across models: providing paragraphs before the revelation (BR) yields the largest ERC,
+followed by paragraphs after the revelation (AR), with the no-context baseline (None) generally lowest. This shows
+that earlier narrative context is more predictive of a missing paragraph than the revelatory ending, suggesting that the
+clues form a chain linked more strongly to the investigation than to the final resolution. For Llama-3.1-8B, the AR
+condition actually slightly underperforms the None baseline, which may reflect noise given the small sample. In many
+cases, both AR and BR ERC values remain below 0.04 (one paragraph worth), indicating that even when positive, the
+contextual gain is small. GPT-4o-mini is a notable outlier with high absolute ERC even in the None condition, likely
+reflecting low diversity in its generated paragraphs rather than genuine coherence.
+K
+Human Experiment Details
+K.1
+Participants
+Twenty participants were recruited for the study (n = 20; mean age 28.3 years, SD 4.7; 12 female, 8 male). All were
+fluent English readers with at least some prior experience with mystery fiction. Participants were compensated with a
+gift card.
+K.2
+Procedure
+The experiment was carried out using Google Forms. The general instructions are shown in Figure 4a, an example of
+a repeating question is shown in Figure 4b, and the additional questions given after each story are shown in Figure 4c.
+32
+
+
+===== PDF PAGE 33 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Participants read each story paragraph by paragraph on a web interface. After each paragraph, they were prompted to
+select which suspect they believed was most likely the culprit from the list of suspects presented at the beginning of
+the story. A “not sure / too early to tell” option was provided but discouraged after the introduction phase.
+After completing each story, participants rated the story on four dimensions (1–5 Likert scale): fairness, coherence,
+surprise, and enjoyability. The exact questions are shown in Figure 4c.
+Each participant read a subset of stories: all real stories assigned to them (either Sherlock Holmes or Poirot, counter-
+balanced across participants) and a stratified random sample of generated stories (3–5 per participant, sampled across
+models). Reading order was randomized within each participant to control for learning and fatigue effects.
+K.3
+Subjective ratings
+Table 5 reports participants’ subjective ratings of surprise, fairness, coherence, and enjoyability on a 1–5 scale, as
+mean ± standard deviation across per-story means. Real stories (Poirot and Sherlock) are rated substantially higher
+than generated stories in fairness, coherence, and enjoyability: real stories score roughly 1 point above the scale
+midpoint (3) on average, while most generated stories score at or below the midpoint on these dimensions. Among
+generated stories, Gemini-2.5-pro and GPT-4o stand out as the most positively rated, with above-average coherence
+and enjoyability. Llama-3.3-70B and Llama-3.2-3B receive the lowest ratings across most dimensions. Surprise shows
+a different pattern: it does not clearly distinguish real from generated stories.
+Among subjective measures, fairness, coherence, and enjoyability are strongly intercorrelated (Spearman r = 0.62–
+0.71, p < 0.001). Surprise is negatively correlated with subjective fairness (r = −0.13, p < 0.05), showing that
+readers tend to perceive unexpected outcomes as unfair. Surprise is not significantly correlated with subjective coher-
+ence (r = −0.03, p = 0.54) or enjoyability (r = 0.06, p = 0.29). Subjective fairness and coherence are strongly
+correlated (r = 0.71), suggesting participants view these as related qualities. Enjoyability does not significantly corre-
+late with the measured surprise or coherence scores, though real stories were rated substantially more enjoyable than
+generated ones (relative scores of +0.98 to +1.34 vs. mostly negative for generated stories).
+Participants were also asked to rank their familiarity with detective stories. Scores range from moderate to high (mean
+3.71 ± 1.01, range 2–5 on a 1–5 scale; n = 22).
+K.4
+Correlations between subjective and objective measures
+Tables 6 and 7 report Spearman correlations at the individual observation level (n ≈360). The inter-subjective
+correlations (Table 7) show that coherence and fairness are strongly correlated, while surprise is negatively correlated
+with fairness, reflecting the perceived tension between being surprised and viewing the story as fair. The correlations
+with objective measures (Table 6) are modest but significant for several pairs, validating that the computational metrics
+capture relevant aspects of narrative quality.
+L
+Reading Curves
+L.1
+Definition
+The probability a reader model M assigns to a given culprit y at each point in the story defines a trajectory over
+paragraphs, which we call the reading curve for y:
+My : N →[0, 1],
+My(i) := M(X, i)y
+We are primarily interested in the reading curve for the true culprit, Mt, and for the main distractor, Md. These
+curves visualize how a reader’s belief evolves across the three narrative phases (introduction, suspicion, revelation)
+and provide an intuitive complement to the scalar metrics defined in the main text.
+Reading curves for different reader types exhibit characteristic shapes. For the gullible reader M0, the true-culprit
+curve starts near
+1
+|Y| in the introduction phase, decreases toward 0 during suspicion as the distractor attracts probability
+mass, then jumps to ≈1 at revelation. The distractor curve mirrors this, rising toward 1 during suspicion and collapsing
+to ≈0 at revelation. For the know-it-all reader M∗(and, when clue sufficiency holds, the brilliant-detective reader
+M1), the true-culprit curve rises monotonically from
+1
+|Y|, reaching high confidence before or at the revelation, while
+the distractor curve declines.
+33
+
+
+===== PDF PAGE 34 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 3: Estimated token usage per model run (10 generated + 10 sampled stories).
+Phase
+Client 1 (generator)
+Client 2 (evaluator)
+Generation (×10 stories)
+∼1.05M in + ∼75K out
+∼81K in + ∼2.3K out
+Sampling (×10 stories)
+∼133M in + ∼6.7M out
+∼23M in + ∼93K out
+Total
+∼134M in + ∼6.8M out
+∼23M in + ∼95K out
+Table 4: Paragraph-filling (ERC) results for a subset of models for which ERC was computed (excludes Gemini-2.5-
+pro TB−1, Gemini-3 models, Llama-3.3-70B, and Llama-3.2-1B). Three conditions: None – only the prefix up to the
+masked paragraph; AR – prefix plus paragraphs after the revelation; BR – prefix plus paragraphs before the revelation
+(up to the revelation point). We report the ERC value multiplied by 25 and the ratio of stories with ERC ≥0.04
+(corresponding to one paragraph in a 25-paragraph story). The last two columns show the gain of AR and BR over the
+None baseline. All Llama models use the Instruct version.
+Model
+ERC (x25)
+ERC≥0.04 (ratio)
+ERC gain over None (x25)
+None
+AR
+BR
+None
+AR
+BR
+AR
+BR
+∆(BR−AR)
+Llama-3.2-1B
+1.70
+2.62
+3.09
+0.67
+1.00
+1.00
++0.93
++1.39
++0.46
+Llama-3.2-3B
+1.88
+3.62
+5.35
+0.63
+0.88
+0.88
++1.74
++3.47
++1.73
+Llama-3.1-8B
+2.06
+1.59
+6.69
+0.56
+0.67
+1.00
+−0.46
++4.63
++5.09
+Llama-3.1-70B
+1.69
+1.55
+4.47
+0.50
+0.60
+1.00
+−0.14
++2.78
++2.92
+Llama-3.3-70B
+1.81
+1.94
+4.58
+0.50
+0.70
+0.90
++0.14
++2.78
++2.64
+Gemini-1.5-flash
+−0.02
+1.23
+1.78
+0.30
+0.60
+0.60
++1.25
++1.81
++0.55
+Gemini-1.5-pro
+0.88
+1.16
+3.10
+0.40
+0.50
+0.90
++0.28
++2.22
++1.94
+Gemini-2.5-flash TB 0
+0.93
+3.29
+3.56
+0.60
+0.80
+0.90
++2.36
++2.64
++0.27
+Gemini-2.5-flash TB -1
+0.51
+1.76
+2.45
+0.50
+0.60
+0.70
++1.25
++1.94
++0.69
+Gemini-2.5-pro
+0.54
+1.95
+2.65
+0.40
+0.60
+0.70
++1.41
++2.10
++0.69
+GPT-4o-mini
+4.66
+6.57
+8.83
+0.75
+0.75
+1.00
++1.91
++4.16
++2.26
+GPT-4o
+1.23
+3.12
+5.10
+0.60
+0.60
+1.00
++1.89
++3.87
++1.99
+Table 5: Human subjective evaluation (mean ratings on a 1–5 scale). Average rows show the mean ± between-story
+SD.
+Model
+#
+Surprise
+Fairness
+Coherence
+Enjoyability
+Llama 3.2-3B
+28
+2.79
+3.18
+2.68
+2.39
+Llama 3.1-8B
+24
+3.96
+2.75
+2.67
+2.50
+Llama 3.1-70B
+26
+3.39
+2.58
+2.69
+2.58
+Llama 3.3-70B
+55
+3.38
+2.40
+2.47
+2.29
+Gemini 1.5-pro
+19
+3.11
+3.16
+3.42
+2.42
+Gemini 2.5 flash TB 0
+30
+3.80
+2.67
+3.27
+3.00
+Gemini 2.5 flash TB -1
+30
+3.47
+2.60
+2.90
+2.53
+Gemini 2.5-pro
+29
+3.50
+3.11
+3.72
+3.41
+GPT-4o mini
+23
+3.61
+2.57
+2.74
+2.35
+GPT-4o
+26
+3.42
+3.23
+3.73
+3.39
+Avg. generated
+290
+3.44 ±0.57
+2.77 ±0.56
+2.99 ±0.64
+2.65 ±0.54
+Sherlock
+33
+3.09
+3.85
+4.21
+4.30
+Poirot
+37
+3.70
+4.03
+4.51
+4.11
+Avg.
+real
+70
+3.32 ±0.49
+3.91 ±0.45
+4.39 ±0.35
+4.21 ±0.38
+34
+
+
+===== PDF PAGE 35 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+(a) Instruction page for the human experiment.
+(b) Example paragraph and suspects. The question repeats
+throughout the experiment as new paragraphs are shown.
+(c) Questions for subjective rankings, given after the story.
+Figure 4: Human experiment interface screenshots.
+35
+
+
+===== PDF PAGE 36 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+L.2
+Experimental reading curves
+Experimental reading curves serve as interpretive case studies: they make it possible to understand why a story receives
+a particular metric score by tracing the evolution of reader beliefs across the narrative. In particular, they reveal the
+structural difference between fair-play and Deus ex Machina stories—in fair-play stories, the know-it-all and brilliant-
+detective readers gradually converge on the culprit well before the revelation, whereas in Deus ex Machina stories
+these readers remain uncertain until the final reveal.
+Representative examples of fair-play and Deus ex Machina reading curves are shown in the main text (Figure 3C–
+D). Figures 5 and 6 show additional examples of generated stories with low and high fair play scores, respectively.
+Figure 7 shows a notable real-story example.
+L.3
+Reading curves for real stories
+Figure 7 shows the reading curve for Sherlock story 5 (“The Man with the Twisted Lip”), where human participants
+perform worse than the gullible reader. This suggests that human readers, familiar with detective fiction conventions,
+expect a twist and discount the obvious suspect, while the gullible reader takes the clues at face value.
+M
+Experienced Reader: Full Results
+The experienced reader M+ is provided with a set of previous stories from the same generating model before reading
+the current story. It was estimated by prompting Gemini-3-flash—chosen for its strong long-context understanding—
+with 0, 2, 3, 5, or 9 previous stories from the same generating model before reading the current story. A high experi-
+enced reader fair play score FPER indicates that exposure to previous stories substantially improves culprit prediction,
+suggesting the model relies on recurring patterns—a sign that clue sufficiency may be violated: the story can be solved
+not from its clues alone but from knowledge of the model’s writing tendencies.
+Mode collapse
+An extreme case of pattern reliance is mode collapse, where a model converges on the same story
+structure repeatedly. Gemini-1.5-pro is a clear example: approximately 90% of its stories use the same culprit name,
+and its human fair play score is close to its know-it-all upper bound (see Table 8), indicating that the stories are easily
+predicted once a reader is familiar with the model’s output. More generally, models where FPER is close to FPUB (e.g.,
+Llama-3.1-70B) show low diversity—a few previous stories almost suffice to predict outcomes. Models with larger
+gaps between FPER and FPUB (e.g., Gemini-2.5-flash TB 0) produce more varied stories where familiarity provides
+less predictive advantage.
+Source of experienced reader advantage
+Comparing the 0-shot experienced reader (no previous stories) with the
+multi-story settings reveals that much of the predictive gain already appears with zero prior-story context: the 0-shot
+experienced reader achieves performance close to the know-it-all reader, outperforming the actual readers, even with-
+out exposure to previous stories. A possible explanation is that the main power of the experienced reader comes from
+knowing the generation process itself—prompt, structure, and stylistic conventions—rather than from accumulating
+information across individual stories. Incremental gains from additional context are real but smaller, reflecting that
+story-specific patterns beyond the generating model’s general tendencies provide limited additional signal for most
+models.
+Table 8 reports the experienced reader fair play score FPER per model. For each model, it shows results on the annotated
+subset (with the know-it-all upper bound FPUB and human average FPAR) alongside results on all valid stories (nall) at
+0, 3, and 9 prior stories. As the number of prior stories increases, FPER generally increases, reflecting that familiarity
+with a model’s output patterns improves culprit prediction. The rate of increase varies substantially across models.
+Coherence and fair play scores.
+Figure 8a shows coherence scores (CUB) per model across all stories, comparing
+the know-it-all, human, and gullible reader perspectives. The expected hierarchy (know-it-all ≥human ≥gullible)
+is visible across most models, though Gemini-1.5-pro deviates due to mode collapse (see below). Figure 8b shows
+aggregate fair play scores for all stories, including experienced reader fair play at varying numbers of previous stories.
+With more prior stories, the experienced reader generally approaches the know-it-all upper bound, though the rate of
+increase varies across models; notably, using 5 previous stories performed slightly worse than no previous stories for
+some models.
+Models with low diversity (e.g., Llama-3.1-70B) reach near-saturation with 2–3 previous stories, while high-diversity
+models (e.g., Gemini-2.5-pro) continue to improve with more context. Notably, Llama-3.1-8B shows virtually no
+change across all settings (−0.039 throughout), suggesting that prior context had almost no effect on culprit prediction
+36
+
+
+===== PDF PAGE 37 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 6: Spearman correlations between subjective ratings and objective measures (n ≈359–360 individual observa-
+tions). Surprise score uses the default gullible reader.
+Subjective
+Objective
+r
+p
+Surprise
+S (default)
+0.152
+0.004
+Surprise
+Human-guessing surprise
+0.268
+< 0.001
+Coherence
+FPAR (human)
+0.155
+0.003
+Coherence
+CUB (LLM)
+0.106
+0.045
+Fairness
+FPAR (human)
+0.250
+< 0.001
+Fairness
+FPAR (default)
+0.104
+0.048
+Enjoyability
+CUB (LLM)
+0.113
+0.032
+Table 7: Spearman correlations among subjective ratings (n ≈358–360 individual observations).
+Dimension 1
+Dimension 2
+r
+p
+Surprise
+Fairness
+−0.131
+0.013
+Surprise
+Coherence
+−0.033
+0.537
+Coherence
+Fairness
+0.650
+< 0.001
+Coherence
+Enjoyability
+0.713
+< 0.001
+Fairness
+Enjoyability
+0.624
+< 0.001
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=0.53  S=5.79  C=6.32
+gpt-4o-mini - Story 5 - 6 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Deus ex Machina (1)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=3.88  S=6.32  C=10.20
+Llama-3.1-8B-Instruct - Story 3 - 5 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Deus ex Machina (2)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=-1.05  S=6.45  C=5.39
+Llama-3.3-70B-Instruct - Story 3 - 4 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Deus ex Machina (3)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=2.63  S=7.96  C=10.59
+Llama-3.3-70B-Instruct - Story 5 - 6 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Deus ex Machina (4)
+Figure 5: Reading curves for representative generated stories with low fair play scores (Deus ex Machina), shown as
+raw probability assigned to the true culprit at each paragraph. The know-it-all and gullible reader curves track each
+other closely throughout, indicating that the clues provide little genuine misdirection. Shaded bands are 68% Clopper-
+Pearson confidence intervals [Clopper and Pearson, 1934] on the actual-reader curve.
+37
+
+
+===== PDF PAGE 38 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=12.45  S=5.20  C=17.65
+gemini-2.5-flash-tb-1 - Story 3 - 7 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Fair Play (1)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=17.47  S=4.37  C=21.84
+gpt-4o - Story 3 - 5 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Fair Play (2)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=12.50  S=4.47  C=16.97
+Llama-3.1-70B-Instruct - Story 2 - 4 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Fair Play (3)
+0
+5
+10
+15
+20
+25
+Paragraph Number
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Probability of True Culprit
+FP_UB=13.03  S=4.14  C=17.17
+Llama-3.1-70B-Instruct - Story 3 - 5 human responses
+Actual Reader
+Actual Reader 68% CI
+Gullible Reader
+Know-it-all Reader
+Know-it-all Reader 68% CI
+Fair Play (4)
+Figure 6: Reading curves for representative generated stories with high fair play scores (Fair Play), shown as raw
+probability assigned to the true culprit at each paragraph. A sustained gap between the know-it-all and gullible curves
+reflects successful misdirection combined with coherent clues. Shaded bands are 68% Clopper-Pearson confidence
+intervals [Clopper and Pearson, 1934] on the actual-reader curve.
+Figure 7: Reading curves for Sherlock Holmes story 5 (“The Man with the Twisted Lip”). The gullible reader (red)
+outperforms human participants (green) on this story—a notable exception to the general trend. Human readers appear
+to discount the obvious suspect due to genre expectations (“there must be a twist”), while the gullible reader takes the
+clues at face value. This illustrates how prior genre experience can work against accuracy when a story does not
+conform to conventional patterns.
+38
+
+
+===== PDF PAGE 39 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+for this model. For Gemini-1.5-pro, the experienced reader score slightly exceeds the upper bound (0.308 > 0.234),
+indicating mode collapse: the model’s culprit choices are predictable from prior stories regardless of the clues. While
+the know-it-all reader is Bayes-optimal and cannot be outperformed in expectation, sporadic exceedances can occur
+due to sampling noise in the know-it-all estimate or an unrepresentative sample of stories.
+N
+Full Results Tables
+Table 9 reports LLM-based scores (S, CUB, FPUB, FPS) for all models on all valid generated stories. Figure 9 shows
+the distribution of per-story fair play scores across models. Table 10 reports human fair play scores for the subset of
+stories with human annotations, alongside the experienced reader fair play score.
+O
+Surprise vs. Coherence
+Figures 10 and 11 show scatter plots of per-story surprise scores against fair play scores, using human and LLM-based
+coherence estimates respectively. Each point represents one story; models are distinguished by color.
+P
+Variability Statistics
+Culprit-name diversity, inferred from the character statistics in Table 12, varies considerably across models. Gemini-
+1.5-pro exhibits strong culprit-name repetition (90% of stories use the same name). This mode collapse may explain
+the high performance of the experienced reader for this model: (1) the experienced reader score substantially exceeds
+the know-it-all upper bound (Table 8), showing that prior stories alone predict the culprit better than the story’s own
+clues; and (2) the gap between FPUB and FPAR is near zero, meaning that human readers—who may also notice the
+pattern—perform close to the theoretical upper bound.
+Gemini-3-flash shows mode collapse for supporting characters: the victim last name “Sterling” appears in 9/10 stories
+and the detective last name “Thorne” in 8/10 stories (Table 12). Culprit names are more varied (the most common
+culprit last name, “Sterling”, appears in only 3/10 stories), so this character-level repetition is less likely to inflate
+the fair play score than in Gemini-1.5-pro. Gemini-3.1-pro shows low name repetition across all roles—no single
+culprit, detective, or victim name appears in more than 2/10 stories—indicating substantially higher diversity than the
+Gemini-1.5 family.
+P.1
+Story lengths
+Table 11 reports mean story lengths (in words) per model.
+P.2
+Character statistics
+Table 12 reports character name statistics for generated stories.
+Q
+Additional Discussion
+When writing stories, humans usually decide many details early on in the writing process. This is clearly the case when
+revising the story. Similarly, Li et al. [Li et al., 2024] show that models trained with RLHF tend to use “anchors”,
+which are phrases that tend to appear in many generated stories, to guide the generation process. The anchors are
+beneficial for long generations, constraining the output space, but reduce diversity. This phenomenon is sometimes
+referred to as “mode collapse” [Hamilton, 2024, Jiang et al., 2025]. In our experiment, we see a similar trend, where
+stories use extremely similar names. This could limit the impact of our experiment with sampling. Early convergence
+of a story model can sometimes be attributed to stylistic preferences and not to the clue-related content. A model that
+always generates the same story would show artificially high coherence scores, since the know-it-all reader can predict
+any paragraph from a point-mass distribution—but this reflects low diversity, not genuine fair play.
+Early convergence: definition and detection
+Early convergence is a form of structural mode collapse: the gener-
+ating model assigns most probability mass to stories where the true culprit can be identified from the very beginning.
+This is a broader phenomenon that does not depend on a specific mechanism—it includes, but is not limited to, al-
+ways naming the same character as culprit, placing the culprit in a stereotyped narrative position, or using distinctive
+39
+
+
+===== PDF PAGE 40 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 8: Per-model experienced reader fair play scores FPER. Left block: annotated subset (na stories with human
+annotations); FPUB (know-it-all) and FPAR (human average) are shown for comparison; FPER columns show 0-shot,
+0-alt, and selected prior-story settings. Right block: all valid stories (n stories); FPER at 0, 3, and 9 prior stories. “–”
+indicates insufficient data.
+Model
+na
+FPUB
+FPAR
+FPER (annotated)
+n
+FPER (all)
+0-shot
+0-alt
+2-prev
+3-prev
+5-prev
+9-prev
+0-prev
+3-prev
+9-prev
+Llama-3.2-3B
+4
+0.118
+0.169 −0.151
+–
+–
+−0.086
+–
+0.013
+8
+0.007
+0.013
+0.013
+Llama-3.1-8B
+5
+0.182
+0.037
+0.032
+0.114
+−0.004
+0.005
+−0.004 −0.039
+9
+−0.039 −0.039 −0.039
+Llama-3.1-70B
+6
+0.538
+0.345
+0.480
+0.463
+0.425
+0.439
+0.461
+0.522
+10
+0.401
+0.510
+0.522
+Llama-3.3-70B
+10
+0.039
+0.039 −0.084 −0.112 −0.196 −0.126 −0.089
+0.011
+10
+0.006
+0.009
+0.011
+Gemini-1.5-pro
+5
+0.234
+0.246
+0.235
+0.263
+0.237
+0.287
+0.414
+0.308
+10
+0.241
+0.286
+0.308
+Gemini-2.5-flash TB 0
+5
+0.351
+0.066
+0.284
+0.211
+0.164
+0.227
+0.135
+0.143
+10
+0.041
+0.103
+0.143
+Gemini-2.5-flash TB -1
+5
+0.484
+0.090
+0.346
+0.356
+0.355
+0.350
+0.324
+0.408
+10
+0.118
+0.316
+0.408
+Gemini-2.5-pro
+5
+0.455
+0.213
+0.401
+0.469
+0.668
+0.539
+0.539
+0.426
+10
+0.134
+0.346
+0.426
+GPT-4o-mini
+4
+−0.020 0.096 −0.016 −0.197 −0.096
+0.118
+−0.329 −0.076
+8
+−0.086 −0.077 −0.076
+GPT-4o
+5
+0.105
+0.011
+0.111
+0.092
+−0.045 −0.016
+0.008
+0.079
+10
+0.040
+0.066
+0.079
+Table 9: Results for various models. G-VAL indicates the ratio of generated stories that have a clear (p > 0.5) culprit
+and distractor. n is the number of valid stories used. K is the number of continuations sampled per checkpoint for the
+know-it-all reader (20 for most models; 5 for GPT-4o, Gemini-1.5-flash, and Gemini-1.5-pro). S, CUB, and FPUB use
+the default (gullible) reader. FPS is the solvability score using the uniform predictor: FPS = CUB −A( ˆPunif), where
+A( ˆPunif) = 1/|Y| is the accuracy of the uniform predictor. FPUB = CUB −(1 −S). Models with n < 5 valid stories
+have metric values suppressed (“–”) as unreliable. All Llama models use the Instruct version. Bold entries indicate
+the two highest FPUB values.
+Model
+G-VAL
+n
+K
+S
+CUB
+FPUB
+FPS
+Llama-3.2-1B
+0.27
+3
+20
+–
+–
+–
+–
+Llama-3.2-3B
+0.73
+8
+20
+0.570
+0.612
+0.182
+0.125
+Llama-3.1-8B
+0.90
+9
+20
+0.744
+0.423
+0.167
+0.068
+Llama-3.1-70B
+0.83
+10
+20
+0.745
+0.746
+0.491
+0.335
+Llama-3.3-70B
+1.00
+10
+20
+0.574
+0.466
+0.040
+−0.045
+Gemini-1.5-flash
+0.71
+9
+5
+0.352
+0.734
+0.086
+0.115
+Gemini-1.5-pro
+1.00
+10
+5
+0.549
+0.684
+0.233
+0.162
+Gemini-2.5-flash TB 0
+1.00
+10
+20
+0.734
+0.647
+0.381
+0.247
+Gemini-2.5-flash TB -1
+1.00
+10
+20
+0.674
+0.771
+0.445
+0.347
+Gemini-2.5-pro
+1.00
+10
+20
+0.798
+0.687
+0.485
+0.307
+Gemini-3-flash
+1.00
+10
+20
+0.795
+0.637
+0.432
+0.264
+Gemini-3.1-pro
+1.00
+10
+20
+0.646
+0.584
+0.230
+0.109
+GPT-4o-mini
+0.57
+8
+20
+0.669
+0.451
+0.120
+0.137
+GPT-4o
+0.67
+10
+5
+0.562
+0.480
+0.042
+0.084
+40
+
+
+===== PDF PAGE 41 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Gullible
+(naive)
+Human
+reader
+Experienced
+(0-shot)
+Experienced
+(5-prev)
+Know-it-all
+(LLM)
+0
+5
+10
+15
+20
+Coherence  (mean P(true culprit) × 25)
+8.77
+11.98
+14.36
+13.90
+14.77
+Coherence Comparison 
+ n=58 stories with human data
+(naive mode: default)
+(a) Coherence scores per model (all stories), comparing know-it-all, hu-
+man, and gullible readers. The expected hierarchy (know-it-all ≥human
+≥gullible) holds for most models.
+Know-it-all (LLM)
+Experienced
+(0-shot)
+Experienced
+(5-prev)
+5
+0
+5
+10
+15
+Fair Play Score (×L)
+6.56
+4.58
+5.10
+Fair Play Comparison (Aggregate, n=95 all stories) 
+ default
+(b) Aggregate fair play scores per model for all sto-
+ries, comparing the know-it-all upper bound (FPUB)
+and the experienced reader (FPER) at 0, 2, 3, 5, and
+9 previous stories. The gap between know-it-all
+and experienced reader is larger when all stories are
+included (vs. human-annotation subset only).
+Figure 8: Coherence and fair play scores for all generated stories.
+Gemini 3.1 Pro
+Gemini 3 Flash
+Gemini 2.5 Pro
+Gemini 2.5 Flash TB0
+Gemini 2.5 Flash TB-1
+Gemini 1.5 Pro
+Gemini 1.5 Flash
+Llama 3.1 70B
+Llama 3.3 70B
+Llama 3.1 8B
+Llama 3.2 3B
+Llama 3.2 1B
+GPT-4o
+GPT-4o Mini
+20
+10
+0
+10
+20
+LLM-based Fair Play Score (×L)
+LLM-based Fair Play Scores Across All Stories
+Figure 9: Distribution of per-story fair play scores (FPUB) for all models. Each box shows the interquartile range;
+whiskers extend to 1.5× IQR.
+41
+
+
+===== PDF PAGE 42 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 10: Human fair play results. n is the number of stories with human annotations. “FP upper” (FPUB = CUB −
+(1−S)) uses the know-it-all reader for coherence; “FP actual” (FPAR = Chuman −(1−S)) replaces coherence with the
+human average reader’s accuracy, while keeping the same gullible-reader surprise S. FPER is the experienced reader
+fair play (with 9 previous stories). “Diff” is the upper minus actual fair play score. The experienced reader is not
+applicable to real stories (–).
+Model
+n
+S
+FP upper
+FP actual
+FPER
+Diff
+FPUB
+≥0.04
+FPAR
+≥0.04
+Llama-3.2-3B
+4
+0.507
+0.118
+0.50
+0.169
+0.75
+0.013
+−0.051
+Llama-3.1-8B
+5
+0.782
+0.182
+0.80
+0.037
+0.20
+−0.039
+0.145
+Llama-3.1-70B
+6
+0.864
+0.538
+1.00
+0.345
+0.83
+0.522
+0.193
+Llama-3.3-70B
+10
+0.574
+0.039
+0.40
+0.039
+0.80
+0.011
+0.000
+Gemini-1.5-pro
+5
+0.571
+0.234
+0.60
+0.246
+1.00
+0.308
+−0.012
+Gemini-2.5-flash TB 0
+5
+0.732
+0.351
+0.80
+0.066
+0.40
+0.143
+0.285
+Gemini-2.5-flash TB -1
+5
+0.713
+0.484
+1.00
+0.090
+0.80
+0.408
+0.394
+Gemini-2.5-pro
+5
+0.821
+0.455
+1.00
+0.213
+1.00
+0.426
+0.242
+GPT-4o-mini
+4
+0.605
+−0.020
+0.50
+0.096
+0.50
+−0.076
+−0.116
+GPT-4o
+5
+0.521
+0.105
+0.60
+0.011
+0.60
+0.079
+0.094
+Average generated
+54
+0.668
+0.242
+0.69
+0.127
+0.69
+0.178
+0.116
+Sherlock
+6
+0.315
+–
+–
+0.067
+0.50
+–
+–
+Poirot
+5
+0.664
+–
+–
+0.325
+1.00
+–
+–
+Average real
+11
+0.474
+–
+–
+0.184
+0.73
+–
+–
+Table 11: Mean story length (in words) ± standard deviation across 10 stories per model. Gemini-2.5 models include
+no thinking (TB 0) or dynamic thinking (TB -1).
+Llama-3.2-1B
+Llama-3.2-3B
+Llama-3.1-8B
+Llama-3.1-70B
+Llama-3.3-70B
+Length ± STD
+2875.6 ± 1319.8
+3338.6 ± 232.8
+3161.6 ± 191.2
+3349.2 ± 334.8
+5670.6 ± 399.4
+Gemini-1.5
+flash
+Gemini-1.5
+pro
+Gemini-2.5
+flash TB0
+Gemini-2.5
+flash TB -1
+Gemini-2.5
+pro TB -1
+Length ± STD
+1183.5 ± 107.7
+1136.7 ± 83.5
+2134.9 ± 238.2
+2026.3 ± 164.3
+2437.1 ± 241.2
+Gemini-3
+flash
+Gemini-3.1
+pro
+Length ± STD
+4432.7 ± 685.5
+4099.9 ± 219.2
+GPT-4o-mini
+GPT-4o
+Length ± STD
+4996.2 ± 279.9
+6731.2 ± 975.6
+42
+
+
+===== PDF PAGE 43 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 12: Character statistics for generated stories. p(t-cul.), p(t-det.), p(t-vic.) are the fraction of stories in which
+the same name was used for the true culprit, detective, and victim respectively (with the most common name in
+parentheses). p(M) is the fraction of stories in which that character was assigned a male gender. Gemini-2.5 models
+include no thinking (TB 0) or dynamic thinking (TB -1).
+Model
+p(t-cul.)
+p(M)
+p(t-det.)
+p(M)
+p(t-vic.)
+p(M)
+Llama-3.2-1B
+0.1
+(many)
+0.7
+0.6
+(Jameson)
+0.7
+–
+–
+Llama-3.2-3B
+0.3
+(Rachel)
+0.3
+1.
+(Jameson)
+1.
+0.5
+(Richard)
+0.8
+Llama-3.1-8B
+0.2
+(Emily)
+0.7
+1.
+(Jameson)
+1.
+0.5
+(Richard)
+0.6
+Llama-3.1-70B
+0.4
+(Emma)
+0.9
+0.8
+(Jameson)
+0.9
+0.6
+(Richard)
+0.8
+Llama-3.3-70B
+0.5
+(Emma)
+0.5
+1.
+(Jameson)
+1.
+0.6
+(Richard)
+1.
+Gemini-1.5-flash
+0.5
+(Beatrice)
+0.8
+0.6
+(Davies)
+1.
+1.
+(Ashworth) 1.
+Gemini-1.5-pro
+0.9
+(Black-
+wood)
+0.9
+0.6
+(Davies)
+1.
+1.
+(Black-
+wood)
+1.
+Gemini-2.5-flash TB 0
+0.2
+(2
+names)
+0.6
+0.8
+(Corbin)
+1.
+0.4
+(Alistair)
+1.
+Gemini-2.5-flash TB -1
+0.5
+(Finch)
+0.9
+0.5
+(Corbin)
+1.
+0.6
+(Ashworth) 1.
+Gemini-2.5-pro TB -1
+0.5
+(Beatrice)
+0.3
+0.6
+(Corbin)
+1.
+0.9
+(Alistair)
+1.
+Gemini-3-flash
+0.3
+(Ster-
+ling)
+0.5
+0.8
+(Thorne)
+1.
+0.9
+(Sterling)
+1.
+Gemini-3.1-pro
+0.2
+(3
+names)
+0.4
+0.6
+(Vance)
+1.
+0.5
+(Arthur)
+1.
+GPT-4o-mini
+0.1
+(many)
+0.8
+0.4
+(Clara)
+0.3
+0.2
+(Harold)
+0.5
+GPT-4o
+0.2
+(3
+names)
+0.5
+0.4
+(Elanor)
+0.0
+0.3
+(Victor)
+0.9
+43
+
+
+===== PDF PAGE 44 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+linguistic patterns that the know-it-all reader can exploit without explicit clue-following. Early convergence inflates
+CUB without reflecting genuine fair play: the know-it-all reader achieves high accuracy because distributional patterns
+betray the answer immediately, while the gullible-reader surprise S is unaffected (it depends on a separate reader), so
+FPUB = CUB −(1 −S) is inflated together with CUB.
+We detect early convergence by reporting the fraction of stories for which the know-it-all reader assigns probability
+> 0.5 to the true culprit at paragraphs 1, 3, and 5—paragraphs assumed to fall within the introduction for most models
+(we do not rely on the reported introduction-end markers, which can be unreliable). A model with high rates at these
+early paragraphs is likely exhibiting structural mode collapse. Table 13 reports these rates per model.
+Somewhat surprisingly, in most cases the generating models do not exhibit strong early convergence: sampling mul-
+tiple continuations yields diverse results, so structural mode collapse is usually not a dominant concern. That said,
+several models show elevated rates at paragraphs 3–5: notably Gemini-3-flash (70% at paragraph 3), Gemini-2.5-pro
+and Gemini-1.5-pro (50% each), and Llama-3.1-70B (30% at paragraphs 1 and 5). GPT-4o and Llama-3.3-70B both
+show 20% at paragraphs 1 and 3, though these rates do not reach statistical significance. Gemini-2.5-flash (tb0) shows
+a notable ramp-up: 0% at paragraph 1 but 40% by paragraph 5. For models with elevated rates, the inflated CUB values
+should be interpreted with caution. Ideally, we would like the model to sample from the space of relevant stories,
+yet as argued by Wagner and Abend [Wagner and Abend, 2025], post-training with instructions disincentivizes output
+diversity, which is precisely what is required for effective sampling from the space of valid stories.
+Our experiments show that some aspects of the story are relatively fixed and others show variability. This aligns with
+the findings of Doshi and Hauser [Doshi and Hauser, 2024], that human-AI collaboration seems to increase creativity
+at the individual level but decrease the collective novelty.
+R
+Learning Effect Analysis
+We examine whether participants’ ability to identify the culprit improves as they read more stories, by correlating story
+reading order with relative performance (accuracy adjusted for story difficulty). For each participant, we computed
+the Spearman rank correlation between reading order and final prediction accuracy (whether the culprit was correctly
+identified by the end of the story).
+For real stories, we find no significant correlation between reading order and performance (Spearman r = 0.03,
+p = 0.82), suggesting that participants do not noticeably improve at solving real mystery stories with practice. For
+artificial stories, there is a statistically significant but small negative correlation (r = −0.14, p = 0.021), possibly
+due to fatigue. A mixed-effects model with reading order as a fixed effect and participant as a random effect yields a
+significant but very small effect for the order variable (β = −0.001, p = 0.034) for artificial stories, confirming this
+pattern. The magnitude of the effect is negligible in practical terms, validating our treatment of the reader’s predictions
+as independent in the statistical analysis.
+The mean correlation across participants was ρ = 0.04 (p = 0.61, one-sample t-test against zero), indicating no sig-
+nificant trend overall. The 95% confidence interval [−0.06, 0.14] excludes a meaningful learning effect. We therefore
+conclude that reading order does not confound the results.
+44
+
+
+===== PDF PAGE 45 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+0
+5
+10
+15
+20
+Surprise (×25)
+0
+5
+10
+15
+20
+25
+Human Coherence (×25)
+Surprise vs. Human Coherence (per story)
+Spearman =-0.373 *  (n=44)
+Model family
+Gemini 1.5
+Gemini 2.5
+Llama
+GPT
+Figure 10: Per-story surprise vs. fair play (human-based coherence). Each point is one story; colors indicate the
+generating model.
+45
+
+
+===== PDF PAGE 46 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+0
+5
+10
+15
+20
+Surprise (×25)
+0
+5
+10
+15
+20
+25
+LLM Coherence (×25)
+Surprise vs. LLM Coherence (per story)
+Spearman =-0.044 ns  (n=127)
+Model family
+Gemini 1.5
+Gemini 2.5
+Gemini 3
+Llama
+GPT
+Figure 11: Per-story surprise vs. fair play (LLM-based coherence). Each point is one story; colors indicate the gener-
+ating model.
+46
+
+
+===== PDF PAGE 47 =====
+The Challenge and Reward of Fair Play in Narrative
+A PREPRINT
+Table 13: Early convergence analysis: fraction of stories for which the know-it-all reader assigns probability > 0.5 to
+the true culprit at paragraphs 1, 3, and 5 (assumed introduction paragraphs). Significance relative to a uniform-chance
+baseline (one-sided Poisson test): ∗p < 0.05, ∗∗p < 0.01, ∗∗∗p < 0.001. “n/a” indicates data unavailable.
+Model
+Para 1
+Para 3
+Para 5
+Real stories
+Sherlock Holmes
+2/10 (20%)
+n/a
+n/a
+Hercule Poirot
+1/10 (10%)
+4/8 (50%)∗
+4/8 (50%)∗
+Artificial stories
+Llama-3.1-8B
+0/9 (0%)
+0/9 (0%)
+0/9 (0%)
+Llama-3.2-3B
+0/8 (0%)
+1/8 (12%)∗
+1/8 (12%)∗
+Llama-3.1-70B
+3/10 (30%)∗∗∗
+1/10 (10%)∗
+3/10 (30%)∗∗∗
+Llama-3.3-70B
+2/10 (20%)∗∗∗
+2/10 (20%)∗∗∗
+1/10 (10%)∗
+Gemini-1.5-flash
+2/9 (22%)
+2/9 (22%)
+1/9 (11%)
+Gemini-1.5-pro
+2/10 (20%)
+5/10 (50%)∗∗
+3/10 (30%)
+Gemini-2.5-flash tb0
+0/10 (0%)
+2/10 (20%)∗∗∗
+4/10 (40%)∗∗∗
+Gemini-2.5-flash tb-1
+0/10 (0%)
+2/10 (20%)∗∗∗
+1/10 (10%)∗
+Gemini-2.5-pro
+1/10 (10%)∗
+5/10 (50%)∗∗∗
+3/10 (30%)∗∗∗
+Gemini-3-flash
+0/10 (0%)
+7/10 (70%)∗∗∗
+6/10 (60%)∗∗∗
+Gemini-3.1-pro
+0/10 (0%)
+2/10 (20%)∗∗∗
+3/10 (30%)∗∗∗
+GPT-4o-mini
+0/8 (0%)
+0/8 (0%)
+1/8 (12%)∗
+GPT-4o
+2/10 (20%)
+2/10 (20%)
+1/10 (10%)
+47

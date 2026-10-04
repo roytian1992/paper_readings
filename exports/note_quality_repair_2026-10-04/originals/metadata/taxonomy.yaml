@@ -1,0 +1,41 @@
+fields:
+  NLP:
+    children:
+      - Information Retrieval
+      - LLM
+      - Text Generation
+  Computer Vision:
+    children:
+      - Multimodal Learning
+      - Detection
+  Machine Learning:
+    children:
+      - Optimization
+      - Representation Learning
+
+directions:
+  RAG:
+    aliases:
+      - Retrieval-Augmented Generation
+      - Retrieval Augmented Generation
+    children:
+      - Graph RAG
+      - Agentic RAG
+      - Multimodal RAG
+  LLM Agents:
+    aliases:
+      - LLM Agent
+      - Agents
+
+method_tags:
+  - retrieval
+  - reranking
+  - graph-indexing
+  - preference-optimization
+  - instruction-tuning
+
+task_tags:
+  - question-answering
+  - summarization
+  - code-generation
+  - long-context
