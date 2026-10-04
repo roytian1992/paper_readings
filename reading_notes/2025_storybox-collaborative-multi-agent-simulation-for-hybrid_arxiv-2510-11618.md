@@ -288,12 +288,6 @@ Overall 从 1 天到 7 天提升明显，但 7 天之后收益变小。作者还
 
 从论文论证结构看，结论的作用是把方法和实验重新收束到一个实践意义上：多智能体模拟可以为长篇故事生成提供更自然的事件来源，使故事不只是从大纲扩写出来，而是从角色行为和环境互动中演化出来。需要注意的是，结论没有进一步展开新技术细节，也没有补充新的实验，只是对 StoryBox 的有效性和生成 engaging、coherent stories 的能力做总结。
 
-## 关键公式 / 图表
-
-### 关键图
-
-### 关键表格
-
 ## 实验结论
 
 实验部分支持三个主要结论。第一，StoryBox 在自动评价和人类评价中总体领先，尤其在 plot、character development、language use、conflict quality 和 overall 等维度上表现较强，说明沙盒事件和 Storyteller Agent 的组合能改善长篇故事质量。第二，StoryBox 能生成约 12,000 词的故事，相比直接使用 vanilla LLM 更适合 long-form generation。第三，组件消融显示 object descriptions、random abnormal behaviors 和 dynamic context window 分别支撑语言表达、角色/冲突发展和长程情节连贯性。

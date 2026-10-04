@@ -1,0 +1,81 @@
+{
+  "paper_id": "2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag",
+  "source_pdf": "../../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf",
+  "page_numbering": "1-based PDF page index",
+  "coordinate_units": "PDF points, origin top-left",
+  "extraction_method": "PyMuPDF page render with clip, then whitespace trim",
+  "figures": [
+    {
+      "file": "fig1_tasks.png",
+      "figure_number": "Figure 1",
+      "pdf_page": 2,
+      "source_crop_box": [
+        70,
+        68,
+        526,
+        297
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1137,
+        551
+      ],
+      "inline_note": "../../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig2_construction.png",
+      "figure_number": "Figure 2",
+      "pdf_page": 5,
+      "source_crop_box": [
+        70,
+        68,
+        526,
+        282
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1134,
+        523
+      ],
+      "inline_note": "../../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig3_error_analysis.png",
+      "figure_number": "Figure 3",
+      "pdf_page": 8,
+      "source_crop_box": [
+        70,
+        68,
+        526,
+        220
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1135,
+        356
+      ],
+      "inline_note": "../../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig4_prospective.png",
+      "figure_number": "Figure 4",
+      "pdf_page": 8,
+      "source_crop_box": [
+        70,
+        302,
+        292,
+        467
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        531,
+        403
+      ],
+      "inline_note": "../../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md",
+      "visual_qa": "inspected individually or in montage"
+    }
+  ]
+}

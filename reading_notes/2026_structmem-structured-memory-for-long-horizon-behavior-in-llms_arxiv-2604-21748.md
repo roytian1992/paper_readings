@@ -164,14 +164,6 @@ Internal mechanisms 部分回答一个关键质疑：效果提升是否只是因
 
 这一节的实质是把方法和实验收束到同一个贡献上：StructMem 试图证明长期会话记忆可以不在 flat memory 和 graph memory 之间二选一。它用时间锚定事件作为基本单位，在保留结构推理所需上下文的同时，避免 graph memory 的连续维护开销。LoCoMo 实验被用来支持这一点：StructMem 在 overall performance、multi-hop/temporal reasoning 和构建效率之间取得较好的折中。
 
-## 关键公式 / 图表
-
-### 关键图
-
-### 关键表格
-
-## 实验结论
-
 ## 局限性与可追问点
 
 论文明确承认两个局限。第一，dual-perspective extraction 依赖 instruction prompts。如果 prompt 设计不佳，factual entries 或 relational entries 可能不完整，也可能错误捕获关系信息。也就是说，StructMem 的结构质量部分取决于 LLM 按提示抽取事件视角的稳定性。一个直接的后续问题是：能否通过自动 prompt optimization、示例选择或小模型校验来提高跨对话场景的鲁棒性。
@@ -179,5 +171,3 @@ Internal mechanisms 部分回答一个关键质疑：效果提升是否只是因
 第二，StructMem 主要处理 memory expansion 和 synthesis，但缺少显式的 conflict resolution 与 memory updating 机制。长期用户事实和偏好会变化，例如用户过去喜欢某类内容，后来不喜欢了；如果系统只持续合成历史记忆，而不处理冲突、过期和修订，旧的 summary 或 relational hypothesis 可能与新信息不一致。作者建议未来引入 memory decay 或 updating strategies，使层次化记忆能反映交互中的最新状态。
 
 从研究角度看，这两个局限都很关键：StructMem 证明了“事件级绑定 + 跨事件合成”能改善长期记忆结构，但还没有完全解决动态记忆系统的生命周期问题。后续值得追问的是，事件记忆何时应被更新、遗忘或合并，以及 synthesized memory 如何在新证据出现时被校正。
-
-## 对我当前研究/项目的启发

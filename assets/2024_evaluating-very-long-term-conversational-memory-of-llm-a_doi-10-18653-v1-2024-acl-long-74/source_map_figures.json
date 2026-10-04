@@ -1,0 +1,46 @@
+[
+  {
+    "file": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig01_example.png",
+    "source": "sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf",
+    "page": 1,
+    "rect": [
+      304,
+      219,
+      528,
+      506
+    ]
+  },
+  {
+    "file": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig02_tasks.png",
+    "source": "sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf",
+    "page": 2,
+    "rect": [
+      79,
+      198,
+      512,
+      421
+    ]
+  },
+  {
+    "file": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig03_pipeline.png",
+    "source": "sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf",
+    "page": 5,
+    "rect": [
+      81,
+      70,
+      509,
+      180
+    ]
+  },
+  {
+    "file": "assets/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74/figures/fig04_multimodal_results.png",
+    "source": "sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf",
+    "page": 9,
+    "rect": [
+      81,
+      180,
+      510,
+      322
+    ]
+  }
+]

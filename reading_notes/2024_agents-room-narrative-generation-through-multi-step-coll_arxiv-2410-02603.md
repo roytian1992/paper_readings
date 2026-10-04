@@ -386,13 +386,13 @@ LLM-based rankings 与人类评价趋势相似。LLM evaluator 整体偏好人�
 
 ### 关键图
 
-### Figure 1: Agents' Room framework
+#### Figure 1: Agents' Room framework
 
 ![Figure 1](../assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_001_fig-agents-room-a-multi-agent-framework-for-coll.png)
 
 这张图展示了 Agents' Room 的基本协作机制：orchestrator 调用不同 agents，各 agents 的输出进入共享 scratchpad，writing agents 的输出还会组成最终故事。它支撑第 3 章对 agent、scratchpad 和 orchestrator 的形式化定义。
 
-### Figure 3: Human and LLM-based system rankings
+#### Figure 3: Human and LLM-based system rankings
 
 ![Figure 3](../assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_003_fig-human-autorater-evals-overall-system-ranking.png)
 
@@ -400,7 +400,7 @@ LLM-based rankings 与人类评价趋势相似。LLM evaluator 整体偏好人�
 
 ### 关键表格
 
-### Table 1: Dataset comparison
+#### Table 1: Dataset comparison
 
 | Dataset | Training | Validation | Testing | Avg. input tokens | Avg. target tokens |
 |---|---:|---:|---:|---:|---:|
@@ -412,7 +412,7 @@ LLM-based rankings 与人类评价趋势相似。LLM evaluator 整体偏好人�
 
 Tell Me a Story 的规模小，但 prompt 更详细、target story 更长，更贴近 long-form fiction writing。
 
-### Table 2: Main automatic metrics
+#### Table 2: Main automatic metrics
 
 | System | Words | Paragraphs | Unique | Intra rep. | Inter rep. | Overlap | Rouge-L | BertScore |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -452,5 +452,3 @@ Tell Me a Story 的规模小，但 prompt 更详细、target story 更长，更�
 5. LLM evaluator 与人类相关，但仍不是人类评价替代品。尤其在创意写作中，评价标准主观且文化依赖强，LLM evaluator 的偏差、稳定性和泛化仍需进一步检验。
 
 6. 实验集中在 1,000-2,000 tokens 的故事上，尚不能直接推断到小说级别、跨章节记忆更长的写作任务。
-
-## 对我当前研究/项目的启发

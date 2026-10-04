@@ -1,0 +1,46 @@
+[
+  {
+    "file": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig01_framework.png",
+    "source": "sources/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.pdf",
+    "page": 3,
+    "rect": [
+      108,
+      70,
+      502,
+      226
+    ]
+  },
+  {
+    "file": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig02_empathy.png",
+    "source": "sources/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.pdf",
+    "page": 6,
+    "rect": [
+      108,
+      69,
+      504,
+      277
+    ]
+  },
+  {
+    "file": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig03_recall.png",
+    "source": "sources/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.pdf",
+    "page": 7,
+    "rect": [
+      108,
+      83,
+      503,
+      201
+    ]
+  },
+  {
+    "file": "assets/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250/figures/fig04_personality.png",
+    "source": "sources/2024_memorybank-enhancing-large-language-models-with-long-ter_arxiv-2305-10250.pdf",
+    "page": 7,
+    "rect": [
+      109,
+      231,
+      503,
+      379
+    ]
+  }
+]

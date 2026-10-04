@@ -1,0 +1,63 @@
+{
+  "paper_id": "2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841",
+  "source_pdf": "../../sources/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.pdf",
+  "page_numbering": "1-based PDF page index",
+  "coordinate_units": "PDF points, origin top-left",
+  "extraction_method": "PyMuPDF page render with clip, then whitespace trim",
+  "figures": [
+    {
+      "file": "fig1_reader_models.png",
+      "figure_number": "Figure 1",
+      "pdf_page": 4,
+      "source_crop_box": [
+        71,
+        68,
+        541,
+        222
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1113,
+        373
+      ],
+      "inline_note": "../../reading_notes/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig2_fairplay_models.png",
+      "figure_number": "Figure 2",
+      "pdf_page": 10,
+      "source_crop_box": [
+        71,
+        69,
+        541,
+        277
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1173,
+        516
+      ],
+      "inline_note": "../../reading_notes/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig3_reading_curves.png",
+      "figure_number": "Figure 3",
+      "pdf_page": 11,
+      "source_crop_box": [
+        71,
+        68,
+        541,
+        384
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1176,
+        785
+      ],
+      "inline_note": "../../reading_notes/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md",
+      "visual_qa": "inspected individually or in montage"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "paper_id": "2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577",
+  "source_pdf": "../../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf",
+  "page_numbering": "1-based PDF page index",
+  "coordinate_units": "PDF points, origin top-left",
+  "extraction_method": "PyMuPDF page render with clip, then whitespace trim",
+  "figures": [
+    {
+      "file": "fig1_pipeline.png",
+      "figure_number": "Figure 1",
+      "pdf_page": 2,
+      "source_crop_box": [
+        61,
+        64,
+        598,
+        313
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        931,
+        537
+      ],
+      "inline_note": "../../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig2_multihop_results.png",
+      "figure_number": "Figure 2",
+      "pdf_page": 14,
+      "source_crop_box": [
+        107,
+        282,
+        506,
+        496
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        901,
+        425
+      ],
+      "inline_note": "../../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig3_families.png",
+      "figure_number": "Figure 3",
+      "pdf_page": 15,
+      "source_crop_box": [
+        66,
+        71,
+        535,
+        308
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        902,
+        486
+      ],
+      "inline_note": "../../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig4_hop_classes.png",
+      "figure_number": "Figure 4",
+      "pdf_page": 15,
+      "source_crop_box": [
+        66,
+        344,
+        535,
+        610
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        890,
+        566
+      ],
+      "inline_note": "../../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md",
+      "visual_qa": "inspected individually or in montage"
+    }
+  ]
+}

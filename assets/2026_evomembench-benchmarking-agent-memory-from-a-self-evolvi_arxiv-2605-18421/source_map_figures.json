@@ -1,0 +1,46 @@
+[
+  {
+    "file": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig01_taxonomy.png",
+    "source": "sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf",
+    "page": 2,
+    "rect": [
+      107,
+      70,
+      506,
+      291
+    ]
+  },
+  {
+    "file": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig02_cost_accuracy.png",
+    "source": "sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf",
+    "page": 6,
+    "rect": [
+      309,
+      496,
+      509,
+      630
+    ]
+  },
+  {
+    "file": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig03_tool_transfer.png",
+    "source": "sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf",
+    "page": 9,
+    "rect": [
+      108,
+      70,
+      500,
+      188
+    ]
+  },
+  {
+    "file": "assets/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421/figures/fig04_embodied_transfer.png",
+    "source": "sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf",
+    "page": 9,
+    "rect": [
+      108,
+      211,
+      501,
+      329
+    ]
+  }
+]

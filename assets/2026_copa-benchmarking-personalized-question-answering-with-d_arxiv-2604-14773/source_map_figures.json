@@ -1,0 +1,57 @@
+[
+  {
+    "file": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig01_cipd.png",
+    "source": "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf",
+    "page": 1,
+    "rect": [
+      305,
+      222,
+      525,
+      362
+    ]
+  },
+  {
+    "file": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig02_distribution.png",
+    "source": "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf",
+    "page": 3,
+    "rect": [
+      75,
+      71,
+      285,
+      365
+    ]
+  },
+  {
+    "file": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig03_factor_distillation.png",
+    "source": "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf",
+    "page": 4,
+    "rect": [
+      78,
+      70,
+      516,
+      219
+    ]
+  },
+  {
+    "file": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig04_evaluation.png",
+    "source": "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf",
+    "page": 5,
+    "rect": [
+      71,
+      70,
+      290,
+      136
+    ]
+  },
+  {
+    "file": "assets/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773/figures/fig05_correlations.png",
+    "source": "sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf",
+    "page": 8,
+    "rect": [
+      314,
+      415,
+      516,
+      593
+    ]
+  }
+]

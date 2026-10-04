@@ -1,0 +1,35 @@
+[
+  {
+    "file": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig01_competencies.png",
+    "source": "sources/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.pdf",
+    "page": 2,
+    "rect": [
+      123,
+      80,
+      488,
+      278
+    ]
+  },
+  {
+    "file": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig02_chunk_ablation.png",
+    "source": "sources/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.pdf",
+    "page": 9,
+    "rect": [
+      109,
+      80,
+      504,
+      196
+    ]
+  },
+  {
+    "file": "assets/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257/figures/fig03_topk_ablation.png",
+    "source": "sources/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.pdf",
+    "page": 9,
+    "rect": [
+      109,
+      216,
+      504,
+      331
+    ]
+  }
+]

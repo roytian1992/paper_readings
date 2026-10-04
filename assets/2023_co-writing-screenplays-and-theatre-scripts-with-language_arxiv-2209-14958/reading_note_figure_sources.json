@@ -1,0 +1,68 @@
+[
+  {
+    "asset": "fig1_hierarchy.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 2,
+    "crop_box_points": [
+      199,
+      90,
+      450,
+      232
+    ]
+  },
+  {
+    "asset": "fig2_story_shapes.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 3,
+    "crop_box_points": [
+      122,
+      93,
+      447,
+      211
+    ]
+  },
+  {
+    "asset": "fig3_prompting.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 4,
+    "crop_box_points": [
+      141,
+      98,
+      506,
+      217
+    ]
+  },
+  {
+    "asset": "fig4_performance.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 14,
+    "crop_box_points": [
+      129,
+      92,
+      520,
+      194
+    ]
+  },
+  {
+    "asset": "fig5_survey.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 15,
+    "crop_box_points": [
+      118,
+      98,
+      462,
+      200
+    ]
+  },
+  {
+    "asset": "fig6_editing.png",
+    "source_pdf": "2023_co-writing-screenplays-and-theatre-scripts-with-language_arxiv-2209-14958.pdf",
+    "pdf_page": 16,
+    "crop_box_points": [
+      121,
+      93,
+      526,
+      214
+    ]
+  }
+]

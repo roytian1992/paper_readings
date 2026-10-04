@@ -1,0 +1,98 @@
+[
+  {
+    "figure": 1,
+    "pdf_page": 2,
+    "bbox_pt": [
+      315,
+      77,
+      505,
+      300
+    ],
+    "file": "figure_01_p02.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 2,
+    "pdf_page": 3,
+    "bbox_pt": [
+      108,
+      77,
+      504,
+      214
+    ],
+    "file": "figure_02_p03.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 3,
+    "pdf_page": 4,
+    "bbox_pt": [
+      114,
+      75,
+      494,
+      342
+    ],
+    "file": "figure_03_p04.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 4,
+    "pdf_page": 6,
+    "bbox_pt": [
+      105,
+      79,
+      504,
+      204
+    ],
+    "file": "figure_04_p06.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 5,
+    "pdf_page": 7,
+    "bbox_pt": [
+      105,
+      79,
+      505,
+      207
+    ],
+    "file": "figure_05_p07.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 6,
+    "pdf_page": 7,
+    "bbox_pt": [
+      105,
+      300,
+      505,
+      430
+    ],
+    "file": "figure_06_p07.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 7,
+    "pdf_page": 8,
+    "bbox_pt": [
+      110,
+      77,
+      502,
+      282
+    ],
+    "file": "figure_07_p08.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  },
+  {
+    "figure": 8,
+    "pdf_page": 9,
+    "bbox_pt": [
+      105,
+      79,
+      505,
+      211
+    ],
+    "file": "figure_08_p09.png",
+    "source": "sources/2026_language-models-use-lookbacks-to-track-beliefs_arxiv-2505-14685.pdf"
+  }
+]

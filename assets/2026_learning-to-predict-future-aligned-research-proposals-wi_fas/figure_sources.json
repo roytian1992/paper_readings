@@ -1,0 +1,81 @@
+{
+  "paper_id": "2026_learning-to-predict-future-aligned-research-proposals-wi_fas",
+  "source_pdf": "../../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf",
+  "page_numbering": "1-based PDF page index",
+  "coordinate_units": "PDF points, origin top-left",
+  "extraction_method": "PyMuPDF page render with clip, then whitespace trim",
+  "figures": [
+    {
+      "file": "fig1_future_alignment.png",
+      "figure_number": "Figure 1",
+      "pdf_page": 1,
+      "source_crop_box": [
+        310,
+        219,
+        516,
+        303
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        618,
+        249
+      ],
+      "inline_note": "../../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig2_framework.png",
+      "figure_number": "Figure 2",
+      "pdf_page": 4,
+      "source_crop_box": [
+        70,
+        68,
+        526,
+        218
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1041,
+        375
+      ],
+      "inline_note": "../../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig3_human_evaluation.png",
+      "figure_number": "Figure 3",
+      "pdf_page": 6,
+      "source_crop_box": [
+        70,
+        68,
+        292,
+        213
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        541,
+        359
+      ],
+      "inline_note": "../../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig4_executable_proposals.png",
+      "figure_number": "Figure 4",
+      "pdf_page": 7,
+      "source_crop_box": [
+        70,
+        68,
+        526,
+        245
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1123,
+        443
+      ],
+      "inline_note": "../../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md",
+      "visual_qa": "inspected individually or in montage"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "asset": "fig1_overview.png",
+    "source_pdf": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+    "pdf_page": 1,
+    "crop_box_points": [
+      323,
+      211,
+      522,
+      411
+    ]
+  },
+  {
+    "asset": "fig2_plan.png",
+    "source_pdf": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+    "pdf_page": 3,
+    "crop_box_points": [
+      70,
+      489,
+      291,
+      658
+    ]
+  },
+  {
+    "asset": "fig3_draft.png",
+    "source_pdf": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+    "pdf_page": 3,
+    "crop_box_points": [
+      305,
+      290,
+      526,
+      478
+    ]
+  },
+  {
+    "asset": "fig4_rewrite.png",
+    "source_pdf": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+    "pdf_page": 4,
+    "crop_box_points": [
+      70,
+      374,
+      291,
+      502
+    ]
+  },
+  {
+    "asset": "fig5_edit.png",
+    "source_pdf": "2022_re3-generating-longer-stories-with-recursive-reprompting_arxiv-2210-06774.pdf",
+    "pdf_page": 5,
+    "crop_box_points": [
+      70,
+      71,
+      291,
+      257
+    ]
+  }
+]

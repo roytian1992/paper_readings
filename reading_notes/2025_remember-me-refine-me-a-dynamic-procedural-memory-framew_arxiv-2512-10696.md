@@ -222,15 +222,3 @@ Conclusion 用很短的篇幅回扣全文主张：ReMe 是一个 dynamic procedu
 结论还突出 experience refinement 的必要性。ReMe 不只是构建经验池，而是通过动态维护保持经验池质量，使其服务长期 agent evolution。这个观点对应主结果中 dynamic 版本优于 fixed 版本，也对应组件消融中 selective addition、failure-aware reflection 和 utility-based deletion 的收益。
 
 从全文角度看，Conclusion 的最终论点是：ReMe 的实验结果和消融结果共同支持“procedural memory 有效性来自闭环管理”这一中心命题。也就是说，agent 不是因为拥有更多记忆就自然变强，而是因为记忆被抽取得更细、检索和改写得更贴合任务、执行后还能持续增删维护，才形成可复用的长期经验能力。
-
-## 关键公式 / 图表
-
-### 关键图
-
-### 关键表格
-
-## 实验结论
-
-## 局限性与可追问点
-
-## 对我当前研究/项目的启发

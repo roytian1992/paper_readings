@@ -1,6 +1,6 @@
 # Papers by Keyword
 
-Generated: 2026-10-04
+Generated: 2026-10-05
 
 ## action selection
 
@@ -1058,7 +1058,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p` | 11697_P2P_Automated_Paper_to_P | 2026 | research | [pdf](../sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf) | [note](../reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md) |  |  |  | reading |
+| `2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p` | 11697_P2P_Automated_Paper_to_P | 2026 | research | [pdf](../sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf) | [note](../reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md) |  |  |  | read |
 | `2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577` | Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction | 2026 | research | [pdf](../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf) | [note](../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md) |  |  |  | read |
 
 ## user memory

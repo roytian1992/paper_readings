@@ -227,12 +227,6 @@ Hybrid reranking 的结果被作者用来支持“错误主要来自 irrelevant 
 
 Discussion 的核心结论是：当前 agent memory 研究不应默认“更复杂的写入管线”就是主要突破口。至少在本文设置中，raw memory preservation 加上更好的 retrieval/reranking 比有损压缩式写入更有效。更稳妥的下一步不是抛弃写入策略研究，而是在不同模型、数据集、retrieval budget、上下文长度约束和 learned memory systems 上验证这个诊断结论是否仍成立。
 
-## 关键公式 / 图表
-
-### 关键图
-
-### 关键表格
-
 ## 实验结论
 
 本文的主要实验结论可以概括为三点。第一，write strategy 的影响相对有限：同一 retrieval method 内，Basic RAG、Extracted Facts 和 Summarized Episodes 的 accuracy 差距通常只有 3--8 个点。第二，retrieval method 是更强的影响因素：从 BM25 到 Hybrid+Rerank，平均 accuracy 从 57.1% 提升到 77.2%，并且 Retrieval Precision@5 与 downstream accuracy 高度相关。第三，failure analysis 显示 retrieval failure 是主要错误模式，而 utilization failure 和 hallucination 比例较低且相对稳定，说明模型在拿到相关上下文后通常能够使用它。

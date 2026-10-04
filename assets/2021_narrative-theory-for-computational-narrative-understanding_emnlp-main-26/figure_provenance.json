@@ -1,0 +1,26 @@
+[
+  {
+    "figure": 1,
+    "pdf_page": 2,
+    "bbox_pt": [
+      335,
+      70,
+      489,
+      193
+    ],
+    "file": "figure_01_p02.png",
+    "source": "sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf"
+  },
+  {
+    "figure": 2,
+    "pdf_page": 3,
+    "bbox_pt": [
+      82,
+      70,
+      278,
+      178
+    ],
+    "file": "figure_02_p03.png",
+    "source": "sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf"
+  }
+]

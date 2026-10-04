@@ -1,0 +1,46 @@
+[
+  {
+    "asset": "fig1_overview.png",
+    "source_pdf": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf",
+    "pdf_page": 1,
+    "crop_box_points": [
+      108,
+      292,
+      501,
+      554
+    ]
+  },
+  {
+    "asset": "fig2_statistics.png",
+    "source_pdf": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf",
+    "pdf_page": 5,
+    "crop_box_points": [
+      135,
+      74,
+      480,
+      178
+    ]
+  },
+  {
+    "asset": "fig3_annotation.png",
+    "source_pdf": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf",
+    "pdf_page": 5,
+    "crop_box_points": [
+      126,
+      230,
+      481,
+      434
+    ]
+  },
+  {
+    "asset": "fig4_qualitative.png",
+    "source_pdf": "2024_whodunitbench-evaluating-large-multimodal-agents-via-mur_doi-10-52202-079017-2751.pdf",
+    "pdf_page": 9,
+    "crop_box_points": [
+      108,
+      74,
+      502,
+      203
+    ]
+  }
+]

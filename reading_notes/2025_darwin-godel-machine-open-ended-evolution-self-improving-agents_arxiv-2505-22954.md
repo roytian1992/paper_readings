@@ -193,7 +193,7 @@ $$p_i \propto \frac{\sigma\!\left(\lambda(\alpha_i-\alpha_0)\right)}{1+n_i},$$
 
 ### 4.4 Results
 
-### Figure 2: DGM 与两个消融基线的进展
+#### Figure 2: DGM 与两个消融基线的进展
 
 ![Figure 2](../assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_002_1_self-improvement-and-open-ended-exploration-enab.png)
 
@@ -208,7 +208,7 @@ $$p_i \propto \frac{\sigma\!\left(\lambda(\alpha_i-\alpha_0)\right)}{1+n_i},$$
 
 完整 DGM 在 80 轮后将 SWE-bench 从 20.0% 提升到 50.0%，将 Polyglot 的 50-task 子集分数从 14.0% 提升到 38.0%。由于 Polyglot 子集较小，作者又在完整 Polyglot 上重新评估初始和最佳智能体，得到 14.2% 到 30.7% 的提升。两组数字对应不同评测规模，不能直接混用。
 
-### Figure 3: 档案树与性能进展
+#### Figure 3: 档案树与性能进展
 
 ![Figure 3](../assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_003_1_the-dgm-automatically-self-improves-to-become-a.png)
 
@@ -218,7 +218,7 @@ $$p_i \propto \frac{\sigma\!\left(\lambda(\alpha_i-\alpha_0)\right)}{1+n_i},$$
 
 **消融结果的解释。** 去掉自我改进后，固定的基础元智能体在早期仍能生成一些更好的版本，但很快停滞；去掉档案后，一次糟糕的最新修改会污染后续所有尝试。附录还比较了 DGM Greedy：它总是选择最高分父代，但仍低于允许所有历史节点作为潜在 stepping stone 的完整 DGM，说明多样性本身具有价值。
 
-### Figure 4: 跨模型、跨基准和跨语言迁移
+#### Figure 4: 跨模型、跨基准和跨语言迁移
 
 ![Figure 4](../assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/figures/source_figure_004_transfer-between-models-benchmarks-and-tasks-the.png)
 
@@ -259,15 +259,3 @@ $$p_i \propto \frac{\sigma\!\left(\lambda(\alpha_i-\alpha_0)\right)}{1+n_i},$$
 后续方向包括让智能体修改或共同进化开放式搜索过程，进一步修改自己的训练脚本甚至基础模型；把 DGM 扩展到视觉、写作等非编码任务；共同进化任务分布，减少对单一目标的依赖；在更广泛的任务集合上演化通用智能体；以及研究人类监督、偏好和安全约束如何进入长期自我改进循环。
 
 这篇论文最重要的限制也正是它最重要的研究问题：它证明了“代码级自我修改 + 经验筛选 + 历史档案”能够在受限编码环境中产生明显提升，但还没有证明系统能够在开放世界中可靠地定义自己的目标、保证安全，或自主改进负责搜索自身的元过程。
-
-## 关键公式 / 图表
-
-### 关键图
-
-### 关键表格
-
-## 实验结论
-
-## 局限性与可追问点
-
-## 对我当前研究/项目的启发

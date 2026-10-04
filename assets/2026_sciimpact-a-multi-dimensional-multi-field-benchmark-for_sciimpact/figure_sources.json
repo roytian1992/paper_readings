@@ -1,0 +1,81 @@
+{
+  "paper_id": "2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact",
+  "source_pdf": "../../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf",
+  "page_numbering": "1-based PDF page index",
+  "coordinate_units": "PDF points, origin top-left",
+  "extraction_method": "PyMuPDF page render with clip, then whitespace trim",
+  "figures": [
+    {
+      "file": "fig1_dimension_results.png",
+      "figure_number": "Figure 1",
+      "pdf_page": 1,
+      "source_crop_box": [
+        297,
+        204,
+        535,
+        442
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        567,
+        559
+      ],
+      "inline_note": "../../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig2_curation.png",
+      "figure_number": "Figure 2",
+      "pdf_page": 4,
+      "source_crop_box": [
+        70,
+        69,
+        526,
+        294
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        1136,
+        538
+      ],
+      "inline_note": "../../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig3_text_lengths.png",
+      "figure_number": "Figure 3",
+      "pdf_page": 5,
+      "source_crop_box": [
+        305,
+        229,
+        526,
+        352
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        540,
+        305
+      ],
+      "inline_note": "../../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "visual_qa": "inspected individually or in montage"
+    },
+    {
+      "file": "fig4_year_bins.png",
+      "figure_number": "Figure 4",
+      "pdf_page": 8,
+      "source_crop_box": [
+        304,
+        324,
+        527,
+        454
+      ],
+      "crop_note": "Final PNG has additional whitespace-only border trimming; original visual content preserved.",
+      "pixel_size": [
+        558,
+        312
+      ],
+      "inline_note": "../../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md",
+      "visual_qa": "inspected individually or in montage"
+    }
+  ]
+}

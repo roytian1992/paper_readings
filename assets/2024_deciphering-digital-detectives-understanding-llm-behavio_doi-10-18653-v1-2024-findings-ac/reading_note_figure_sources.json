@@ -1,0 +1,46 @@
+[
+  {
+    "asset": "fig1_game_flow.png",
+    "source_pdf": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf",
+    "pdf_page": 1,
+    "crop_box_points": [
+      310,
+      211,
+      505,
+      395
+    ]
+  },
+  {
+    "asset": "fig2_thinkthrice.png",
+    "source_pdf": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf",
+    "pdf_page": 5,
+    "crop_box_points": [
+      70,
+      70,
+      526,
+      299
+    ]
+  },
+  {
+    "asset": "fig3_voting.png",
+    "source_pdf": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf",
+    "pdf_page": 7,
+    "crop_box_points": [
+      322,
+      70,
+      502,
+      185
+    ]
+  },
+  {
+    "asset": "fig4_reasoning.png",
+    "source_pdf": "2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf",
+    "pdf_page": 8,
+    "crop_box_points": [
+      86,
+      70,
+      267,
+      186
+    ]
+  }
+]

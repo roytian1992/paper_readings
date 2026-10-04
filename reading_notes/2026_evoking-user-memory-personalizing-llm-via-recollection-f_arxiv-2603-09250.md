@@ -303,6 +303,16 @@ PersonaBench 上使用 MiniLM 时，RF-Mem 仍然在 Overall 上最好：
 
 ### 4 Related Works
 
+本节把个性化记忆检索与一般知识 RAG 区分开：检索对象是某个用户的历史经历、偏好与对话，目的是补足当前交流中的个人背景。作者按 query reformulation、index construction、retrieval frameworks 三条路线定位 RF-Mem。（原文 `chapter/5rela.tex`）
+
+**查询改写。** LD-Agent 抽取关键词，MemoCue 用记忆线索构造查询，LQ-TOD 生成面向任务的查询；LameR、MemInsight 等则借助 LLM 扩充上下文或属性。这些方法主要改变“用什么查询去找”，使短问题与历史表述更容易匹配。RF-Mem 的切入点还包括“当前检索是否足够可信、是否需要更深入地找”，所以查询改写可以作为其外部组件，而不是必然被替代。
+
+**索引构造。** 文本路线包括 MemoryBank、SeCom、MemGas 的摘要、分段或聚类，以及反思式/层级式摘要；图路线包括 A-Mem、THEANINE、Mem0、Zep 的关系结构。作者认为，这些表示虽然不同，但许多最终仍使用固定的密集检索流程，未充分依据问题复杂度与检索不确定性调整路径。这是作者用于定位工作的概括，不意味着这些系统在所有版本、所有场景下都绝无自适应操作。
+
+**检索框架。** 从关键词匹配到 DPR、Contriever，再到 MiniLM、MPNet、BGE，编码器改进主要改善相似度排名和效率。RF-Mem 强调的是在高效的 Familiarity 路径与更深入的 Recollection 路径间切换：前者承担直接识别，后者通过逐步扩展补足分散证据，controller 根据熟悉性不确定度决定是否增加计算。
+
+因此本节与 §3.4 的适配实验相呼应：索引、query expansion 和外部迭代推理可以保留，RF-Mem 提供另一层检索深度控制。其“认知启发”具体体现为双路径和切换策略，并非已复现人类完整的情景记忆机制；本节没有新增实验结果。
+
 ### 5 Conclusion
 
 Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙事框架上。作者认为，现有 personalized memory retrieval 主要停留在基于相似度的一次性 Familiarity retrieval，而本文引入的 Recollection 是一种 deliberate stepwise retrieval mechanism：当熟悉性不足时，检索器不直接停在 top-$K$，而是通过多轮候选检索、聚类和 query mixing 继续扩展证据。
@@ -315,8 +325,6 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 
 ## 关键公式 / 图表
-
-### 关键图
 
 ### 关键表格
 
@@ -411,9 +419,3 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 ### 已抽取表格候选
 
 暂无结构化表格候选。文字型表格或说明框在逐章阅读时转写为 Markdown list/table。
-
-## 实验结论
-
-## 局限性与可追问点
-
-## 对我当前研究/项目的启发

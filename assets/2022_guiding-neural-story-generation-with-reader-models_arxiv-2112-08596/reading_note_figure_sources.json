@@ -1,0 +1,35 @@
+[
+  {
+    "asset": "fig1_reader_goal.png",
+    "source_pdf": "2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.pdf",
+    "pdf_page": 1,
+    "crop_box_points": [
+      305,
+      215,
+      510,
+      510
+    ]
+  },
+  {
+    "asset": "fig2_pipeline.png",
+    "source_pdf": "2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.pdf",
+    "pdf_page": 4,
+    "crop_box_points": [
+      70,
+      65,
+      525,
+      242
+    ]
+  },
+  {
+    "asset": "fig3_inference_link.png",
+    "source_pdf": "2022_guiding-neural-story-generation-with-reader-models_arxiv-2112-08596.pdf",
+    "pdf_page": 6,
+    "crop_box_points": [
+      71,
+      76,
+      292,
+      169
+    ]
+  }
+]

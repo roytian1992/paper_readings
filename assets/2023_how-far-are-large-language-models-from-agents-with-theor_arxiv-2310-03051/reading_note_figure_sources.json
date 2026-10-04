@@ -1,0 +1,57 @@
+[
+  {
+    "asset": "fig1_task_shift.png",
+    "source_pdf": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+    "pdf_page": 1,
+    "crop_box_points": [
+      106,
+      213,
+      506,
+      443
+    ]
+  },
+  {
+    "asset": "fig2_conversion.png",
+    "source_pdf": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+    "pdf_page": 4,
+    "crop_box_points": [
+      265,
+      450,
+      504,
+      609
+    ]
+  },
+  {
+    "asset": "fig3_oracle_hints.png",
+    "source_pdf": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+    "pdf_page": 6,
+    "crop_box_points": [
+      306,
+      423,
+      504,
+      546
+    ]
+  },
+  {
+    "asset": "fig4_far_prompt.png",
+    "source_pdf": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+    "pdf_page": 7,
+    "crop_box_points": [
+      108,
+      77,
+      504,
+      311
+    ]
+  },
+  {
+    "asset": "fig5_prompt_comparison.png",
+    "source_pdf": "2023_how-far-are-large-language-models-from-agents-with-theor_arxiv-2310-03051.pdf",
+    "pdf_page": 8,
+    "crop_box_points": [
+      108,
+      76,
+      505,
+      248
+    ]
+  }
+]

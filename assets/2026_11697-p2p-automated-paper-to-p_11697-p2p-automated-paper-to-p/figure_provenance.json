@@ -1,0 +1,50 @@
+[
+  {
+    "figure": 1,
+    "pdf_page": 3,
+    "bbox_pt": [
+      112,
+      75,
+      498,
+      251
+    ],
+    "file": "figure_01_p03.png",
+    "source": "sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf"
+  },
+  {
+    "figure": 2,
+    "pdf_page": 4,
+    "bbox_pt": [
+      162,
+      75,
+      445,
+      281
+    ],
+    "file": "figure_02_p04.png",
+    "source": "sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf"
+  },
+  {
+    "figure": 3,
+    "pdf_page": 5,
+    "bbox_pt": [
+      110,
+      75,
+      503,
+      221
+    ],
+    "file": "figure_03_p05.png",
+    "source": "sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf"
+  },
+  {
+    "figure": 4,
+    "pdf_page": 6,
+    "bbox_pt": [
+      125,
+      75,
+      492,
+      208
+    ],
+    "file": "figure_04_p06.png",
+    "source": "sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf"
+  }
+]
