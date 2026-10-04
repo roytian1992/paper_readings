@@ -25,7 +25,7 @@ keywords:
   - BFCL-V3
   - AppWorld
   - memory scaling
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz
 assets_path: ../assets/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696
@@ -127,7 +127,7 @@ Utility-based deletion 负责删除过时或低效经验。ReMe 为每条经验�
 $$
 \phi_{remove}(E) =
 \begin{cases}
-\mathds{1}\left[\frac{u(E)}{f(E)} \leq \beta\right], & \text{if } f(E) \geq \alpha, \\
+\mathbf{1}\left[\frac{u(E)}{f(E)} \leq \beta\right], & \text{if } f(E) \geq \alpha, \\
 0, & \text{otherwise}.
 \end{cases}
 $$

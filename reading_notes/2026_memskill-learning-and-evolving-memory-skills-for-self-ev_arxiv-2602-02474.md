@@ -24,7 +24,7 @@ keywords:
   - skill bank
   - controller
   - designer
-status: reading
+status: read
 source_path: ../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf
 source_archive_path: ../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474_source.tar.gz
 assets_path: ../assets/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474

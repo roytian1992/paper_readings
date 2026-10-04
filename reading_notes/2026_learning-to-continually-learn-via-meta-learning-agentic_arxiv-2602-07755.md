@@ -19,7 +19,7 @@ keywords:
   - agent memory
   - meta-learning
   - memory design
-status: reading
+status: read
 source_path: ../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf
 source_archive_path: ../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755_source.tar.gz
 source_extract_path: ../assets/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755/source

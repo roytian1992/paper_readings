@@ -26,7 +26,7 @@ keywords:
   - AutoResearch
   - LoCoMo
   - MemBench
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz
 assets_path: ../assets/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941

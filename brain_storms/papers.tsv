@@ -1,0 +1,67 @@
+title	year	venue_or_status	category	relevance	link	notes
+Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games	2024	ACL Findings	benchmark:jubensha	M1/M2 closest	https://aclanthology.org/2024.findings-acl.490/	First Jubensha dataset with character scripts and game rules; multi-agent interaction framework.
+WhodunitBench: Evaluating Large Multimodal Agents via Murder Mystery Games	2024	NeurIPS D&B Spotlight	benchmark:murder mystery	M1/M2 closest	https://openreview.net/forum?id=qmvtDIfbmS	50 curated scripts and 3000+ QA; roles, clues, reason, murderer; multimodal.
+WhoDunIt: Evaluation benchmark for culprit detection in mystery stories	2025	arXiv	benchmark:detective story	culprit reasoning	https://arxiv.org/html/2502.07747v1	Open-domain mystery novels and short stories for culprit detection.
+DetectiveQA: Evaluating Long-Context Reasoning on Detective Novels	2024	arXiv	benchmark:detective story	long-context reasoning	https://arxiv.org/html/2409.02465v2	Detective novels QA for long-context narrative reasoning.
+Llosa-style nonlinear multi-POV novels	n/a	literary stress test	benchmark:literary stress test	M1/M2/M3 qualitative	n/a	Use as inspiration/case-study schema: nonlinear timelines, nested dialogues, multi-POV reveal; copyrighted, not a public benchmark source.
+Genette Narrative Discourse	1980	narratology	theory	M1/M3 theory	https://archive.org/download/NarrativeDiscourseAnEssayInMethod/NarrativeDiscourse-AnEssayInMethod.pdf	Story/discourse/narration; order, duration, frequency, mood, voice.
+Sternberg Expositional Modes and Temporal Ordering in Fiction	1978	narratology	theory	M3 reveal theory	https://archive.org/details/expositionalmode0000ster	Curiosity, suspense, surprise via temporal ordering and exposition.
+Marie-Laure Ryan Possible Worlds Theory	1991	narratology	theory	M1/M2 theory	https://marilaur.info/pws.htm	Textual actual world and character private worlds.
+David Herman Story Logic / Cognitive Narratology	2002	narratology	theory	reader/storyworld theory	https://www.imageandnarrative.be/inarchive/narratology/davidherman.htm	Narrative comprehension as storyworld construction.
+Manfred Jahn Focalization	2007	narratology	theory	M2/M3 theory	https://uni-koeln.de/~ame02/jahn_2007.htm	Focalization as who sees / through whom narrative information is filtered.
+Vargas Llosa Conversation in the Cathedral close readings	n/a	literary close reading	literary stress test	frame dialogue / nested time	https://literariness.org/2022/10/10/analysis-of-mario-vargas-llosas-conversation-in-the-cathedral/	Frame conversation, memory, dictatorship, multiple social strata.
+Vargas Llosa The Green House close readings	n/a	literary close reading	literary stress test	nonlinear timelines	https://literariness.org/2022/10/12/analysis-of-mario-vargas-llosas-the-green-house/	Nonchronological multi-location panorama.
+Vargas Llosa Aunt Julia and the Scriptwriter close readings	n/a	literary close reading	literary stress test	embedded fiction	https://www.enotes.com/topics/aunt-julia-scriptwriter/in-depth	Alternates autobiographical story and radio soap operas.
+Faulkner The Sound and the Fury analysis	n/a	literary close reading	literary stress test	limited POV / nonlinear memory	https://en.wikipedia.org/wiki/The_Sound_and_the_Fury	Multiple narrators, stream of consciousness, flashbacks.
+Digital Yoknapatawpha narrative technique	n/a	digital humanities	literary data resource	fabula/syuzhet annotation inspiration	https://faulkner.iath.virginia.edu/the_art_of_faulkner_technique.html	Digital Faulkner resource with narrative technique framing.
+Rulfo Pedro Paramo analysis	n/a	literary close reading	literary stress test	fragmented voices / storyworld boundary	https://literariness.org/2023/08/03/analysis-of-juan-rulfos-pedro-paramo/	Fragments, dead voices, magical realism precursor.
+Cortazar Hopscotch analysis	n/a	literary close reading	literary stress test	reorderable discourse	https://literariness.org/2022/10/13/analysis-of-julio-cortazars-hopscotch/	Reader-reorderable novel structure.
+Fuentes The Death of Artemio Cruz analysis	n/a	literary close reading	literary stress test	voice/time shifts	https://literariness.org/2022/10/10/analysis-of-carlos-fuentess-the-death-of-artemio-cruz/	Present deathbed, memory, second person/future tense.
+Garcia Marquez One Hundred Years of Solitude analysis	n/a	literary close reading	literary stress test	cyclical time	https://literariness.org/2020/09/24/analysis-of-marquezs-one-hundred-years-of-solitude/	Generational and cyclical time.
+Morrison Beloved narrative structure teaching resource	n/a	literary close reading	literary stress test	traumatic memory / delayed revelation	https://www.pdesas.org/module/content/resources/18014/view.ashx	Nonlinear organization and multiple accounts of a central event.
+Toward a Computational Model of Focalization in Narrative	2011	FDG	strict:focalization	M2/M3 strict	https://dl.acm.org/doi/pdf/10.1145/2159365.2159423	Computational focalization in narrative generation.
+Automated Story Generation with Multiple Internal Focalization	2011	CIG	strict:focalization	M2/M3 strict	https://inglab.github.io/assets/files/CIG2011Bae.pdf	Multiple internal focalization; multi-POV narrative generation.
+Narrative Generation through Character's Point of View	2010	CHI	strict:POV generation	M2/M3 strict	https://dl.acm.org/doi/10.1145/1753326.1753667	Character POV constrains narrative generation.
+A Narrative Sentence Planner and Structurer for Domain Independent Story Generation	2019	D&D	strict:focalization	M3 strict	https://aclanthology.org/2019.dnd-10.6.pdf	Focalization as knowledge accessibility in discourse.
+A Computational Model of Narrative Generation for Suspense	2006	AAAI Workshop	strict:reader model	M1->M3 strict	https://cdn.aaai.org/Workshops/2006/WS-06-04/WS06-04-003.pdf	Suspenser; reader model; what to tell when.
+Narrative Generation for Suspense: Modeling and Evaluation	2008	ICIDS	strict:reader model	M1->M3 strict	https://link.springer.com/chapter/10.1007/978-3-540-89454-4_21	Suspense evaluation and reader model.
+Creating Suspenseful Stories: Iterative Planning with Large Language Models	2024	EACL	strict:LLM suspense	M3 direct	https://aclanthology.org/2024.eacl-long.147.pdf	LLM suspense planning; reveal-like control.
+Incorporating Global and Local Knowledge in Intentional Narrative Planning	2015	AAMAS	strict:belief planning	M1/M2 strict	https://www.ifaamas.org/Proceedings/aamas2015/aamas/p1539.pdf	Global world state plus local imperfect character knowledge.
+HeadSpace: Incorporating Action Failure and Character Beliefs into Narrative Planning	2022	AIIDE	strict:belief planning	M2 strict	https://ojs.aaai.org/index.php/AIIDE/article/view/21961	False beliefs lead to failed actions in narrative planning.
+Generating Stories that Include Failed Actions by Modeling False Character Beliefs	2017	AIIDE Workshop	strict:false belief	M2 strict	https://cdn.aaai.org/ojs/12988/12988-52-16505-1-2-20201228.pdf	False character belief for story generation.
+Story Generation with Characters That Perceive and Assume	2014	AIIDE	strict:perception/belief	M2 strict	https://theune.personalweb.utwente.nl/VS/tenbrinke-linssen-theune-AIIDE2014.pdf	Limited perception and assumptions for believable characters.
+Toward Characters Who Observe, Tell, Misremember, and Lie	2015	Workshop	strict:subjective memory	M2/M3 strict	https://eis.ucsc.edu/papers/ryanEtAl_TowardCharactersWhoObserveTellMisrememberLie.pdf	Characters observe, tell, misremember, lie.
+Go Back in Time: Generating Flashbacks in Stories with Event Temporal Prompts	2022	NAACL	strict:nonlinear discourse	M1/M3 strict	https://aclanthology.org/2022.naacl-main.104/	Flashbacks via temporal prompts.
+Narrative Order Aware Story Generation via Bidirectional Pretraining Model with Optimal Transport Reward	2023	EMNLP Findings	strict:narrative order	M1/M3 strict	https://openreview.net/forum?id=daGbpBMkoy&noteId=iwkRwj7sx2	Narrative order aware generation.
+Generating Game Narratives with Focalization and Flashbacks	2014	AIIDE	strict:focalization+flashback	M2/M3 strict	https://cdn.aaai.org/ojs/12758/12758-52-16275-1-2-20201228.pdf	Focalization and flashbacks in game narratives.
+Story Curves: Visualizing Nonlinear Narratives	2017	visualization	strict:analysis	M1/M3 adjacent	https://www.researchgate.net/publication/319326463_Visualizing_Nonlinear_Narratives_with_Story_Curves	Visualizes narrative order vs chronological order.
+Multi-Agent Based Character Simulation for Story Writing	2025	In2Writing	strict:LLM story agent	M1/M2/M3 closest	https://aclanthology.org/2025.in2writing-1.9.pdf	Chronological fabula, syuzhet rewrite, character memory.
+DOME: Dynamic Hierarchical Outlining with Memory-Enhancement	2025	NAACL	strict:LLM story memory	M1 direct	https://aclanthology.org/2025.naacl-long.63/	Temporal KG memory and conflict analyzer for long stories.
+Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents	2026	arXiv	direct:agent memory	M1 temporal	https://arxiv.org/html/2601.07468v1	Dialogue time vs event/semantic time.
+Rashomon Memory	2026	arXiv	direct:agent memory	M2 perspective	https://arxiv.org/html/2604.03588v3	Multi-perspective agent memory.
+Generative Agents	2023	UIST	direct:agent memory	agent baseline	https://dl.acm.org/doi/10.1145/3586183.3606763	Memory stream, reflection, planning.
+MemoryBank	2024	AAAI	direct:agent memory	agent baseline	https://ojs.aaai.org/index.php/AAAI/article/view/29946	Long-term conversational memory.
+MIRIX	2025	arXiv	direct:agent memory	architecture	https://arxiv.org/abs/2507.07957	Multi-agent memory system with multiple memory types.
+Collaborative Memory	2025	arXiv	direct:access control	mechanism	https://arxiv.org/html/2505.18279v1	Private/shared fragments and access control.
+Re3	2022	EMNLP	direct:long story	baseline	https://arxiv.org/abs/2210.06774	Recursive reprompting and revision.
+DOC	2023	ACL	direct:long story	baseline	https://aclanthology.org/2023.acl-long.190/	Detailed outline control.
+Dramatron	2023	CHI	direct:screenplay	baseline	https://dl.acm.org/doi/fullHtml/10.1145/3544548.3581225	Hierarchical script generation.
+Agents' Room	2025	ICLR	direct:multi-agent story	baseline	https://openreview.net/forum?id=HfWcFs7XLR&noteId=xO9yNXp4VJ	Multi-agent narrative generation; Tell Me A Story.
+StoryVerse	2024	FDG	direct:character simulation	authorial goal	https://arxiv.org/abs/2405.13042	Authorial intent with LLM-based character simulation.
+StoryBox	2025	arXiv	direct:character simulation	baseline	https://arxiv.org/html/2510.11618v1	Sandbox simulation to long-form story.
+FANToM	2023	EMNLP	benchmark:belief	M2 benchmark	https://openreview.net/forum?id=5TEfD2GBUc	Information-asymmetric conversations for ToM.
+Hi-ToM	2023	EMNLP Findings	benchmark:belief	M2 benchmark	https://openreview.net/forum?id=L4yVLb6cLu&noteId=9HtPANhYGe	Higher-order theory of mind.
+OpenToM	2024	GitHub	benchmark:belief	M2 benchmark	https://github.com/seacowx/OpenToM	First/second-order belief benchmark.
+AnaToM	2025	Findings	benchmark:belief	M2 construction	https://aclanthology.org/2025.findings-ijcnlp.14.pdf	Automated ToM story/question generation.
+ConStory-Bench	2026	arXiv	benchmark:story consistency	general consistency	https://picrew.github.io/constory-bench.github.io/	Long story consistency errors.
+CML-Bench	2025	arXiv	benchmark:screenplay	general screenplay	https://arxiv.org/html/2510.06231v1	Dialogue coherence, character consistency, plot reasonableness.
+LoCoMo	2024	benchmark	benchmark:agent memory	memory baseline	https://snap-research.github.io/locomo/	Long-term conversational memory.
+LongMemEval	2024	arXiv	benchmark:agent memory	memory baseline	https://arxiv.org/abs/2410.10813	Long-term memory evaluation.
+MemoryAgentBench	2026	ICLR	benchmark:agent memory	memory baseline	https://openreview.net/forum?id=DT7JyQC3MR	Incremental multi-turn agent memory.
+MemBench	2025	ACL Findings	benchmark:agent memory	memory baseline	https://aclanthology.org/2025.findings-acl.989.pdf	Comprehensive LLM-agent memory evaluation.
+LongGenBench	2025	ICLR	benchmark:long generation	long output	https://proceedings.iclr.cc/paper_files/paper/2025/hash/141304a37d59ec7f116f3535f1b74bde-Abstract-Conference.html	Long-form instruction following.
+NarrativeQA	2018	TACL	benchmark:narrative QA	long story understanding	https://aclanthology.org/Q18-1023/	Narrative understanding QA.
+GLUCOSE	2020	EMNLP	benchmark:story commonsense	causal explanation	https://aclanthology.org/2020.emnlp-main.370/	Story commonsense explanations.
+Automatic Story Generation: A Survey of Approaches	2021	TOCHI	survey	story generation survey	https://dl.acm.org/doi/fullHtml/10.1145/3453156	Story generation survey.
+A Review of Plan-Based Approaches to Story and Discourse Generation	2013	Literary and Linguistic Computing	survey	narrative planning survey	https://justusrobertson.com/papers/Young%20Ware%20Cassell%20and%20Robertson%202013%20-%20Plans%20and%20Planning%20in%20Narrative%20Generation.pdf	Plan-based story/discourse generation survey.
+A Survey on the Memory Mechanism of LLM-based Agents	2025	ACM TOIS	survey	agent memory survey	https://dl.acm.org/doi/10.1145/3748302	LLM agent memory survey.

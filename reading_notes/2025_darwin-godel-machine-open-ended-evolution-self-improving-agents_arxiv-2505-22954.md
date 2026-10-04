@@ -24,7 +24,7 @@ keywords:
   - coding agents
   - SWE-bench
   - Polyglot
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz
 source_extract_path: ../assets/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954/source

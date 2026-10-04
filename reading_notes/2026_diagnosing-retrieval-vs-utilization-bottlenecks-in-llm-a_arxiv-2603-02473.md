@@ -22,7 +22,7 @@ keywords:
   - LoCoMo
   - BM25
   - hybrid reranking
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz
 assets_path: ../assets/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473
@@ -198,6 +198,8 @@ Probe 2 的 beneficial rate 也支持这个结论。Basic RAG + Hybrid 的 benef
 Results 章把论文的中心论点闭合起来：写入策略确实有影响，但在本文实验中不是主导因素；检索方法对 accuracy 的影响更大，并且 retrieval precision 与 downstream accuracy 高度相关；错误分解显示主要失败模式是 retrieval failure，而 utilization failure 和 hallucination 相对稳定且比例较低。由此作者得出实践上的设计优先级：在当前 agent memory 系统中，优先改进 query understanding、candidate retrieval 和 reranking，可能比继续加复杂写入压缩策略更有效。
 
 ### 4 Discussion and Conclusion
+
+本章的总判断是：在本文的 GPT-5-mini、LoCoMo 和固定 top-k=5 设置下，agent memory 的主要瓶颈位于 retrieval，而不是 write strategy 或模型对已取回上下文的 utilization。raw chunks 保留信息最完整，Hybrid retrieval 能显著减少检索失败；但这一结论仍需要在更强的压缩约束、更多模型和 learned memory system 上复验。
 
 #### 章节作用
 

@@ -232,20 +232,20 @@ Table 1 把 Tell Me a Story 和常用开放式故事生成 benchmark 做了对�
 
 **Comparison Systems**
 
-作者把当前叙事生成的主流基线定义为 end-to-end story generation，也就是让模型一次性生成完整故事。它有两个基础版本：zero-shot prompting 的 $\textsc{E2E}_{ZS}$，以及 fine-tuned 的 $\textsc{E2E}_{FT}$。这两个版本代表“不使用多代理结构”的基本对照组。
+作者把当前叙事生成的主流基线定义为 end-to-end story generation，也就是让模型一次性生成完整故事。它有两个基础版本：zero-shot prompting 的 $\mathrm{E2E}_{ZS}$，以及 fine-tuned 的 $\mathrm{E2E}_{FT}$。这两个版本代表“不使用多代理结构”的基本对照组。
 
 为了避免只和弱 baseline 比较，作者还加入了几个更强的 zero-shot 端到端变体：
 
 | Baseline | 做法 | 目的 |
 |---|---|---|
-| $\textsc{E2E}_{ZS}$ | 直接根据 prompt 一次性生成故事 | 最基础的 zero-shot 端到端基线 |
-| $\textsc{E2E}_{FT}$ | fine-tune 后一次性生成故事 | 检验 fine-tuning 的端到端版本 |
-| $\textsc{E2E}_{ZS}$ plan | 先要求模型生成 conflict、characters、setting、plot，再生成故事 | 检验“单模型显式规划”能否替代多代理规划 |
-| $\textsc{E2E}_{ZS}$ reflect | 让模型按详细 guidelines 反思 conflict、characters、setting、plot，再生成故事 | 检验 self-reflection 式提示是否足够 |
-| $\textsc{E2E}_{ZS}$ decompose | 让模型自动生成 plan，再在一次调用中按计划写故事 | 检验无任务特定知识的自动分解 |
-| $\textsc{2Stage}$ decompose | 第一次调用生成 plan，第二次调用根据 prompt 和 plan 写故事 | 检验两阶段单模型规划-写作流程 |
+| $\mathrm{E2E}_{ZS}$ | 直接根据 prompt 一次性生成故事 | 最基础的 zero-shot 端到端基线 |
+| $\mathrm{E2E}_{FT}$ | fine-tune 后一次性生成故事 | 检验 fine-tuning 的端到端版本 |
+| $\mathrm{E2E}_{ZS}$ plan | 先要求模型生成 conflict、characters、setting、plot，再生成故事 | 检验“单模型显式规划”能否替代多代理规划 |
+| $\mathrm{E2E}_{ZS}$ reflect | 让模型按详细 guidelines 反思 conflict、characters、setting、plot，再生成故事 | 检验 self-reflection 式提示是否足够 |
+| $\mathrm{E2E}_{ZS}$ decompose | 让模型自动生成 plan，再在一次调用中按计划写故事 | 检验无任务特定知识的自动分解 |
+| $\mathrm{2Stage}$ decompose | 第一次调用生成 plan，第二次调用根据 prompt 和 plan 写故事 | 检验两阶段单模型规划-写作流程 |
 
-这些 baseline 很关键，因为它们把“多代理”与“更复杂 prompt”区分开来。比如 $\textsc{E2E}_{ZS}$ plan 和 reflect 使用了与 planning agents 相同的详细指令，但仍然由单个模型在一个端到端流程里处理。若 Agents' Room 仍然更好，就说明收益不只是来自给模型更多规划提示，而可能来自任务拆分、专门化和 scratchpad 协作。
+这些 baseline 很关键，因为它们把“多代理”与“更复杂 prompt”区分开来。比如 $\mathrm{E2E}_{ZS}$ plan 和 reflect 使用了与 planning agents 相同的详细指令，但仍然由单个模型在一个端到端流程里处理。若 Agents' Room 仍然更好，就说明收益不只是来自给模型更多规划提示，而可能来自任务拆分、专门化和 scratchpad 协作。
 
 **Agents' Room Variants**
 
@@ -259,7 +259,7 @@ Table 1 把 Tell Me a Story 和常用开放式故事生成 benchmark 做了对�
 
 `plan` 变体有一个细节：planning agents 本身不生成最终故事，所以作者加入一个简单的 `[finalizer]` agent，把规划内容转成故事。这个设置让他们能单独观察“规划”本身的贡献，但它也意味着 `plan` 变体的最终质量可能受 finalizer 能力限制。
 
-每个 Agents' Room 变体又分为 zero-shot agents 和 fine-tuned agents 两种设置，分别记为 $\textsc{AR}_{ZS}$ 和 $\textsc{AR}_{FT}$。作者没有混合 zero-shot 和 fine-tuned agents，虽然独立调用的结构理论上支持混搭；他们选择保持设置干净，是为了更清楚地看 zero-shot 与 fine-tuning 各自带来的信号。
+每个 Agents' Room 变体又分为 zero-shot agents 和 fine-tuned agents 两种设置，分别记为 $\mathrm{AR}_{ZS}$ 和 $\mathrm{AR}_{FT}$。作者没有混合 zero-shot 和 fine-tuned agents，虽然独立调用的结构理论上支持混搭；他们选择保持设置干净，是为了更清楚地看 zero-shot 与 fine-tuning 各自带来的信号。
 
 **Implementation**
 
@@ -269,7 +269,7 @@ Table 1 把 Tell Me a Story 和常用开放式故事生成 benchmark 做了对�
 
 合成训练数据生成阶段使用 Gemini Ultra 作为 teacher model。也就是说，第 4.2 节里的 distilled backtranslation 由更强教师模型完成：它根据已有 prompt-story 样本反推 planning outputs，并把故事切分成不同叙事阶段。
 
-由于 Tell Me a Story 数据集很小，作者没有进行大规模全参数训练，而是用 LoRA fine-tuning。Fine-tuning 对象包括端到端基线 $\textsc{E2E}_{FT}$，以及 $\textsc{AR}_{FT}$ 中的各个独立 agents。LoRA 的 rank 为 4，学习率从候选集合中搜索后选定，训练 250 steps，batch size 为 16，每 20 steps 保存 checkpoint，最终选择 validation loss 最低的 checkpoint。文中学习率记作 $1^{-6}$，结合候选集合 $\{1^{-4}, 1^{-5}, 1^{-6}, 1^{-7}\}$，这里应理解为指数形式的极小学习率写法。
+由于 Tell Me a Story 数据集很小，作者没有进行大规模全参数训练，而是用 LoRA fine-tuning。Fine-tuning 对象包括端到端基线 $\mathrm{E2E}_{FT}$，以及 $\mathrm{AR}_{FT}$ 中的各个独立 agents。LoRA 的 rank 为 4，学习率从候选集合中搜索后选定，训练 250 steps，batch size 为 16，每 20 steps 保存 checkpoint，最终选择 validation loss 最低的 checkpoint。文中学习率记作 $10^{-6}$，候选集合应写作 $\{10^{-4}, 10^{-5}, 10^{-6}, 10^{-7}\}$。
 
 这一章的实验设计比较像一张拆解图：端到端基线回答“单模型能做到什么”，增强 prompt 基线回答“显式规划提示是否已经够了”，Agents' Room 的 `plan/write/plan+write` 变体回答“规划代理和写作代理分别贡献什么”，zero-shot/fine-tuned 设置则回答“专门化训练是否带来额外收益”。后面的 `6 Evaluation` 会说明这些系统如何被人类和自动指标评价。
 
@@ -335,28 +335,28 @@ Table 2 比较了人类故事和各系统生成故事的表层指标、重复度
 
 | System | Words | Paragraphs | Unique | Intra rep. | Inter rep. | Overlap | Rouge-L | BertScore |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| $\textsc{E2E}_{ZS}$ | 1,207 | 32.24 | 44.57 | 28.78 | 33.35 | .0034 | 20.71 | .8152 |
-| $\textsc{E2E}_{FT}$ | 1,193 | 32.25 | 44.02 | 28.21 | 31.31 | .0036 | 20.73 | .8138 |
-| $\textsc{AR}_{ZS}$ write | 3,278 | 63.80 | 34.97 | 47.50 | 44.09 | .0022 | 17.34 | .8103 |
-| $\textsc{AR}_{FT}$ write | 3,129 | 61.90 | 36.35 | 46.39 | 42.39 | .0021 | 17.53 | .8150 |
-| $\textsc{AR}_{FT}$ plan+write | 3,006 | 56.85 | 34.30 | 46.31 | 41.60 | .0019 | 17.60 | .8152 |
+| $\mathrm{E2E}_{ZS}$ | 1,207 | 32.24 | 44.57 | 28.78 | 33.35 | .0034 | 20.71 | .8152 |
+| $\mathrm{E2E}_{FT}$ | 1,193 | 32.25 | 44.02 | 28.21 | 31.31 | .0036 | 20.73 | .8138 |
+| $\mathrm{AR}_{ZS}$ write | 3,278 | 63.80 | 34.97 | 47.50 | 44.09 | .0022 | 17.34 | .8103 |
+| $\mathrm{AR}_{FT}$ write | 3,129 | 61.90 | 36.35 | 46.39 | 42.39 | .0021 | 17.53 | .8150 |
+| $\mathrm{AR}_{FT}$ plan+write | 3,006 | 56.85 | 34.30 | 46.31 | 41.60 | .0019 | 17.60 | .8152 |
 | Humans | 1,439 | 32.91 | 50.35 | 15.53 | 19.24 | .0020 | -- | -- |
 
 从长度看，端到端 baseline 的故事略短于人类故事，而只包含 planning 的模型最短；包含 writing agents 的 Agents' Room 变体则显著更长，约为人类故事的两倍，也有更多段落。作者把更多段落解释为可能包含更多 dialogue 或分段写作结构。这说明 writing agents 确实解决了“端到端模型写不够长”的问题。
 
 但更长不等于更好。包含 writing agents 的系统同时有更高的 intra-story 和 inter-story trigram repetition，说明长故事内部更容易重复，不同 prompt 下生成的故事也更可能共享类似表达。人类故事则 unique word ratio 最高，重复度最低，显示出更强的语言多样性。作者还指出，机器故事的句子结构更 generic，例如更高比例的句子以冠词或代词开头。
 
-Prompt overlap 方面，Agents' Room 系统复制 prompt 的比例较低，接近人类写作。这支持一个温和结论：多代理系统不是简单复述输入，而是在某种程度上能展开 prompt。不过，Rouge-L 反而更偏好 E2E 系统，因为它们更接近 gold reference；BertScore 区分能力也不强，几乎同时偏好最简单的 $\textsc{E2E}_{ZS}$ 和最复杂的 $\textsc{AR}_{FT}$ plan+write。这正好呼应第 6 章的评价设计：reference-based metrics 不适合单独评价开放式故事质量。
+Prompt overlap 方面，Agents' Room 系统复制 prompt 的比例较低，接近人类写作。这支持一个温和结论：多代理系统不是简单复述输入，而是在某种程度上能展开 prompt。不过，Rouge-L 反而更偏好 E2E 系统，因为它们更接近 gold reference；BertScore 区分能力也不强，几乎同时偏好最简单的 $\mathrm{E2E}_{ZS}$ 和最复杂的 $\mathrm{AR}_{FT}$ plan+write。这正好呼应第 6 章的评价设计：reference-based metrics 不适合单独评价开放式故事质量。
 
 **Human and LLM rankings**
 
 ![Figure 3: Human and LLM-based system rankings](../assets/2024_agents-room-narrative-generation-through-multi-step-coll_arxiv-2410-02603/figures/source_figure_003_fig-human-autorater-evals-overall-system-ranking.png)
 
-Figure 3 展示了人类评价和 LLM evaluator 的系统排名。作者在正文中省略了一些已经在 Table 2 中表现较弱的 baseline，例如 $\textsc{E2E}_{ZS}$ plan、reflect、decompose 和 $\textsc{2Stage}$ decompose，把重点放在主要系统之间的比较。
+Figure 3 展示了人类评价和 LLM evaluator 的系统排名。作者在正文中省略了一些已经在 Table 2 中表现较弱的 baseline，例如 $\mathrm{E2E}_{ZS}$ plan、reflect、decompose 和 $\mathrm{2Stage}$ decompose，把重点放在主要系统之间的比较。
 
 第一个结果是，人类写作故事整体仍然最受偏好。人类评价显示，machine writers，包括 baseline 和 Agents' Room，都和专业写作者存在差距。这个差距出现在所有维度上，但 language use 维度差距较小。作者据此认为，当前 LLM 可能更适合作为写作辅助工具，而不是完全替代人类写作者。为了排除“人类故事只是因为更长才被偏好”的解释，作者统计了较长故事在整体偏好中获胜的比例，约为 0.51，接近随机，因此长度不是人类故事胜出的主要原因。
 
-第二个结果是，Agents' Room 优于 baseline systems。人工评价在所有维度上更偏好带 writing agents 的 Agents' Room 故事，而不是端到端 baseline。表现最好的变体是 $\textsc{AR}_{FT}$ write 和 $\textsc{AR}_{FT}$ plan+write。这说明分段写作是本文方法中非常关键的因素：它不仅让故事更长，也在人工偏好中带来质量提升。
+第二个结果是，Agents' Room 优于 baseline systems。人工评价在所有维度上更偏好带 writing agents 的 Agents' Room 故事，而不是端到端 baseline。表现最好的变体是 $\mathrm{AR}_{FT}$ write 和 $\mathrm{AR}_{FT}$ plan+write。这说明分段写作是本文方法中非常关键的因素：它不仅让故事更长，也在人工偏好中带来质量提升。
 
 只包含 planning agents 的 AR plan 变体表现并不好。作者认为原因可能是单个 `[finalizer]` agent 太简单，无法充分利用 scratchpad 中的规划元素来生成高质量故事。这一点很有启发：规划本身不是魔法，最终生成器必须足够强，才能把规划内容转化为好故事。否则，再好的计划也可能在最后写作阶段被浪费。
 
@@ -364,7 +364,7 @@ Fine-tuned agents 整体优于 zero-shot agents。作者把这解释为第 4.2 �
 
 **LLM evaluator agreement**
 
-LLM-based rankings 与人类评价趋势相似。LLM evaluator 整体偏好人类故事和 $\textsc{AR}$ plan+write 系统，尽管它对这二者区分不算特别强。作者进一步报告，LLM 判断与人类评分显著相关：按系统聚合时 Spearman $\rho = 0.62$，按 item 统计时 $\rho = 0.41$，两者均为 $p < 0.01$。
+LLM-based rankings 与人类评价趋势相似。LLM evaluator 整体偏好人类故事和 $\mathrm{AR}$ plan+write 系统，尽管它对这二者区分不算特别强。作者进一步报告，LLM 判断与人类评分显著相关：按系统聚合时 Spearman $\rho = 0.62$，按 item 统计时 $\rho = 0.41$，两者均为 $p < 0.01$。
 
 维度上，LLM 和人类在 story development 与 creativity 上一致性最高，分别为 $\rho = 0.83$ 和 $\rho = 0.85$。这说明 LLM evaluator 在判断故事展开是否充分、创意是否较强方面，与人类有较高趋势一致性。作者还检查了 LLM evaluator 的自一致性：当两篇故事以相反顺序再次呈现时，90.2% 的情况下 LLM 仍偏好同一篇故事。这支持它作为可扩展自动评价工具的潜力。
 
@@ -416,11 +416,11 @@ Tell Me a Story 的规模小，但 prompt 更详细、target story 更长，更�
 
 | System | Words | Paragraphs | Unique | Intra rep. | Inter rep. | Overlap | Rouge-L | BertScore |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| $\textsc{E2E}_{ZS}$ | 1,207 | 32.24 | 44.57 | 28.78 | 33.35 | .0034 | 20.71 | .8152 |
-| $\textsc{E2E}_{FT}$ | 1,193 | 32.25 | 44.02 | 28.21 | 31.31 | .0036 | 20.73 | .8138 |
-| $\textsc{AR}_{ZS}$ write | 3,278 | 63.80 | 34.97 | 47.50 | 44.09 | .0022 | 17.34 | .8103 |
-| $\textsc{AR}_{FT}$ write | 3,129 | 61.90 | 36.35 | 46.39 | 42.39 | .0021 | 17.53 | .8150 |
-| $\textsc{AR}_{FT}$ plan+write | 3,006 | 56.85 | 34.30 | 46.31 | 41.60 | .0019 | 17.60 | .8152 |
+| $\mathrm{E2E}_{ZS}$ | 1,207 | 32.24 | 44.57 | 28.78 | 33.35 | .0034 | 20.71 | .8152 |
+| $\mathrm{E2E}_{FT}$ | 1,193 | 32.25 | 44.02 | 28.21 | 31.31 | .0036 | 20.73 | .8138 |
+| $\mathrm{AR}_{ZS}$ write | 3,278 | 63.80 | 34.97 | 47.50 | 44.09 | .0022 | 17.34 | .8103 |
+| $\mathrm{AR}_{FT}$ write | 3,129 | 61.90 | 36.35 | 46.39 | 42.39 | .0021 | 17.53 | .8150 |
+| $\mathrm{AR}_{FT}$ plan+write | 3,006 | 56.85 | 34.30 | 46.31 | 41.60 | .0019 | 17.60 | .8152 |
 | Humans | 1,439 | 32.91 | 50.35 | 15.53 | 19.24 | .0020 | -- | -- |
 
 这张表说明 writing agents 显著拉长故事，但也带来更多重复；人类故事仍有最高词汇多样性和最低重复度。
@@ -429,7 +429,7 @@ Tell Me a Story 的规模小，但 prompt 更详细、target story 更长，更�
 
 1. Agents' Room 中包含 writing agents 的变体在人工评价中优于端到端 baseline，说明分段写作和多代理协作对长篇故事质量有实际帮助。
 
-2. $\textsc{AR}_{FT}$ write 和 $\textsc{AR}_{FT}$ plan+write 表现最好，表明 fine-tuned specialized agents 比 zero-shot agents 更有效，也支持 synthetic backtranslation 生成代理训练数据的策略。
+2. $\mathrm{AR}_{FT}$ write 和 $\mathrm{AR}_{FT}$ plan+write 表现最好，表明 fine-tuned specialized agents 比 zero-shot agents 更有效，也支持 synthetic backtranslation 生成代理训练数据的策略。
 
 3. 只使用 planning agents 的 AR plan 变体表现不佳，可能是因为单个 `[finalizer]` 无法充分利用 scratchpad 中的规划内容。这说明规划需要强写作模块承接，不能只靠中间计划本身。
 

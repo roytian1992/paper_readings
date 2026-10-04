@@ -13,7 +13,7 @@ venue: ""
 field: []
 direction: []
 keywords: []
-status: reading
+status: read
 source_path: ../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf
 source_archive_path: ""
 assets_path: ../assets/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577
@@ -64,7 +64,9 @@ NWM 将记忆定义为已完成文本的发布结果，而不是未来意图。�
 
 `<= n` 是论文最重要的硬边界：写入时每条记录保存来源章节，读取时再次过滤来源章节不大于 checkpoint。检索预算限制的是最终 reader evidence packet，不等同于限制离线记忆规模。邻居上限和最终 packet 上限是检索实现参数，论文没有把它们当作叙事语义。
 
-<!-- 待从论文原文目录或真实章节标题补齐；不要使用通用占位章节。 -->
+### 9 Conclusion
+
+论文的结论是，长篇写作记忆需要同时保存章节边界、有效区间、知识状态、揭示顺序和叙事功能，而不能只做平面事实检索。NWM 的 checkpoint 过滤保证作者/读者在当前章节只能看到已经发布的信息；query-conditioned hybrid retrieval 再通过 typed one-hop expansion 把角色状态、关系变化、setup/payoff 和 reveal-vs-event order 组合成固定大小的证据包。实验表明，图结构的主要收益来自查询条件化和叙事语义，而不是单纯增加节点或类型数量；这支持把 writer memory 设计成有时间边界、可回溯、可按问题重组的 evidence system。
 
 ## 关键公式 / 图表
 

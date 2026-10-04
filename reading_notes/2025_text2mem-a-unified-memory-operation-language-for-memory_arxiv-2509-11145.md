@@ -24,7 +24,7 @@ keywords:
   - Memory Operating System
   - LLM agents
   - memory operations
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz
 assets_path: ../assets/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145

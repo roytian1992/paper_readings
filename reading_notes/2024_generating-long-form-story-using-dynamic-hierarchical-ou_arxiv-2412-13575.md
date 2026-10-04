@@ -23,7 +23,7 @@ keywords:
   - Dynamic Hierarchical Outline
   - Memory-Enhancement Module
   - Temporal Conflict Analyzer
-status: reading
+status: read
 source_path: ../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf
 source_archive_path: ../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575_source.tar.gz
 assets_path: ../assets/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575
@@ -174,7 +174,7 @@ Temporal Conflict Analyzer 是论文提出的自动上下文一致性评估方�
 
 主结果表明，DOME 在自动评价和人工评价上都优于直接 LLM baseline 与 Re3、DOC。
 
-| Method | Word Num. | $CR. \\downarrow$ | ${Ent}$-2 $\\uparrow$ | $PCo. \\downarrow$ | $PCoh. \\downarrow$ | $Rel. \\downarrow$ | $Int. \\downarrow$ | $ECoh. \\downarrow$ |
+| Method | Word Num. | $CR. \downarrow$ | ${Ent}$-2 $\uparrow$ | $PCo. \downarrow$ | $PCoh. \downarrow$ | $Rel. \downarrow$ | $Int. \downarrow$ | $ECoh. \downarrow$ |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Llama3-70B-Instruct | 612.65 | 6.78 | 9.25 | 3.77 | 3.81 | 3.58 | 3.96 | 3.72 |
 | Qwen1.5-72B-Chat | 495.70 | 0.66 | 9.06 | 4.77 | 4.80 | 4.58 | 4.96 | 4.72 |
@@ -190,7 +190,7 @@ Temporal Conflict Analyzer 是论文提出的自动上下文一致性评估方�
 
 消融实验分别移除 DHO 和 MEM，用来验证两个模块的作用。
 
-| Method | Word Num. | $CR. \\downarrow$ | ${Ent}$-2 $\\uparrow$ | $PCo. \\downarrow$ | $PCoh. \\downarrow$ | $Rel. \\downarrow$ | $Int. \\downarrow$ | $ECoh. \\downarrow$ |
+| Method | Word Num. | $CR. \downarrow$ | ${Ent}$-2 $\uparrow$ | $PCo. \downarrow$ | $PCoh. \downarrow$ | $Rel. \downarrow$ | $Int. \downarrow$ | $ECoh. \downarrow$ |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | w/o MEM | 6511.10 | 4.52 | 10.00 | 1.88 | 2.24 | 1.97 | 1.96 | 2.22 |
 | w/o DHO | 1471.90 | 0.65 | 11.50 | 2.92 | 2.36 | 2.86 | 2.88 | 2.46 |

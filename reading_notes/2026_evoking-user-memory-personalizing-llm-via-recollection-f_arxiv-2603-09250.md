@@ -28,7 +28,7 @@ keywords:
   - personalized LLM
   - recollection
   - familiarity
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz
 assets_path: ../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250
@@ -332,7 +332,7 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 ![Figure source_figure_007_empirical-distributions-of-mean-score-s-of-the-p](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_007_empirical-distributions-of-mean-score-s-of-the-p.png)
 
-- \revise{Empirical distributions of mean score $\bar{s}$ of the PersonaMem dataset.}
+- Empirical distributions of mean score $\bar{s}$ of the PersonaMem dataset.
 
 - Source: arXiv source `chapter/figure/Mean_KDE_personamem.pdf`
 
@@ -344,7 +344,7 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 ![Figure source_figure_009_empirical-distributions-of-mean-score-s-of-the-p](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_009_empirical-distributions-of-mean-score-s-of-the-p.png)
 
-- \revise{Empirical distributions of mean score $\bar{s}$ of the Personabench dataset.}
+- Empirical distributions of mean score $\bar{s}$ of the Personabench dataset.
 
 - Source: arXiv source `chapter/figure/Mean_KDE_personabench.pdf`
 
@@ -356,7 +356,7 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 ![Figure source_figure_011_empirical-distributions-of-mean-score-s-of-the-l](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_011_empirical-distributions-of-mean-score-s-of-the-l.png)
 
-- \revise{Empirical distributions of mean score $\bar{s}$ of the LongMemEval-S dataset.}
+- Empirical distributions of mean score $\bar{s}$ of the LongMemEval-S dataset.
 
 - Source: arXiv source `chapter/figure/Mean_KDE_LME_S.pdf`
 
@@ -368,7 +368,7 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 ![Figure source_figure_013_empirical-distributions-of-mean-score-s-of-the-l](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_013_empirical-distributions-of-mean-score-s-of-the-l.png)
 
-- \revise{Empirical distributions of mean score $\bar{s}$ of the LongMemEval-M dataset.}
+- Empirical distributions of mean score $\bar{s}$ of the LongMemEval-M dataset.
 
 - Source: arXiv source `chapter/figure/Mean_KDE_LME_M.pdf`
 
@@ -398,13 +398,13 @@ Conclusion 很短，主要把全文重新收束到 dual-process theory 这个叙
 
 ![Figure source_figure_018_case-study-from-personamem-comparison-between-fa](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_018_case-study-from-personamem-comparison-between-fa.png)
 
-- Case study from PersonaMem: comparison between \emph{Familiarity} and \emph{Recollection} retrieval \revise{where Recollection wins}. Familiarity surfaces salient but fragmented evidence, while Recollection progressively reconstructs temporally distributed details via clustering and query refinement.
+- Case study from PersonaMem: comparison between *Familiarity* and *Recollection* retrieval where Recollection wins. Familiarity surfaces salient but fragmented evidence, while Recollection progressively reconstructs temporally distributed details via clustering and query refinement.
 
 - Source: arXiv source `chapter/figure/case_study.pdf`
 
 ![Figure source_figure_019_case-study-from-personamem-comparison-between-fa](../assets/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250/figures/source_figure_019_case-study-from-personamem-comparison-between-fa.png)
 
-- \revise{Case study from PersonaMem: comparison between \emph{Familiarity} and \emph{Recollection} retrieval where Familiarity wins. Familiarity produces broader and more relevant evidence aligned with prioritizing travel experiences, while Recollection progressively drills into long-term financial management and drifts away from the user’s actual intent.}
+- Case study from PersonaMem: comparison between *Familiarity* and *Recollection* retrieval where Familiarity wins. Familiarity produces broader and more relevant evidence aligned with prioritizing travel experiences, while Recollection progressively drills into long-term financial management and drifts away from the user’s actual intent.
 
 - Source: arXiv source `chapter/figure/bad_case.pdf`
 

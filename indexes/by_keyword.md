@@ -12,7 +12,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## agent memory
 
@@ -21,15 +21,15 @@ Generated: 2026-10-04
 | `2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac` | MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents | 2025 | research | [pdf](../sources/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.pdf) | [note](../reading_notes/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.md) | Natural Language Processing, Artificial Intelligence | Agent Memory Evaluation | MemBench, agent memory, factual memory, reflective memory | read |
 | `2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564` | Memory in the Age of AI Agents | 2025 | survey | [pdf](../sources/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.pdf) | [note](../reading_notes/2025_memory-in-the-age-of-ai-agents_arxiv-2512-13564.md) | AI Agents, NLP | Agent Memory, LLM Agents | agent memory, memory systems, survey | read |
 | `2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257` | Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions | 2026 | research | [pdf](../sources/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.pdf) | [note](../reading_notes/2026_evaluating-memory-in-llm-agents-via-incremental-multi-tu_arxiv-2507-05257.md) | Natural Language Processing, Artificial Intelligence | Agent Memory Evaluation | MemoryAgentBench, agent memory, incremental interaction, conflict resolution | read |
-| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | reading |
-| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | reading |
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | read |
+| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | read |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## Agent Memory
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | skimmed |
+| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | read |
 
 ## Agents' Room
 
@@ -41,7 +41,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## associative memory
 
@@ -59,13 +59,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## award
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## belief tracking
 
@@ -77,13 +77,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## BM25
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
 
 ## causal mediation
 
@@ -107,37 +107,37 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## citation
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## code
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## coding agents
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## Cognitive Load Management
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## Cognitive Trust
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## coherence
 
@@ -155,25 +155,25 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | reading |
+| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | read |
 
 ## controller
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## CoPA
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## cross-event consolidation
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## Cue-Tag-Content
 
@@ -185,19 +185,19 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## dataset
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## designer
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## detective fiction
 
@@ -215,7 +215,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | reading |
+| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | read |
 
 ## dramatic irony
 
@@ -233,13 +233,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | reading |
+| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | read |
 
 ## Dynamic Hierarchical Outline
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | reading |
+| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | read |
 
 ## Ebbinghaus forgetting curve
 
@@ -263,31 +263,31 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | read |
 
 ## event-level binding
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## EvolveMem
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## EvoMemBench
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | skimmed |
+| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | read |
 
 ## experience-driven agent evolution
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## experimental validation
 
@@ -324,31 +324,31 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | reading |
+| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | read |
 
 ## FAS
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | reading |
+| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | read |
 
 ## ForeSci
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | reading |
+| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | read |
 
 ## future alignment
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | reading |
+| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | read |
 
 ## future-aligned research proposals
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | reading |
+| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | read |
 
 ## Graph World Model
 
@@ -408,7 +408,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
 
 ## incremental interaction
 
@@ -438,14 +438,14 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
 
 ## LLM agents
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | reading |
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | read |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## LLM OS
 
@@ -458,10 +458,10 @@ Generated: 2026-10-04
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
 | `2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74` | Evaluating Very Long-Term Conversational Memory of LLM Agents | 2024 | benchmark | [pdf](../sources/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.pdf) | [note](../reading_notes/2024_evaluating-very-long-term-conversational-memory-of-llm-a_doi-10-18653-v1-2024-acl-long-74.md) | NLP, Machine Learning | LLM Agents, Long-Term Memory | LoCoMo, long-term conversation, memory benchmark | read |
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 | `2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036` | Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents | 2026 | research | [source](../sources/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036_source.tar.gz) | [note](../reading_notes/2026_memory-is-reconstructed-not-retrieved-graph-memory-for-l_arxiv-2606-06036.md) | NLP, AI Agents | LLM Agents, Agent Memory, Graph Memory | MRAgent, associative memory, memory reconstruction, Cue-Tag-Content, LoCoMo, LongMemEval | read |
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## long-form generation
 
@@ -480,7 +480,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## long-term conversation
 
@@ -510,20 +510,20 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## MemBench
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
 | `2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac` | MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents | 2025 | research | [pdf](../sources/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.pdf) | [note](../reading_notes/2025_membench-towards-more-comprehensive-evaluation-on-the-me_doi-10-18653-v1-2025-findings-ac.md) | Natural Language Processing, Artificial Intelligence | Agent Memory Evaluation | MemBench, agent memory, factual memory, reflective memory | read |
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## MemCoE
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | reading |
+| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | read |
 
 ## MemGPT
 
@@ -535,7 +535,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## memory benchmark
 
@@ -547,19 +547,19 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | reading |
+| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | read |
 
 ## Memory Operating System
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | reading |
+| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | read |
 
 ## memory operations
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | reading |
+| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | read |
 
 ## memory reconstruction
 
@@ -571,13 +571,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## memory skills
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## memory systems
 
@@ -589,13 +589,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
 
 ## Memory-Enhancement Module
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | reading |
+| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | read |
 
 ## MemoryAgentBench
 
@@ -619,7 +619,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## meta-improvement
 
@@ -631,19 +631,19 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | reading |
+| `2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755` | Learning to Continually Learn via Meta-learning Agentic Memory Designs | 2026 | research | [pdf](../sources/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.pdf) | [note](../reading_notes/2026_learning-to-continually-learn-via-meta-learning-agentic_arxiv-2602-07755.md) | AI, NLP | LLM Agents, Agent Memory, Meta-learning | continual learning, agent memory, meta-learning, memory design | read |
 
 ## Metacognitive Scaffolding
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## model
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## MRAgent
 
@@ -703,79 +703,79 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | reading |
+| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | read |
 
 ## narrative levels
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | read |
 
 ## narrative-centric RAG
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | reading |
+| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | read |
 
 ## NKW
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | reading |
+| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | read |
 
 ## open-ended exploration
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## patent
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## personalization
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | reading |
+| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | read |
 
 ## personalized LLM
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | reading |
+| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | read |
 
 ## personalized LLM agents
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | reading |
+| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | read |
 
 ## personalized QA
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## plotline
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | read |
 
 ## Polyglot
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## preference evolution
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | reading |
+| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | read |
 
 ## private clues
 
@@ -793,7 +793,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## protein binders
 
@@ -829,7 +829,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | reading |
+| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | read |
 
 ## recursive self-improvement
 
@@ -847,31 +847,31 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | reading |
+| `2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696` | Remember Me, Refine Me: A Dynamic Procedural Memory Framework for Experience-Driven Agent Evolution | 2025 | research | [source](../sources/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696_source.tar.gz) | [note](../reading_notes/2025_remember-me-refine-me-a-dynamic-procedural-memory-framew_arxiv-2512-10696.md) | NLP, AI Agents | Agent Memory, LLM Agents, Procedural Memory | ReMe, procedural memory, experience-driven agent evolution, BFCL-V3, AppWorld, memory scaling | read |
 
 ## research agents
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | reading |
+| `2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag` | ForeSci: Evaluating LLM Agents for Forward-Looking AI Research Judgment | 2026 | benchmark | [pdf](../sources/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.pdf) | [note](../reading_notes/2026_foresci-evaluating-llm-agents-for-forward-looking-ai-res_3634-foresci-evaluating-llm-ag.md) | AI, Science of Science | Research Agents, Scientific Forecasting | ForeSci, research agents, future alignment | read |
 
 ## research ideation
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | reading |
+| `2026_learning-to-predict-future-aligned-research-proposals-wi_fas` | Learning to Predict Future-Aligned Research Proposals with Language Models | 2026 | research | [pdf](../sources/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.pdf) | [note](../reading_notes/2026_learning-to-predict-future-aligned-research-proposals-wi_fas.md) | AI, Science of Science | Research Agents, Scientific Forecasting | future-aligned research proposals, FAS, research ideation | read |
 
 ## retrieval bottleneck
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | reading |
+| `2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473` | Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory | 2026 | research | [source](../sources/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473_source.tar.gz) | [note](../reading_notes/2026_diagnosing-retrieval-vs-utilization-bottlenecks-in-llm-a_arxiv-2603-02473.md) | NLP, AI Agents | LLM Agents, Agent Memory, RAG, Evaluation | LLM agent memory, retrieval bottleneck, memory utilization, LoCoMo, BM25, hybrid reranking | read |
 
 ## RF-Mem
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | reading |
+| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | read |
 
 ## RFdiffusion
 
@@ -889,43 +889,43 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | read |
 
 ## Schema Consistency
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## SciImpact
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | reading |
+| `2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact` | SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction | 2026 | benchmark | [pdf](../sources/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.pdf) | [note](../reading_notes/2026_sciimpact-a-multi-dimensional-multi-field-benchmark-for_sciimpact.md) | Science of Science | Scientific Impact Prediction | SciImpact, citation, award, patent, media, code, dataset, model | read |
 
 ## Self-Evolving Agents
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | skimmed |
+| `2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421` | EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective | 2026 | benchmark | [pdf](../sources/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.pdf) | [note](../reading_notes/2026_evomembench-benchmarking-agent-memory-from-a-self-evolvi_arxiv-2605-18421.md) | NLP | LLM Agents | Agent Memory, Self-Evolving Agents, EvoMemBench | read |
 
 ## self-evolving retrieval
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | reading |
+| `2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941` | EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents | 2026 | research | [source](../sources/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941_source.tar.gz) | [note](../reading_notes/2026_evolvemem-self-evolving-memory-architecture-via-autorese_arxiv-2605-13941.md) | NLP, AI Agents | Long-term Memory, LLM Agents, Retrieval | EvolveMem, LLM agents, memory architecture, self-evolving retrieval, AutoResearch, LoCoMo, MemBench | read |
 
 ## self-improvement
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## semantic timeline
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | reading |
+| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | read |
 
 ## Shadow-Loom
 
@@ -937,13 +937,13 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | reading |
+| `2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773` | CoPA: Benchmarking Personalized Question Answering with Data-Informed Cognitive Factors | 2026 | benchmark | [pdf](../sources/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.pdf) | [note](../reading_notes/2026_copa-benchmarking-personalized-question-answering-with-d_arxiv-2604-14773.md) | NLP, Education | Personalized Learning, Educational Question Answering, AI Evaluation | CoPA, CIPD, personalized QA, Cognitive Trust, Situational Anchoring, Schema Consistency, Cognitive Load Management, Metacognitive Scaffolding, Affective and Motivational Resonance | read |
 
 ## skill bank
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | reading |
+| `2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474` | MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents | 2026 | research | [pdf](../sources/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.pdf) | [note](../reading_notes/2026_memskill-learning-and-evolving-memory-skills-for-self-ev_arxiv-2602-02474.md) | NLP, LLM Agents | Agent Memory, Self-Evolving Agents | MemSkill, agent memory, memory skills, skill bank, controller, designer | read |
 
 ## StoRM
 
@@ -967,19 +967,19 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | reading |
+| `2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper` | Narrative Knowledge Weaver: Narrative-Centric Retrieval-Augmented Reasoning for Long-Form Text Understanding | 2026 | research | [pdf](../sources/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.pdf) | [note](../reading_notes/2026_narrative-knowledge-weaver-narrative-centric-retrieval-a_paper.md) | NLP, Information Retrieval | Narrative QA, RAG, Graph RAG | Narrative Knowledge Weaver, NKW, narrative-centric RAG, storyline reasoning | read |
 
 ## StructMem
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## structured memory
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | reading |
+| `2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748` | StructMem: Structured Memory for Long-Horizon Behavior in LLMs | 2026 | research | [source](../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz) | [note](../reading_notes/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748.md) | NLP, LLM Agents | Long-term Memory, Agent Memory, Structured Memory | StructMem, structured memory, long-horizon conversational agents, event-level binding, cross-event consolidation, LoCoMo | read |
 
 ## surprise
 
@@ -1004,7 +1004,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
+| `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | read |
 
 ## syuzhet
 
@@ -1028,19 +1028,19 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | reading |
+| `2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575` | Generating Long-form Story Using Dynamic Hierarchical Outlining with Memory-Enhancement | 2024 | research | [pdf](../sources/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.pdf) | [note](../reading_notes/2024_generating-long-form-story-using-dynamic-hierarchical-ou_arxiv-2412-13575.md) | NLP, Computational Creativity | Story Generation, Long-form Generation, Knowledge Graph Memory | DOME, Dynamic Hierarchical Outline, Memory-Enhancement Module, Temporal Conflict Analyzer | read |
 
 ## Temporal Semantic Memory
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | reading |
+| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | read |
 
 ## Text2Mem
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | reading |
+| `2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145` | Text2Mem: A Unified Memory Operation Language for Memory Operating System | 2025 | research | [source](../sources/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145_source.tar.gz) | [note](../reading_notes/2025_text2mem-a-unified-memory-operation-language-for-memory_arxiv-2509-11145.md) | NLP, LLM Agents | Agent Memory, Memory Operating System | Text2Mem, Memory Operating System, LLM agents, memory operations | read |
 
 ## Theory of Mind
 
@@ -1052,26 +1052,26 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | reading |
+| `2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468` | Beyond Dialogue Time: Temporal Semantic Memory for Personalized LLM Agents | 2026 | research | [source](../sources/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468_source.tar.gz) | [note](../reading_notes/2026_beyond-dialogue-time-temporal-semantic-memory-for-person_arxiv-2601-07468.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | Temporal Semantic Memory, TSM, semantic timeline, durative memory, personalized LLM agents | read |
 
 ## Uncategorized
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
 | `2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p` | 11697_P2P_Automated_Paper_to_P | 2026 | research | [pdf](../sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf) | [note](../reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md) |  |  |  | reading |
-| `2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577` | Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction | 2026 | research | [pdf](../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf) | [note](../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md) |  |  |  | reading |
+| `2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577` | Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction | 2026 | research | [pdf](../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf) | [note](../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md) |  |  |  | read |
 
 ## user memory
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | reading |
+| `2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250` | Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval | 2026 | research | [source](../sources/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250_source.tar.gz) | [note](../reading_notes/2026_evoking-user-memory-personalizing-llm-via-recollection-f_arxiv-2603-09250.md) | NLP, AI Agents | LLM Memory, Personalization, Retrieval | RF-Mem, user memory, personalized LLM, recollection, familiarity | read |
 
 ## user memory bank
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | reading |
+| `2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702` | Learning How and What to Memorize: Cognition-Inspired Two-Stage Optimization for Evolving Memory | 2026 | research | [source](../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz) | [note](../reading_notes/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702.md) | NLP, AI Agents | LLM Memory, Personalization, Reinforcement Learning | MemCoE, agent memory, user memory bank, preference evolution, personalization | read |
 
 ## virtual context management
 

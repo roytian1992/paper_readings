@@ -28,7 +28,7 @@ keywords:
   - user memory bank
   - preference evolution
   - personalization
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702_source.tar.gz
 assets_path: ../assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702
@@ -510,7 +510,7 @@ Conclusion 的核心判断可以压缩成一句话：长期用户记忆不应只
 
 ![Figure source_figure_021_overview-of-our-proposed-it-performs-two-stage-o](../assets/2026_learning-how-and-what-to-memorize-cognition-inspired-two_arxiv-2605-00702/figures/source_figure_021_overview-of-our-proposed-it-performs-two-stage-o.png)
 
-- Overview of our proposed \ourmodel. It performs two-stage optimization for evolving user memory: (1) {Memory Guideline Induction} (\moduleone) iteratively refines a natural-language guideline; (2) {Guideline-Aligned Memory Policy Optimization} (\moduletwo) fixes the induced guideline to define guideline-aligned rewards and applies multi-turn GRPO to learn what information to update in evolving memory bank.
+- Overview of the proposed MemCoE framework. It performs two-stage optimization for evolving user memory: (1) Memory Guideline Induction iteratively refines a natural-language guideline; (2) Guideline-Aligned Memory Policy Optimization fixes the induced guideline to define guideline-aligned rewards and applies multi-turn GRPO to learn what information to update in the evolving memory bank.
 
 - Source: arXiv source `img/method.pdf`
 

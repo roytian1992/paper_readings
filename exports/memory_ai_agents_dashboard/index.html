@@ -1,0 +1,2609 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Memory Mechanisms | Dashboard</title>
+  <style>
+    :root {
+      --paper: #f7f4ed;
+      --paper-2: #fffdf8;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #d8d2c5;
+      --blue: #2f6f9f;
+      --teal: #247a6b;
+      --green: #5f7d36;
+      --amber: #b66f1a;
+      --coral: #b45345;
+      --violet: #665a9f;
+      --shadow: 0 18px 48px rgba(32, 33, 36, 0.12);
+      --radius: 8px;
+      --sidebar: 292px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(47, 111, 159, 0.04), transparent 24%),
+        linear-gradient(180deg, #fbf8f0 0%, #f0eee7 44%, #f7f4ed 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 4px;
+      z-index: 100;
+      background: transparent;
+    }
+
+    .progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--amber), var(--coral));
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 20px 24px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.88);
+      backdrop-filter: blur(18px);
+      overflow-y: auto;
+    }
+
+    .brand {
+      margin-bottom: 26px;
+    }
+
+    .brand__kicker {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 760;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: 8px 0 10px;
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 820;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 8px;
+      align-items: center;
+      min-height: 38px;
+      padding: 7px 8px;
+      border-radius: var(--radius);
+      color: #343434;
+      font-size: 14px;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      border-color: rgba(36, 122, 107, 0.28);
+      background: rgba(36, 122, 107, 0.08);
+    }
+
+    .nav-code {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .side-panel {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(247, 244, 237, 0.72);
+    }
+
+    .side-panel h2 {
+      margin: 0 0 8px;
+      font-size: 13px;
+    }
+
+    .side-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .section {
+      min-height: 100vh;
+      padding: 68px min(6vw, 72px);
+      border-bottom: 1px solid rgba(216, 210, 197, 0.82);
+    }
+
+    .section:nth-child(even) {
+      background: rgba(255, 253, 248, 0.42);
+    }
+
+    .section--hero {
+      display: grid;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 48px;
+    }
+
+    .container {
+      width: min(1240px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.1;
+      font-weight: 840;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .lead {
+      max-width: 850px;
+      margin-top: 18px;
+      color: #373a3d;
+      font-size: 20px;
+      line-height: 1.65;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(380px, 1.08fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 58px;
+      line-height: 1.02;
+      margin: 0;
+      max-width: 760px;
+      font-weight: 880;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-title span {
+      color: var(--teal);
+    }
+
+    .hero-title-mobile {
+      display: none;
+    }
+
+    .hero-copy {
+      margin-top: 20px;
+      max-width: 720px;
+      color: #34383b;
+      font-size: 20px;
+      line-height: 1.65;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.72);
+      color: #333;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .math {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-weight: 760;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .math sub,
+    .formula sub {
+      font-size: 0.72em;
+      line-height: 0;
+      vertical-align: -0.28em;
+    }
+
+    .formula-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0 18px;
+    }
+
+    .formula-card {
+      padding: 14px;
+      border: 1px solid rgba(36, 122, 107, 0.24);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.86);
+    }
+
+    .formula-card .formula {
+      display: block;
+      overflow-x: auto;
+      color: #183c36;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 17px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .formula-card span:last-child {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .figure-frame {
+      --figure-height: auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-2);
+      box-shadow: var(--shadow);
+    }
+
+    .figure-frame img {
+      width: 100%;
+      height: var(--figure-height);
+      object-fit: contain;
+      padding: 10px;
+      cursor: zoom-in;
+      background: white;
+    }
+
+    .figure-hero {
+      --figure-height: auto;
+    }
+
+    .figure-wide {
+      --figure-height: auto;
+    }
+
+    .figure-short {
+      --figure-height: auto;
+    }
+
+    .figure-medium {
+      --figure-height: auto;
+    }
+
+    .figure-tall {
+      --figure-height: clamp(430px, 52vw, 660px);
+    }
+
+    .figure-square {
+      --figure-height: clamp(360px, 42vw, 560px);
+    }
+
+    .figure-compact {
+      --figure-height: clamp(290px, 34vw, 470px);
+    }
+
+    .figure-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .figure-caption strong {
+      color: var(--ink);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 360px);
+      gap: 26px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .section-head .takeaway {
+      border-left: 4px solid var(--teal);
+      padding: 12px 0 12px 16px;
+      color: #34383b;
+      background: rgba(255, 253, 248, 0.52);
+    }
+
+    .section-head .takeaway strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-1 {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.82);
+    }
+
+    .card h3,
+    .card h4 {
+      margin: 0 0 9px;
+    }
+
+    .card h4 {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .card p {
+      color: #42464a;
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    .card--blue {
+      border-top: 5px solid var(--blue);
+    }
+
+    .card--teal {
+      border-top: 5px solid var(--teal);
+    }
+
+    .card--green {
+      border-top: 5px solid var(--green);
+    }
+
+    .card--amber {
+      border-top: 5px solid var(--amber);
+    }
+
+    .card--coral {
+      border-top: 5px solid var(--coral);
+    }
+
+    .card--violet {
+      border-top: 5px solid var(--violet);
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .metric {
+      min-height: 124px;
+      padding: 18px;
+      border-radius: var(--radius);
+      color: white;
+      overflow: hidden;
+    }
+
+    .metric:nth-child(1) {
+      background: var(--blue);
+    }
+
+    .metric:nth-child(2) {
+      background: var(--teal);
+    }
+
+    .metric:nth-child(3) {
+      background: var(--coral);
+    }
+
+    .metric .label {
+      font-size: 13px;
+      font-weight: 790;
+      opacity: 0.9;
+    }
+
+    .metric .value {
+      margin-top: 8px;
+      font-size: 21px;
+      line-height: 1.2;
+      font-weight: 830;
+      overflow-wrap: anywhere;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255, 253, 248, 0.88);
+    }
+
+    .table th,
+    .table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .table th {
+      background: rgba(36, 122, 107, 0.08);
+      color: #26312f;
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .work-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(260px, 0.32fr);
+      gap: 18px;
+      margin: 24px 0;
+      align-items: stretch;
+    }
+
+    .work-map {
+      display: grid;
+      gap: 22px;
+      margin-top: 24px;
+      min-width: 0;
+    }
+
+    .work-block {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .work-block h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .work-block > p {
+      max-width: 920px;
+      margin-bottom: 14px;
+      color: #3f4446;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .table-scroll {
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.9);
+    }
+
+    .table-scroll .table {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .work-table {
+      min-width: 940px;
+    }
+
+    .work-table th:first-child,
+    .work-table td:first-child {
+      width: 22%;
+      font-weight: 780;
+      color: #23313a;
+    }
+
+    .work-table th:nth-child(3),
+    .work-table td:nth-child(3) {
+      width: 32%;
+      color: #245f7e;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .resource-card {
+      min-height: 160px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.82);
+    }
+
+    .resource-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #223032;
+      font-size: 15px;
+    }
+
+    .resource-card p {
+      color: #42464a;
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .talk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .talk-card {
+      min-height: 150px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.84);
+    }
+
+    .talk-card:nth-child(2) {
+      border-left-color: var(--teal);
+    }
+
+    .talk-card:nth-child(3) {
+      border-left-color: var(--coral);
+    }
+
+    .talk-card:nth-child(4) {
+      border-left-color: var(--amber);
+    }
+
+    .talk-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #222b2e;
+      font-size: 16px;
+    }
+
+    .talk-card p {
+      color: #40464a;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .scenario-box {
+      margin: 24px 0;
+      padding: 20px;
+      border: 1px solid rgba(36, 122, 107, 0.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(36, 122, 107, 0.08), rgba(255, 253, 248, 0.88) 42%),
+        rgba(255, 253, 248, 0.84);
+    }
+
+    .scenario-box h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+    }
+
+    .scenario-box p {
+      color: #3c4245;
+      font-size: 16px;
+      line-height: 1.72;
+    }
+
+    .scenario-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .scenario-step {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .scenario-step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #223032;
+      font-size: 14px;
+    }
+
+    .scenario-step span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 22px 0;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 128px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-2);
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -9px;
+      width: 16px;
+      height: 16px;
+      border-top: 2px solid var(--teal);
+      border-right: 2px solid var(--teal);
+      transform: translateY(-50%) rotate(45deg);
+      background: var(--paper-2);
+      z-index: 2;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .callout {
+      margin: 24px 0;
+      padding: 18px 20px;
+      border: 1px solid rgba(180, 83, 69, 0.32);
+      border-left: 5px solid var(--coral);
+      border-radius: var(--radius);
+      background: rgba(180, 83, 69, 0.07);
+      color: #313131;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--coral);
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.76);
+    }
+
+    .mini-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mini-list span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.48;
+    }
+
+    .frontier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .frontier-card {
+      min-height: 178px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.84);
+    }
+
+    .frontier-card .num {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 840;
+    }
+
+    .frontier-card h4 {
+      margin: 8px 0 8px;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .frontier-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.52;
+    }
+
+    .idea-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.58fr) minmax(360px, 0.42fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .idea-panel {
+      padding: 22px;
+      border: 1px solid rgba(36, 122, 107, 0.26);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(36, 122, 107, 0.08), rgba(54, 93, 135, 0.07) 46%, rgba(255, 253, 248, 0.88)),
+        rgba(255, 253, 248, 0.86);
+    }
+
+    .idea-panel h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.18;
+    }
+
+    .idea-panel p {
+      color: #343b3f;
+      font-size: 16px;
+      line-height: 1.72;
+    }
+
+    .idea-panel p + p {
+      margin-top: 12px;
+    }
+
+    .idea-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .idea-tags span {
+      padding: 7px 10px;
+      border: 1px solid rgba(36, 122, 107, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.72);
+      color: #25403b;
+      font-size: 12px;
+      font-weight: 780;
+    }
+
+    .idea-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .idea-card {
+      min-height: 178px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.84);
+    }
+
+    .idea-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #1f2c30;
+      font-size: 16px;
+    }
+
+    .idea-card p {
+      color: #41484b;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .idea-table {
+      margin-top: 18px;
+    }
+
+    .explain-block {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
+      gap: 18px;
+      margin: 24px 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .explain-block h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .explain-block p {
+      color: #383c40;
+      font-size: 16px;
+      line-height: 1.72;
+    }
+
+    .explain-block p + p {
+      margin-top: 12px;
+    }
+
+    .mechanism-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mechanism-list li {
+      padding: 12px 13px;
+      border-left: 4px solid rgba(36, 122, 107, 0.45);
+      background: rgba(36, 122, 107, 0.06);
+      color: #3b4043;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .quick-map {
+      display: none;
+    }
+
+    body[data-density="quick"] main > section:not(.quick-map) {
+      display: none;
+    }
+
+    body[data-density="quick"] .quick-map {
+      display: block;
+    }
+
+    body[data-density="quick"] .sidebar .nav {
+      display: none;
+    }
+
+    .quick-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.74fr) minmax(320px, 0.38fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .knowledge-tree {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .knowledge-tree ul {
+      position: relative;
+      margin: 10px 0 0 18px;
+      padding: 0 0 0 18px;
+      border-left: 2px solid rgba(36, 122, 107, 0.22);
+      list-style: none;
+    }
+
+    .knowledge-tree li {
+      position: relative;
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.86);
+    }
+
+    .knowledge-tree ul li::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 24px;
+      width: 18px;
+      border-top: 2px solid rgba(36, 122, 107, 0.22);
+    }
+
+    .knowledge-tree strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #1f2a2b;
+      font-size: 16px;
+    }
+
+    .knowledge-tree span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.52;
+    }
+
+    .quick-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.9);
+    }
+
+    .quick-card + .quick-card {
+      margin-top: 14px;
+    }
+
+    .quick-card h3 {
+      margin-bottom: 10px;
+      font-size: 19px;
+    }
+
+    .quick-card p {
+      color: #404447;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    .modebar {
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      display: flex;
+      justify-content: flex-end;
+      width: min(1240px, calc(100% - 32px));
+      margin: 12px auto -52px;
+      pointer-events: none;
+    }
+
+    .modebar__inner {
+      display: flex;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.9);
+      box-shadow: 0 10px 22px rgba(32, 33, 36, 0.08);
+      pointer-events: auto;
+    }
+
+    .modebar button {
+      min-width: 54px;
+      min-height: 32px;
+      padding: 4px 11px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    .modebar button.active {
+      background: var(--teal);
+      color: white;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(20, 21, 22, 0.82);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal img {
+      max-width: min(96vw, 1600px);
+      max-height: 90vh;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      cursor: zoom-out;
+    }
+
+    .modal button {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .quote-line {
+      margin-top: 20px;
+      padding-left: 18px;
+      border-left: 4px solid var(--amber);
+      color: #36393b;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 1120px) {
+      :root {
+        --sidebar: 248px;
+      }
+
+      .hero-grid,
+      .compare,
+      .explain-block,
+      .idea-hero,
+      .work-intro,
+      .quick-layout,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-4,
+      .frontier-grid,
+      .idea-grid,
+      .talk-grid,
+      .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow,
+      .scenario-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-step:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        display: block;
+      }
+
+      .container,
+      .sidebar,
+      main,
+      .hero-grid,
+      .section-head,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .metric-row,
+      .frontier-grid,
+      .idea-grid,
+      .idea-hero,
+      .talk-grid,
+      .scenario-steps,
+      .resource-grid,
+      .card,
+      .side-panel {
+        min-width: 0;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .nav a {
+        grid-template-columns: 24px minmax(0, 1fr);
+        font-size: 13px;
+      }
+
+      .nav a span:last-child {
+        overflow-wrap: anywhere;
+      }
+
+      .section {
+        min-height: auto;
+        padding: 54px 18px;
+      }
+
+      .hero-title {
+        display: none;
+      }
+
+      .hero-title-mobile {
+        display: block;
+        margin: 0;
+        max-width: 100%;
+        font-size: 34px;
+        line-height: 1.08;
+        font-weight: 880;
+        overflow-wrap: anywhere;
+      }
+
+      .hero-title-mobile .line {
+        display: block;
+      }
+
+      .hero-title-mobile span {
+        color: var(--teal);
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .lead,
+      .hero-copy {
+        font-size: 18px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .explain-block,
+      .idea-grid,
+      .idea-hero,
+      .work-intro,
+      .quick-layout,
+      .formula-strip,
+      .metric-row,
+      .frontier-grid,
+      .talk-grid,
+      .scenario-steps,
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .figure-frame {
+        --figure-height: auto;
+      }
+
+      .metric {
+        min-height: auto;
+      }
+
+      .metric .value {
+        font-size: 21px;
+      }
+
+      .modebar {
+        position: static;
+        justify-content: flex-start;
+        margin: 10px 16px -22px;
+      }
+
+      .table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .work-table {
+        min-width: 820px;
+      }
+    }
+  </style>
+</head>
+<body data-density="full">
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand__kicker">Mechanism Dashboard</div>
+        <h1>Agent Memory Mechanisms</h1>
+        <p>面向系统介绍的 memory 机制地图：先讲 agent 为什么需要记忆，再讲承载形式、功能角色、生命周期和前沿演进。</p>
+      </div>
+
+      <nav aria-label="章节导航">
+        <ol class="nav" id="nav">
+          <li><a href="#overview"><span class="nav-code">00</span><span>总览</span></a></li>
+          <li><a href="#why"><span class="nav-code">01</span><span>问题动机</span></a></li>
+          <li><a href="#prelim"><span class="nav-code">02</span><span>概念边界</span></a></li>
+          <li><a href="#token"><span class="nav-code">03A</span><span>Token Memory</span></a></li>
+          <li><a href="#beyond-token"><span class="nav-code">03B</span><span>Parametric / Latent</span></a></li>
+          <li><a href="#functions"><span class="nav-code">04</span><span>Functions</span></a></li>
+          <li><a href="#dynamics"><span class="nav-code">05</span><span>Dynamics</span></a></li>
+          <li><a href="#works"><span class="nav-code">06</span><span>Works</span></a></li>
+          <li><a href="#frontiers"><span class="nav-code">07</span><span>Frontiers</span></a></li>
+          <li><a href="#diegetic"><span class="nav-code">08</span><span>我的设想</span></a></li>
+          <li><a href="#wrap"><span class="nav-code">END</span><span>机制结论</span></a></li>
+        </ol>
+      </nav>
+
+      <div class="side-panel">
+        <h2>讲解主线</h2>
+        <p>把 memory 看成 agent 的长期状态系统：它被写入、被维护、被检索，并在每次行动前影响决策。</p>
+      </div>
+    </aside>
+
+    <main>
+      <div class="modebar" aria-label="显示密度">
+        <div class="modebar__inner">
+          <button type="button" class="active" data-density="full">讲解</button>
+          <button type="button" data-density="quick">速览</button>
+        </div>
+      </div>
+
+      <section class="section section--hero" id="overview">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Mechanism Map</p>
+            <h2 class="hero-title">Agent memory is a <span>dynamic subsystem</span>, not a bigger prompt.</h2>
+            <h2 class="hero-title-mobile"><span class="line">Agent Memory</span><span class="line">是动态</span><span class="line">状态系统</span></h2>
+            <p class="hero-copy">理解 agent memory 的关键，不是把上下文窗口拉长，而是看清三件事：记忆由什么承载、服务什么能力、如何在交互中形成、更新并被检索。</p>
+            <div class="meta-row">
+              <span class="pill">Mechanism-first</span>
+              <span class="pill">Agent Memory</span>
+              <span class="pill">Token-level first</span>
+              <span class="pill">Lifecycle view</span>
+            </div>
+            <div class="metric-row">
+              <div class="metric"><div class="label">Forms</div><div class="value">记忆由什么承载</div></div>
+              <div class="metric"><div class="label">Functions</div><div class="value">记忆服务什么能力</div></div>
+              <div class="metric"><div class="label">Dynamics</div><div class="value">记忆如何运作</div></div>
+            </div>
+            <div class="talk-grid text-heavy">
+              <div class="talk-card">
+                <strong>开场先讲问题</strong>
+                <p>Agent 一旦进入多轮工具调用、长期对话或开放环境，就会遇到“过去的信息如何继续影响现在行动”的问题。Memory 机制就是为这个时间连续性服务。</p>
+              </div>
+              <div class="talk-card">
+                <strong>再讲三轴框架</strong>
+                <p>Forms 说明 memory 放在哪里；Functions 说明 memory 支撑什么能力；Dynamics 说明 memory 如何被写入、维护和取回。三轴合起来才是完整机制。</p>
+              </div>
+              <div class="talk-card">
+                <strong>最后落到工程</strong>
+                <p>真实系统优先从 token-level memory 做起，因为它可见、可改、可删除、可审计。Parametric 和 latent 更像能力内化或效率优化，不适合作为唯一治理层。</p>
+              </div>
+            </div>
+          </div>
+          <figure class="figure-frame figure-hero">
+            <img src="assets/figures/source_figure_001_overview.png" alt="Forms Functions Dynamics overview" loading="eager">
+            <figcaption class="figure-caption"><strong>机制总览</strong><span>Forms - Functions - Dynamics：承载形式、功能角色和动态生命周期。</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Why Memory</p>
+              <h2>为什么 Agent 需要真正的 Memory 机制</h2>
+              <p class="lead">memory 的角色从“保存聊天历史”升级为让 agent 具备持续性、适应性和长期任务能力的基础机制。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>短期 / 长期不是足够细的架构分类。更关键的是 memory 以什么形式存在、服务什么功能、如何被写入和读取。</div>
+          </div>
+
+          <div class="grid-3">
+            <article class="card card--blue">
+              <h3>LLM 到 Agent</h3>
+              <p>agent 不再只是生成文本，而是在 reasoning、planning、tool-use、memory、environment control 的循环中行动。memory 直接进入决策输入。</p>
+            </article>
+            <article class="card card--teal">
+              <h3>长上下文不等于记忆</h3>
+              <p>上下文窗口只是当前可读 buffer；memory 需要选择性写入、长期维护、按任务检索，并能跨会话改变 agent 的后续行为。</p>
+            </article>
+            <article class="card card--coral">
+              <h3>机制边界要清楚</h3>
+              <p>用户事实、经验轨迹、当前工作状态、参数知识和内部 latent state 都可能叫 memory，但它们的更新方式和风险完全不同。</p>
+            </article>
+          </div>
+
+          <div class="callout text-heavy">
+            <strong>讲解切入句</strong>
+            Agent memory 不是历史记录的别名，而是让 agent 在长期交互中保持状态、吸收经验并改变后续行动的控制系统。
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>用一个日常例子讲明白</h3>
+            <p>假设我有一个长期研究助理 agent。第一天我告诉它我的研究方向、偏好的实验设置和正在读的论文；第二天它帮我查资料并记录哪些路线失败了；第三天我让它继续写实验计划。一个没有 memory 的模型只能依赖我重新描述背景；一个只有长上下文的模型能读到当前塞进去的历史；一个真正有 memory 机制的 agent 会主动把用户偏好、项目状态、失败经验和当前计划分别沉淀下来，并在下一次行动前按任务取回。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>用户事实</strong><span>我的方向、偏好、约束和长期目标。</span></div>
+              <div class="scenario-step"><strong>任务状态</strong><span>当前项目做到哪一步，哪些资料已经看过。</span></div>
+              <div class="scenario-step"><strong>经验教训</strong><span>哪些搜索策略、实验路线或工具调用曾经失败。</span></div>
+              <div class="scenario-step"><strong>行动影响</strong><span>下一次规划时自动避开重复工作，并保持目标一致。</span></div>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>从“上下文管理”到“状态管理”</h3>
+              <p>普通 LLM 的输入通常是一次性 prompt：给它什么上下文，它就在这个上下文里回答。Agent 的问题更复杂，因为它会连续观察环境、调用工具、执行动作、接收反馈，还可能跨很多轮对话或很多个任务继续工作。如果每次都只看当前 prompt，agent 就会表现得像没有过去：重复问同样的问题、忘记用户偏好、无法复用失败经验，也很难保持长期目标一致。</p>
+              <p>所以 memory 机制要解决的是“状态管理”问题：哪些信息应该从历史里沉淀下来，沉淀成什么形式，什么时候更新，什么时候遗忘，什么时候拿出来影响当前决策。这也是它和单纯长上下文、RAG 或聊天记录的根本区别。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>关键区别 1：</strong>长上下文解决“现在能读多少”，memory 解决“未来应该保留什么”。</li>
+              <li><strong>关键区别 2：</strong>RAG 常检索外部知识，agent memory 还要维护用户、任务、环境和经验状态。</li>
+              <li><strong>关键区别 3：</strong>好的 memory 不只是召回信息，还要控制写入、更新、冲突和遗忘。</li>
+            </ul>
+          </div>
+
+          <table class="table text-heavy">
+            <thead>
+              <tr>
+                <th>机制问题</th>
+                <th>对应模块</th>
+                <th>介绍时要讲清楚什么</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>agent memory 如何定义</td>
+                <td>边界与接口</td>
+                <td>先划清它和 LLM memory、RAG、context engineering 的边界。</td>
+              </tr>
+              <tr>
+                <td>memory 由什么承载</td>
+                <td>Forms</td>
+                <td>token-level 是工程主线，parametric / latent 是补充形态。</td>
+              </tr>
+              <tr>
+                <td>agent 为什么需要 memory</td>
+                <td>Functions</td>
+                <td>factual、experiential、working 分别对应知道什么、如何改进、当前在想什么。</td>
+              </tr>
+              <tr>
+                <td>memory 如何运作</td>
+                <td>Dynamics</td>
+                <td>formation、evolution、retrieval 构成动态闭环。</td>
+              </tr>
+              <tr>
+                <td>未来走向哪里</td>
+                <td>Frontiers</td>
+                <td>自主管理、RL、多模态、多 agent、world model、可信治理。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="prelim">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Memory Interface</p>
+              <h2>Agent Memory 的形式化与边界</h2>
+              <p class="lead">把 memory 看成随时间变化的状态 <span class="math">M<sub>t</sub></span>：它不是静态数据库，而是通过写入、维护、检索接入 agent 决策循环的状态层。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>memory 不是事后附加的存储，而是 observation 和 action 之间的决策信号。</div>
+          </div>
+
+          <div class="formula-strip text-heavy" aria-label="Memory formal interface">
+            <div class="formula-card">
+              <span class="formula">M<sub>t</sub> ∈ ℳ</span>
+              <span>当前时刻的 memory configuration，可以是文本库、图、向量库、KV cache 或混合结构。</span>
+            </div>
+            <div class="formula-card">
+              <span class="formula">M<sub>t+1</sub><sup>form</sup> = F(M<sub>t</sub>, φ<sub>t</sub>)</span>
+              <span>formation 从当前轨迹、工具结果和反馈中抽取候选记忆。</span>
+            </div>
+            <div class="formula-card">
+              <span class="formula">M<sub>t+1</sub> = E(M<sub>t+1</sub><sup>form</sup>)</span>
+              <span>evolution 将候选记忆整合、更新、压缩或遗忘。</span>
+            </div>
+            <div class="formula-card">
+              <span class="formula">m<sub>t</sub> = R(M<sub>t</sub>, o<sub>t</sub>, Q)</span>
+              <span>retrieval 根据当前观察和任务取回可进入 prompt 或 policy 的记忆信号。</span>
+            </div>
+          </div>
+
+          <div class="flow" aria-label="Agent memory loop">
+            <div class="flow-step"><strong>Observation</strong><span>agent 从环境、用户、工具和其他 agent 接收当前状态。</span></div>
+            <div class="flow-step"><strong>Retrieval</strong><span><span class="math">R(M<sub>t</sub>, o<sub>t</sub>, Q)</span> 取回对当前决策有用的 memory signal。</span></div>
+            <div class="flow-step"><strong>LLM Policy</strong><span>策略同时条件化在 observation、任务和 memory-derived signal 上。</span></div>
+            <div class="flow-step"><strong>Action</strong><span>生成文本、调用工具、规划、控制环境或与其他 agent 通信。</span></div>
+            <div class="flow-step"><strong>Memory Update</strong><span>新轨迹、反馈和中间产物进入 formation / evolution。</span></div>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>把公式翻译成系统语言</h3>
+            <p><span class="math">M<sub>t</sub></span> 可以理解为 agent 此刻拥有的全部可用记忆状态。一次新交互产生 observation、tool output、reasoning trace 和 feedback；formation 先从这些材料中提取候选 memory，evolution 决定是否合并进旧 memory、替换旧版本或丢弃低价值内容。下一次行动前，retrieval 再根据当前任务取回少量有用信号，进入 prompt、planner 或 tool policy。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>写入不是全存</strong><span>先判断信息是否有未来价值，再形成 memory unit。</span></div>
+              <div class="scenario-step"><strong>更新不是追加</strong><span>新事实可能要覆盖旧事实，经验可能要合并成规则。</span></div>
+              <div class="scenario-step"><strong>检索不是 top-k</strong><span>要考虑时机、意图、权限、时间有效性和冲突。</span></div>
+              <div class="scenario-step"><strong>使用不是粘贴</strong><span>取回内容还要压缩、重排、验证，再进入决策。</span></div>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>这个接口说明了 memory 怎样影响行动</h3>
+              <p>在 agent loop 里，memory 不是“回答完再存一下”的附加功能，而是在行动之前就进入策略输入。当前 observation 只告诉 agent 眼前发生了什么；memory signal 则告诉 agent 过去发生过什么、用户长期偏好是什么、类似任务以前怎么成功或失败、当前计划执行到哪一步。</p>
+              <p>这意味着 memory 的质量会直接影响 agent 行为。如果 retrieval 没触发，agent 可能忘记关键事实；如果取回了过时或冲突信息，agent 可能做出错误决策；如果 formation 过于粗糙，长期 memory 会变成低质量摘要堆。理解这个接口，是后面理解 forms、functions、dynamics 的基础。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>Formation：</strong>决定什么信息值得从交互中沉淀下来。</li>
+              <li><strong>Evolution：</strong>决定新旧 memory 如何合并、修正、降权或删除。</li>
+              <li><strong>Retrieval：</strong>决定当前任务到底应该读取哪部分 memory。</li>
+            </ul>
+          </div>
+
+          <div class="compare">
+            <figure class="figure-frame figure-wide">
+              <img src="assets/figures/source_figure_002_concept-comparison.png" alt="Concept comparison for agent memory" loading="eager">
+              <figcaption class="figure-caption"><strong>概念边界</strong><span>Agent Memory 与 LLM Memory、RAG、Context Engineering 的差异。</span></figcaption>
+            </figure>
+            <ul class="mini-list text-heavy">
+              <li><strong>Agent Memory</strong><span>关注 agent 在多轮环境交互中形成、维护、检索并使用的持久状态。</span></li>
+              <li><strong>LLM Memory</strong><span>更偏模型本身如何存储知识，包括参数知识、上下文能力和内部表示。</span></li>
+              <li><strong>RAG</strong><span>通常围绕外部文档检索增强单次生成；agent memory 更强调长期交互和动态更新。</span></li>
+              <li><strong>Context Engineering</strong><span>关注如何构造当前输入；agent memory 还包括未来可复用状态的形成和治理。</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="token">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Token-Level Form</p>
+              <h2>Token-level Memory 是工程主战场</h2>
+              <p class="lead">这里的 token 不是 tokenizer token，而是任何外部可见、可写入、可检索、可重组的离散 memory unit：文本片段、用户画像、轨迹、图节点、表格行、多模态条目。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>透明、可编辑、可审计、能治理，是 token-level memory 最适合做 agent 系统主 memory 的原因。</div>
+          </div>
+
+          <div class="grid-2">
+            <figure class="figure-frame figure-wide">
+              <img src="assets/figures/source_figure_003_token-level-taxonomy.png" alt="Token-level memory taxonomy" loading="eager">
+              <figcaption class="figure-caption"><strong>Token memory 结构</strong><span>Flat / Planar / Hierarchical 三种组织复杂度。</span></figcaption>
+            </figure>
+            <div class="grid-1">
+              <article class="card card--blue">
+                <h3>Flat Memory 1D</h3>
+                <p>线性序列或独立条目。适合对话历史、用户 profile、经验池、vector entries、多模态片段。优点是简单可扩展，瓶颈是冗余和检索噪声。</p>
+              </article>
+              <article class="card card--teal" style="margin-top: 14px;">
+                <h3>Planar Memory 2D</h3>
+                <p>单层图、树、表或关系结构。它从“存储”走向“组织”，适合实体关系、时间线、任务依赖、多跳推理。</p>
+              </article>
+              <article class="card card--amber" style="margin-top: 14px;">
+                <h3>Hierarchical Memory 3D</h3>
+                <p>跨粒度、跨抽象层组织 memory，例如 chunks、summaries、communities、episodic / semantic layers。适合长文档、多任务历史和全局摘要推理。</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>为什么这里重点讲 token-level memory</h3>
+              <p>对真实 agent 系统来说，token-level memory 最容易落地，因为它是外部可见的。开发者可以看见它保存了什么，用户可以要求删除或修改，系统也可以给每条 memory 加时间、来源、置信度、权限和版本。这些治理能力在长期用户记忆、企业知识、代码仓库、金融或医疗场景里非常关键。</p>
+              <p>但 token-level memory 不是简单把所有历史塞进向量库。Flat memory 适合快速追加，但关系弱；Planar memory 用图、树、表表达关系，适合多跳推理；Hierarchical memory 再进一步，把原始片段、摘要、社区、主题和长期知识组织成多层结构。结构越强，推理能力越好，但维护成本也越高。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>工程优势：</strong>可解释、可编辑、可审计，能和权限、版本、删除策略结合。</li>
+              <li><strong>核心挑战：</strong>不是“存不存”，而是“怎么组织、怎么检索、怎么去噪”。</li>
+              <li><strong>设计原则：</strong>先从 flat memory 起步，再按任务需要引入图结构和层级结构。</li>
+            </ul>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>Token memory 的设计决策</h3>
+            <p>讲 token-level memory 时，可以把它拆成四个工程问题：memory unit 的粒度、metadata 的设计、索引结构的选择、以及取回后的使用方式。粒度太细会检索噪声大，粒度太粗会丢失细节；metadata 不足会让系统无法判断时间、来源和权限；索引只有向量相似度会丢掉关系；取回后直接拼接又会浪费上下文。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>Unit</strong><span>一条 memory 是事实、摘要、事件、反思，还是完整轨迹。</span></div>
+              <div class="scenario-step"><strong>Metadata</strong><span>来源、时间、置信度、用户、任务、权限和版本。</span></div>
+              <div class="scenario-step"><strong>Index</strong><span>向量、关键词、图关系、层级摘要或 hybrid 检索。</span></div>
+              <div class="scenario-step"><strong>Use</strong><span>重排、去冲突、压缩成 planner 或 LLM 可用的上下文。</span></div>
+            </div>
+          </div>
+
+          <table class="table text-heavy" style="margin-top: 24px;">
+            <thead>
+              <tr>
+                <th>结构</th>
+                <th>典型用途</th>
+                <th>主要价值</th>
+                <th>主要风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Flat</td>
+                <td>对话历史、用户偏好、经验轨迹、向量库</td>
+                <td>追加、删除和相似检索成本低</td>
+                <td>关系缺失，容易堆积噪声</td>
+              </tr>
+              <tr>
+                <td>Planar</td>
+                <td>KG、timeline、persona graph、任务依赖图</td>
+                <td>支持结构化检索和关系推理</td>
+                <td>结构构建和纠错成本高</td>
+              </tr>
+              <tr>
+                <td>Hierarchical</td>
+                <td>GraphRAG、分层摘要、长期知识组织</td>
+                <td>同时支持局部细节和全局推理</td>
+                <td>跨层检索路径和维护策略复杂</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="beyond-token">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Beyond Tokens</p>
+              <h2>Parametric 与 Latent：作为 Token Memory 的补充</h2>
+              <p class="lead">parametric 和 latent memory 也能承载经验与状态，但它们更难解释、更新和治理。这里把它们作为 token memory 之外的补充机制。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>需要透明可审计时优先 token-level；需要稳定行为先验时考虑 parametric；需要高压缩和多模态内部状态时考虑 latent。</div>
+          </div>
+
+          <div class="grid-2">
+            <figure class="figure-frame figure-medium">
+              <img src="assets/figures/source_figure_004_latent-memory.png" alt="Latent memory integration" loading="eager">
+              <figcaption class="figure-caption"><strong>Latent memory</strong><span>generate / reuse / transform 三种接入路径。</span></figcaption>
+            </figure>
+            <figure class="figure-frame figure-short">
+              <img src="assets/figures/source_figure_005_memory-paradigms.png" alt="Memory paradigms comparison" loading="eager">
+              <figcaption class="figure-caption"><strong>三类承载形态</strong><span>Token / Parametric / Latent 的适配场景对比。</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>Parametric 和 latent 更像“内化”与“压缩”</h3>
+              <p>Parametric memory 把知识或经验写进模型参数、adapter 或 LoRA 这类可训练模块里。它的好处是推理时不必显式检索，模型可以像“已经学会”一样使用这些知识；坏处是更新慢、回滚难，错误写入可能影响很多相邻能力。因此它更适合稳定知识、长期风格、任务先验，而不适合频繁变化的用户事实。</p>
+              <p>Latent memory 则把信息保存在 KV cache、hidden states、latent embeddings 或 memory tokens 里。它更接近模型内部计算，适合长上下文压缩、多模态状态和高吞吐推理；但人很难直接看懂 latent state 保存了什么，也很难精确删除某条用户记忆。因此本 dashboard 把它们作为补充：它们很重要，但不应该替代 token-level memory 的治理层。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>Token-level：</strong>透明可治理，适合长期系统的外部记忆层。</li>
+              <li><strong>Parametric：</strong>适合稳定行为和领域能力内化，但更新风险高。</li>
+              <li><strong>Latent：</strong>适合高效压缩和内部状态复用，但解释和审计困难。</li>
+            </ul>
+          </div>
+
+          <div class="talk-grid text-heavy">
+            <div class="talk-card">
+              <strong>什么时候用 parametric</strong>
+              <p>当信息足够稳定、需要变成模型默认能力，而且错误更新成本可控时才适合。比如领域术语、固定工具格式、长期风格或稳定技能。</p>
+            </div>
+            <div class="talk-card">
+              <strong>什么时候用 latent</strong>
+              <p>当瓶颈是上下文长度、推理吞吐或多模态状态压缩时适合。它更像效率层，不像用户可直接管理的长期记忆层。</p>
+            </div>
+            <div class="talk-card">
+              <strong>为什么还要 token 层</strong>
+              <p>只要系统涉及用户可控、隐私删除、事实冲突、审计和可解释决策，就需要一层外部可读写的 token memory 做治理接口。</p>
+            </div>
+          </div>
+
+          <table class="table text-heavy" style="margin-top: 24px;">
+            <thead>
+              <tr>
+                <th>Memory form</th>
+                <th>存在哪里</th>
+                <th>优势</th>
+                <th>风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Token-level</td>
+                <td>外部文本、向量库、图、表、轨迹</td>
+                <td>可解释、可编辑、易检索、可审计</td>
+                <td>检索噪声、冗余积累、结构维护成本</td>
+              </tr>
+              <tr>
+                <td>Parametric</td>
+                <td>模型参数、adapter、LoRA、辅助 LM</td>
+                <td>泛化强，推理时不需要显式检索</td>
+                <td>更新慢、难回滚，可能遗忘或误伤旧知识</td>
+              </tr>
+              <tr>
+                <td>Latent</td>
+                <td>KV cache、hidden states、latent embeddings、memory tokens</td>
+                <td>高压缩、高吞吐，适合长上下文和多模态</td>
+                <td>不可解释，难以编辑、审计和验证</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="functions">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Memory Functions</p>
+              <h2>Functions：Memory 服务什么 Agent 能力</h2>
+              <p class="lead">同一种 memory form 可以服务不同功能。对 agent 来说，记忆至少要回答三类问题：知道什么、如何改进、当前在想什么。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>memory 的价值不只在存储内容，而在它支撑了哪类 agent 能力。</div>
+          </div>
+
+          <div class="grid-2">
+            <figure class="figure-frame figure-tall">
+              <img src="assets/figures/source_figure_006_functional-taxonomy.png" alt="Functional taxonomy of memory" loading="eager">
+              <figcaption class="figure-caption"><strong>功能分类</strong><span>Factual / Experiential / Working memory。</span></figcaption>
+            </figure>
+            <div>
+              <div class="grid-1">
+                <article class="card card--blue">
+                  <h3>Factual Memory</h3>
+                  <p>回答 agent 知道什么。保存用户事实、环境状态、历史事件和外部知识，支撑 consistency、coherence、adaptability。</p>
+                </article>
+                <article class="card card--green" style="margin-top: 14px;">
+                  <h3>Experiential Memory</h3>
+                  <p>回答 agent 如何改进。保存过去案例、成功 / 失败轨迹、策略、workflow 和可执行技能。</p>
+                </article>
+                <article class="card card--coral" style="margin-top: 14px;">
+                  <h3>Working Memory</h3>
+                  <p>回答 agent 当前在想什么。它是当前任务中的 active workspace，不只是被动 context window。</p>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>三类功能对应 agent 的三种“持续性”</h3>
+              <p>Factual memory 让 agent 在事实层面持续：它记得用户是谁、环境里有什么、之前确认过哪些约束，因此能保持一致性和个性化。Experiential memory 让 agent 在能力层面持续：它从过去任务的成功和失败中抽象案例、策略和技能，下一次遇到相似问题时不必从零探索。Working memory 让 agent 在当前任务内部持续：它维护当前计划、子目标、临时假设和中间结果，防止长程任务中目标漂移。</p>
+              <p>这三类功能不是三个固定数据库，而是同一套 memory 机制在不同用途下的角色。比如 token-level memory 既可以存用户事实，也可以存反思总结，还可以存当前任务状态；关键是系统必须知道这条 memory 的用途，否则 retrieval 时就会把“长期事实”“经验策略”和“临时草稿”混在一起。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>Factual：</strong>维持一致性和个性化，避免重复询问和前后矛盾。</li>
+              <li><strong>Experiential：</strong>沉淀案例、策略、技能，让 agent 能复用经验。</li>
+              <li><strong>Working：</strong>管理当前任务状态，让多步推理和工具调用不跑偏。</li>
+            </ul>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>同一个事件会进入不同功能层</h3>
+            <p>比如 agent 帮用户完成一次代码调试。它可以把“用户偏好 pytest 而不是 unittest”写成 factual memory；把“这类错误通常先检查依赖版本”写成 experiential memory；把“当前已经定位到配置文件，下一步要改 CI 脚本”保存在 working memory。三者都来自同一次交互，但用途完全不同，生命周期也不同。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>Factual</strong><span>长期稳定、面向一致性，通常需要冲突检测和用户可控。</span></div>
+              <div class="scenario-step"><strong>Experiential</strong><span>可迁移经验，通常需要抽象、评价和跨任务复用。</span></div>
+              <div class="scenario-step"><strong>Working</strong><span>当前任务状态，任务结束后可能压缩、归档或删除。</span></div>
+              <div class="scenario-step"><strong>Retrieval</strong><span>取回时必须按功能过滤，避免临时草稿污染长期事实。</span></div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top: 24px;">
+            <figure class="figure-frame figure-short">
+              <img src="assets/figures/source_figure_007_experiential-memory.png" alt="Experiential memory taxonomy" loading="eager">
+              <figcaption class="figure-caption"><strong>经验记忆</strong><span>case / strategy / skill / hybrid 四个抽象层次。</span></figcaption>
+            </figure>
+            <table class="table text-heavy">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>问题</th>
+                  <th>Token-level 例子</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Factual</td>
+                  <td>What does the agent know?</td>
+                  <td>用户画像、事实条目、环境 KG、长期对话摘要。</td>
+                </tr>
+                <tr>
+                  <td>Experiential</td>
+                  <td>How does the agent improve?</td>
+                  <td>case bank、reflection、strategy notes、可复用工具脚本。</td>
+                </tr>
+                <tr>
+                  <td>Working</td>
+                  <td>What is the agent thinking about now?</td>
+                  <td>任务状态、scratchpad、subgoal tree、当前计划摘要。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dynamics">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Memory Dynamics</p>
+              <h2>Dynamics：Memory 如何形成、演化、检索</h2>
+              <p class="lead">真正的 agent memory system 不是 append-only vector store，而是一个持续形成、治理、读取并反馈到行为中的动态闭环。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>memory 的价值来自 lifecycle，而不是来自存储容器本身。</div>
+          </div>
+
+          <figure class="figure-frame figure-square">
+            <img src="assets/figures/source_figure_008_memory-dynamics.png" alt="Memory dynamics lifecycle" loading="eager">
+            <figcaption class="figure-caption"><strong>生命周期闭环</strong><span>Formation、Evolution、Retrieval 连接成持续改进回路。</span></figcaption>
+          </figure>
+
+          <div class="grid-3" style="margin-top: 24px;">
+            <article class="card card--blue">
+              <h3>Formation</h3>
+              <p>从 raw interaction、reasoning trace、tool output、environment feedback 中抽取更高信息密度的 memory units。</p>
+            </article>
+            <article class="card card--amber">
+              <h3>Evolution</h3>
+              <p>把新旧 memory 融合、修正、遗忘、重组，避免长期系统变成噪声堆积。</p>
+            </article>
+            <article class="card card--teal">
+              <h3>Retrieval</h3>
+              <p>在合适时刻构造 task-aware query，从合适 memory store 取回对当前推理有用的信息。</p>
+            </article>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>生命周期决定 memory 是否可长期运行</h3>
+              <p>一个长期 agent 最容易出问题的地方，不是没有存储，而是 memory 治理失败。Formation 如果太宽松，系统会把大量无关聊天、错误推理和低价值工具输出都写入；如果太严格，又会漏掉未来关键事实。Evolution 如果缺失，memory 会越来越冗余、冲突、过时；Retrieval 如果只做 top-k 相似度，取回的内容可能相关但不适合当前任务阶段。</p>
+              <p>因此，agent memory 的核心是闭环：交互产生原始材料，formation 抽取候选记忆，evolution 把候选记忆和已有记忆整合，retrieval 在行动前取回相关信息，行动结果又回到下一轮 formation。这个闭环跑得越久，系统越需要处理冲突、时间有效性、隐私、遗忘和可解释性。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>Formation 关注质量：</strong>把噪声历史变成可复用 memory unit。</li>
+              <li><strong>Evolution 关注健康：</strong>合并、更新、遗忘，让 memory base 不失控。</li>
+              <li><strong>Retrieval 关注可用性：</strong>按任务意图取回少量真正能影响决策的内容。</li>
+            </ul>
+          </div>
+
+          <div class="grid-2" style="margin-top: 24px;">
+            <figure class="figure-frame figure-square">
+              <img src="assets/figures/source_figure_009_memory-evolution.png" alt="Memory evolution mechanisms" loading="eager">
+              <figcaption class="figure-caption"><strong>Memory evolution</strong><span>Consolidation / Updating / Forgetting。</span></figcaption>
+            </figure>
+            <article class="card card--violet">
+              <h3>Retrieval pipeline</h3>
+              <p>检索流程不依赖论文页面截图展示。实际讲解时重点看四步：什么时候检索、用什么 query 检索、采用什么策略检索，以及检索后如何过滤、重排和压缩。</p>
+            </article>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>为什么 append-only memory 会失控</h3>
+            <p>如果每次交互都直接追加到向量库，短期看起来系统“记住了更多”，长期会出现四类问题：同一事实有多个版本，失败推理被当成经验，过时信息仍被召回，低价值片段挤占检索结果。Dynamics 的作用就是把 memory 从日志堆变成可维护状态。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>Consolidation</strong><span>把重复、相近或同主题 memory 合并成更稳定表示。</span></div>
+              <div class="scenario-step"><strong>Updating</strong><span>新事实覆盖旧事实，同时保留版本和来源。</span></div>
+              <div class="scenario-step"><strong>Forgetting</strong><span>删除、降权或归档低价值、过时、敏感内容。</span></div>
+              <div class="scenario-step"><strong>Retrieval control</strong><span>按任务阶段控制检索时机、范围和最终上下文。</span></div>
+            </div>
+          </div>
+
+          <div class="flow detail" aria-label="Retrieval pipeline">
+            <div class="flow-step"><strong>Timing</strong><span>判断何时检索，以及是否需要访问 memory tool。</span></div>
+            <div class="flow-step"><strong>Query</strong><span>把用户表层输入拆解、改写或扩展成有效检索信号。</span></div>
+            <div class="flow-step"><strong>Strategy</strong><span>lexical、semantic、graph、generative、hybrid retrieval。</span></div>
+            <div class="flow-step"><strong>Rerank</strong><span>过滤低价值、过时、冲突和不相关 memory。</span></div>
+            <div class="flow-step"><strong>Compress</strong><span>把多个片段聚合成简洁、角色相关的最终上下文。</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="works">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Representative Works</p>
+              <h2>相关工作定位图</h2>
+              <p class="lead">这里把代表系统放到 Form、Function、Dynamics 三条轴上。讲解时不用逐个列论文名，而是用这些表判断一个方法是在做存储载体、能力角色，还是生命周期管理。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>相关工作不是按名字堆叠，而是按“承载什么、服务什么、怎么运作”定位。</div>
+          </div>
+
+          <div class="work-intro">
+            <article class="card card--green">
+              <h3>怎么用这些表</h3>
+              <p>一个 memory 系统通常会同时落在三张表里：它可能用 token-level graph 存储用户和环境事实，用 experiential memory 保存失败轨迹，再通过 summarization、updating 和 retrieval pipeline 维护生命周期。汇报时先定位这三个答案，听众就能快速理解它和普通 RAG、长上下文、模型微调的差别。</p>
+            </article>
+            <ul class="mechanism-list">
+              <li><strong>Form：</strong>memory 放在哪里，以什么表示存在。</li>
+              <li><strong>Function：</strong>memory 服务事实一致性、经验复用，还是当前任务状态。</li>
+              <li><strong>Dynamics：</strong>memory 如何被写入、整合、更新、遗忘和检索。</li>
+            </ul>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>把相关工作讲成“系统地图”</h3>
+            <p>这一页不需要逐项介绍所有方法。更有效的讲法是：先选一个系统，问它的 memory carrier 是 flat text、graph、hierarchy、parameter 还是 latent state；再问它主要提升的是用户事实一致性、经验复用还是当前任务状态；最后问它有没有处理 formation、evolution 和 retrieval。如果三个问题都能回答清楚，就能判断它是一个完整 agent memory system，还是只覆盖其中一个组件。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>完整系统</strong><span>同时说明承载形式、服务功能和生命周期控制。</span></div>
+              <div class="scenario-step"><strong>存储组件</strong><span>主要解决 memory unit 的保存、索引和访问。</span></div>
+              <div class="scenario-step"><strong>检索组件</strong><span>主要解决何时查、查什么、怎么重排和压缩。</span></div>
+              <div class="scenario-step"><strong>学习组件</strong><span>主要把经验转成策略、参数能力或 latent 表示。</span></div>
+            </div>
+          </div>
+
+          <div class="work-map">
+            <article class="work-block">
+              <h3>1. 按 Memory Form：先看载体</h3>
+              <p>Form 决定 memory 的可见性、可编辑性和部署门槛。token-level memory 最适合产品和 agent workflow 起步；parametric / latent memory 更接近模型内部能力或推理效率优化，适合稳定知识内化、高压缩和底层系统优化。</p>
+              <div class="table-scroll">
+                <table class="table work-table">
+                  <thead>
+                    <tr>
+                      <th>方向</th>
+                      <th>主要问题</th>
+                      <th>代表工作</th>
+                      <th>讲解重点</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Token-level flat memory</td>
+                      <td>把对话、用户事实、摘要、profile、经验条目作为可检索文本存储。</td>
+                      <td>MemGPT、MemoryBank、Mem0、RMM、MIRIX、LightMem、ComoRAG</td>
+                      <td>最容易接入通用 LLM；质量取决于写入粒度、检索策略和后处理。</td>
+                    </tr>
+                    <tr>
+                      <td>Token-level experiential memory</td>
+                      <td>从 episode、成功/失败轨迹中抽取可复用经验。</td>
+                      <td>Reflexion、ExpeL、AgentKB、ReasoningBank、Voyager、LEGOMem、ToolMem</td>
+                      <td>重点从“记住事实”转向“复用经验”，支撑 self-evolving agent。</td>
+                    </tr>
+                    <tr>
+                      <td>Token-level multimodal / embodied memory</td>
+                      <td>把视频、第一视角观察、空间状态、地图和物体状态转成可检索记忆。</td>
+                      <td>Ego-LLaVA、MovieChat、VideoAgent、KARMA、Embodied VideoAgent、Mem2Ego、WorldMM</td>
+                      <td>难点不是存图像，而是把视觉观察压缩成可检索、可更新的状态。</td>
+                    </tr>
+                    <tr>
+                      <td>Token-level structured / graph memory</td>
+                      <td>用图、树、层级结构表达实体关系、事件关系、时间关系和多跳线索。</td>
+                      <td>A-MEM、MemTree、GraphRAG、Zep、HippoRAG、AriGraph、G-Memory、MAGMA</td>
+                      <td>适合多跳推理、长期知识维护和可解释检索；工程成本高于 flat store。</td>
+                    </tr>
+                    <tr>
+                      <td>Parametric internal memory</td>
+                      <td>把知识、人格、经验或任务先验写入模型原始参数。</td>
+                      <td>StreamingLLM、LMLM、HierMemLM、Agent-Founder、SELF-PARAM、MEND、AlphaEdit</td>
+                      <td>部署时不需要外部 store，但更新成本高，容易遗忘或污染原能力。</td>
+                    </tr>
+                    <tr>
+                      <td>Parametric external memory</td>
+                      <td>用 adapter、LoRA、辅助网络或小模型承载记忆。</td>
+                      <td>MLP-Memory、K-Adapter、WISE、ELDER、T-Patcher、Memory Decoder、MemLoRA、Retroformer</td>
+                      <td>比直接改参数更模块化，但通常仍绑定具体模型和训练管线。</td>
+                    </tr>
+                    <tr>
+                      <td>Latent memory generation</td>
+                      <td>生成 soft token、summary vector、latent slot 或 persistent token。</td>
+                      <td>Gist、AutoCompressor、MemoRAG、MemoryLLM、M+、Titans、MemGen、CoMEM</td>
+                      <td>优势是压缩率和推理效率；短板是用户不可直接读写、解释性弱。</td>
+                    </tr>
+                    <tr>
+                      <td>Latent memory reuse / transform</td>
+                      <td>复用或压缩 KV cache、hidden state、prefix state 等内部计算状态。</td>
+                      <td>Memorizing Transformers、SirLLM、Memory3、FOT、LONGMEM、SnapKV、PyramidKV、H2O、R3Mem</td>
+                      <td>更接近底层推理优化，需要控制模型或推理框架。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="work-block">
+              <h3>2. 按 Memory Function：再看它服务什么能力</h3>
+              <p>Function 让系统设计从“我要存什么”变成“我要让 agent 具备什么长期能力”。事实记忆负责一致性，经验记忆负责改进，工作记忆负责当前任务状态；三者的写入、检索和评测方式都不同。</p>
+              <div class="table-scroll">
+                <table class="table work-table">
+                  <thead>
+                    <tr>
+                      <th>功能方向</th>
+                      <th>主要问题</th>
+                      <th>代表工作</th>
+                      <th>讲解重点</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Factual：用户事实与对话一致性</td>
+                      <td>长期记住用户身份、偏好、历史承诺和互动事实。</td>
+                      <td>MemGPT、TiM、MemoryBank、AI Persona、Mem0、RMM、EMem、Memoria</td>
+                      <td>产品型 agent 最先需要；重点是事实更新、冲突处理和隐私。</td>
+                    </tr>
+                    <tr>
+                      <td>Factual：目标一致性与任务约束</td>
+                      <td>让 agent 在长程任务中持续遵守目标、约束和历史决策。</td>
+                      <td>RecurrentGPT、Memolet、MemGuide、SGMem、A-MEM、M3-Agent、EverMemOS</td>
+                      <td>对 web、office、research agent 很关键，因为早期约束会持续影响后续动作。</td>
+                    </tr>
+                    <tr>
+                      <td>Factual：环境知识持久化</td>
+                      <td>维护外部世界、文档状态、资源状态和跨 agent 共享事实。</td>
+                      <td>AriGraph、HippoRAG、Zep、MemTree、CAM、MemAct、WISE、MemoryLLM、M+</td>
+                      <td>更接近 agent 的可更新世界模型，通常需要结构化存储或知识图谱。</td>
+                    </tr>
+                    <tr>
+                      <td>Experiential：case-based</td>
+                      <td>保存 solution、trajectory 或 episode，用作示例和 replay。</td>
+                      <td>ExpeL、Synapse、MapCoder、JARVIS-1、MemGen、DreamGym、MemRL</td>
+                      <td>证据完整，但上下文占用和检索噪声较大。</td>
+                    </tr>
+                    <tr>
+                      <td>Experiential：strategy-based</td>
+                      <td>把历史经验抽象成 insight、pattern、workflow 或 rule。</td>
+                      <td>Reflexion、Buffer of Thoughts、AWM、H2R、ReasoningBank、AgentKB、Dynamic Cheatsheet、MemEvolve</td>
+                      <td>这是从“保存经历”到“形成方法论”的关键一步。</td>
+                    </tr>
+                    <tr>
+                      <td>Experiential：skill-based</td>
+                      <td>把经验编译成可执行代码、函数、API 或工具能力。</td>
+                      <td>CREATOR、Gorilla、ToolLLM、Voyager、LEGOMem、Darwin Godel Machine、SkillWeaver、Alita、LearnAct</td>
+                      <td>更接近 procedural memory，适合工具调用、代码、web 和 embodied control。</td>
+                    </tr>
+                    <tr>
+                      <td>Working：input condensation</td>
+                      <td>在单轮推理里压缩长上下文或冗余输入。</td>
+                      <td>Gist、ICAE、AutoCompressors、LLMLingua、CompAct、HyCo2、R3Mem</td>
+                      <td>解决当前上下文太长的问题，不等同于长期记忆。</td>
+                    </tr>
+                    <tr>
+                      <td>Working：observation abstraction</td>
+                      <td>把 DOM、视频、GUI、环境观察抽象成低维状态。</td>
+                      <td>Synapse、VideoAgent、MA-LMM、Context as Memory</td>
+                      <td>对交互环境关键，因为原始 observation 往往过长、过噪。</td>
+                    </tr>
+                    <tr>
+                      <td>Working：multi-turn state consolidation</td>
+                      <td>在多轮任务中持续压缩、继承和更新中间状态。</td>
+                      <td>MEM1、MemGen、MemAgent、ReSum、MemSearcher、IterResearch、SUPO、AgeMem</td>
+                      <td>连接 short-term working memory 和 long-term experiential memory。</td>
+                    </tr>
+                    <tr>
+                      <td>Working：hierarchical folding / planning</td>
+                      <td>用层级折叠、目标图或规划结构管理长程任务状态。</td>
+                      <td>HiAgent、Context-Folding、AgentFold、DeepAgent、SayPlan、KARMA、Agent-S、PRIME</td>
+                      <td>适合 deep research、web automation、robotics 等长程任务。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="work-block">
+              <h3>3. 按 Memory Dynamics：最后看它怎么长期运作</h3>
+              <p>Dynamics 关注 memory 进入系统之后发生什么。这里的代表工作可以帮助判断一个方案是在做 formation、consolidation、structured construction，还是把经验进一步压缩成 latent 或 parametric 能力。</p>
+              <div class="table-scroll">
+                <table class="table work-table">
+                  <thead>
+                    <tr>
+                      <th>生命周期方向</th>
+                      <th>主要问题</th>
+                      <th>代表工作</th>
+                      <th>讲解重点</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Semantic summarization</td>
+                      <td>把原始历史压缩成 textual summary、session summary 或 multimodal summary。</td>
+                      <td>MemGPT、Mem0、Mem1、MemAgent、MemoryBank、ReadAgent、LightMem、DeepSeek-OCR、LangRepo</td>
+                      <td>最常见的 formation 方法，适合作为长期记忆写入前的第一层压缩。</td>
+                    </tr>
+                    <tr>
+                      <td>Knowledge distillation</td>
+                      <td>从对话、轨迹、视觉观察中抽取 intent、insight、workflow 或 procedural knowledge。</td>
+                      <td>TiM、RMM、MemGuide、M3-Agent、AWM、Memp、ExpeL、R2D2、H2R、Memory-R1、Mem-alpha</td>
+                      <td>目标不是保存原文，而是形成更可迁移的知识。</td>
+                    </tr>
+                    <tr>
+                      <td>Structured construction</td>
+                      <td>把 memory 构造成 KG、tree、hierarchical JSON、networked notes 或多层 graph。</td>
+                      <td>KGT、Mem0g、D-SMART、GraphRAG、AriGraph、Zep、RAPTOR、MemTree、H-MEM、A-MEM、G-Memory</td>
+                      <td>强化可解释、多跳和跨 session 查询，但需要维护 schema 和更新策略。</td>
+                    </tr>
+                    <tr>
+                      <td>Latent representation</td>
+                      <td>把 memory 编码成 latent vector、latent token、multimodal embedding 或 KV-like state。</td>
+                      <td>MemoryLLM、M+、MemGen、ESR、CoMEM、Mem2Ego、KARMA</td>
+                      <td>适合高压缩和高频调用，但更难人工审计。</td>
+                    </tr>
+                    <tr>
+                      <td>Parametric internalization</td>
+                      <td>通过参数更新、model editing、LoRA 或工具调用 SFT 把外部经验内化进模型能力。</td>
+                      <td>MEND、ROME、MEMIT、CoLoR、ToolFormer</td>
+                      <td>更像把 memory 变成 competence，适合稳定知识或能力，不适合频繁变化的个人记忆。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="work-block">
+              <h3>4. 评测和框架：看系统 claim 是否站得住</h3>
+              <p>一个 memory claim 要说明自己评测的是什么能力。用户画像、长上下文定位、持续学习、跨 episode 自我改进、web/tool 长程状态和 hallucination 风险，对应的 benchmark 不一样；开源框架也要区分完整 memory system 和普通 retrieval backend。</p>
+              <div class="resource-grid">
+                <div class="resource-card">
+                  <strong>用户事实与偏好</strong>
+                  <p>LoCoMo、PersonaMem、PerLTQA、PrefEval、DialSim。适合评估长期对话一致性、用户画像维护和个性化记忆。</p>
+                </div>
+                <div class="resource-card">
+                  <strong>长上下文和事实定位</strong>
+                  <p>LongMemEval、RULER、BABILong、MM-Needle、LongBench。重点看系统能否在长历史中定位、保持和使用信息。</p>
+                </div>
+                <div class="resource-card">
+                  <strong>持续学习与自我演化</strong>
+                  <p>MemoryBench、LifelongAgentBench、StreamBench、MemoryAgentBench、Evo-Memory、StoryBench。关注跨 episode 积累和策略改进。</p>
+                </div>
+                <div class="resource-card">
+                  <strong>Web / Tool / Coding 长程状态</strong>
+                  <p>WebChoreArena、MT-Mind2Web、WebArena、ToolBench、SWE-Bench Verified。适合看 agent 是否保持约束、证据和中间状态。</p>
+                </div>
+                <div class="resource-card">
+                  <strong>Agent memory frameworks</strong>
+                  <p>MemGPT、MemoryOS、MemOS、MemU、LangMem、ReMe、AgentMemory、MemEngine。更接近 memory 操作接口和生命周期管理。</p>
+                </div>
+                <div class="resource-card">
+                  <strong>Graph / retrieval infrastructure</strong>
+                  <p>Mem0、Zep、Cognee、Memobase、Pinecone、Chroma、Weaviate、SuperMemory。适合作为事实存储、实体关系和检索基础设施。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="frontiers">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Frontiers</p>
+              <h2>Memory 机制的下一步演进</h2>
+              <p class="lead">agent memory 会从手工设计、检索中心、外接模块，走向可学习、可生成、可自治管理、跨模态和可信治理。</p>
+            </div>
+            <div class="takeaway"><strong>Takeaway</strong>未来不是更大的向量库，而是更自主、更可学习、更可信的 memory subsystem。</div>
+          </div>
+
+          <div class="grid-2">
+            <figure class="figure-frame figure-short">
+              <img src="assets/figures/source_figure_011_rl-memory.png" alt="RL-enabled memory systems" loading="eager">
+              <figcaption class="figure-caption"><strong>RL-driven memory</strong><span>从 heuristic pipeline 到 fully RL-driven memory control。</span></figcaption>
+            </figure>
+            <div class="frontier-grid">
+              <article class="frontier-card"><div class="num">7.1</div><h4>Retrieval vs Generation</h4><p>memory usage 从取出原片段走向按任务重组、抽象和生成。</p></article>
+              <article class="frontier-card"><div class="num">7.2</div><h4>Automated Management</h4><p>agent 自主决定 add、update、delete、retrieve，而不是依赖固定规则。</p></article>
+              <article class="frontier-card"><div class="num">7.3</div><h4>RL Meets Memory</h4><p>memory writer、retriever、compressor 和架构控制可能被长时域奖励优化。</p></article>
+              <article class="frontier-card"><div class="num">7.4</div><h4>Multimodal Memory</h4><p>从 text memory 走向视觉、音频、视频、传感器和行动反馈的统一记忆。</p></article>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>下一阶段的核心变化：memory 从模块变成策略</h3>
+              <p>早期 memory 系统往往是工程规则：固定 chunk、固定摘要 prompt、固定向量检索、固定遗忘阈值。这种方式容易实现，但在开放环境中很难泛化。未来更关键的是让 agent 自己学会 memory management：什么时候写入、写入什么粒度、是否更新旧记忆、什么时候触发检索、取回后如何压缩和验证。</p>
+              <p>这也是 RL、多模态、多 agent、world model 和 trustworthy memory 会被放在一起讨论的原因。它们都在把 memory 从“外部资料库”推向“agent 认知控制层”：memory 不只服务语言回答，还服务团队协作、长期世界状态、跨模态感知、隐私治理和可解释决策。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>自主管理：</strong>memory 操作变成 agent action，而不是固定 pipeline。</li>
+              <li><strong>RL 控制：</strong>用长期任务结果优化写入、检索、压缩和遗忘策略。</li>
+              <li><strong>可信治理：</strong>长期 memory 必须支持权限、版本、审计、删除和冲突解释。</li>
+            </ul>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>为什么这些 frontiers 会连在一起</h3>
+            <p>当 memory 只是外部文本库时，系统可以靠人工规则管理；但当 agent 要在开放环境里长期行动，memory 操作本身就变成策略选择：写错会污染未来，忘错会丢掉关键经验，检索错会导致错误行动。RL 关心长期奖励，多模态和 world model 关心环境连续状态，多 agent 关心共享和冲突，trustworthy memory 关心用户能否理解、控制和删除。这些问题本质上都在问：长期记忆怎样才能被安全地交给 agent 自己管理。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>RL</strong><span>把写入、检索、压缩、遗忘看成可优化动作。</span></div>
+              <div class="scenario-step"><strong>Multimodal</strong><span>把视觉、音频、传感器和行动反馈转成持续状态。</span></div>
+              <div class="scenario-step"><strong>Multi-agent</strong><span>解决团队记忆、角色权限、共享事实和冲突。</span></div>
+              <div class="scenario-step"><strong>Trustworthy</strong><span>让长期记忆可解释、可审计、可删除、可追责。</span></div>
+            </div>
+          </div>
+
+          <div class="frontier-grid" style="margin-top: 14px;">
+            <article class="frontier-card"><div class="num">7.5</div><h4>Shared MAS Memory</h4><p>多 agent 需要 team-level memory，同时处理权限、角色、冲突和污染。</p></article>
+            <article class="frontier-card"><div class="num">7.6</div><h4>World Model Memory</h4><p>memory 从 data caching 走向维护可交互世界的连续状态。</p></article>
+            <article class="frontier-card"><div class="num">7.7</div><h4>Trustworthy Memory</h4><p>隐私、可解释、抗幻觉、版本和审计会成为基础设施要求。</p></article>
+            <article class="frontier-card"><div class="num">7.8</div><h4>Cognitive Connections</h4><p>从 verbatim retrieval 走向 constructive reconstruction 和 offline consolidation。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="diegetic">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">我的研究设想</p>
+              <h2>Diegetic Memory Agents：时间线约束的叙事记忆智能体</h2>
+              <p class="lead">把 agent memory 用在长篇创作里：系统不从作者全知视角读取全文，而是按故事内时间线和角色可见性构造受限记忆，让角色 agent 只能知道它在当时应该知道的信息。</p>
+            </div>
+            <div class="takeaway"><strong>Pitch</strong>把 memory 的时间可见性变成叙事逻辑的一部分。</div>
+          </div>
+
+          <div class="idea-hero">
+            <div class="idea-panel text-heavy">
+              <h3>一句话概念</h3>
+              <p>在长篇创作过程中，后台自动把已完成文本转化为按故事内时间线组织的叙事记忆系统。作者可以在任意情节点打开某个角色 agent，这个 agent 只能访问过去发生、且按剧情设定它有理由知道的信息，不能偷看未来剧情或其他角色秘密。</p>
+              <p>这和普通写作助手的区别很明确：普通助手常把全文当上下文，用全知视角续写；Diegetic Memory Agents 把“谁在什么时候知道什么”作为检索约束，用受限视角做创意推演和叙事审计。</p>
+              <div class="idea-tags">
+                <span>Timeline-constrained memory</span>
+                <span>Character-visible retrieval</span>
+                <span>Future-information isolation</span>
+                <span>Narrative memory sandbox</span>
+              </div>
+            </div>
+            <figure class="figure-frame figure-wide">
+              <img src="assets/figures/idea_diegetic_overview.png" alt="Diegetic memory agents overview" loading="eager">
+              <figcaption class="figure-caption"><strong>系统机制</strong><span>正文解析成事件、角色、地点、关系、秘密、伏笔和世界规则，再按故事内时间线控制可访问记忆。</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>核心直觉：memory 不按写作顺序，而按故事世界组织</h3>
+            <p>作者写作顺序、文本章节顺序和故事内部发生顺序经常不一致。这个想法的关键是把 memory index 从“文档位置”改成“故事内时间 + 角色视角”。当作者问某个角色下一步会怎么做时，系统先锁定故事时间点，再过滤出该角色当时可见的事实、经历、误解、秘密和情绪状态。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>时间约束</strong><span>当前情节点之后的未来剧情默认不可见。</span></div>
+              <div class="scenario-step"><strong>角色视角可见性</strong><span>只访问该角色亲历、听说、推断或有权限知道的信息。</span></div>
+              <div class="scenario-step"><strong>秘密与误解</strong><span>把隐藏事实、错误信念、传闻和伏笔作为可治理 memory。</span></div>
+              <div class="scenario-step"><strong>受限推演</strong><span>角色基于当时记忆、目标和动机行动，而不是全知续写。</span></div>
+            </div>
+          </div>
+
+          <div class="idea-grid">
+            <article class="idea-card">
+              <strong>故事内时间线索引</strong>
+              <p>memory 按 diegetic timeline 组织，而不是按写作顺序或文本顺序组织。这样可以处理倒叙、插叙、多线叙事和未来信息隔离。</p>
+            </article>
+            <article class="idea-card">
+              <strong>角色视角可见性</strong>
+              <p>不同角色拥有不同的已知事实、误解、秘密、目标和情绪状态。agent 的回答必须先通过角色知识边界过滤。</p>
+            </article>
+            <article class="idea-card">
+              <strong>推演与审计双模式</strong>
+              <p>推演模式服务创意生成，审计模式服务一致性检查。前者使用受限角色视角，后者使用作者全局视角。</p>
+            </article>
+            <article class="idea-card">
+              <strong>叙事 memory governance</strong>
+              <p>秘密、伏笔、承诺、世界规则和角色状态都需要版本化管理，避免未回收、提前泄露或前后矛盾。</p>
+            </article>
+          </div>
+
+          <div class="grid-2">
+            <figure class="figure-frame figure-wide">
+              <img src="assets/figures/idea_diegetic_main_views.png" alt="Creative inference and consistency audit views" loading="eager">
+              <figcaption class="figure-caption"><strong>两种主视图</strong><span>左侧做角色视角推演，右侧做前后矛盾、伏笔回收、动机一致性和未来信息泄露审计。</span></figcaption>
+            </figure>
+            <div class="idea-grid">
+              <article class="idea-card">
+                <strong>创意推演</strong>
+                <p>作者选择一个情节点和一个角色，系统只加载该角色当时可见的记忆，模拟它下一步可能的行动、对话、误判或冲突升级。这不是泛泛续写，而是受角色认知状态约束的分支推演。</p>
+              </article>
+              <article class="idea-card">
+                <strong>叙事审计</strong>
+                <p>作者写完后文后，系统用全局视角扫描时间线，检查角色是否提前知道未来信息、伏笔是否未回收、动机转变是否缺少中间事件、世界规则是否前后冲突。</p>
+              </article>
+              <article class="idea-card">
+                <strong>作者仍然主导</strong>
+                <p>系统不替作者决定剧情，而是给出受限视角下的可能性和全局视角下的风险提示。它更像 narrative memory sandbox，而不是自动续写器。</p>
+              </article>
+              <article class="idea-card">
+                <strong>研究切入点</strong>
+                <p>最有价值的问题是 retrieval 和 visibility control：检索时必须先判断时间可见性、角色知识边界、秘密状态和当前任务视角，而不是直接做 top-k 相似度。</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="explain-block text-heavy">
+            <div>
+              <h3>系统模块可以这样拆</h3>
+              <p>后台首先做故事解析，从正文中抽取事件、角色、地点、物品、承诺、秘密、伏笔、冲突和世界规则。然后构建叙事时间线，把事件按故事内部发生顺序排列，而不是按章节或写作顺序排列。每个角色维护自己的记忆状态，包括已知事实、误解、目标、情绪、关系变化和行动承诺。</p>
+              <p>当作者进入某个情节点时，可见性控制模块会过滤 memory：未来事件被锁定，其他角色私有信息被隔离，只有当前角色在当时合理可知的内容进入推演。审计模式则切换到全局视角，反向检查叙事一致性和信息泄露。</p>
+            </div>
+            <ul class="mechanism-list">
+              <li><strong>故事解析器：</strong>抽取事件、角色、地点、物品、关系、秘密、伏笔和世界规则。</li>
+              <li><strong>叙事时间线：</strong>按故事内时间排序，处理倒叙、插叙和多线并行。</li>
+              <li><strong>角色记忆：</strong>维护每个角色的已知事实、误解、目标、动机和情绪状态。</li>
+              <li><strong>可见性控制：</strong>按时间点、角色视角、秘密状态和审计模式过滤检索。</li>
+            </ul>
+          </div>
+
+          <table class="table text-heavy idea-table">
+            <thead>
+              <tr>
+                <th>Agent Memory 维度</th>
+                <th>在这个创意里的对应</th>
+                <th>为什么重要</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Forms</td>
+                <td>token-level structured memory：事件时间线、角色图、事件图、秘密索引、伏笔索引、世界规则表。</td>
+                <td>长篇叙事需要可解释结构，作者要能看到、修改、锁定或删除每条叙事记忆。</td>
+              </tr>
+              <tr>
+                <td>Functions</td>
+                <td>factual memory 维护剧情事实，experiential memory 表示角色行为模式，working memory 支持当前情节点推演。</td>
+                <td>同一段剧情既是世界事实，也是角色经验，还可能成为当前推演的临时状态。</td>
+              </tr>
+              <tr>
+                <td>Dynamics</td>
+                <td>formation 从正文抽取记忆，evolution 处理冲突和伏笔状态，retrieval 按时间与角色视角受限检索。</td>
+                <td>核心创新不是存储，而是“该角色此刻能访问什么”的动态治理。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="scenario-box text-heavy">
+            <h3>可以继续展开的研究问题</h3>
+            <p>这个想法可以从系统原型走向研究问题：如何稳定抽取自由文本中的事件时间线，如何判断角色是否知道某个事实，如何表示秘密和误解，如何检测未来信息泄露，以及如何评价受限推演的质量。它和 agent memory 综述的连接点很清楚：这里把 token-level structured memory、retrieval timing、query construction、visibility control 和 memory governance 放到了一个具体创作场景中。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>时间线抽取</strong><span>event extraction、temporal ordering、chapter-level incremental parsing。</span></div>
+              <div class="scenario-step"><strong>角色知识建模</strong><span>viewpoint modeling、information propagation、dialogue evidence tracking。</span></div>
+              <div class="scenario-step"><strong>秘密与误解</strong><span>private memory、false belief state、confidence and provenance。</span></div>
+              <div class="scenario-step"><strong>评估</strong><span>plot consistency、character motivation consistency、human author preference。</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="wrap">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Closing</p>
+              <h2>机制结论：Token Memory 是当前最可落地的 Agent Memory 形态</h2>
+              <p class="lead">parametric 和 latent memory 代表更深层的模型内化与高效表示，但若目标是构建可维护、可审计、可迭代的 agent 系统，token-level memory 仍然是最清晰的主线。</p>
+            </div>
+            <div class="takeaway"><strong>One-liner</strong>Agent memory = 可被形成、演化、检索并进入行动决策的长期状态系统。</div>
+          </div>
+
+          <div class="grid-4">
+            <article class="card card--teal">
+              <h3>1. 不是历史记录</h3>
+              <p>memory 的核心不在保存更多内容，而在选择哪些内容值得形成、如何治理、何时取回。</p>
+            </article>
+            <article class="card card--blue">
+              <h3>2. 不只是 RAG</h3>
+              <p>RAG 强调检索增强生成；agent memory 还强调长期交互、动态更新和行为连续性。</p>
+            </article>
+            <article class="card card--amber">
+              <h3>3. Token 是主战场</h3>
+              <p>外部可见、可编辑、可审计，使 token-level memory 更适合真实系统工程。</p>
+            </article>
+            <article class="card card--coral">
+              <h3>4. 未来在自治治理</h3>
+              <p>memory management 会逐渐成为 agent 自身可学习、可追踪、可优化的行动空间。</p>
+            </article>
+          </div>
+
+          <div class="scenario-box text-heavy">
+            <h3>汇报收束：三句话带走</h3>
+            <p>第一，agent memory 的目标不是扩大 prompt，而是让过去的信息以受控方式影响未来行动。第二，当前最可落地的主线是 token-level memory，因为它能承载事实、经验和工作状态，也能支持审计、删除和冲突处理。第三，真正决定长期系统质量的是 dynamics：formation 决定写入质量，evolution 决定 memory base 是否健康，retrieval 决定当前行动是否拿到正确上下文。</p>
+            <div class="scenario-steps">
+              <div class="scenario-step"><strong>定义</strong><span>长期状态系统，不是聊天记录。</span></div>
+              <div class="scenario-step"><strong>主线</strong><span>token-level memory 最适合工程落地。</span></div>
+              <div class="scenario-step"><strong>闭环</strong><span>formation、evolution、retrieval 决定长期质量。</span></div>
+              <div class="scenario-step"><strong>前沿</strong><span>memory management 会变成 agent 可学习动作。</span></div>
+            </div>
+          </div>
+
+          <p class="quote-line">推荐讲解节奏：先用三轴框架建立整体地图，再重点展开 token-level memory 和 lifecycle，最后说明 RL、自主管理和可信治理为什么会成为下一阶段关键问题。</p>
+        </div>
+      </section>
+
+      <section class="section quick-map" id="quick-map">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Quick Tree</p>
+              <h2>Agent Memory 机制速览树</h2>
+              <p class="lead">这一页把完整讲解压成一棵知识树：先看 memory 的定义和边界，再看 Forms、Functions、Dynamics，最后看未来演进。</p>
+            </div>
+            <div class="takeaway"><strong>How to read</strong>从左侧主干往下看：每个节点回答一个机制问题，叶子节点给出实际系统设计时要记住的取舍。</div>
+          </div>
+
+          <div class="quick-layout">
+            <ol class="knowledge-tree">
+              <li>
+                <strong>Agent Memory</strong>
+                <span>让 agent 在长期交互中保持状态、吸收经验、影响后续行动的动态子系统。</span>
+                <ul>
+                  <li>
+                    <strong>1. Why：为什么需要 memory</strong>
+                    <span>长上下文只能读当前输入；memory 负责跨轮次、跨任务、跨环境保留有未来价值的信息。</span>
+                    <ul>
+                      <li><strong>持续性</strong><span>记住用户事实、任务约束、环境状态，避免每轮像第一次见面。</span></li>
+                      <li><strong>适应性</strong><span>根据历史反馈、偏好和成功/失败经验调整后续行为。</span></li>
+                      <li><strong>可治理性</strong><span>长期记忆需要来源、时间、权限、版本、删除和冲突处理。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>2. Forms：memory 由什么承载</strong>
+                    <span>不同承载形式决定了 memory 是否可解释、可更新、可压缩、可内化。</span>
+                    <ul>
+                      <li><strong>Token-level</strong><span>外部文本、向量库、图、表、轨迹。当前最适合工程落地和审计治理。</span></li>
+                      <li><strong>Parametric</strong><span>模型参数、adapter、LoRA。适合稳定知识和行为先验，但难回滚。</span></li>
+                      <li><strong>Latent</strong><span>KV cache、hidden states、embeddings。适合高效压缩和多模态状态，但不透明。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>3. Token Memory 结构</strong>
+                    <span>token-level memory 不是一堆 chunk，而是可以按关系和粒度组织。</span>
+                    <ul>
+                      <li><strong>Flat 1D</strong><span>独立条目，易追加删除，适合对话历史、用户画像、经验池。</span></li>
+                      <li><strong>Planar 2D</strong><span>图、树、表，能表达实体关系、时间线、任务依赖。</span></li>
+                      <li><strong>Hierarchical 3D</strong><span>多层摘要和多粒度索引，兼顾局部细节与全局推理。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>4. Functions：memory 服务什么能力</strong>
+                    <span>同一种存储形式可以承担不同功能，检索时必须区分用途。</span>
+                    <ul>
+                      <li><strong>Factual</strong><span>agent 知道什么：用户事实、环境状态、外部知识。</span></li>
+                      <li><strong>Experiential</strong><span>agent 如何改进：案例、反思、策略、技能。</span></li>
+                      <li><strong>Working</strong><span>agent 当前在想什么：任务状态、计划、子目标、临时假设。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>5. Dynamics：memory 如何运作</strong>
+                    <span>长期 memory 的质量来自生命周期，而不是来自存储容器本身。</span>
+                    <ul>
+                      <li><strong>Formation</strong><span>从原始交互和反馈中抽取候选 memory unit。</span></li>
+                      <li><strong>Evolution</strong><span>合并、更新、遗忘、重组，保持 memory base 健康。</span></li>
+                      <li><strong>Retrieval</strong><span>判断何时查、查什么、怎么查、查完如何过滤和压缩。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>6. Related Works：相关工作怎么定位</strong>
+                    <span>不要把代表系统当成清单，而是把它们放到 Form、Function、Dynamics 三条轴上。</span>
+                    <ul>
+                      <li><strong>按 Form</strong><span>MemGPT / Mem0 是 flat token memory 起点；GraphRAG / Zep / HippoRAG 代表结构化路线；Gist / AutoCompressor / Titans 代表 latent 压缩路线。</span></li>
+                      <li><strong>按 Function</strong><span>MemGPT / MemoryBank 偏用户事实，Reflexion / Voyager 偏经验复用，ReSum / HiAgent 偏长程 working state。</span></li>
+                      <li><strong>按 Dynamics</strong><span>MemGPT / LightMem 做摘要形成，GraphRAG / RAPTOR 做结构构建，Memory-R1 / MemEvolve 指向自我演化。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>7. Frontiers：未来往哪里走</strong>
+                    <span>memory 会从手工规则走向可学习、自主管理、跨模态、多 agent 和可信治理。</span>
+                    <ul>
+                      <li><strong>Generation</strong><span>不只检索原片段，还会按任务重组和生成记忆表示。</span></li>
+                      <li><strong>RL control</strong><span>用长期任务奖励学习写入、检索、压缩、遗忘策略。</span></li>
+                      <li><strong>Trustworthy memory</strong><span>长期记忆必须支持隐私、解释、冲突检测和用户可控。</span></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>8. 我的设想：Diegetic Memory Agents</strong>
+                    <span>把 token-level structured memory 用到长篇创作中，用故事内时间线和角色视角约束 retrieval。</span>
+                    <ul>
+                      <li><strong>机制</strong><span>正文解析成事件、角色、秘密、伏笔和世界规则，再按故事时间线组织。</span></li>
+                      <li><strong>推演</strong><span>角色 agent 只能访问当时可见记忆，用受限视角生成可能行动。</span></li>
+                      <li><strong>审计</strong><span>全局视角检查前后矛盾、伏笔未回收、动机断裂和未来信息泄露。</span></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ol>
+
+            <aside>
+              <div class="quick-card">
+                <h3>一句话抓重点</h3>
+                <p>Agent memory 是“长期状态 + 生命周期管理 + 决策前检索”的组合，不是聊天记录、长上下文或普通 RAG 的同义词。</p>
+              </div>
+              <div class="quick-card">
+                <h3>最重要的工程选择</h3>
+                <p>默认优先 token-level memory，因为它可见、可改、可审计；只有在需要稳定内化或高效压缩时，再引入 parametric 或 latent memory。</p>
+              </div>
+              <div class="quick-card">
+                <h3>最容易踩坑</h3>
+                <p>把所有历史 append 到向量库，然后每轮 top-k 检索。这会快速带来噪声、冲突、过时信息和不可解释的行为漂移。</p>
+              </div>
+              <div class="quick-card">
+                <h3>讲给别人时的顺序</h3>
+                <p>先讲为什么长上下文不够，再讲 token memory 的结构，接着讲 factual / experiential / working 三类功能，最后讲 formation / evolution / retrieval 的闭环。</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="imageModal" aria-hidden="true" role="dialog" aria-label="图片预览">
+    <button type="button" id="modalClose" aria-label="关闭图片预览">×</button>
+    <img id="modalImage" alt="">
+  </div>
+
+  <script>
+    const progressBar = document.getElementById('progressBar');
+    const navLinks = Array.from(document.querySelectorAll('#nav a'));
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    const densityButtons = Array.from(document.querySelectorAll('.modebar button[data-density]'));
+    densityButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const density = button.getAttribute('data-density');
+        document.body.setAttribute('data-density', density);
+        densityButtons.forEach((item) => item.classList.toggle('active', item === button));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        requestAnimationFrame(updateProgress);
+      });
+    });
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.figure-frame img').forEach((image) => {
+      image.addEventListener('click', () => {
+        modalImage.src = image.currentSrc || image.src;
+        modalImage.alt = image.alt;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.removeAttribute('src');
+    }
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal || event.target === modalImage) closeModal();
+    });
+    modalClose.addEventListener('click', closeModal);
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  </script>
+</body>
+</html>

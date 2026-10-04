@@ -1,0 +1,1769 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>长期记忆增强型 LLM Agent 的检索瓶颈诊断与自演化记忆架构</title>
+  <style>
+    :root {
+      --bg: #f4f6f3;
+      --panel: #ffffff;
+      --panel-soft: #f9faf6;
+      --ink: #1d1f1f;
+      --muted: #626a67;
+      --line: #d8ddd4;
+      --teal: #16746d;
+      --red: #c54432;
+      --mustard: #c48a21;
+      --green: #587a2e;
+      --blue: #2d6e9f;
+      --charcoal: #242827;
+      --shadow: 0 18px 44px rgba(29, 31, 31, 0.10);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #eef2ec 0, var(--bg) 300px),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      height: 4px;
+      background: transparent;
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--mustard), var(--red));
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(216, 221, 212, 0.95);
+      background: rgba(244, 246, 243, 0.94);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar__inner {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      width: min(var(--max), calc(100% - 36px));
+      min-height: 64px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: inline-grid;
+      grid-template-columns: 34px auto;
+      gap: 10px;
+      align-items: center;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .logo-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--charcoal);
+      color: white;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .logo span:last-child {
+      max-width: 190px;
+      font-size: 13px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      overflow-x: auto;
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #3e4543;
+      font-size: 13px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      border-color: rgba(22, 116, 109, 0.26);
+      background: rgba(22, 116, 109, 0.10);
+      color: #0f5b56;
+    }
+
+    .density {
+      display: flex;
+      gap: 3px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(29, 31, 31, 0.06);
+    }
+
+    .density button {
+      min-width: 46px;
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 780;
+      cursor: pointer;
+    }
+
+    .density button.active {
+      background: var(--charcoal);
+      color: white;
+    }
+
+    .hero {
+      padding: 58px 0 48px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(22, 116, 109, 0.09), transparent 38%),
+        linear-gradient(180deg, #fbfcf8, #eef2ec);
+    }
+
+    .hero__inner,
+    .section {
+      width: min(var(--max), calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 920px;
+      font-size: 44px;
+      line-height: 1.14;
+      font-weight: 900;
+    }
+
+    h1 span {
+      color: var(--teal);
+    }
+
+    .hero-copy {
+      max-width: 850px;
+      margin-top: 20px;
+      color: #39403e;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    .hero-panel {
+      display: grid;
+      align-content: space-between;
+      min-height: 360px;
+      padding: 22px;
+      border: 1px solid #ccd4ca;
+      border-radius: var(--radius);
+      background: var(--charcoal);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel h2 {
+      font-size: 24px;
+      line-height: 1.18;
+    }
+
+    .hero-panel p {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 14px;
+    }
+
+    .hero-panel .route {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .route div {
+      padding: 11px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 13px;
+      font-weight: 740;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid #ccd4ca;
+      border-radius: 999px;
+      background: white;
+      color: #3c4441;
+      font-size: 13px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+
+    .section-wrap {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-wrap:nth-of-type(odd) {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      max-width: 800px;
+      font-size: 40px;
+      line-height: 1.08;
+      font-weight: 880;
+    }
+
+    .lead {
+      max-width: 820px;
+      margin-top: 14px;
+      color: #3c4441;
+      font-size: 19px;
+      line-height: 1.72;
+    }
+
+    .takeaway {
+      padding: 16px 17px;
+      border: 1px solid #cdd6cd;
+      border-left: 6px solid var(--teal);
+      border-radius: var(--radius);
+      background: white;
+      color: #3d4643;
+      box-shadow: 0 10px 24px rgba(29, 31, 31, 0.06);
+    }
+
+    .takeaway strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--teal);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .paper-band {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .paper-badge {
+      display: grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--charcoal);
+      color: white;
+      font-size: 18px;
+      font-weight: 880;
+    }
+
+    .paper-meta h3 {
+      font-size: 28px;
+      line-height: 1.18;
+    }
+
+    .paper-meta p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid #d5dbd2;
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 10px 24px rgba(29, 31, 31, 0.05);
+    }
+
+    .card h3,
+    .card h4 {
+      margin-bottom: 9px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      line-height: 1.22;
+    }
+
+    .card h4 {
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .card p,
+    .card li {
+      color: #434c49;
+      font-size: 15px;
+      line-height: 1.62;
+    }
+
+    .card ul {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .accent-teal {
+      border-top: 5px solid var(--teal);
+    }
+
+    .accent-red {
+      border-top: 5px solid var(--red);
+    }
+
+    .accent-mustard {
+      border-top: 5px solid var(--mustard);
+    }
+
+    .accent-green {
+      border-top: 5px solid var(--green);
+    }
+
+    .accent-blue {
+      border-top: 5px solid var(--blue);
+    }
+
+    .figure {
+      overflow: hidden;
+      border: 1px solid #cfd8cf;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .figure img {
+      width: 100%;
+      height: auto;
+      background: white;
+      cursor: zoom-in;
+    }
+
+    .caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 11px 13px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .caption strong {
+      color: var(--ink);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 10px 24px rgba(29, 31, 31, 0.05);
+    }
+
+    .table th,
+    .table td {
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .table th {
+      background: #edf3ed;
+      color: #26312f;
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .math {
+      display: inline-block;
+      font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+      font-style: italic;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0;
+      line-height: 1;
+      vertical-align: -0.02em;
+      white-space: nowrap;
+    }
+
+    .math sub,
+    .math sup {
+      font-size: 0.72em;
+      line-height: 0;
+    }
+
+    .formula {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border: 1px dashed #c7d1c8;
+      border-radius: var(--radius);
+      background: #fbfcf8;
+      color: #2f3835;
+      overflow-x: auto;
+    }
+
+    .formula .math {
+      font-size: 16px;
+    }
+
+    .callout {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border: 1px solid rgba(197, 68, 50, 0.28);
+      border-left: 6px solid var(--red);
+      border-radius: var(--radius);
+      background: rgba(197, 68, 50, 0.06);
+      color: #353b39;
+      font-size: 16px;
+      line-height: 1.68;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--red);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      min-height: 128px;
+      padding: 14px;
+      border: 1px solid #d6ddd3;
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--teal);
+      font-size: 14px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .score-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .score {
+      padding: 16px;
+      border-radius: var(--radius);
+      background: var(--charcoal);
+      color: white;
+    }
+
+    .score:nth-child(2) {
+      background: var(--teal);
+    }
+
+    .score:nth-child(3) {
+      background: var(--red);
+    }
+
+    .score:nth-child(4) {
+      background: var(--mustard);
+    }
+
+    .score span {
+      display: block;
+      font-size: 12px;
+      font-weight: 780;
+      opacity: 0.86;
+    }
+
+    .score strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .score p {
+      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .round {
+      min-height: 150px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .round strong {
+      display: block;
+      color: var(--teal);
+      font-size: 13px;
+    }
+
+    .round .value {
+      margin: 6px 0 7px;
+      font-size: 21px;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .round span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .divider-label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 34px 0 16px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .divider-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    body[data-density="compact"] .detail {
+      display: none;
+    }
+
+    body[data-density="visual"] .text-heavy {
+      display: none;
+    }
+
+    body[data-density="visual"] .section-wrap {
+      padding: 48px 0;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(15, 17, 17, 0.84);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal img {
+      max-width: min(96vw, 1600px);
+      max-height: 90vh;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      cursor: zoom-out;
+    }
+
+    .modal button {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1080px) {
+      .topbar__inner {
+        grid-template-columns: 1fr auto;
+        row-gap: 8px;
+        padding: 10px 0;
+      }
+
+      .nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        order: 3;
+      }
+
+      .hero-grid,
+      .section-head,
+      .grid-2,
+      .paper-band {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        min-height: auto;
+      }
+
+      .grid-4,
+      .score-strip,
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero__inner,
+      .section {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .section-title {
+        font-size: 31px;
+      }
+
+      .lead,
+      .hero-copy {
+        font-size: 17px;
+      }
+
+      .grid-3,
+      .grid-4,
+      .score-strip,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body data-density="full">
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="logo" href="#top" aria-label="回到顶部">
+        <span class="logo-mark">M</span>
+        <span>Agent Memory 组会报告</span>
+      </a>
+      <nav aria-label="页面导航">
+        <ol class="nav" id="nav">
+          <li><a href="#top">总览</a></li>
+          <li><a href="#paper-a">诊断研究</a></li>
+          <li><a href="#paper-a-method">研究一方法</a></li>
+          <li><a href="#paper-a-results">研究一结果</a></li>
+          <li><a href="#paper-b">演化架构</a></li>
+          <li><a href="#paper-b-method">研究二方法</a></li>
+          <li><a href="#paper-b-results">研究二结果</a></li>
+          <li><a href="#compare">综合</a></li>
+          <li><a href="#closing">结论</a></li>
+        </ol>
+      </nav>
+      <div class="density" aria-label="显示密度">
+        <button type="button" class="active" data-density="full">完整</button>
+        <button type="button" data-density="visual">图表</button>
+        <button type="button" data-density="compact">简版</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__inner hero-grid">
+        <div>
+          <p class="kicker">Group Meeting Report | LLM Agent Memory</p>
+          <h1>长期记忆增强型 LLM Agent 的<span>检索瓶颈诊断</span>与自演化记忆架构</h1>
+          <p class="hero-copy">本报告围绕两项 2026 年 agent memory 研究展开。第一项研究通过受控实验诊断长期记忆问答中的 retrieval 与 utilization 瓶颈；第二项研究提出 EvolveMem，将检索策略、融合方式、上下文预算和验证机制纳入可演化配置空间。</p>
+          <div class="chips">
+            <span class="chip">Agent Memory</span>
+            <span class="chip">LoCoMo</span>
+            <span class="chip">Retrieval Bottleneck</span>
+            <span class="chip">Failure Diagnosis</span>
+            <span class="chip">AutoResearch</span>
+            <span class="chip">Self-Evolution</span>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div>
+            <h2>报告结构</h2>
+            <p>报告按两项研究分别展开，依次讨论研究问题、方法设计、实验结果与证据边界，并在最后总结二者对长期记忆系统设计的共同启示。</p>
+          </div>
+          <div class="route">
+            <div>01. 诊断性研究：Retrieval vs. Utilization Bottlenecks</div>
+            <div>02. 系统性研究：EvolveMem Self-Evolving Retrieval</div>
+            <div>03. 综合讨论：检索诊断、策略演化与证据边界</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-a">
+      <div class="section">
+        <div class="paper-band">
+          <div class="paper-badge">A</div>
+          <div class="paper-meta">
+            <p class="kicker">研究一 | 诊断性实证研究</p>
+            <h3>Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory</h3>
+            <p>Boqin Yuan, Yue Su, Kun Yao, 2026。该研究属于 benchmark diagnostic / empirical study，重点不在提出新的 memory 写入算法，而在定位 agent memory pipeline 中影响性能的关键环节。</p>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">研究问题：长期记忆问答错误应如何在写入、检索与利用阶段之间归因？</h2>
+            <p class="lead">作者认为很多长期记忆 benchmark 只报告端到端 accuracy，无法定位错误发生在 memory pipeline 的哪个环节。它的贡献是把检索到生成之间的边界拆开，用探针分别看 retrieval relevance、memory utilization 和 failure mode。</p>
+          </div>
+          <div class="takeaway">
+            <strong>核心结论</strong>
+            在当前设置下，相较于 write strategy，retrieval method 对性能差异具有更强解释力；当相关记忆被正确取回时，LLM 通常能够有效使用这些信息。
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card accent-blue">
+            <h3>研究动机</h3>
+            <p>许多 agent memory 工作倾向于引入更复杂的写入策略，例如事实抽取、会话摘要、记忆链接或 learned memory management。然而，当系统最终回答错误时，仅凭 accuracy 无法判断错误来自写入阶段的信息损失、检索阶段的证据缺失，还是生成阶段的上下文利用不足。</p>
+          </article>
+          <article class="card accent-teal">
+            <h3>关键假设</h3>
+            <p>如果 retrieval 是主要瓶颈，那么不同检索方法之间会拉开明显准确率差距，并且 retrieval precision 应该与下游 accuracy 高度相关；相反，如果 utilization 是主要瓶颈，则即使取回相关记忆，模型也会经常答错。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>主要发现</h3>
+            <p>作者发现 retrieval method 影响远大于 write strategy。Basic RAG 的 raw chunks 在多数组合中匹配或超过更昂贵的 fact extraction 和 summarization；错误样本中 retrieval failure 是主要波动来源。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-a-method">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">研究一 | 方法设计</p>
+            <h2 class="section-title">方法设计：3 &times; 3 受控实验 + 三类诊断探针</h2>
+            <p class="lead">作者固定 LoCoMo、backbone、embedding 和 <span class="math">top-k</span> 预算，只改变两组变量：memory 写入策略和 retrieval 方法。这样能把“写入什么”和“如何检索”的影响拆开。</p>
+          </div>
+          <div class="takeaway">
+            <strong>实验逻辑</strong>
+            每一种写入策略都搭配三种检索方法。如果换检索方法造成的变化稳定大于换写入策略，就支持 retrieval bottleneck 判断。
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <figure class="figure">
+            <img src="assets/figures/diagnosing_figure_1_pipeline.png" alt="Memory-agent pipeline with three diagnostic probes" loading="lazy">
+            <figcaption class="caption"><strong>研究一 Figure 1</strong><span>写入策略、检索记忆和三个 diagnostic probes 的位置。</span></figcaption>
+          </figure>
+          <div class="stack">
+            <article class="card accent-blue">
+              <h3>Write Strategies</h3>
+              <ul>
+                <li><strong>Basic RAG:</strong> 保存原始 3-turn 对话片段，保留 speaker 和 timestamp，没有写入阶段 LLM 调用。</li>
+                <li><strong>Extracted Facts:</strong> Mem0-style 事实抽取和冲突处理，记忆更结构化，但可能丢失语境细节。</li>
+                <li><strong>Summarized Episodes:</strong> MemGPT-style 会话摘要，压缩为 session-level narrative，同样是有损表示。</li>
+              </ul>
+            </article>
+            <article class="card accent-teal">
+              <h3>Retrieval Methods</h3>
+              <ul>
+                <li><strong>Cosine:</strong> query embedding 与 memory embedding 的语义相似度。</li>
+                <li><strong>BM25:</strong> 词频和关键词重合，适合明确实体和精确词面匹配。</li>
+                <li><strong>Hybrid+Rerank:</strong> cosine 和 BM25 候选合并后，用 LLM judge rerank 到 <span class="math">top-k</span>。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <div class="divider-label">Diagnostic Probes</div>
+        <div class="grid-3">
+          <article class="card accent-mustard">
+            <h3>Probe 1: Retrieval <span class="math">Precision@k</span></h3>
+            <p>LLM judge 判断 <span class="math">top-k</span> retrieved memories 中哪些条目包含回答问题所需信息。这个指标直接衡量生成前拿到的证据质量。</p>
+          </article>
+          <article class="card accent-green">
+            <h3>Probe 2: Memory Utilization</h3>
+            <p>同一个问题分别生成带 memory 和不带 memory 的回答，再判断 memory 是 Beneficial、Harmful、Ignored 还是 Neutral。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>Probe 3: Failure Classification</h3>
+            <p>错误样本分为 retrieval failure、utilization failure 和 hallucination。这里的 retrieval failure 是从生成边界看“没有足够可用上下文”。</p>
+          </article>
+        </div>
+
+        <div class="divider-label">Controlled Pipeline</div>
+        <div class="flow text-heavy" aria-label="Diagnosing paper controlled experiment pipeline">
+          <div class="flow-step"><strong>Build Store</strong><span>同一段 LoCoMo 对话分别写成 raw chunks、facts、session summaries。</span></div>
+          <div class="flow-step"><strong>Retrieve</strong><span>对同一个问题用 Cosine、BM25 或 Hybrid+Rerank 取 <span class="math">top-k</span> memories。</span></div>
+          <div class="flow-step"><strong>Answer</strong><span>GPT-5-mini 在相同 prompt template 下生成带 memory 的回答。</span></div>
+          <div class="flow-step"><strong>Counterfactual</strong><span>同题再生成不带 memory 的回答，用于判断 memory 是否真的改变结果。</span></div>
+          <div class="flow-step"><strong>Judge</strong><span>LLM judge 同时评估答案正确性、retrieval relevance 和错误类型。</span></div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 22px;">
+          <article class="card accent-blue">
+            <h3>写入策略的可比性</h3>
+            <p>三种 memory store 都来自同一批原始对话，差异只在写入表示：raw chunks 保留局部上下文，fact extraction 把内容压成独立事实，summaries 把 session 压成叙事摘要。作者故意不把 learned memory systems 纳入主实验，避免把训练策略、索引结构和检索器混在一起。</p>
+          </article>
+          <article class="card accent-teal">
+            <h3>检索策略的可比性</h3>
+            <p>每个问题的最终上下文预算保持一致，都是 <span class="math">k = 5</span>。Hybrid+Rerank 不是简单拼接：先扩大 cosine 与 BM25 的候选覆盖，再由 LLM judge 重排到固定预算。这样能区分“候选召回不足”和“排序质量不足”。</p>
+          </article>
+        </div>
+
+        <table class="table text-heavy" style="margin-top: 22px;">
+          <thead>
+            <tr>
+              <th>Probe</th>
+              <th>具体输入</th>
+              <th>判定输出</th>
+              <th>汇报时要强调的含义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Retrieval relevance</td>
+              <td>问题、gold answer、每条 retrieved memory。</td>
+              <td><span class="math">Precision@k</span>：相关条目数 / <span class="math">k</span>。</td>
+              <td>直接测生成前 evidence 是否到位，不等同于最终答案分数。</td>
+            </tr>
+            <tr>
+              <td>Memory utilization</td>
+              <td>带 memory 回答 <span class="math">a<sub>mem</sub></span> 与无 memory 回答 <span class="math">a<sub>no</sub></span>。</td>
+              <td>Beneficial、Harmful、Ignored、Neutral。</td>
+              <td>判断 retrieved memories 是否真正改变模型行为，而不是只被塞进 prompt。</td>
+            </tr>
+            <tr>
+              <td>Failure classification</td>
+              <td>错误回答、retrieved memories、gold answer。</td>
+              <td>Retrieval failure、utilization failure、hallucination。</td>
+              <td>把端到端错误拆成“没拿到证据”“拿到但没用好”“与证据矛盾”。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table text-heavy" style="margin-top: 22px;">
+          <thead>
+            <tr>
+              <th>实验条件</th>
+              <th>设置</th>
+              <th>为什么重要</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Benchmark</td>
+              <td>LoCoMo 的 1,540 个 non-adversarial questions</td>
+              <td>长对话、多 session、长期记忆问答，适合观察 memory pipeline。</td>
+            </tr>
+            <tr>
+              <td>Backbone</td>
+              <td>GPT-5-mini 作为问答模型，text-embedding-3-small 作为 embedding</td>
+              <td>固定模型，避免把写入/检索差异混入模型能力差异。</td>
+            </tr>
+            <tr>
+              <td>Retrieval budget</td>
+              <td>固定 <span class="math">k = 5</span></td>
+              <td>所有配置给生成模型的 memory 条数一致，便于比较。</td>
+            </tr>
+            <tr>
+              <td>设计矩阵</td>
+              <td>3 种写入 &times; 3 种检索 = 9 个配置</td>
+              <td>可以分别观察 write strategy effect 和 retrieval method effect。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout text-heavy">
+          <strong>方法边界</strong>
+          这套诊断框架站在 retrieval-to-generation boundary 上观察错误。因此，如果摘要或事实抽取在写入阶段已经丢失细节，最终也会表现为 retrieval failure。它适合回答“生成时有没有足够可用证据”，但不能单独证明信息究竟是在写入阶段丢失，还是在排序阶段没有取回。
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-a-results">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">研究一 | 实验结果</p>
+            <h2 class="section-title">主要结果：检索方法对端到端性能差异具有更强解释力</h2>
+            <p class="lead">实验结果表明，在 LoCoMo、固定 <span class="math">k = 5</span>、prompt-based write strategies 的设置下，检索质量对性能差异的解释力显著高于写入形式。该结论并不否定写入策略的重要性，而是强调当前设置中的优先优化环节。</p>
+          </div>
+          <div class="takeaway">
+            <strong>关键结果</strong>
+            Hybrid 平均 accuracy 77.2，Cosine 73.4，BM25 57.1；Retrieval <span class="math">Precision@5</span> 与 accuracy 的相关系数达到 <span class="math">r = 0.98</span>。
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <figure class="figure">
+            <img src="assets/figures/diagnosing_figure_2_accuracy.png" alt="Accuracy across write strategies and retrieval methods" loading="lazy">
+            <figcaption class="caption"><strong>研究一 Figure 2</strong><span>同一 retrieval method 内写入策略差距较小，换 retrieval method 差距更大。</span></figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/figures/diagnosing_figure_3_precision_accuracy.png" alt="Precision at 5 vs accuracy" loading="lazy">
+            <figcaption class="caption"><strong>研究一 Figure 3</strong><span>Retrieval <span class="math">Precision@5</span> 和 downstream accuracy 高度同步。</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="score-strip">
+          <div class="score"><span>Basic RAG + Hybrid</span><strong>81.1%</strong><p>原始对话片段结合 hybrid rerank 在九个配置中取得最高 accuracy。</p></div>
+          <div class="score"><span>Average Hybrid</span><strong>77.2%</strong><p>三种写入策略平均后，Hybrid+Rerank 整体最好。</p></div>
+          <div class="score"><span>Average BM25</span><strong>57.1%</strong><p>词面检索在这个设置下整体落后，retrieval failure 较高。</p></div>
+          <div class="score"><span>Precision / Accuracy</span><strong><span class="math">r = 0.98</span></strong><p>说明生成结果几乎随检索相关性同步变化。</p></div>
+        </div>
+
+        <table class="table text-heavy" style="margin-top: 22px;">
+          <thead>
+            <tr>
+              <th>Write Strategy</th>
+              <th>Token <span class="math">F<sub>1</sub></span> Cos</th>
+              <th>Token <span class="math">F<sub>1</sub></span> BM25</th>
+              <th>Token <span class="math">F<sub>1</sub></span> Hyb</th>
+              <th>Accuracy Cos</th>
+              <th>Accuracy BM25</th>
+              <th>Accuracy Hyb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Basic RAG</td>
+              <td class="num">0.232</td>
+              <td class="num">0.184</td>
+              <td class="num">0.240</td>
+              <td class="num">77.9</td>
+              <td class="num">59.2</td>
+              <td class="num">81.1</td>
+            </tr>
+            <tr>
+              <td>Extracted Facts</td>
+              <td class="num">0.211</td>
+              <td class="num">0.146</td>
+              <td class="num">0.220</td>
+              <td class="num">72.2</td>
+              <td class="num">49.4</td>
+              <td class="num">77.3</td>
+            </tr>
+            <tr>
+              <td>Summarized Episodes</td>
+              <td class="num">0.197</td>
+              <td class="num">0.173</td>
+              <td class="num">0.202</td>
+              <td class="num">70.1</td>
+              <td class="num">62.7</td>
+              <td class="num">73.3</td>
+            </tr>
+            <tr>
+              <td>Average</td>
+              <td class="num">0.213</td>
+              <td class="num">0.168</td>
+              <td class="num">0.221</td>
+              <td class="num">73.4</td>
+              <td class="num">57.1</td>
+              <td class="num">77.2</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="divider-label">Failure Analysis</div>
+        <div class="grid-2">
+          <figure class="figure">
+            <img src="assets/figures/diagnosing_figure_4_failure.png" alt="Retrieval failure rate by retrieval method" loading="lazy">
+            <figcaption class="caption"><strong>研究一 Figure 4</strong><span>BM25 下 retrieval failure 明显更高，Hybrid 可降低该失败模式。</span></figcaption>
+          </figure>
+          <div class="stack">
+            <article class="card accent-red">
+              <h3>主要错误来源并非 utilization failure</h3>
+              <p>错误分解显示 utilization failure 大致稳定在 4 到 8%，hallucination 约 0.4 到 1.4%。真正随检索方法显著变化的是 retrieval failure。</p>
+            </article>
+            <article class="card accent-mustard">
+              <h3>Basic RAG 的表现解释</h3>
+              <p>raw chunking 冗余较多，但保留了细粒度语境、原始措辞、时间线和局部上下文。事实抽取和摘要更干净，却可能提前丢掉回答需要的细节。</p>
+            </article>
+            <article class="card accent-blue">
+              <h3>研究边界</h3>
+              <p>结论依赖 GPT-5-mini、LoCoMo、固定 <span class="math">k = 5</span> 和 prompt-based write strategies。它没有完全分离 write-time information loss 和 retrieval ranking failure，也没有覆盖 learned memory systems。</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="callout text-heavy">
+          <strong>研究一小结</strong>
+          该研究强调，在引入复杂记忆写入或压缩模块之前，应先建立检索相关性、记忆利用效果和失败类型的诊断指标。若主要错误表现为 retrieval failure，优化重点应放在 query rewriting、hybrid retrieval、reranking、candidate pool 和 indexing；若 utilization failure 明显升高，再进一步调整 prompt、reasoning 或 answer synthesis。
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-b">
+      <div class="section">
+        <div class="paper-band">
+          <div class="paper-badge">B</div>
+          <div class="paper-meta">
+            <p class="kicker">研究二 | 自演化记忆架构</p>
+            <h3>EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents</h3>
+            <p>Jiaqi Liu, Xinyu Ye, Peng Xia, Zeyu Zheng, Cihang Xie, Mingyu Ding, Huaxiu Yao, 2026。研究类型是 memory system / self-improving agent，核心是让长期记忆系统的 retrieval infrastructure 自我演化。</p>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">这篇文章的核心问题：长期记忆系统的检索策略为什么要跟着记忆库一起演化？</h2>
+            <p class="lead">已有系统通常让 memory content 增长、合并或遗忘，但检索配置一旦部署就冻结。EvolveMem 认为，当 memory store 和 query distribution 变化时，BM25/semantic/metadata 检索、融合权重、上下文预算和回答策略也应成为可演化对象。</p>
+          </div>
+          <div class="takeaway">
+            <strong>核心结论</strong>
+            EvolveMem 把 retrieval policy 做成可观察、可诊断、可验证、可回滚的配置空间，并用 LLM 失败诊断驱动迭代。
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card accent-teal">
+            <h3>研究动机</h3>
+            <p>长期 agent 的记忆库会从几十条增长到几百条，问题也会从事实查询扩展到时间推理、多跳推理、开放聚合和对抗性 name-swap。冻结的一套检索参数很难同时适配所有场景。</p>
+          </article>
+          <article class="card accent-blue">
+            <h3>核心设计</h3>
+            <p>系统每一轮评测当前配置，保存逐题失败日志；LLM diagnosis 读取日志、归因错误、提出配置修改；meta-analyzer 用指标决定接受、回滚或探索。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>论文定位</h3>
+            <p>该研究将长期记忆系统的 retrieval infrastructure 本身作为 AutoResearch 的研究对象，而不仅仅是替换单个检索器。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-b-method">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">研究二 | 方法设计</p>
+            <h2 class="section-title">方法解读：结构化记忆库、可演化检索层、LLM 诊断闭环</h2>
+            <p class="lead">EvolveMem 的技术核心可以拆成三层。底层保证 memory store 有足够完整和结构化的证据；中层把检索和回答策略参数化；上层用失败日志驱动配置更新，并通过 guard 防止坏 proposal 生效。</p>
+          </div>
+          <div class="takeaway">
+            <strong>方法主线</strong>
+            系统将 memory 与 retrieval 过程显式记录为可评测对象，由 LLM 基于失败日志提出配置假设，并由评测指标决定接受、回滚或继续探索。
+          </div>
+        </div>
+
+        <figure class="figure">
+          <img src="assets/figures/evolvemem_figure_2_architecture.png" alt="EvolveMem architecture" loading="lazy">
+          <figcaption class="caption"><strong>研究二 Figure 2</strong><span>Base Memory、Multi-View Retrieval + Answer、LLM Diagnosis 和 Evolution Engine。</span></figcaption>
+        </figure>
+
+        <div class="divider-label">Architecture Components</div>
+        <div class="grid-3">
+          <article class="card accent-green">
+            <h3>1. Structured Memory Store</h3>
+            <p>每条 memory unit 包含自然语言内容、embedding、六类 memory type，以及 importance、confidence、entities、people、location、topic、timestamp 等元数据。抽取过程有 retry、超长 chunk split 和 coverage verification，之后做去重、重要性衰减和实体强化。</p>
+            <div class="formula"><span class="math">m = (c, e, &mu;, &eta;)</span></div>
+          </article>
+          <article class="card accent-teal">
+            <h3>2. Retrieval as Action Space</h3>
+            <p>检索层包含 lexical BM25、dense semantic 和 structured metadata 三路候选，再通过 sum、weighted-sum 或 RRF 融合。<span class="math">top-k</span>、context budget、fusion mode、view weights、answer style 和 category-specific overrides 都进入配置空间。</p>
+            <div class="formula"><span class="math">&theta; = (k<sub>sem</sub>, k<sub>kw</sub>, k<sub>str</sub>, B<sub>ctx</sub>, mode, {w<sub>v</sub>}, &alpha;, {&theta;<sub>c</sub>})</span></div>
+          </article>
+          <article class="card accent-red">
+            <h3>3. Self-Evolution Engine</h3>
+            <p>每轮系统在 QA 集合上评测当前配置，保存 question、prediction、gold answer、score 和 retrieved sources。LLM diagnosis 分析 root cause 并输出结构化 proposal，meta-analyzer 决定回滚、探索或应用。</p>
+            <div class="formula"><span class="math">&theta;<sub>r+1</sub> = Guard(&theta;<sub>r</sub>, &Delta;&theta;<sub>r</sub>, f<sub>r</sub>)</span></div>
+          </article>
+        </div>
+
+        <div class="divider-label">Memory Construction</div>
+        <div class="grid-2">
+          <article class="card accent-blue">
+            <h3>Typed extraction</h3>
+            <p>原始 session 被 sliding window 切分，LLM 在每个窗口内抽取 typed memory units。六类类型包括 episodic、semantic、preference、project state、working summary 和 procedural knowledge。这个类型体系的作用是让后续 structured retrieval 能按人物、地点、主题、时间和记忆类型筛选证据。</p>
+          </article>
+          <article class="card accent-green">
+            <h3>Quality control</h3>
+            <p>抽取阶段不是一次性生成后直接入库，而是加入 retry、过长 chunk split、coverage verification、去重、重要性衰减和实体强化。方法上这一步很关键：如果 memory store 里没有证据，后面的 retrieval evolution 只能在缺失信息上调参。</p>
+          </article>
+        </div>
+
+        <div class="divider-label">Retrieval and Answering</div>
+        <div class="grid-2">
+          <article class="card accent-teal">
+            <h3>Multi-view candidate pool</h3>
+            <p>一次查询会同时产生 lexical、semantic、structured 三组候选。BM25 负责精确词面匹配，dense semantic 负责 paraphrase 和抽象匹配，structured metadata 负责实体、时间、类型等过滤。融合方式可以是 sum、weighted-sum 或 RRF。</p>
+          </article>
+          <article class="card accent-mustard">
+            <h3>Query augmentation</h3>
+            <p>系统可按问题类别打开特殊机制：adversarial entity-swap 会移除 query 中可能误导的人名并按主题重检索；query decomposition 会把多跳问题拆成 single-hop sub-queries；answer verifier 会对低置信答案做二次证据检查。</p>
+          </article>
+        </div>
+
+        <div class="flow text-heavy" aria-label="EvolveMem loop">
+          <div class="flow-step"><strong>Evaluate</strong><span>当前配置回答 QA 集合，得到逐题分数和证据。</span></div>
+          <div class="flow-step"><strong>Diagnose</strong><span>LLM 读取 failure logs，判断 wrong entity、context shortage、temporal confusion 等。</span></div>
+          <div class="flow-step"><strong>Propose</strong><span>提出 <span class="math">&Delta;&theta;</span>，例如 RRF、entity-swap、decomposition、verifier。</span></div>
+          <div class="flow-step"><strong>Guard</strong><span>性能退步则回滚，连续停滞则探索，否则应用并 clamp 到安全范围。</span></div>
+          <div class="flow-step"><strong>Iterate</strong><span>继续评测和诊断，直到收益停滞或达到最大轮数。</span></div>
+        </div>
+
+        <table class="table text-heavy" style="margin-top: 22px;">
+          <thead>
+            <tr>
+              <th>演化阶段</th>
+              <th>输入</th>
+              <th>输出</th>
+              <th>方法意义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Evaluate</td>
+              <td>当前配置 <span class="math">&theta;<sub>r</sub></span>、memory store <span class="math">K</span>、QA 集合 <span class="math">Q</span>。</td>
+              <td>预测答案、retrieved sources、逐题 score。</td>
+              <td>把配置质量量化，避免凭 LLM 自评直接改系统。</td>
+            </tr>
+            <tr>
+              <td>Diagnose</td>
+              <td>失败样本 raw log：question、prediction、gold answer、score、evidence。</td>
+              <td>root-cause pattern，例如 wrong entity、insufficient context、temporal confusion。</td>
+              <td>把错误从分数下降转成可操作的检索问题。</td>
+            </tr>
+            <tr>
+              <td>Propose</td>
+              <td>失败模式和当前配置快照。</td>
+              <td>结构化修改 <span class="math">&Delta;&theta;</span>，如打开 RRF、调整 view weight、扩大 context budget。</td>
+              <td>让 LLM 提出有语义依据的 targeted adjustment，而非随机搜索。</td>
+            </tr>
+            <tr>
+              <td>Guard</td>
+              <td>新旧配置的评测分数和历史最佳配置。</td>
+              <td>accept、revert、explore 或 stop。</td>
+              <td>用指标守门，避免有害 proposal 长期污染 retrieval policy。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table text-heavy" style="margin-top: 22px;">
+          <thead>
+            <tr>
+              <th>配置维度</th>
+              <th>含义</th>
+              <th>解决的失败类型</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="math">k<sub>sem</sub>, k<sub>kw</sub>, k<sub>str</sub></span></td>
+              <td>语义、关键词、结构化检索各自召回多少候选。</td>
+              <td>单一路检索漏掉证据，候选覆盖不足。</td>
+            </tr>
+            <tr>
+              <td>mode, view weights</td>
+              <td>sum、weighted-sum、RRF 等融合方式和各 view 权重。</td>
+              <td>不同检索源分数尺度不一致，排序不稳。</td>
+            </tr>
+            <tr>
+              <td>context budget</td>
+              <td>最终放进 answer-generation LLM 的记忆条数。</td>
+              <td>上下文不足或噪声过多。</td>
+            </tr>
+            <tr>
+              <td>entity-swap</td>
+              <td>对 name-swap 问题去掉误导人名，按主题重新检索。</td>
+              <td>对抗性实体误导，检索到错误人物。</td>
+            </tr>
+            <tr>
+              <td>query decomposition</td>
+              <td>把多跳问题拆成若干 single-hop sub-queries。</td>
+              <td>复杂问题没有拆解，单次检索覆盖不足。</td>
+            </tr>
+            <tr>
+              <td>answer verifier</td>
+              <td>低置信答案经过第二次证据检查。</td>
+              <td>证据使用不充分或答案风格不稳定。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout text-heavy">
+          <strong>方法边界</strong>
+          EvolveMem 的“自演化”不是任意自动改代码。LLM 主要在已经暴露出的配置空间内提出修改，entity-swap、decomposition、verifier 等机制也需要系统事先具备可执行实现。论文证明的是 benchmark-supervised retrieval configuration evolution，而不是开放环境中无监督地产生完整新架构。
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="paper-b-results">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">研究二 | 实验结果</p>
+            <h2 class="section-title">实验解读：从弱配置出发，逐轮打开有效检索机制</h2>
+            <p class="lead">作者故意从很弱的 BM25-only 配置开始：semantic 和 structured views 关闭，<span class="math">k<sub>kw</sub> = 5</span>，context budget = 8，entity-swap 和 query decomposition 都关闭。这样可以观察提升是否来自自演化过程。</p>
+          </div>
+          <div class="takeaway">
+            <strong>关键结果</strong>
+            LoCoMo 上从 <span class="math">R<sub>0</sub></span> 的 30.5% <span class="math">F<sub>1</sub></span> 到 <span class="math">R<sub>7</sub></span> 的 54.3% <span class="math">F<sub>1</sub></span>；GPT-4o 下相对表现最好的基线方法 SimpleMem 提升 25.7%。
+          </div>
+        </div>
+
+        <figure class="figure">
+          <img src="assets/figures/evolvemem_figure_1_trajectory.png" alt="EvolveMem self-evolution trajectory" loading="lazy">
+          <figcaption class="caption"><strong>研究二 Figure 1</strong><span>自演化轨迹：<span class="math">R<sub>2</sub></span> 的有害 proposal 被回滚，<span class="math">R<sub>7</sub></span> 加入 verifier 和全局 tuning 后大幅提升。</span></figcaption>
+        </figure>
+
+        <div class="timeline text-heavy">
+          <div class="round"><strong><span class="math">R<sub>0</sub></span></strong><div class="value">30.5</div><span>BM25-only, <span class="math">k = 5</span>, context budget 8。</span></div>
+          <div class="round"><strong><span class="math">R<sub>1</sub></span></strong><div class="value">35.8</div><span>intent planning + RRF fusion。</span></div>
+          <div class="round"><strong><span class="math">R<sub>2</sub></span></strong><div class="value">34.8</div><span>MMR diversity 造成退步，被回滚。</span></div>
+          <div class="round"><strong><span class="math">R<sub>3</sub></span></strong><div class="value">37.2</div><span>entity-swap for adversarial category。</span></div>
+          <div class="round"><strong><span class="math">R<sub>4</sub></span></strong><div class="value">38.5</div><span>per-category answer-style flags。</span></div>
+          <div class="round"><strong><span class="math">R<sub>5</sub></span></strong><div class="value">38.1</div><span>query decomposition for Cat. 1/4。</span></div>
+          <div class="round"><strong><span class="math">R<sub>6</sub></span></strong><div class="value">45.4</div><span>inferential subtypes + entity-swap expansion。</span></div>
+          <div class="round"><strong><span class="math">R<sub>7</sub></span></strong><div class="value">54.3</div><span>answer verification + hyperparameter sweep。</span></div>
+        </div>
+
+        <div class="divider-label">Main Results</div>
+        <div class="grid-2">
+          <table class="table text-heavy">
+            <thead>
+              <tr>
+                <th>LoCoMo</th>
+                <th>Overall <span class="math">F<sub>1</sub></span></th>
+                <th>Overall BLEU</th>
+                <th>解读</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GPT-4o SimpleMem</td>
+                <td class="num">0.432</td>
+                <td class="num">0.407</td>
+                <td>published baseline 中表现最好。</td>
+              </tr>
+              <tr>
+                <td>GPT-4o EvolveMem</td>
+                <td class="num">0.543</td>
+                <td class="num">0.569</td>
+                <td>相对 SimpleMem 提升 25.7%。</td>
+              </tr>
+              <tr>
+                <td>GPT-5.1 SimpleMem</td>
+                <td class="num">0.418</td>
+                <td class="num">0.376</td>
+                <td>更强 backbone 下仍需要显式优化检索策略。</td>
+              </tr>
+              <tr>
+                <td>GPT-5.1 EvolveMem</td>
+                <td class="num">0.572</td>
+                <td class="num">0.536</td>
+                <td>在所有类别列达到最好。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table text-heavy">
+            <thead>
+              <tr>
+                <th>MemBench</th>
+                <th>GPT-4o Overall</th>
+                <th>GPT-5.1 Overall</th>
+                <th>解读</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RecentMem</td>
+                <td class="num">57.1</td>
+                <td class="num">60.7</td>
+                <td>baseline 之一。</td>
+              </tr>
+              <tr>
+                <td>MemGPT</td>
+                <td class="num">57.1</td>
+                <td class="num">60.7</td>
+                <td>recursive summarization 系统。</td>
+              </tr>
+              <tr>
+                <td>MemBank</td>
+                <td class="num">46.4</td>
+                <td class="num">64.3</td>
+                <td>Robustness 有优势。</td>
+              </tr>
+              <tr>
+                <td>EvolveMem</td>
+                <td class="num">67.9</td>
+                <td class="num">71.4</td>
+                <td>overall 最高，优势集中在 Recall 和 Reasoning。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="divider-label">Ablation and Transfer</div>
+        <div class="grid-2">
+          <table class="table text-heavy">
+            <thead>
+              <tr>
+                <th>Ablation</th>
+                <th><span class="math">F<sub>1</sub></span></th>
+                <th>Drop</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EvolveMem</td>
+                <td class="num">54.3</td>
+                <td class="num">--</td>
+                <td>完整系统。</td>
+              </tr>
+              <tr>
+                <td>- Extraction quality control</td>
+                <td class="num">31.08</td>
+                <td class="num">-23.22</td>
+                <td>最大掉分，说明 store 里没有证据时检索演化无用。</td>
+              </tr>
+              <tr>
+                <td>- Semantic search</td>
+                <td class="num">43.98</td>
+                <td class="num">-10.32</td>
+                <td>paraphrase 和抽象匹配具有关键作用。</td>
+              </tr>
+              <tr>
+                <td>- LLM-powered diagnosis</td>
+                <td class="num">44.67</td>
+                <td class="num">-9.63</td>
+                <td>失败日志诊断优于随机扰动。</td>
+              </tr>
+              <tr>
+                <td>- BM25 keyword search</td>
+                <td class="num">47.43</td>
+                <td class="num">-6.87</td>
+                <td>精确关键词仍不可替代。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table text-heavy">
+            <thead>
+              <tr>
+                <th>Transfer Config</th>
+                <th>LoCoMo</th>
+                <th>MemBench</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Baseline</td>
+                <td class="num">0.305</td>
+                <td class="num">/</td>
+                <td>弱初始配置。</td>
+              </tr>
+              <tr>
+                <td><span class="math">C<sub>L</sub></span>: LoCoMo only</td>
+                <td class="num">0.543</td>
+                <td class="num">0.543</td>
+                <td>LoCoMo 配置 zero-shot 到 MemBench 仍可用。</td>
+              </tr>
+              <tr>
+                <td><span class="math">C<sub>LM</sub></span>: LoCoMo &rarr; MemBench</td>
+                <td class="num">0.593</td>
+                <td class="num">0.792</td>
+                <td>继续迁移演化后双向正收益。</td>
+              </tr>
+              <tr>
+                <td><span class="math">C<sub>M</sub></span>: MemBench only</td>
+                <td class="num">/</td>
+                <td class="num">0.679</td>
+                <td>从 LoCoMo 演化配置继续迁移优于从零开始演化。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-3" style="margin-top: 22px;">
+          <article class="card accent-teal">
+            <h3>主要证据</h3>
+            <p><span class="math">R<sub>0</sub></span> 到 <span class="math">R<sub>7</sub></span> 的轨迹显示，系统能从弱 baseline 自动打开 RRF、entity-swap、query decomposition、answer verification 等机制，并且 guard 会回滚坏 proposal。</p>
+          </article>
+          <article class="card accent-mustard">
+            <h3>证据边界</h3>
+            <p>演化依赖固定 QA、gold answer 和离线指标。真实长期 agent 往往没有持续标准答案，如何构造反馈仍是开放问题。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>“发现新维度”的限制</h3>
+            <p>entity-swap、decomposition 和 verifier 需要代码层支持。因此，EvolveMem 更适合被理解为受实现约束的配置扩展机制，而非任意架构自动编程。</p>
+          </article>
+        </div>
+
+        <div class="callout text-heavy">
+          <strong>研究二小结</strong>
+          EvolveMem 的核心价值在于把 retrieval policy 的生命周期管理做成系统能力：失败日志可观察、修改建议可结构化、评测可验证、退步可回滚。它证明了 benchmark-supervised retrieval configuration evolution 有效，但还没有完全解决开放环境中的反馈构造和动态部署。
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="compare">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Cross-paper Synthesis</p>
+            <h2 class="section-title">综合讨论：从检索瓶颈诊断到检索策略演化</h2>
+            <p class="lead">两项研究形成了连续的技术逻辑：诊断性研究表明 retrieval quality 是当前长期记忆问答中的关键瓶颈；EvolveMem 进一步将检索策略转化为可评测、可诊断、可回滚的配置空间。</p>
+          </div>
+          <div class="takeaway">
+            <strong>共同启发</strong>
+            长期记忆系统的改进应同时关注证据保真、检索边界诊断和 retrieval policy 的版本化迭代。
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>研究一：Diagnosing</th>
+              <th>研究二：EvolveMem</th>
+              <th>合起来的启发</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>研究目标</td>
+              <td>定位 agent memory pipeline 的性能瓶颈。</td>
+              <td>让检索基础设施通过失败日志自我演化。</td>
+              <td>先 diagnose，再 optimize。</td>
+            </tr>
+            <tr>
+              <td>核心变量</td>
+              <td>write strategy 与 retrieval method。</td>
+              <td>retrieval configuration <span class="math">&theta;</span>。</td>
+              <td>把检索参数从代码常量提升为实验对象。</td>
+            </tr>
+            <tr>
+              <td>主要证据</td>
+              <td>retrieval method 差异大，<span class="math">Precision@5</span> 与 accuracy 的相关系数为 <span class="math">r = 0.98</span>。</td>
+              <td><span class="math">R<sub>0</sub></span> 为 30.5，<span class="math">R<sub>7</sub></span> 为 54.3，消融显示 diagnosis 和 semantic search 贡献大。</td>
+              <td>检索质量既是瓶颈，也是可优化杠杆。</td>
+            </tr>
+            <tr>
+              <td>对写入的态度</td>
+              <td>原始对话片段是重要基线，有损抽取/摘要未稳定胜出。</td>
+              <td>typed memory store 和 extraction QC 是检索演化的基础。</td>
+              <td>写入阶段应优先保证证据保真，结构化设计应服务于可检索性与可验证性。</td>
+            </tr>
+            <tr>
+              <td>主要局限</td>
+              <td>固定 LoCoMo、<span class="math">k = 5</span>、prompt-based strategies、LLM judge。</td>
+              <td>依赖 gold QA、action space 需代码支持、动态环境未充分覆盖。</td>
+              <td>真实部署需要无监督/弱监督反馈、持续评估和治理机制。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-4" style="margin-top: 22px;">
+          <article class="card accent-blue">
+            <h3>1. 保留原始证据</h3>
+            <p>原始片段应作为长期记忆系统的重要基线。事实抽取或摘要需要在准确率、成本、上下文预算和可审计性之间证明净收益。</p>
+          </article>
+          <article class="card accent-teal">
+            <h3>2. 记录检索日志</h3>
+            <p>query、retrieved evidence、rank、score、answer、reference 和配置快照都应持久化，否则无法做可复现诊断。</p>
+          </article>
+          <article class="card accent-mustard">
+            <h3>3. 参数化检索策略</h3>
+            <p><span class="math">top-k</span>、fusion、rerank、query rewrite、decomposition、verifier、context budget 应成为结构化配置，便于比较、复现与回滚。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>4. 指标驱动更新</h3>
+            <p>LLM 可用于读取失败日志并生成配置假设，但配置更新应由离线评测、阈值约束、版本管理和回滚机制共同决定。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap" id="closing">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Conclusion</p>
+            <h2 class="section-title">结论：长期记忆系统需要面向检索瓶颈的诊断与策略演化机制</h2>
+            <p class="lead">两项研究分别从错误归因和系统优化两个层面说明，agent memory 的性能不仅取决于记忆内容如何写入，也取决于检索策略能否被持续评估、诊断和更新。该视角将长期记忆系统从“存储模块”推进为可管理的检索基础设施。</p>
+          </div>
+          <div class="takeaway">
+            <strong>总结观点</strong>
+            Agent memory 的关键问题并非单纯扩大存储规模，而在于建立可诊断、可验证、可回滚的检索策略生命周期。
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card accent-blue">
+            <h3>研究一结论</h3>
+            <p>在当前 LoCoMo 设置中，agent memory 的主要瓶颈体现为 retrieval quality；原始对话片段结合 hybrid retrieval 构成具有竞争力的基线。</p>
+          </article>
+          <article class="card accent-teal">
+            <h3>研究二结论</h3>
+            <p>EvolveMem 把 retrieval infrastructure 暴露为可演化配置空间，让 LLM 根据失败日志提出修改，再由指标守门接受或回滚。</p>
+          </article>
+          <article class="card accent-red">
+            <h3>讨论问题</h3>
+            <p>如果没有 benchmark gold answer，真实长期 agent 如何自动构造 probe QA、验证反馈、避免过拟合和处理动态偏好漂移？</p>
+          </article>
+        </div>
+
+        <div class="callout text-heavy">
+          <strong>讨论问题</strong>
+          在缺少 benchmark gold answer 的真实长期 agent 场景中，如何从用户反馈、工具执行结果、任务完成度或自动生成 probe 中构造可靠的演化信号，是将这类方法从离线评测扩展到开放部署环境的关键问题。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="imageModal" aria-hidden="true" role="dialog" aria-label="图片预览">
+    <button type="button" id="modalClose" aria-label="关闭图片预览">×</button>
+    <img id="modalImage" alt="">
+  </div>
+
+  <script>
+    const progressBar = document.getElementById('progressBar');
+    const navLinks = Array.from(document.querySelectorAll('#nav a'));
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
+      });
+    }, { rootMargin: '-34% 0px -58% 0px', threshold: 0.01 });
+
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    const densityButtons = Array.from(document.querySelectorAll('.density button[data-density]'));
+    densityButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const density = button.getAttribute('data-density');
+        document.body.setAttribute('data-density', density);
+        densityButtons.forEach((item) => item.classList.toggle('active', item === button));
+      });
+    });
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.figure img').forEach((image) => {
+      image.addEventListener('click', () => {
+        modalImage.src = image.currentSrc || image.src;
+        modalImage.alt = image.alt;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.removeAttribute('src');
+    }
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal || event.target === modalImage) closeModal();
+    });
+    modalClose.addEventListener('click', closeModal);
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  </script>
+</body>
+</html>

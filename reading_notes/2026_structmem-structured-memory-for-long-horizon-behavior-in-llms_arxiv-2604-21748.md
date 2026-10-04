@@ -26,7 +26,7 @@ keywords:
   - event-level binding
   - cross-event consolidation
   - LoCoMo
-status: reading
+status: read
 source_path: ""
 source_archive_path: ../sources/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748_source.tar.gz
 assets_path: ../assets/2026_structmem-structured-memory-for-long-horizon-behavior-in-llms_arxiv-2604-21748
@@ -105,7 +105,7 @@ Cross-Event Consolidation 解决的是跨 utterance、跨时间段的信息连�
 
 ### 4 Experiments
 
-实验章的目标是验证两个主张：StructMem 是否真的提升长程对话问答效果，以及这种结构化记忆是否比 graph memory 更省构建成本。实验在 \texttt{LoCoMo} benchmark 上进行，效果用 LLM-as-a-judge 评估，效率用 memory construction 阶段的 token usage、API calls 和 runtime 衡量。
+实验章的目标是验证两个主张：StructMem 是否真的提升长程对话问答效果，以及这种结构化记忆是否比 graph memory 更省构建成本。实验在 `LoCoMo` benchmark 上进行，效果用 LLM-as-a-judge 评估，效率用 memory construction 阶段的 token usage、API calls 和 runtime 衡量。
 
 作者比较了三类 baseline：RAG-based systems，包括 OpenAI、FullContext、MiniRAG、LightRAG；flat memory methods，包括 LangMem、A-Mem、Mem0；structural memory methods，包括 MemoryOS、Mem0 图版本、Zep、Memobase。除部分外部系统外，实验统一使用 gpt-4o-mini 作为 backbone，text-embedding-3-small 作为 embedding model。
 

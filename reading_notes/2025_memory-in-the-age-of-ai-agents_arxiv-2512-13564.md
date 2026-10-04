@@ -1307,6 +1307,10 @@ Conclusion 把全文重新压回三个关键词：forms、functions、dynamics�
 
 #### 全文最终 takeaway
 
+这篇综述的最终判断是：agent memory 不是附加的文本缓存，而是连接感知、推理、行动和持续适应的基础设施。作者用三个互补维度组织领域：`form` 说明记忆以 token、参数或 latent state 的什么载体存在；`function` 区分 factual、experiential 和 working memory 的用途；`dynamics` 描述记忆如何形成、演化、检索和被遗忘。三者组合比传统的“短期/长期记忆”二分更能解释不同系统的设计取舍。
+
+综述进一步把研究前沿归纳为从 retrieval 到 generation、从手工规则到自动管理、从独立记忆到强化学习内化、从单模态到多 agent 共享，以及面向 world model、可信性和认知科学的连接。作者的结论不是某一种架构已经胜出，而是记忆系统正在从静态存储走向可学习、可维护、能参与策略更新的 agent substrate。后续工作需要同时报告记忆质量、检索和使用成本、跨任务适应、错误传播与安全边界。
+
 这篇综述的最终立场可以概括为：
 
 
