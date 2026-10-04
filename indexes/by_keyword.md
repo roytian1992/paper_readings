@@ -143,7 +143,6 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19` | DOC: Improving Long Story Coherence With Detailed Outline Control | 2023 | research | [pdf](../sources/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.pdf) | [note](../reading_notes/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.md) | NLP, Computational Creativity | Story Generation | DOC, outline control, coherence | read |
 | `2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841` | The Challenge and Reward of Fair Play in Narrative: A Computational Approach | 2026 | research | [pdf](../sources/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.pdf) | [note](../reading_notes/2026_the-challenge-and-reward-of-fair-play-in-narrative-a-com_arxiv-2507-13841.md) | Natural Language Processing, Narrative Intelligence | Reader Modeling, Narrative Evaluation | fair play, surprise, coherence, reader modes, detective fiction | read |
 
 ## conflict resolution
@@ -216,7 +215,6 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19` | DOC: Improving Long Story Coherence With Detailed Outline Control | 2023 | research | [pdf](../sources/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.pdf) | [note](../reading_notes/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.md) | NLP, Computational Creativity | Story Generation | DOC, outline control, coherence | read |
 
 ## DOME
 
@@ -740,7 +738,6 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19` | DOC: Improving Long Story Coherence With Detailed Outline Control | 2023 | research | [pdf](../sources/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.pdf) | [note](../reading_notes/2023_doc-improving-long-story-coherence-with-detailed-outline_doi-10-18653-v1-2023-acl-long-19.md) | NLP, Computational Creativity | Story Generation | DOC, outline control, coherence | read |
 
 ## patent
 
