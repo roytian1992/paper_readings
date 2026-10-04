@@ -125,6 +125,16 @@
       "source_ref": "figures/xiaohongshu.pdf"
     },
     {
+      "id": "source_figure_013_humanlaya-delivery-driven-rsi-loop",
+      "kind": "figure",
+      "page": null,
+      "path": "assets/2026_the-last-ai-built-by-humans-toward-genuine-recursive-sel_arxiv-2609-11873/figures/source_figure_013_humanlaya-delivery-driven-rsi-loop.png",
+      "caption": "Humanlaya's delivery-driven RSI loop for data-quality assurance.",
+      "crop_bbox": [],
+      "source": "arxiv-source",
+      "source_ref": "figures/HumanLaya.pdf"
+    },
+    {
       "id": "source_figure_014_modelbest-forge-engineering-as-a-two-level-rsi-l",
       "kind": "figure",
       "page": null,
