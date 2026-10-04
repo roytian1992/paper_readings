@@ -211,11 +211,6 @@ Generated: 2026-10-04
 |---|---|---:|---|---|---|---|---|---|---|
 | `2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac` | Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games | 2024 | benchmark | [pdf](../sources/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.pdf) | [note](../reading_notes/2024_deciphering-digital-detectives-understanding-llm-behavio_doi-10-18653-v1-2024-findings-ac.md) | Natural Language Processing, Artificial Intelligence | Multi-Agent Evaluation, Naturalistic Narrative Data | Jubensha, Digital Detectives, private information, multi-agent | read |
 
-## DOC
-
-| ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
-|---|---|---:|---|---|---|---|---|---|---|
-
 ## DOME
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
@@ -268,7 +263,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput` | 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation | 2026 | research | [pdf](../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf) | [note](../reading_notes/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
 
 ## event-level binding
 
@@ -714,7 +709,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput` | 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation | 2026 | research | [pdf](../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf) | [note](../reading_notes/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
 
 ## narrative-centric RAG
 
@@ -733,11 +728,6 @@ Generated: 2026-10-04
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
 | `2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954` | Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents | 2025 | research | [source](../sources/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954_source.tar.gz) | [note](../reading_notes/2025_darwin-godel-machine-open-ended-evolution-self-improving-agents_arxiv-2505-22954.md) | Artificial Intelligence, LLM Agents, Automated Machine Learning | Self-Improving AI, Open-Ended Learning, Coding Agents | Darwin Gödel Machine, self-improvement, open-ended exploration, coding agents, SWE-bench, Polyglot | reading |
-
-## outline control
-
-| ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
-|---|---|---:|---|---|---|---|---|---|---|
 
 ## patent
 
@@ -773,7 +763,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput` | 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation | 2026 | research | [pdf](../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf) | [note](../reading_notes/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
 
 ## Polyglot
 
@@ -899,7 +889,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput` | 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation | 2026 | research | [pdf](../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf) | [note](../reading_notes/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
 
 ## Schema Consistency
 
@@ -1068,8 +1058,6 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2023_2023-inlg-genchal-2_aclanthology-org` | 2023.inlg-genchal.2 | 2023 | research | [pdf](../sources/2023_2023-inlg-genchal-2_aclanthology-org.pdf) | [note](../reading_notes/2023_2023-inlg-genchal-2_aclanthology-org.md) |  |  |  | reading |
-| `2024_2024-inlg-genchal-4_aclanthology-org` | 2024.inlg-genchal.4 | 2024 | research | [pdf](../sources/2024_2024-inlg-genchal-4_aclanthology-org.pdf) | [note](../reading_notes/2024_2024-inlg-genchal-4_aclanthology-org.md) |  |  |  | reading |
 | `2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p` | 11697_P2P_Automated_Paper_to_P | 2026 | research | [pdf](../sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf) | [note](../reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md) |  |  |  | reading |
 | `2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577` | Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction | 2026 | research | [pdf](../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf) | [note](../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md) |  |  |  | reading |
 

@@ -217,7 +217,7 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput` | 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation | 2026 | research | [pdf](../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf) | [note](../reading_notes/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
+| `2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26` | Narrative Theory for Computational Narrative Understanding | 2021 | position | [pdf](../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf) | [note](../reading_notes/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.md) | NLP, Computational Narratology | Narrative Structure | narrative levels, scene detection, plotline, event hierarchy | reading |
 
 ## Narrative World Models
 
@@ -359,8 +359,6 @@ Generated: 2026-10-04
 
 | ID | Title | Year | Type | Source | Notes | Field | Direction | Keywords | Status |
 |---|---|---:|---|---|---|---|---|---|---|
-| `2023_2023-inlg-genchal-2_aclanthology-org` | 2023.inlg-genchal.2 | 2023 | research | [pdf](../sources/2023_2023-inlg-genchal-2_aclanthology-org.pdf) | [note](../reading_notes/2023_2023-inlg-genchal-2_aclanthology-org.md) |  |  |  | reading |
-| `2024_2024-inlg-genchal-4_aclanthology-org` | 2024.inlg-genchal.4 | 2024 | research | [pdf](../sources/2024_2024-inlg-genchal-4_aclanthology-org.pdf) | [note](../reading_notes/2024_2024-inlg-genchal-4_aclanthology-org.md) |  |  |  | reading |
 | `2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p` | 11697_P2P_Automated_Paper_to_P | 2026 | research | [pdf](../sources/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.pdf) | [note](../reading_notes/2026_11697-p2p-automated-paper-to-p_11697-p2p-automated-paper-to-p.md) |  |  |  | reading |
 | `2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577` | Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction | 2026 | research | [pdf](../sources/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.pdf) | [note](../reading_notes/2026_narrative-world-model-narratology-grounded-writer-memory_arxiv-2607-05577.md) |  |  |  | reading |
 

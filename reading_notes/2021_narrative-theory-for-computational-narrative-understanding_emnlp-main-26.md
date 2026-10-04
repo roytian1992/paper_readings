@@ -1,7 +1,7 @@
 ---
-id: 2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput
-title: "2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation"
-year: 2026
+id: 2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26
+title: "Narrative Theory for Computational Narrative Understanding"
+year: 2021
 authors:
   - Andrew Piper
   - Richard Jean So
@@ -18,13 +18,13 @@ keywords:
   - plotline
   - event hierarchy
 status: reading
-source_path: ../sources/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput.pdf
+source_path: ../sources/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26.pdf
 source_archive_path: ""
-assets_path: ../assets/2026_2026-narrative-theory-for-computational-narrative-unders_2026-narrative-theory-for-comput
+assets_path: ../assets/2021_narrative-theory-for-computational-narrative-understanding_emnlp-main-26
 paper_type: research
 ---
 
-# 2026_narrative-theory-for-computational-narrative-understandi_narrative-theory-for-computation
+# Narrative Theory for Computational Narrative Understanding
 
 ## 一句话总结
 
@@ -40,7 +40,19 @@ paper_type: research
 
 ## 分章节阅读笔记
 
-<!-- 待从论文原文目录或真实章节标题补齐；不要使用通用占位章节。 -->
+1 Introduction
+2 The elements of narrativity
+   2.1 Towards a working definition of narrativity
+   2.2 Agents (E, G)
+   2.3 Events (F)
+   2.4 Temporality (I)
+   2.5 Setting (H)
+   2.6 Perspective (A, B, C)
+3 Higher-level issues
+   3.1 Narrative economies
+   3.2 Narrative responses
+   3.3 Narrative beliefs
+4 Conclusion
 
 ### 2.3 Events (F)
 
